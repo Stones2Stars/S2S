@@ -15,8 +15,9 @@
 //	  <sign><magnitude><unit> <family/kind name>[ for <target>][, <scope phrase>][ per <per-scaler>]
 //	  [ -- top N by <metric>][ -- while <enabled>][ -- unless <disabled>]
 //	  [ -- units matching <unitQual>][ -- per city religion matching <religionQual>][ [AI only]]
-//	The `while` clause is left off when a page subject is named and the clause is only a plain mention of it.
-//	The magnitude is /100 at THIS out boundary (the reader rule, docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
+//	The `while` clause is left off when a page subject is named and the clause is only a plain mention of it. A
+//	condition that only names a kind of unit reads "-- for <tag> units" / "-- except for <tag> units". A predicate
+//	renders as its player-facing phrase (TXT_KEY_CONDITION_*: "in your capital"), never as its JSON token.
 //	A unit's own strength and moves, and a property that has a font glyph, render as their glyphs; a combat
 //	membership flag carries no magnitude: it reads "<container heading>: <target>".
 //
@@ -32,6 +33,10 @@ class CvInfo;
 /// when the entry's `enabled` condition is nothing but a plain mention of that subject, the "while" clause is
 /// left off, because under the subject's own heading it restates the heading.</summary>
 CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket = NO_EDGEB, int iSubjectId = -1);
+
+///<summary>The same line for a value the engine resolved the entry to at one object (a building's deposit in its
+/// city): the resolved magnitude, with the `per` clause left off because the scaling is already in the number.</summary>
+CvWString entryResolvedLine(const CvModEntry& entry, int64_t iResolvedValue);
 
 ///<summary>Do the game's options alone rule this entry out for the current game? Such an entry is not listed,
 /// and a game-option atom is never printed in a condition clause, because an option is fixed for the game.</summary>

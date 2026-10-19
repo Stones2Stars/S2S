@@ -3,6 +3,7 @@
 //
 #include "CvGameCoreDLL.h"
 #include "UI/CvGameTextMgr.h"
+#include "UI/CvEntryText.h"   // amountText -- the one amount format
 #include "CyCity.h"
 #include "CyDeal.h"
 #include "CyGameTextMgr.h"
@@ -233,17 +234,43 @@ std::wstring CyGameTextMgr::getBonusHelp(int iBonus, bool bCivilopediaText)
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getProductionHelpCity(int iPlayer, int iCity)
+
+namespace
 {
-	g_szLastCyRead = "CyGameTextMgr::getProductionHelpCity";
-	CvWStringBuffer szBuffer;
-	CvCity* pCity = cgt_city(iPlayer, iCity);
-	if (pCity == NULL)
+	///<summary>Text lines and their runs as the (lines, runs) tuple a Python screen lays out.</summary>
+	python::tuple cgt_hoverTuple(const std::vector<CvWString>& kTextLines, const std::vector<CityBreakdownTextRun>& kTextRuns)
 	{
-		return std::wstring();
+		python::list lines = python::list();
+		for (size_t iLine = 0; iLine < kTextLines.size(); ++iLine)
+		{
+			lines.append(std::wstring(kTextLines[iLine].GetCString()));
+		}
+		python::list runs = python::list();
+		for (size_t iRun = 0; iRun < kTextRuns.size(); ++iRun)
+		{
+			runs.append(python::make_tuple((int)kTextRuns[iRun].firstLine, (int)kTextRuns[iRun].lineCount,
+				std::wstring(kTextRuns[iRun].summary.GetCString())));
+		}
+		return python::make_tuple(lines, runs);
 	}
-	GAMETEXT.setProductionHelp(szBuffer, *pCity);
-	return szBuffer.getCString();
+}
+
+std::wstring CyGameTextMgr::getAmountText(int iAmount)
+{
+	return std::wstring(amountText(iAmount).GetCString());
+}
+
+python::tuple CyGameTextMgr::getCityHover(int iPlayer, int iCity, int iSubject)
+{
+	g_szLastCyRead = "CyGameTextMgr::getCityHover";
+	std::vector<CvWString> kTextLines;
+	std::vector<CityBreakdownTextRun> kTextRuns;
+	CvCity* pCity = cgt_city(iPlayer, iCity);
+	if (pCity != NULL && iSubject >= 0 && iSubject < NUM_CITY_BREAKDOWN_SUBJECTS)
+	{
+		GAMETEXT.getCityHoverLines(*pCity, (CityBreakdownSubject)iSubject, kTextLines, kTextRuns);
+	}
+	return cgt_hoverTuple(kTextLines, kTextRuns);
 }
 
 std::wstring CyGameTextMgr::getReligionHelpCity(int iReligion, int iPlayer, int iCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion)
@@ -330,13 +357,6 @@ std::wstring CyGameTextMgr::parseTraits(int /*TraitTypes*/ eTrait, bool bDawnOfM
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getHappinessHelp()
-{
-	CvWStringBuffer szBuffer;
-	GAMETEXT.parseHappinessHelp(szBuffer);
-	return szBuffer.getCString();
-}
-
 std::wstring CyGameTextMgr::getSpecialistHelp(int iSpecialist, bool bCivilopediaText)
 {
 	CvWStringBuffer szBuffer;
@@ -396,19 +416,6 @@ std::wstring CyGameTextMgr::getFinanceUnitUpkeepString(int iPlayer)
 	return szBuffer.getCString();
 }
 
-std::wstring CyGameTextMgr::getDefenseHelp(int iPlayer, int iCity)
-{
-	g_szLastCyRead = "CyGameTextMgr::getDefenseHelp";
-	CvWStringBuffer szBuffer;
-	CvCity* pCity = cgt_city(iPlayer, iCity);
-	if (pCity == NULL)
-	{
-		return std::wstring();
-	}
-	GAMETEXT.getDefenseHelp(szBuffer, *pCity);
-	return szBuffer.getCString();
-}
-
 std::wstring CyGameTextMgr::getFlagHelp()
 {
 	CvWStringBuffer szBuffer;
@@ -448,7 +455,8 @@ void CyGameTextMgr::pythonPublish()
 		.def("getPromotionHelp", &CyGameTextMgr::getPromotionHelp)
 		.def("getUnitCombatHelp", &CyGameTextMgr::getUnitCombatHelp)
 		.def("getBonusHelp", &CyGameTextMgr::getBonusHelp)
-		.def("getProductionHelpCity", &CyGameTextMgr::getProductionHelpCity)
+		.def("getCityHover", &CyGameTextMgr::getCityHover)
+		.def("getAmountText", &CyGameTextMgr::getAmountText)
 		.def("getReligionHelpCity", &CyGameTextMgr::getReligionHelpCity)
 		.def("getCorporationHelpCity", &CyGameTextMgr::getCorporationHelpCity)
 		.def("getImprovementHelp", &CyGameTextMgr::getImprovementHelp)
@@ -461,7 +469,6 @@ void CyGameTextMgr::pythonPublish()
 		.def("parseCivInfos", &CyGameTextMgr::parseCivInfos)
 		.def("parseLeaderTraits", &CyGameTextMgr::parseLeaderTraits)
 		.def("parseTraits", &CyGameTextMgr::parseTraits)
-		.def("getHappinessHelp", &CyGameTextMgr::getHappinessHelp)
 		.def("getSpecialistHelp", &CyGameTextMgr::getSpecialistHelp)
 		.def("buildHintsList", &CyGameTextMgr::buildHintsList)
 		.def("getAttitudeString", &CyGameTextMgr::getAttitudeString)
@@ -470,7 +477,6 @@ void CyGameTextMgr::pythonPublish()
 		.def("getActiveDealsString", &CyGameTextMgr::getActiveDealsString)
 		.def("getDealString", &CyGameTextMgr::getDealString)
 		.def("getFinanceUnitUpkeepString", &CyGameTextMgr::getFinanceUnitUpkeepString)
-		.def("getDefenseHelp", &CyGameTextMgr::getDefenseHelp)
 		.def("getFlagHelp", &CyGameTextMgr::getFlagHelp)
 	;
 }

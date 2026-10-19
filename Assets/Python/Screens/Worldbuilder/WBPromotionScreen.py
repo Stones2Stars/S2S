@@ -206,6 +206,9 @@ class WBPromotionScreen:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			screen.setTableText("WBPromotion", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("PROMOTION_", item[1]), WidgetTypes.WIDGET_PYTHON, 7873, item[1], 1<<0 )
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
 		global bApplyAll

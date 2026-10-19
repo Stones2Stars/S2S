@@ -1087,35 +1087,57 @@ void CvPlot::updateCulture(bool bBumpUnits, bool bUpdatePlotGroups)
 	}
 }
 
-void CvPlot::checkCityRevolt()
+PlayerTypes CvPlot::getCityRevoltAttacker() const
 {
-	PROFILE_EXTRA_FUNC();
-	// Check if city flips (revolts)
-	CvCity* pCity = getPlotCity();
-	if (!pCity || pCity->isOccupation())
+	const CvCity* pCity = getPlotCity();
+	if (pCity == NULL || pCity->isOccupation())
 	{
-		return;
+		return NO_PLAYER;
 	}
 	const PlayerTypes eCulturalOwner = calculateCulturalOwner(false);
-	FAssert(eCulturalOwner != NO_PLAYER);
-
 	if (eCulturalOwner == NO_PLAYER
 	// Toffer - Don't flip ownership of city to a player who is not currently adding the most culture to the plot per turn.
 	|| getCultureRateThisTurn(eCulturalOwner) <= getCultureRateThisTurn(getOwner())
 	// Don't flip cities between team members
 	|| GET_PLAYER(eCulturalOwner).getTeam() == getTeam())
 	{
+		return NO_PLAYER;
+	}
+	return eCulturalOwner;
+}
+
+int CvPlot::getCityRevoltTestPercent()
+{
+	return std::max(1, GC.getREVOLT_TEST_PROB() * 100 / CvGameSpeedScale::speedPercent());
+}
+
+int CvPlot::getCityRevoltChance() const
+{
+	const PlayerTypes eAttacker = getCityRevoltAttacker();
+	if (eAttacker == NO_PLAYER)
+	{
+		return 0;
+	}
+	const CvCity* pCity = getPlotCity();
+	// checkCityRevolt: an NPC's city revolts whenever the test runs.
+	if (pCity->isNPC())
+	{
+		return getCityRevoltTestPercent() * 100;
+	}
+	return getCityRevoltTestPercent() * pCity->netRevoltRisk(eAttacker) / 100;
+}
+
+void CvPlot::checkCityRevolt()
+{
+	PROFILE_EXTRA_FUNC();
+	// Check if city flips (revolts)
+	CvCity* pCity = getPlotCity();
+	const PlayerTypes eCulturalOwner = getCityRevoltAttacker();
+	if (eCulturalOwner == NO_PLAYER)
+	{
 		return;
 	}
-	const int iRevoltTestProb = (
-		std::max(
-			1,
-			GC.getREVOLT_TEST_PROB()* 100/CvGameSpeedScale::speedPercent()
-		)
-	);
-	// Check to check for revolt, rate adjusted by gamespeed, at least 1% minimum.
-	// If adjusted, also update `int iSpeedAdjustment` in CvGameTextMgr, CvDLLWidgetData
-	if (GC.getGame().getSorenRandNum(100, "Revolt #1") < iRevoltTestProb)
+	if (GC.getGame().getSorenRandNum(100, "Revolt #1") < getCityRevoltTestPercent())
 	{
 		// iCityStrength100 is 100x % chance of revolt
 		const int iCityStrength100 = pCity->netRevoltRisk(eCulturalOwner);
@@ -1186,7 +1208,7 @@ void CvPlot::checkCityRevolt()
 		}
 	}
 	// ~2x more likely to be alerted of high discontent than revolt or quelled one (don't want every turn)
-	else if (GC.getGame().getSorenRandNum(100, "Revolt #1 Alert") < 2 * iRevoltTestProb
+	else if (GC.getGame().getSorenRandNum(100, "Revolt #1 Alert") < 2 * getCityRevoltTestPercent()
 		&& isInViewport())
 	{
 		CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_DISCONTENT_IN_CITY", GET_PLAYER(eCulturalOwner).getCivilizationAdjective(), pCity->getNameKey());

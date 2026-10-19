@@ -1272,6 +1272,8 @@ enum CityOrderRead
 	ORDER_READ_PRODUCTION_PER_TURN,
 	ORDER_READ_PRODUCTION_PER_TURN_NO_FOOD,
 	ORDER_READ_MAX_OVERFLOW,
+	///<summary>The production the city's food surplus makes this turn while it builds with food.</summary>
+	ORDER_READ_FOOD_TO_PRODUCTION,
 
 	NUM_CITY_ORDER_READS
 };
@@ -1441,6 +1443,8 @@ enum CityCountRead
 	CITY_COUNT_MAX_WORLD_WONDERS,
 	CITY_COUNT_DEFENSE_MODIFIER,
 	CITY_COUNT_DEFENSE_DAMAGE,
+	///<summary>The percent of the city's defenses still standing (CvCity::getDefenseStandingPercent).</summary>
+	CITY_COUNT_DEFENSE_STANDING_PERCENT,
 	CITY_COUNT_REVOLUTION_INDEX,
 	CITY_COUNT_REVOLUTION_AVERAGE,
 	CITY_COUNT_GAME_TURN_FOUNDED,
@@ -1529,17 +1533,70 @@ enum CityGrowthRead
 	GROWTH_READ_TURNS_LEFT,
 	GROWTH_READ_IS_FOOD_PRODUCTION,
 	GROWTH_READ_FOOD_KEPT,
+	///<summary>Turns until the city loses a citizen to starvation; -1 when it is not starving or has one citizen.</summary>
+	GROWTH_READ_STARVATION_TURNS_LEFT,
 
 	NUM_CITY_GROWTH_READS
 };
 
-//	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, and which
-//	level it currently sits at. One group -- the threshold is meaningless without the amount beside it.
+///<summary>The city's wellbeing totals, as the engine nets the four channels: happiness against anger and health
+/// against unhealth, the angry citizens, and the food unhealth costs.</summary>
+enum CityWellbeingNetRead
+{
+	WELLBEING_NET_HAPPINESS = 0,
+	WELLBEING_NET_HEALTH,
+	WELLBEING_NET_ANGRY_POPULATION,
+	WELLBEING_NET_FOOD_LOST,
+
+	NUM_CITY_WELLBEING_NET_READS
+};
+
+///<summary>The city's trade routes: the commerce they give the city, and the domestic and foreign routes with
+/// their commerce and their count (CvCity::calculateTradeTotals).</summary>
+enum CityTradeRead
+{
+	TRADE_READ_YIELD = 0,
+	TRADE_READ_DOMESTIC_YIELD,
+	TRADE_READ_DOMESTIC_ROUTES,
+	TRADE_READ_FOREIGN_YIELD,
+	TRADE_READ_FOREIGN_ROUTES,
+	TRADE_READ_ROUTES,
+
+	NUM_CITY_TRADE_READS
+};
+
+///<summary>The finance advisor's three panels, each an engine breakdown: the empire's commerce yield, its gold
+/// income and its expenses (CvPlayer::sumCityBreakdowns, CvPlayer::calculateBaseNetGold).</summary>
+enum FinancePart
+{
+	FINANCE_PART_COMMERCE = 0,
+	FINANCE_PART_INCOME,
+	FINANCE_PART_EXPENSES,
+
+	NUM_FINANCE_PARTS
+};
+
+///<summary>The four parts a player's score adds up from (CvPlayer::calculateScoreParts).</summary>
+enum ScorePart
+{
+	SCORE_PART_POPULATION = 0,
+	SCORE_PART_LAND,
+	SCORE_PART_TECH,
+	SCORE_PART_WONDERS,
+
+	NUM_SCORE_PARTS
+};
+
+//	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, which level it
+//	currently sits at and the turns to the next one (CvCity::getCultureTurnsLeft). One group -- the threshold is
+//	meaningless without the amount beside it.
 enum CityCultureRead
 {
 	CULTURE_READ_OWNER_AMOUNT = 0,
 	CULTURE_READ_THRESHOLD,
 	CULTURE_READ_LEVEL,
+	///<summary>Turns until the owner's culture here reaches the next level; -1 with no culture coming in or no next level.</summary>
+	CULTURE_READ_TURNS_LEFT,
 
 	NUM_CITY_CULTURE_READS
 };
@@ -1552,6 +1609,8 @@ enum CityHurryQuote
 	HURRY_QUOTE_POPULATION_COST,
 	HURRY_QUOTE_PRODUCTION_GAINED,
 	HURRY_QUOTE_GOLD_COST,
+	///<summary>The turns of hurry anger the city has after this hurry (its timer plus what the hurry adds).</summary>
+	HURRY_QUOTE_ANGER_TURNS,
 
 	NUM_CITY_HURRY_QUOTES
 };

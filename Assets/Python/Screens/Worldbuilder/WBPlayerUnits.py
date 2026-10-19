@@ -429,6 +429,9 @@ class WBPlayerUnits:
 				screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_WORD_UNIT", ()) + " " + CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS", ()), 8, 8, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBPlayerUnits", CvScreenEnums.WB_UNITLIST)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBPlayerUnits", CvScreenEnums.WB_UNITLIST)
 		global iCityID

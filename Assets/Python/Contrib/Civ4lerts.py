@@ -652,22 +652,10 @@ class CanHurryPopulation(AbstractCanHurry):
 
 	def _getAlertMessage(self, cityId, szPrefix, iType):
 		aQuote = GC.getPlayer(cityId[0]).getCity(cityId[1]).getHurryQuote(self.keHurryType)
-		aOrder = GC.getPlayer(cityId[0]).getCity(cityId[1]).getOrder()
-		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
 		iPop = aQuote[CityHurryQuote.HURRY_QUOTE_POPULATION_COST]
-		iOverflow = (aQuote[CityHurryQuote.HURRY_QUOTE_PRODUCTION_GAINED]
-		             - aOrder[CityOrderRead.ORDER_READ_PRODUCTION_LEFT])
-		if Civ4lertsOpt.isWhipAssistOverflowCountCurrentProduction():
-			iOverflow = iOverflow + aOrder[CityOrderRead.ORDER_READ_PRODUCTION_PER_TURN]
-		iAnger = (aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER]
-		          + aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER_PERIOD])
-		iMaxOverflow = aOrder[CityOrderRead.ORDER_READ_MAX_OVERFLOW]
-		iOverflowGold = max(0, iOverflow - iMaxOverflow) * GC.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100
-		# The kept overflow is expressed in POST-modifier hammers; dividing by the production modifier reports
-		# it in the pre-modifier hammers the player actually sees in the build box.
-		iProductionModifier = GC.getPlayer(cityId[0]).getCity(cityId[1]).getYieldModifiers()[YieldTypes.YIELD_PRODUCTION]
-		if iProductionModifier > 0:
-			iOverflow = 100 * iMaxOverflow / iProductionModifier
+		iAnger = aQuote[CityHurryQuote.HURRY_QUOTE_ANGER_TURNS]
+		# What the hurry carries over, as the engine hurries (CvCity::hurryOverflow).
+		_, iOverflow, iOverflowGold = GC.getPlayer(cityId[0]).getCity(cityId[1]).getHurryOverflow(self.keHurryType, Civ4lertsOpt.isWhipAssistOverflowCountCurrentProduction())
 		szName = GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
 		szItem = INFO.getDescription(szPrefix, iType)
 		if iOverflowGold > 0:

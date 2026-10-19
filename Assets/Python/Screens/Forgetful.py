@@ -119,6 +119,9 @@ class Forgetful:
 
 	def update(self, fDelta): return
 
+	def getScreen(self):
+		return CyGInterfaceScreen("ForgetfulScreen", self.screenId)
+
 	def handleInput(self, inputClass):
 		if inputClass.getFunctionName() == "ForgetfulType":
 			self.iForgetfulType = int(inputClass.getData())

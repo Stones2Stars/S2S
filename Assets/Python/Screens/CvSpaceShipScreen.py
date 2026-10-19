@@ -249,6 +249,9 @@ class CvSpaceShipScreen:
 
 		self.createdButtons.clear()
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "SpaceShipScreen", CvScreenEnums.SPACE_SHIP_SCREEN)
+
 	# Will handle the input for this screen...
 	def handleInput (self, inputClass):
 		if inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED:

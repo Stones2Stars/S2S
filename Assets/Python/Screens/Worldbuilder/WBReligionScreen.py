@@ -184,6 +184,9 @@ class WBReligionScreen:
 			screen.setTableText("WBStateReligion", 1, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0)
 			screen.setTableText("WBStateReligion", 2, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</color></font>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBReligionScreen", CvScreenEnums.WB_RELIGION)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen("WBReligionScreen", CvScreenEnums.WB_RELIGION)
 		global bHoly

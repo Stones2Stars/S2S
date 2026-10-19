@@ -8,6 +8,7 @@ import CvMainInterface
 import CvOptionsScreen
 import CvReplayScreen
 import ScreenInput as PyScreenInput
+import PythonToolTip
 
 import BugCore
 GC = CyGlobalContext()
@@ -466,9 +467,15 @@ def handleInput(argsList):
 	iPythonFile = inputClass.ePythonFileEnum
 	# get the screen that is active from the screenMap Dictionary
 	if iPythonFile in screenMap:
+		# The one hover learns which screen the mouse is in before the screen handles the input.
+		PythonToolTip.noteHoverInput(screenMap[iPythonFile], inputClass)
 		# call handle input on that screen
 		return screenMap[iPythonFile].handleInput(inputClass)
 	return 0
+
+# Entry point for the DLL: a widget's hover text for the one hover box (PythonToolTip.showWidgetHover).
+def showWidgetHover(argsList):
+	return PythonToolTip.showWidgetHover(argsList[0])
 
 # Entry point for dll requests to display messages.
 import CvUtil

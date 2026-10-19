@@ -11,6 +11,7 @@
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
 #include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
+#include "Engine/CvCityBreakdown.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
@@ -4385,36 +4386,79 @@ void CvPlayer::chooseTech(int iDiscover, CvWString szText, bool bFront)
 }
 
 
+///<summary>One score part, in millionths of a point so the total rounds down once: iFactor scaled by
+/// (raw + free) / (max + free) and by iPercentProduct, the victory and difficulty percents multiplied (10000 is
+/// 100% of 100%). A part with no max to measure against takes the whole factor. iTurn / iEndTurn above zero grows
+/// the max from its initial value toward the end turn: by the power of that ratio of the max-to-initial quotient
+/// (rounded down, as the score has always taken it) when bExponential, along a straight line otherwise.</summary>
+static int64_t scorePart(int iRaw, int iInitial, int iMax, int iFactor, bool bExponential, int iTurn, int iEndTurn, int iPercentProduct)
+{
+	// The grown max keeps six decimals, so a max grown by a small turn ratio keeps its digits.
+	const int iMaxScale = 1000000;
+	int64_t iScaledMax = (int64_t)iMaxScale * iMax;
+	if (iTurn > 0)
+	{
+		if (bExponential && iInitial != 0)
+		{
+			iScaledMax = iInitial * intPowFraction(iMax / iInitial, iTurn, iEndTurn, iMaxScale);
+		}
+		else
+		{
+			iScaledMax = (int64_t)iMaxScale * iInitial + (int64_t)iMaxScale * iTurn * (iMax - iInitial) / iEndTurn;
+		}
+	}
+	const int64_t iScaledFree = iScaledMax * GC.getSCORE_FREE_PERCENT() / 100;
+	const int64_t iScaledDivisor = iScaledFree + iScaledMax;
+	if (iScaledDivisor == 0)
+	{
+		return (int64_t)iFactor * iPercentProduct * 100;
+	}
+	// (raw + free) / (max + free) to six decimals, then the factor and the percents.
+	const int64_t iRatio = ((int64_t)iMaxScale * iRaw + iScaledFree) * 1000000 / iScaledDivisor;
+	return (int64_t)iFactor * iPercentProduct * iRatio / 10000;
+}
+
+void CvPlayer::calculateScoreParts(bool bFinal, bool bVictory, int64_t (&aiParts)[NUM_SCORE_PARTS]) const
+{
+	for (int iPart = 0; iPart < NUM_SCORE_PARTS; iPart++)
+	{
+		aiParts[iPart] = 0;
+	}
+	const CvGame& kGame = GC.getGame();
+	const int iEndTurn = kGame.getEstimateEndTurn();
+	if (!isAlive() || GET_TEAM(getTeam()).getNumMembers() == 0 || iEndTurn == 0)
+	{
+		return;
+	}
+	const int iTurn = (bFinal && bVictory) ? GC.getGame().getGameTurn() : 0;
+	const int iVictoryPercent = bVictory ? 100 + GC.getDefineINT("SCORE_VICTORY_PERCENT") : 100;
+	const int iFinalPercent = bFinal
+		? 100 + GC.getDefineINT("SCORE_HANDICAP_PERCENT_OFFSET") + kGame.getHandicapType() * GC.getDefineINT("SCORE_HANDICAP_PERCENT_PER")
+		: 100;
+	const int iPercentProduct = iVictoryPercent * iFinalPercent;
+
+	aiParts[SCORE_PART_POPULATION] = scorePart(getPopScore(), kGame.getInitPopulation(), kGame.getMaxPopulation(),
+		GC.getSCORE_POPULATION_FACTOR(), true, iTurn, iEndTurn, iPercentProduct);
+	aiParts[SCORE_PART_LAND] = scorePart(getLandScore(), kGame.getInitLand(), kGame.getMaxLand(),
+		GC.getSCORE_LAND_FACTOR(), true, iTurn, iEndTurn, iPercentProduct);
+	aiParts[SCORE_PART_TECH] = scorePart(getTechScore(), kGame.getInitTech(), kGame.getMaxTech(),
+		GC.getSCORE_TECH_FACTOR(), true, iTurn, iEndTurn, iPercentProduct);
+	aiParts[SCORE_PART_WONDERS] = scorePart(getWondersScore(), kGame.getInitWonders(), kGame.getMaxWonders(),
+		GC.getSCORE_WONDER_FACTOR(), false, iTurn, iEndTurn, iPercentProduct);
+}
+
 int CvPlayer::calculateScore(bool bFinal, bool bVictory) const
 {
 	PROFILE_FUNC();
 
-	if (!isAlive())
+	int64_t aiParts[NUM_SCORE_PARTS];
+	calculateScoreParts(bFinal, bVictory, aiParts);
+	int64_t iTotal = 0;
+	for (int iPart = 0; iPart < NUM_SCORE_PARTS; iPart++)
 	{
-		return 0;
+		iTotal += aiParts[iPart];
 	}
-
-	if (GET_TEAM(getTeam()).getNumMembers() == 0)
-	{
-		return 0;
-	}
-
-	return Cy::call<int>(PYGameModule, "calculateScore", Cy::Args() << getID() << bFinal << bVictory);
-
-// A python clean-up by Toffer90 made the above code as fast as the hardcoded solution that's below.
-// I'll keep this commented out in the case we ever need it again, however unlikely that is. - KaTiON
-
-/*
-	int iPopulationScore = getScoreComponent(getPopScore(), GC.getGame().getInitPopulation(), GC.getGame().getMaxPopulation(), GC.getSCORE_POPULATION_FACTOR(), true, bFinal, bVictory);
-
-	int iLandScore = getScoreComponent(getLandScore(), GC.getGame().getInitLand(), GC.getGame().getMaxLand(), GC.getSCORE_LAND_FACTOR(), true, bFinal, bVictory);
-
-	int iTechScore = getScoreComponent(getTechScore(), GC.getGame().getInitTech(), GC.getGame().getMaxTech(), GC.getSCORE_TECH_FACTOR(), true, bFinal, bVictory);
-
-	int iWondersScore = getScoreComponent(getWondersScore(), GC.getGame().getInitWonders(), GC.getGame().getMaxWonders(), GC.getSCORE_WONDER_FACTOR(), false, bFinal, bVictory);
-
-	return iPopulationScore + iLandScore + iTechScore + iWondersScore;
-*/
+	return (int)(iTotal / 1000000);
 }
 
 
@@ -7333,18 +7377,21 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 
 int CvPlayer::calculateUnitSupply() const
 {
-	if (isAnarchy() || isNPC())
-	{
-		return 0;
-	}
 	int iPaidUnits;
 	int iBaseSupplyCost;
-
-	return calculateUnitSupply(iPaidUnits, iBaseSupplyCost);
+	int iDifficultyCost;
+	return calculateUnitSupply(iPaidUnits, iBaseSupplyCost, iDifficultyCost);
 }
 
-int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
+int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost, int& iDifficultyCost) const
 {
+	if (isAnarchy() || isNPC())
+	{
+		iPaidUnits = 0;
+		iBaseSupplyCost = 0;
+		iDifficultyCost = 0;
+		return 0;
+	}
 	iPaidUnits = std::max(0, getNumOutsideUnits() - GC.getDefineINT("INITIAL_FREE_OUTSIDE_UNITS"));
 
     int eraMultiplier = (int)getCurrentEra() + 1;
@@ -7377,24 +7424,33 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 		iSupply = getModifiedIntValue(iSupply, iMod);
 	}
 	FASSERT_NOT_NEGATIVE(iSupply);
+	iDifficultyCost = iSupply - iBaseSupplyCost;
 	return iSupply;
 }
 
 
-int64_t CvPlayer::calculatePreInflatedCosts() const
+int64_t CvPlayer::calculatePreInflatedCosts(CvCityBreakdown* pBreakdown) const
 {
 	if (isAnarchy())
 	{
 		return 0;
 	}
-	return (
-		getTreasuryUpkeep()
-		+ getTotalMaintenance()
-		+ getCivicUpkeep()
-		+ getFinalUnitUpkeep()
-		+ calculateUnitSupply()
-		+ getCorporateMaintenance()
-	);
+	const int64_t iTreasuryUpkeep = getTreasuryUpkeep();
+	const int64_t iCityMaintenance = getTotalMaintenance();
+	const int64_t iCivicUpkeep = getCivicUpkeep();
+	const int64_t iUnitUpkeep = getFinalUnitUpkeep();
+	const int64_t iUnitSupply = calculateUnitSupply();
+	const int64_t iCorporateMaintenance = getCorporateMaintenance();
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_UNIT_UPKEEP, 100 * iUnitUpkeep);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_UNIT_SUPPLY, 100 * iUnitSupply);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_CITY_MAINTENANCE, 100 * iCityMaintenance);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_TREASURY_UPKEEP, 100 * iTreasuryUpkeep);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_CIVIC_UPKEEP, 100 * iCivicUpkeep);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_CORPORATE_MAINTENANCE, 100 * iCorporateMaintenance);
+	}
+	return iTreasuryUpkeep + iCityMaintenance + iCivicUpkeep + iUnitUpkeep + iUnitSupply + iCorporateMaintenance;
 }
 
 int CvPlayer::getInflationMod10000() const
@@ -7449,9 +7505,25 @@ int64_t CvPlayer::getInflationCost() const
 	return isAnarchy() ? 0 : iPreInflatedCost * getInflationMod10000() / 10000 - iPreInflatedCost;
 }
 
-int64_t CvPlayer::getFinalExpense() const
+int CvPlayer::getInflationPercent() const
 {
-	return isAnarchy() ? 0 : calculatePreInflatedCosts() * getInflationMod10000() / 10000;
+	return getInflationMod10000() - 10000;
+}
+
+int64_t CvPlayer::getFinalExpense(CvCityBreakdown* pBreakdown) const
+{
+	if (isAnarchy())
+	{
+		return 0;
+	}
+	const int64_t iPreInflated = calculatePreInflatedCosts(pBreakdown);
+	const int64_t iFinal = iPreInflated * getInflationMod10000() / 10000;
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->addSubtotal(100 * iPreInflated);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_INFLATION, 100 * (iFinal - iPreInflated));
+	}
+	return iFinal;
 }
 
 
@@ -7527,11 +7599,32 @@ short CvPlayer::getProfitMargin(int iExtraExpense, int iExtraExpenseMod) const
 	return getProfitMargin(iNetExpenses, iExtraExpense, iExtraExpenseMod);
 }
 
-int64_t CvPlayer::calculateBaseNetGold() const
+int64_t CvPlayer::calculateBaseNetGold(CvCityBreakdown* pIncome, CvCityBreakdown* pExpenses) const
 {
 	int aiOwnCommerces[NUM_COMMERCE_TYPES];
 	getCommerces(aiOwnCommerces);
-	return aiOwnCommerces[COMMERCE_GOLD] / 100 + getGoldPerTurn() - getFinalExpense();
+	const int iCityGold = aiOwnCommerces[COMMERCE_GOLD];
+	const int iGoldPerTurn = getGoldPerTurn();
+	if (pIncome != NULL)
+	{
+		pIncome->reset(CITY_BREAKDOWN_GOLD);
+		sumCityBreakdowns(CITY_BREAKDOWN_GOLD, *pIncome);
+		// The treasury moves in whole gold.
+		pIncome->addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED, iCityGold / 100 * 100 - iCityGold);
+		pIncome->addAmount(CITY_BREAKDOWN_TERM_FOREIGN_INCOME, 100 * std::max(0, iGoldPerTurn));
+		pIncome->setTotal(iCityGold / 100 * 100 + 100 * std::max(0, iGoldPerTurn));
+	}
+	if (pExpenses != NULL)
+	{
+		pExpenses->reset(CITY_BREAKDOWN_EXPENSES);
+	}
+	const int64_t iFinalExpense = getFinalExpense(pExpenses);
+	if (pExpenses != NULL)
+	{
+		pExpenses->addAmount(CITY_BREAKDOWN_TERM_FOREIGN_PAYMENTS, 100 * std::max(0, -iGoldPerTurn));
+		pExpenses->setTotal(100 * (iFinalExpense + std::max(0, -iGoldPerTurn)));
+	}
+	return iCityGold / 100 + iGoldPerTurn - iFinalExpense;
 }
 
 int CvPlayer::calculateResearchModifier(TechTypes eTech) const
@@ -9517,8 +9610,12 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 // Prices a HYPOTHETICAL pair of raw ×100 buckets. It exists so the marginal-cost valuation can ask "what would
 // upkeep be with this much more" WITHOUT the temp add/restore the legacy form used -- the buckets are now a Σ
 // recomputed from the live units, so there is no stored value to nudge and put back.
-int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal) const
+int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal, int64_t* pDifficultyOut) const
 {
+	if (pDifficultyOut != NULL)
+	{
+		*pDifficultyOut = 0;
+	}
 	if (isNPC())
 	{
 		return 0;
@@ -9530,6 +9627,7 @@ int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitar
 
 	if (iCalc > 0)
 	{
+		const int64_t iBeforeDifficulty = iCalc;
 		// Difficulty adjustment
 		iCalc *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_UNIT, CASC_SCOPE_EMPIRE, false);
 		iCalc /= 100;
@@ -9541,6 +9639,10 @@ int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitar
 
 			iCalc *= std::max(0, 100 + GC.getHandicapInfo(GC.getGame().getHandicapType()).getUnitUpkeepEraModifier() * getCurrentEra());
 			iCalc /= 100;
+		}
+		if (pDifficultyOut != NULL)
+		{
+			*pDifficultyOut = iCalc - iBeforeDifficulty;
 		}
 	}
 	if (iCalc < 0)
@@ -9711,12 +9813,78 @@ int CvPlayer::maintenancePercentStack(int iKind) const
 	return (int)iPercentSum;
 }
 
-int64_t CvPlayer::getTotalMaintenance() const
+int64_t CvPlayer::sumCityBreakdowns(CityBreakdownSubject eSubject, CvCityBreakdown& kBreakdown) const
+{
+	// The cities the empire's receivers sum: a city in disorder contributes nothing (realizedAtEmpire).
+	int64_t aiTermSums[NUM_CITY_BREAKDOWN_TERMS] = {0};
+	int aiTermCounts[NUM_CITY_BREAKDOWN_TERMS] = {0};
+	std::map<const CvInfo*, int64_t> kSourceSums;
+	std::map<const CvInfo*, int> kSourceCounts;
+	int64_t iSourceTotal = 0;
+	int64_t iTotal = 0;
+	int64_t iParts = 0;
+	CvCityBreakdown kCityBreakdown;
+	foreach_(const CvCity* pLoopCity, cities())
+	{
+		if (pLoopCity->isDisorder())
+		{
+			continue;
+		}
+		iTotal += InfoValuation::cityBreakdown(*pLoopCity, eSubject, kCityBreakdown);
+		const std::vector<CityBreakdownLine>& kLines = kCityBreakdown.getLines();
+		for (size_t iLine = 0; iLine < kLines.size(); ++iLine)
+		{
+			const CityBreakdownLine& kLine = kLines[iLine];
+			if (kLine.role != CITY_BREAKDOWN_AMOUNT)
+			{
+				continue;
+			}
+			iParts += kLine.value;
+			// A city's sources and its "other" line add up to that part of its number, so they sum as one part.
+			if (kLine.term == CITY_BREAKDOWN_TERM_SOURCE || kLine.term == CITY_BREAKDOWN_TERM_OTHER)
+			{
+				iSourceTotal += kLine.value;
+				if (kLine.source != NULL)
+				{
+					kSourceSums[kLine.source] += kLine.value;
+					kSourceCounts[kLine.source] += kLine.count;
+				}
+			}
+			else
+			{
+				aiTermSums[kLine.term] += kLine.value;
+				// The slider share's count is the empire's slider percent, the same in every city.
+				aiTermCounts[kLine.term] = (kLine.term == CITY_BREAKDOWN_TERM_SLIDER_SHARE)
+					? kLine.count : aiTermCounts[kLine.term] + kLine.count;
+			}
+		}
+	}
+	for (int iTerm = 0; iTerm < NUM_CITY_BREAKDOWN_TERMS; ++iTerm)
+	{
+		kBreakdown.addAmount((CityBreakdownTerm)iTerm, aiTermSums[iTerm], aiTermCounts[iTerm]);
+	}
+	kBreakdown.addSourceLines(kSourceSums, CITY_BREAKDOWN_AMOUNT, iSourceTotal, &kSourceCounts);
+	kBreakdown.addAmount(CITY_BREAKDOWN_TERM_CITY_PERCENTS, iTotal - iParts);
+	return iTotal;
+}
+
+int64_t CvPlayer::getTotalMaintenance(CvCityBreakdown* pBreakdown) const
 {
 	// The empire's maintenance total is the Σ of its cities' REALIZED maintenance -- the one non-commerce
 	// receiver, and the reason the receiver rule is general rather than a commerce habit (economy.md).
-	return (int64_t)InfoValuation::realizedAtEmpire(*this,
-		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1)) / 100;
+	const int64_t iTotal = (int64_t)InfoValuation::realizedAtEmpire(*this,
+		CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1));
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->reset(CITY_BREAKDOWN_MAINTENANCE);
+		sumCityBreakdowns(CITY_BREAKDOWN_MAINTENANCE, *pBreakdown);
+		// The treasury moves in whole gold, so the expense is the Σ with its fraction dropped; that step is
+		// part of what the player pays and shows as its own line.
+		pBreakdown->addSubtotal(iTotal);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED, iTotal / 100 * 100 - iTotal);
+		pBreakdown->setTotal(iTotal / 100 * 100);
+	}
+	return iTotal / 100;
 }
 
 
@@ -24649,49 +24817,6 @@ int CvPlayer::getRevolutionFromCivics(RevolutionKind eKind) const
 	return iValue;
 }
 
-int CvPlayer::getScoreComponent(int iRawScore, int iInitial, int iMax, int iFactor, bool bExponential, bool bFinal, bool bVictory) const
-{
-	if (GC.getGame().getEstimateEndTurn() == 0)
-	{
-		return 0;
-	}
-
-	if (bFinal && bVictory)
-	{
-		float fTurnRatio = float(GC.getGame().getGameTurn()) / float(GC.getGame().getEstimateEndTurn());
-		if (bExponential && (iInitial != 0))
-		{
-			float fRatio = float(iMax) / float(iInitial);
-			iMax = iInitial * int(pow(fRatio, fTurnRatio));
-		}
-		else
-		{
-			iMax = iInitial + int((fTurnRatio * float(iMax - iInitial)));
-		}
-	}
-	int iScore;
-	int iFree = (GC.getSCORE_FREE_PERCENT() * iMax) / 100;
-	if ((iFree + iMax) != 0)
-	{
-		iScore = (iFactor * (iRawScore + iFree)) / (iFree + iMax);
-	}
-	else
-	{
-		iScore = iFactor;
-	}
-
-	if (bVictory)
-	{
-		iScore = ((100 + GC.getDefineINT("SCORE_VICTORY_PERCENT")) * iScore) / 100;
-	}
-
-	if (bFinal)
-	{
-		iScore = ((100 + GC.getDefineINT("SCORE_HANDICAP_PERCENT_OFFSET") + (GC.getGame().getHandicapType() * GC.getDefineINT("SCORE_HANDICAP_PERCENT_PER"))) * iScore) / 100;
-	}
-
-	return iScore;
-}
 
 
 void CvPlayer::doAdvancedEconomy()

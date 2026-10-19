@@ -403,6 +403,7 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 
 		// The EMPIRE-scope group reads -- the empire half of the game-object read role. Their city twins are the
 		// identically-named reads on CyCity; scope is the RECEIVER, so neither carries a selector.
+		.def("getFinanceRows", &CyPlayer::getFinanceRows, "list (int iPart)")
 		.def("getYields", &CyPlayer::getYields, "list ()")
 		.def("getCommerces", &CyPlayer::getCommerces, "list ()")
 		.def("getWellbeing", &CyPlayer::getWellbeing, "list ()")

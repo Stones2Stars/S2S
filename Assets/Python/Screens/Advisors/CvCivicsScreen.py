@@ -451,7 +451,7 @@ class CvCivicsScreen:
 
 				if TYPE == "CIVIC":
 					if CASE[0] != "TEXT":
-						self.tooltip.handle(screen, GTM.parseCivicInfo(ID, False, True, False), uFont=self.aFontList[4])
+						self.tooltip.handle(screen, GTM.parseCivicInfo(ID, False, True, False))
 
 					elif ID != self.iCivicDisplayed:
 						self.setCivicText(screen, ID)

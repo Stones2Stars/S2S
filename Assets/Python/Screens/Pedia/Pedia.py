@@ -1424,13 +1424,11 @@ class Pedia:
 	def welcomeMessage(self, screen, bCredit = ""):
 		if bCredit:
 			szText = "Created by Kristoffer E.H.-L. \n\t AKA: Toffer90"
-			uFont = self.aFontList[2]
 		else:
 			szText = TRNSLTR.getText("TXT_KEY_PEDIA_WELCOME_MESSAGE", ())
-			uFont = self.aFontList[4]
 		x = int(0.3 * self.xRes)
 		y = int(0.4 * self.yRes)
-		self.tooltip.handle(screen, szText, x, y, uFont)
+		self.tooltip.handle(screen, szText, x, y)
 
 	def handleInput(self, inputClass):
 		if self.bNotPedia: return

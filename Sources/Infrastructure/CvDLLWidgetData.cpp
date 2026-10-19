@@ -3,7 +3,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvGameSpeedScale.h"
+#include "UI/CvEntryText.h"         // amountText -- an amount as every hover shows it
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the civic's base limit x the world-size scale
 #include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
@@ -441,15 +441,7 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		break;
 
 	case WIDGET_HELP_FINANCE_DOMESTIC_TRADE:
-		parseFinanceDomesticTrade(widgetDataStruct, szBuffer);
-		break;
-
-	case WIDGET_HELP_FINANCE_FOREIGN_TRADE:
-		parseFinanceForeignTrade(widgetDataStruct, szBuffer);
-		break;
-
-	case WIDGET_HELP_FINANCE_SPECIALISTS:
-		parseFinanceSpecialistGold(widgetDataStruct, szBuffer);
+		parseFinanceTrade(widgetDataStruct, szBuffer);
 		break;
 
 	case WIDGET_HELP_FINANCE_NUM_UNITS:
@@ -596,16 +588,8 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseKillDealHelp(widgetDataStruct, szBuffer);
 		break;
 
-	case WIDGET_FOOD_MOD_HELP:
-		parseFoodModHelp(widgetDataStruct, szBuffer);
-		break;
-
 	case WIDGET_LEADERHEAD:
 		parseLeaderheadHelp(widgetDataStruct, szBuffer);
-		break;
-
-	case WIDGET_COMMERCE_MOD_HELP:
-		parseCommerceModHelp(widgetDataStruct, szBuffer);
 		break;
 
 	case WIDGET_TRADE_ROUTES:
@@ -647,6 +631,15 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 			}
 		}
 		break;
+	}
+
+	// The one hover (docs/reference/tooltip-look.md § THE ONE HOVER): the text goes to the Python box of the screen
+	// the mouse is in, and the game's own box is left empty; it keeps the text only when no screen took it. A
+	// general widget's hover is drawn by its screen and asks here every frame with nothing to say.
+	if (widgetDataStruct.m_eWidgetType != WIDGET_GENERAL && !szBuffer.isEmpty()
+		&& Cy::call<bool>(PYScreensModule, "showWidgetHover", Cy::Args() << szBuffer.getCString()))
+	{
+		szBuffer.clear();
 	}
 }
 
@@ -3040,10 +3033,8 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 												iTemporaryUnhappiness += ((iAngerPercent * (pLoopCity->getPopulation())) / GC.getPERCENT_ANGER_DIVISOR());
 												iTemporaryUnhappiness += pLoopCity->getEspionageHappinessCounter();
 
-												// The verdicts are ×100 native and both operands beside them are WHOLE counts, so the
-												// verdict reduces here rather than the counts being lifted -- this is a display read.
-												int iHappinessLevel = pLoopCity->netHappiness() / 100 + iTemporaryUnhappiness;
-												int iHealthLevel = pLoopCity->netHealth() / 100 + pLoopCity->getEspionageHealthCounter();
+												int iHappinessLevel = pLoopCity->netHappiness() + iTemporaryUnhappiness;
+												int iHealthLevel = pLoopCity->netHealth() + pLoopCity->getEspionageHealthCounter();
 												//Adjustments
 												iHealthLevel += iFeatureHealthAdjust;
 												//Adjustment for building
@@ -3508,7 +3499,7 @@ void CvDLLWidgetData::parseAngryCitizenHelp(CvWidgetDataStruct &widgetDataStruct
 		szBuffer.assign(gDLL->getText("TXT_KEY_MISC_ANGRY_CITIZEN"));
 		szBuffer.append(NEWLINE);
 
-		GAMETEXT.setAngerHelp(szBuffer, *pHeadSelectedCity);
+		GAMETEXT.setCityHoverHelp(szBuffer, *pHeadSelectedCity, CITY_BREAKDOWN_HAPPINESS);
 	}
 }
 
@@ -4961,79 +4952,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 
 	if (pHeadSelectedCity != NULL)
 	{
-		if (pHeadSelectedCity->isWeLoveTheKingDay())
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_WE_LOVE_KING_MAINT"));
-		}
-		else
-		{
-			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_MAINT_INFO"));
-			szBuffer.append(NEWLINE);
-
-			const int iMod = pHeadSelectedCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
-
-			int iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_DISTANCE);
-			if (iMaintenanceValue != 0)
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_MAINT_FLOAT", szMaint.GetCString()) + ((GET_PLAYER(pHeadSelectedCity->getOwner()).getNumGovernmentCenters() > 0) ? gDLL->getText("TXT_KEY_MISC_DISTANCE_FROM_PALACE") : gDLL->getText("TXT_KEY_MISC_NO_PALACE_PENALTY")));
-			}
-
-			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_NUM_CITIES);
-			if (iMaintenanceValue != 0)
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_CITIES_FLOAT", szMaint.GetCString()));
-			}
-
-			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_COLONY);
-			if (iMaintenanceValue != 0)
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_COLONY_MAINT_FLOAT", szMaint.GetCString()));
-			}
-
-			iMaintenanceValue = (int)pHeadSelectedCity->maintenanceOfKind(MAINTENANCE_CORPORATION);
-			if (iMaintenanceValue != 0)
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CORPORATION_MAINT_FLOAT", szMaint.GetCString()));
-			}
-
-			int64_t iBuildingFlat = 0;
-			int64_t iBuildingPercent = 0;
-			pHeadSelectedCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
-			iMaintenanceValue = getModifiedIntValue((int)iBuildingFlat, iMod);
-			if (iMaintenanceValue != 0)
-			{
-				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_BUILDING_MAINT_FLOAT", szMaint.GetCString()));
-			}
-
-			szBuffer.append(SEPARATOR);
-			int iTotal = (int)pHeadSelectedCity->getMaintenanceTimes100();
-
-			CvWString szMaint = CvWString::format(L"%d.%02d", iTotal/100, iTotal%100);
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_MAINT_FLOAT", szMaint.GetCString()));
-
-			// The SAME stack the components above were scaled by -- this line used to re-derive it a second time,
-			// in a different order, which is the scope-mismatch duplicate the calc map records.
-			iMaintenanceValue = iMod;
-			if (iMaintenanceValue != 0)
-			{
-				wchar_t szTempBuffer[1024];
-				swprintf(szTempBuffer, L" (%s%d%%)", ((iMaintenanceValue > 0) ? L"+" : L""), iMaintenanceValue);
-				szBuffer.append(szTempBuffer);
-			}
-
-		}
+		GAMETEXT.setCityHoverHelp(szBuffer, *pHeadSelectedCity, CITY_BREAKDOWN_MAINTENANCE);
 	}
 }
 
@@ -5043,11 +4962,7 @@ void CvDLLWidgetData::parseHealthHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
 	if (NULL != pHeadSelectedCity)
 	{
-		// ⛔ Held sources only -- the happiness hover's rule, and for the same reason (owner): a preview of what
-		// an UNBUILT building would contribute is not part of an account of what the city has.
-		GAMETEXT.setBadHealthHelp(szBuffer, *pHeadSelectedCity);
-		szBuffer.append(L"\n=======================\n");
-		GAMETEXT.setGoodHealthHelp(szBuffer, *pHeadSelectedCity);
+		GAMETEXT.setCityHoverHelp(szBuffer, *pHeadSelectedCity, CITY_BREAKDOWN_HEALTH);
 	}
 }
 
@@ -5065,12 +4980,12 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
 			{
-				int iCulturePercent = pHeadSelectedCity->plot()->calculateCulturePercent((PlayerTypes)iI, 1);
+				const int iCulturePercent = pHeadSelectedCity->plot()->calculateCulturePercent((PlayerTypes)iI, 2);
 
 				if (iCulturePercent > 0)
 				{
 					wchar_t szTempBuffer[1024];
-					swprintf(szTempBuffer, L"\n%.1f%% " SETCOLR L"%s" ENDCOLR, ((float)iCulturePercent)/10,
+					swprintf(szTempBuffer, L"\n%s%% " SETCOLR L"%s" ENDCOLR, amountText(iCulturePercent).GetCString(),
 						GET_PLAYER((PlayerTypes)iI).getPlayerTextColorR(),
 						GET_PLAYER((PlayerTypes)iI).getPlayerTextColorG(),
 						GET_PLAYER((PlayerTypes)iI).getPlayerTextColorB(),
@@ -5081,30 +4996,7 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 			}
 		}
 
-		PlayerTypes eCulturalOwner = pHeadSelectedCity->plot()->calculateCulturalOwner();
-
-		if (eCulturalOwner != NO_PLAYER)
-		{
-			if (GET_PLAYER(eCulturalOwner).getTeam() != pHeadSelectedCity->getTeam())
-			{
-				const int iNetRevoltRisk100 = pHeadSelectedCity->netRevoltRisk(eCulturalOwner);
-				const int iOriginal100 = pHeadSelectedCity->baseRevoltRisk(eCulturalOwner);
-				const int iSpeedAdjustment = GC.getREVOLT_TEST_PROB() * 100 /
-					CvGameSpeedScale::speedPercent();
-				const int iGarrison = pHeadSelectedCity->unitRevoltRiskModifier(eCulturalOwner);
-
-				if (iNetRevoltRisk100 > 0)
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_MISC_CHANCE_OF_REVOLT",
-						CvWString::format(L"" SETCOLR L"%.2f%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), ((float)iNetRevoltRisk100*iSpeedAdjustment)/10000).GetCString(),
-						CvWString::format(L"" SETCOLR L"%.1f%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), (float)iOriginal100/100).GetCString(),
-						CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iSpeedAdjustment).GetCString(),
-						CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iGarrison).GetCString()
-					));
-				}
-			}
-		}
+		GAMETEXT.setCityRevoltHelp(szBuffer, *pHeadSelectedCity);
 	}
 }
 
@@ -5144,41 +5036,7 @@ void CvDLLWidgetData::parseCultureHelp(CvWidgetDataStruct &widgetDataStruct, CvW
 	{
 		return;
 	}
-	const int iThreshold = pHeadSelectedCity->getCultureThreshold();
-	const int64_t iCultureTimes100 = pHeadSelectedCity->getCultureTimes100(pHeadSelectedCity->getOwner());
-
-	if (iThreshold > 0)
-	{
-		if (iCultureTimes100%100 == 0)
-		{
-			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CULTURE", iCultureTimes100/100, iThreshold));
-		}
-		else
-		{
-			CvWString szCulture = CvWString::format(L"%d.%02d", iCultureTimes100/100, iCultureTimes100%100);
-			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CULTURE_FLOAT", szCulture.GetCString(), iThreshold));
-		}
-		int aiCityCommerces[NUM_COMMERCE_TYPES];
-		pHeadSelectedCity->getCommerces(aiCityCommerces);
-		int iCultureRateTimes100 = aiCityCommerces[COMMERCE_CULTURE];
-		if (iCultureRateTimes100 > 0)
-		{
-			const int64_t iCultureLeftTimes100 = 100 * iThreshold - iCultureTimes100;
-
-			if (iCultureLeftTimes100 > 0)
-			{
-				// TURNS, so it is bounded and reduces here -- the culture it is derived from is not.
-				const int iTurnsLeft = static_cast<int>((iCultureLeftTimes100 + iCultureRateTimes100 - 1) / iCultureRateTimes100);
-
-				szBuffer.append(L' ');
-				szBuffer.append(gDLL->getText("INTERFACE_CITY_TURNS", std::max(1, iTurnsLeft)));
-			}
-		}
-	}
-	else szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CULTURE_MAX", iCultureTimes100/100));
-
-	szBuffer.append(L"\n=======================\n");
-	GAMETEXT.setCommerceHelp(szBuffer, *pHeadSelectedCity, COMMERCE_CULTURE);
+	GAMETEXT.setCityHoverHelp(szBuffer, *pHeadSelectedCity, CITY_BREAKDOWN_CULTURE);
 
 }
 
@@ -5188,7 +5046,7 @@ void CvDLLWidgetData::parseGreatPeopleHelp(CvWidgetDataStruct &widgetDataStruct,
 	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
 	if (NULL != pHeadSelectedCity)
 	{
-		GAMETEXT.parseGreatPeopleHelp(szBuffer, *pHeadSelectedCity);
+		GAMETEXT.setCityHoverHelp(szBuffer, *pHeadSelectedCity, CITY_BREAKDOWN_GREAT_PEOPLE);
 	}
 }
 
@@ -5562,37 +5420,11 @@ void CvDLLWidgetData::parseFoundCorporationHelp(CvWidgetDataStruct &widgetDataSt
 }
 
 // BUG - Finance Advisor - start
-void CvDLLWidgetData::parseFinanceDomesticTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+void CvDLLWidgetData::parseFinanceTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
 {
-//	szBuffer = "The Total Commerce from Domestic Trade Routes";
-	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE"));
-	szBuffer.append(NEWLINE);
-	if (widgetDataStruct.m_iData2 > 0)
-	{
-		GAMETEXT.buildDomesticTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
-	}
+	GAMETEXT.buildTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, NO_PLAYER, true, true, true);
 }
 
-void CvDLLWidgetData::parseFinanceForeignTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
-{
-//	szBuffer = "The Total Commerce from Foreign Trade Routes";
-	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE"));
-	szBuffer.append(NEWLINE);
-	if (widgetDataStruct.m_iData2 > 0)
-	{
-		GAMETEXT.buildForeignTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
-	}
-}
-
-void CvDLLWidgetData::parseFinanceSpecialistGold(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
-{
-//	szBuffer = "The Total Commerce from Foreign Trade Routes";
-	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS"));
-	if (widgetDataStruct.m_iData2 > 0)
-	{
-		GAMETEXT.buildFinanceSpecialistGoldString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
-	}
-}
 // BUG - Finance Advisor - end
 
 void CvDLLWidgetData::parseFinanceNumUnits(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
@@ -6027,28 +5859,9 @@ void CvDLLWidgetData::doRefreshMilitaryAdvisor(CvWidgetDataStruct &widgetDataStr
 }
 
 
-void CvDLLWidgetData::parseFoodModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
-{
-	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
-	if (NULL != pCity)
-	{
-		GAMETEXT.setFoodHelp(szBuffer, *pCity);
-	}
-}
-
-
 void CvDLLWidgetData::parseLeaderheadHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	GAMETEXT.parseLeaderHeadHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
-}
-
-void CvDLLWidgetData::parseCommerceModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
-{
-	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
-	if (NULL != pCity)
-	{
-		GAMETEXT.setCommerceHelp(szBuffer, *pCity, (CommerceTypes)widgetDataStruct.m_iData1);
-	}
 }
 
 void CvDLLWidgetData::parseScoreHelp(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)

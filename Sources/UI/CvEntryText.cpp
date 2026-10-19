@@ -20,6 +20,7 @@
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
 #include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide
+#include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the limit a CITY_LIMIT scaler counts against
 #include "CvClassificationRegistry.h"   // keyOf -- a hiding method's skill key, for its name
 #include "CvPropertyInfo.h"             // getChar -- a property's font glyph
 #include "Defines/CvGlobals.h"
@@ -258,25 +259,34 @@ namespace
 			&& !MMKernel::unitIsPercentSide(entry.unit);
 	}
 
-	// The entry's magnitude as rendered: absolute, with a normalised `per` quantum folded in. A vision amount
-	// reads in plots of open ground (vision.md §1a: VISION_PLOT to the plot), so "+100" sight is "+1".
-	int etx_absMagnitude(const CvModEntry& entry)
+	///<summary>The magnitude of iValue as the entry renders it: absolute, with a normalised `per` quantum folded
+	/// in. A vision amount reads in plots of open ground (vision.md §1a: VISION_PLOT to the plot), so "+100" sight is
+	/// "+1". iValue is the entry's authored value (bAuthored), or the value the engine resolved it to at one object;
+	/// only the authored value carries a `per` quantum to fold in, since a resolved value has its scaling applied.</summary>
+	int64_t etx_absMagnitudeOf(const CvModEntry& entry, int64_t iValue, bool bAuthored)
 	{
-		int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
+		int64_t iAbsValue = (iValue < 0) ? -iValue : iValue;
 		if (entry.family == MODFAM_VISION && !MMKernel::unitIsPercentSide(entry.unit))
 		{
 			iAbsValue /= VISION_PLOT;
 		}
-		return etx_perNormalised(entry) ? iAbsValue / 100 : iAbsValue;
+		return (bAuthored && etx_perNormalised(entry)) ? iAbsValue / 100 : iAbsValue;
 	}
 
-	// The signed magnitude + unit marker ("+2", "-25%", "x1.5"). /100 happens here.
-	CvWString etx_signedMagnitude(const CvModEntry& entry)
+	///<summary>The entry's own authored magnitude as it renders (etx_absMagnitudeOf).</summary>
+	int etx_absMagnitude(const CvModEntry& entry)
 	{
-		const int iAbsValue = etx_absMagnitude(entry);
-		const wchar_t* szSign = (entry.value < 0) ? L"-" : L"+";
+		return (int)etx_absMagnitudeOf(entry, entry.value, true);
+	}
+
+	///<summary>The signed magnitude of iValue with the entry's unit marker ("+2", "-25%", "x1.5"); iValue and
+	/// bAuthored as etx_absMagnitudeOf.</summary>
+	CvWString etx_signedMagnitudeOf(const CvModEntry& entry, int64_t iValue, bool bAuthored)
+	{
+		const int64_t iAbsValue = etx_absMagnitudeOf(entry, iValue, bAuthored);
+		const wchar_t* szSign = (iValue < 0) ? L"-" : L"+";
 		const CvWString szNumber = MMKernel::unitIsPercentSide(entry.unit)
-			? CvWString::format(L"%d", iAbsValue)
+			? CvWString::format(L"%I64d", iAbsValue)
 			: amountText(iAbsValue);
 		switch (entry.unit)
 		{
@@ -285,9 +295,9 @@ namespace
 		case CASC_UNIT_RAW_PERCENT:
 			return CvWString(szSign) + szNumber + L"% (raw)";
 		case CASC_UNIT_MULTIPLIER:
-			return CvWString(L"x") + ((entry.value < 0) ? CvWString(L"-") : CvWString()) + szNumber;
+			return CvWString(L"x") + ((iValue < 0) ? CvWString(L"-") : CvWString()) + szNumber;
 		case CASC_UNIT_POST_MULTIPLIER:
-			return CvWString(L"x") + ((entry.value < 0) ? CvWString(L"-") : CvWString()) + szNumber + L" (post)";
+			return CvWString(L"x") + ((iValue < 0) ? CvWString(L"-") : CvWString()) + szNumber + L" (post)";
 		case CASC_UNIT_PER_POPULATION:
 			return CvWString(szSign) + szNumber + L" per population";
 		case CASC_UNIT_PER_SPECIALIST:
@@ -299,6 +309,12 @@ namespace
 		default:
 			return CvWString(szSign) + szNumber;
 		}
+	}
+
+	///<summary>The entry's own authored magnitude, signed, with its unit marker (etx_signedMagnitudeOf).</summary>
+	CvWString etx_signedMagnitude(const CvModEntry& entry)
+	{
+		return etx_signedMagnitudeOf(entry, entry.value, true);
 	}
 
 	// The §3.7 per-scaler phrase ("per Specialist", "per 5 Population", "per City over the city limit").
@@ -326,11 +342,15 @@ namespace
 		}
 		if (entry.hasAbove)
 		{
-			// the §3.7 over-threshold scaler (ruling 26): "over the city limit" for the token form (the
-			// world-size scaling makes the resolved base alone misleading), the literal spelled directly
+			// the §3.7 over-threshold scaler (ruling 26): the city limit is named with the number the engine
+			// counts against -- the base scaled for the world size -- so the cost and the limit read as one line;
+			// the literal spelled directly
 			if (entry.perAboveToken == "CITY_LIMIT")
 			{
-				szPhrase += L" over the city limit";
+				const int iCityLimit = InfoValuation::resolvedCityLimit(entry.perAbove);
+				szPhrase += (iCityLimit > 0)
+					? CvWString::format(L" over the city limit of %d", iCityLimit)
+					: CvWString(L" over the city limit");
 			}
 			else if (!entry.perAboveToken.empty())
 			{
@@ -372,6 +392,116 @@ namespace
 		return szPhrase;
 	}
 
+	///<summary>True when the condition is one unit-tag test and nothing else.</summary>
+	bool etx_isUnitTagOnly(const CvCondition* condition)
+	{
+		return condition != NULL && condition->kind == CASC_COND_PREDICATE && condition->predKind == CASC_PRED_IS_TAG;
+	}
+
+	///<summary>The reach phrase of an entry above the city whose whole `enabled` condition is one plain city check
+	/// or its plain negation: it applies in exactly the cities that pass it, so it reads as where it applies ("+2%
+	/// research in your capital") rather than as a reach and a gate that seem to contradict each other ("empire-wide
+	/// -- while in your capital"). NULL when the condition is anything else.</summary>
+	const char* etx_cityReachKey(const CvModEntry& entry)
+	{
+		if ((entry.scope != CASC_SCOPE_EMPIRE && entry.scope != CASC_SCOPE_TEAM) || entry.enabled == NULL || entry.disabled != NULL)
+		{
+			return NULL;
+		}
+		const CvCondition* pCondition = entry.enabled;
+		bool bNegated = false;
+		if (pCondition->kind == CASC_COND_GROUP && pCondition->all.empty() && pCondition->anyOf.empty()
+			&& pCondition->noneOf.size() == 1 && pCondition->enabled == NULL && pCondition->disabled == NULL)
+		{
+			pCondition = pCondition->noneOf[0];
+			bNegated = true;
+		}
+		if (pCondition == NULL || pCondition->kind != CASC_COND_PREDICATE || !pCondition->param.empty() || pCondition->min >= 0)
+		{
+			return NULL;
+		}
+		switch (pCondition->predKind)
+		{
+		case CASC_PRED_IS_CAPITAL:
+			return bNegated ? "TXT_KEY_CONDITION_REACH_NOT_IS_CAPITAL" : "TXT_KEY_CONDITION_REACH_IS_CAPITAL";
+		case CASC_PRED_IS_HOME_AREA:
+			return bNegated ? "TXT_KEY_CONDITION_REACH_NOT_IS_HOME_AREA" : "TXT_KEY_CONDITION_REACH_IS_HOME_AREA";
+		case CASC_PRED_STATE_RELIGION_IN_CITY:
+			return bNegated ? "TXT_KEY_CONDITION_REACH_NOT_STATE_RELIGION_IN_CITY" : "TXT_KEY_CONDITION_REACH_STATE_RELIGION_IN_CITY";
+		case CASC_PRED_IS_GOVERNMENT_CENTER:        return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_IS_GOVERNMENT_CENTER";
+		case CASC_PRED_HAS_POWER:                   return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_HAS_POWER";
+		case CASC_PRED_HAS_COAST:                   return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_HAS_COAST";
+		case CASC_PRED_HAS_RIVER:                   return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_HAS_RIVER";
+		case CASC_PRED_HAS_FRESHWATER:              return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_HAS_FRESHWATER";
+		case CASC_PRED_IS_HOLY_CITY:                return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_IS_HOLY_CITY";
+		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_IS_STATE_RELIGION_HOLY_CITY";
+		case CASC_PRED_IS_HEADQUARTERS:             return bNegated ? NULL : "TXT_KEY_CONDITION_REACH_IS_HEADQUARTERS";
+		default:                                    return NULL;
+		}
+	}
+
+	///<summary>The player-facing phrase of a bare predicate; NULL for one with no phrase of its own.</summary>
+	const char* etx_predicateKey(CvCascPredKind ePredKind)
+	{
+		switch (ePredKind)
+		{
+		case CASC_PRED_IS_WATER:                    return "TXT_KEY_CONDITION_IS_WATER";
+		case CASC_PRED_IS_LAND:                     return "TXT_KEY_CONDITION_IS_LAND";
+		case CASC_PRED_IS_FLATLANDS:                return "TXT_KEY_CONDITION_IS_FLATLANDS";
+		case CASC_PRED_IS_AIR:                      return "TXT_KEY_CONDITION_IS_AIR";
+		case CASC_PRED_HAS_PEAK:                    return "TXT_KEY_CONDITION_HAS_PEAK";
+		case CASC_PRED_HAS_HILLS:                   return "TXT_KEY_CONDITION_HAS_HILLS";
+		case CASC_PRED_HAS_COAST:                   return "TXT_KEY_CONDITION_HAS_COAST";
+		case CASC_PRED_HAS_RIVER:                   return "TXT_KEY_CONDITION_HAS_RIVER";
+		case CASC_PRED_HAS_FRESHWATER:              return "TXT_KEY_CONDITION_HAS_FRESHWATER";
+		case CASC_PRED_HAS_IRRIGATION:              return "TXT_KEY_CONDITION_HAS_IRRIGATION";
+		case CASC_PRED_HAS_FEATURE:                 return "TXT_KEY_CONDITION_HAS_FEATURE";
+		case CASC_PRED_HAS_LANDMARK:                return "TXT_KEY_CONDITION_HAS_LANDMARK";
+		case CASC_PRED_VICINITY:                    return "TXT_KEY_CONDITION_VICINITY";
+		case CASC_PRED_WORKABLE:                    return "TXT_KEY_CONDITION_WORKABLE";
+		case CASC_PRED_IS_WORKED:                   return "TXT_KEY_CONDITION_IS_WORKED";
+		case CASC_PRED_NO_NUKES:                    return "TXT_KEY_CONDITION_NO_NUKES";
+		case CASC_PRED_IS_CAPITAL:                  return "TXT_KEY_CONDITION_IS_CAPITAL";
+		case CASC_PRED_IS_GOVERNMENT_CENTER:        return "TXT_KEY_CONDITION_IS_GOVERNMENT_CENTER";
+		case CASC_PRED_IS_HOME_AREA:                return "TXT_KEY_CONDITION_IS_HOME_AREA";
+		case CASC_PRED_HAS_POWER:                   return "TXT_KEY_CONDITION_HAS_POWER";
+		case CASC_PRED_HAS_STATE_RELIGION:          return "TXT_KEY_CONDITION_HAS_STATE_RELIGION";
+		case CASC_PRED_STATE_RELIGION_IN_CITY:      return "TXT_KEY_CONDITION_STATE_RELIGION_IN_CITY";
+		case CASC_PRED_IS_GOLDEN_AGE:               return "TXT_KEY_CONDITION_IS_GOLDEN_AGE";
+		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: return "TXT_KEY_CONDITION_IS_STATE_RELIGION_HOLY_CITY";
+		case CASC_PRED_IS_ANARCHY:                  return "TXT_KEY_CONDITION_IS_ANARCHY";
+		case CASC_PRED_IS_OWNED:                    return "TXT_KEY_CONDITION_IS_OWNED";
+		case CASC_PRED_IS_REBEL:                    return "TXT_KEY_CONDITION_IS_REBEL";
+		case CASC_PRED_IS_STATE_RELIGION:           return "TXT_KEY_CONDITION_IS_STATE_RELIGION";
+		case CASC_PRED_IS_HOLY_CITY:                return "TXT_KEY_CONDITION_IS_HOLY_CITY";
+		case CASC_PRED_IS_HEADQUARTERS:             return "TXT_KEY_CONDITION_IS_HEADQUARTERS";
+		case CASC_PRED_CAN_FOUND:                   return "TXT_KEY_CONDITION_CAN_FOUND";
+		case CASC_PRED_IS_FOREIGN:                  return "TXT_KEY_CONDITION_IS_FOREIGN";
+		case CASC_PRED_SHARES_CIVIC:                return "TXT_KEY_CONDITION_SHARES_CIVIC";
+		default:                                    return NULL;
+		}
+	}
+
+	///<summary>The player-facing phrase of a predicate that names a type ("with Coal on the tile"); NULL for one
+	/// with no phrase of its own.</summary>
+	const char* etx_predicateTypeKey(CvCascPredKind ePredKind)
+	{
+		switch (ePredKind)
+		{
+		case CASC_PRED_HAS_FEATURE:     return "TXT_KEY_CONDITION_HAS_FEATURE_TYPE";
+		case CASC_PRED_HAS_TERRAIN:     return "TXT_KEY_CONDITION_HAS_TERRAIN_TYPE";
+		case CASC_PRED_HAS_IMPROVEMENT: return "TXT_KEY_CONDITION_HAS_IMPROVEMENT_TYPE";
+		case CASC_PRED_HAS_BONUS:       return "TXT_KEY_CONDITION_HAS_BONUS_TYPE";
+		case CASC_PRED_HAS_RELIGION:    return "TXT_KEY_CONDITION_HAS_RELIGION_TYPE";
+		case CASC_PRED_STATE_RELIGION:  return "TXT_KEY_CONDITION_STATE_RELIGION_TYPE";
+		case CASC_PRED_IS_HOLY_CITY:    return "TXT_KEY_CONDITION_IS_HOLY_CITY_TYPE";
+		case CASC_PRED_HAS_CORPORATION: return "TXT_KEY_CONDITION_HAS_CORPORATION_TYPE";
+		case CASC_PRED_IS_HEADQUARTERS: return "TXT_KEY_CONDITION_IS_HEADQUARTERS_TYPE";
+		case CASC_PRED_CIVIC_CATEGORY:  return "TXT_KEY_CONDITION_CIVIC_CATEGORY_TYPE";
+		default:                        return NULL;
+		}
+	}
+
 	CvWString etx_predicateText(const CvCondition& condition)
 	{
 		switch (condition.predKind)
@@ -396,22 +526,37 @@ namespace
 			{
 				szSuffix = szSuffix.substr(4);
 			}
-			return CvWString(L"is ") + etx_prettyToken(szSuffix);
+			return gDLL->getText("TXT_KEY_CONDITION_UNIT_TAG", etx_prettyToken(szSuffix).GetCString());
 		}
+		case CASC_PRED_HAS_COAST:
+			if (condition.min >= 0)
+			{
+				return gDLL->getText("TXT_KEY_CONDITION_HAS_COAST_MIN_AREA", condition.min);
+			}
+			break;
+		case CASC_PRED_NATURE_YIELD:
+			if (condition.id >= 0 && condition.id < NUM_YIELD_TYPES)
+			{
+				const CvWString szYieldIcon = CvWString::format(L"%c", GC.getYieldInfo((YieldTypes)condition.id).getChar());
+				return gDLL->getText("TXT_KEY_CONDITION_NATURE_YIELD", condition.min, szYieldIcon.GetCString());
+			}
+			break;
 		default:
 			break;
 		}
-		const char* szSpelling = cascadeSpellPredKind(condition.predKind);
-		CvWString szText = (szSpelling[0] != '\0') ? CvWString(szSpelling) : CvWString(L"?");
-		if (!condition.param.empty())
+		// A predicate reads as the phrase a player would say ("in your capital"), never as its JSON token; a
+		// parameterized one names its type.
+		const char* szKey = condition.param.empty() ? etx_predicateKey(condition.predKind) : etx_predicateTypeKey(condition.predKind);
+		if (szKey == NULL)
 		{
-			szText += CvWString(L" ") + etx_infoNameForType(condition.param, condition.id);
+			const char* szSpelling = cascadeSpellPredKind(condition.predKind);
+			return (szSpelling[0] != '\0') ? CvWString(szSpelling) : CvWString(L"?");
 		}
-		if (condition.predKind == CASC_PRED_HAS_COAST && condition.min >= 0)
+		if (condition.param.empty())
 		{
-			szText += CvWString::format(L" (area %d+)", condition.min);
+			return gDLL->getText(szKey);
 		}
-		return szText;
+		return gDLL->getText(szKey, etx_infoNameForType(condition.param, condition.id).GetCString());
 	}
 
 	bool etx_isGameOptionAtom(const CvCondition& condition)
@@ -905,7 +1050,27 @@ static bool etx_isBareMentionOf(const CvCondition* pCondition, EnEdgeBucket eSub
 	return etx_isBareMentionOf(pCondition->all[0], eSubjectBucket, iSubjectId);
 }
 
+namespace
+{
+	///<summary>The one line body behind entryDetailLine and entryResolvedLine: bAuthored says iValue is the
+	/// entry's own authored value (so its `per` clause still applies) rather than what the engine resolved it
+	/// to.</summary>
+	CvWString etx_detailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, int iSubjectId, bool bAuthored, int64_t iValue);
+}
+
 CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, int iSubjectId)
+{
+	return etx_detailLine(entry, eSubjectBucket, iSubjectId, true, entry.value);
+}
+
+CvWString entryResolvedLine(const CvModEntry& entry, int64_t iResolvedValue)
+{
+	return etx_detailLine(entry, NO_EDGEB, -1, false, iResolvedValue);
+}
+
+namespace
+{
+CvWString etx_detailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, int iSubjectId, bool bAuthored, int64_t iValue)
 {
 	CvWString szLine;
 
@@ -915,7 +1080,7 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 	                         && entry.unit == CASC_UNIT_FLAT && entry.kind == 0;
 	if (bWellbeingIcon)
 	{
-		const bool bGood = entry.value >= 0;
+		const bool bGood = iValue >= 0;
 		int iSymbol;
 		if (entry.family == MODFAM_HAPPINESS)
 		{
@@ -925,7 +1090,7 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 		{
 			iSymbol = gDLL->getSymbolID(bGood ? HEALTHY_CHAR : UNHEALTHY_CHAR);
 		}
-		szLine = CvWString(L"+") + amountText(etx_absMagnitude(entry)) + CvWString::format(L"%c", iSymbol);
+		szLine = CvWString(L"+") + amountText(etx_absMagnitudeOf(entry, iValue, bAuthored)) + CvWString::format(L"%c", iSymbol);
 	}
 	else if (entryIsMembershipFlag(entry))
 	{
@@ -937,19 +1102,19 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 	{
 		// a unit's own strength and moves render as the stat glyphs, the way the unit bar shows them ("+3<strength>")
 		const int iSymbol = gDLL->getSymbolID((entry.family == MODFAM_STRENGTH) ? STRENGTH_CHAR : MOVES_CHAR);
-		szLine = etx_signedMagnitude(entry) + CvWString::format(L"%c", iSymbol);
+		szLine = etx_signedMagnitudeOf(entry, iValue, bAuthored) + CvWString::format(L"%c", iSymbol);
 	}
 	else if (entry.family == MODFAM_PROPERTY && entry.propertyFk >= 0 && entry.unit == CASC_UNIT_FLAT
 	      && GC.getPropertyInfo((PropertyTypes)entry.propertyFk).getChar() > 0)
 	{
 		// a property with a font glyph renders as it, the way the city bar shows crime or disease ("-4<crime>");
 		// the glyph slot is 0 inside the load window, where the name stays (see etx_channelLabel)
-		szLine = etx_signedMagnitude(entry)
+		szLine = etx_signedMagnitudeOf(entry, iValue, bAuthored)
 			+ CvWString::format(L"%c", GC.getPropertyInfo((PropertyTypes)entry.propertyFk).getChar());
 	}
 	else
 	{
-		szLine = etx_signedMagnitude(entry) + L" " + etx_entryName(entry);
+		szLine = etx_signedMagnitudeOf(entry, iValue, bAuthored) + L" " + etx_entryName(entry);
 	}
 
 	// the deposit's target: a named-entity key renders its resolved name; a plural object-target its token.
@@ -957,6 +1122,7 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 	// so it is named before the target ("+100% combat flanking for Siege"); a plain container like `buildings`
 	// only says the key is a building, which the name already does.
 	bool bPluralTarget = false;
+	const char* szReachKey = etx_cityReachKey(entry);
 	if (entryIsMembershipFlag(entry))
 	{
 		// the heading above already named the container and the target
@@ -972,16 +1138,24 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 	else if (entry.targetSeg >= 0)
 	{
 		bPluralTarget = true;
-		szLine += CvWString(L" on ") + CvWString(modSegmentSpell(entry.targetSeg));
+		// "on cities" is the reach the city-check phrase below already states ("in your capital")
+		if (szReachKey == NULL || entry.targetSeg != modSegmentLookup("cities"))
+		{
+			szLine += CvWString(L" on ") + CvWString(modSegmentSpell(entry.targetSeg));
+		}
 	}
 
+	if (szReachKey != NULL)
+	{
+		szLine += CvWString(L" ") + gDLL->getText(szReachKey);
+	}
 	// The scope, where non-obvious (city is the default containing scope).
 	// ⛔ A PLURAL TARGET ALREADY STATES THE REACH, so the bare scope word is NOT appended beside it (json.md
 	// §3.3: the scope is the REACH and the plural target is "all objects of that kind IN that scope" -- the two
 	// are one statement, never two). Printing both turns a per-object deposit into a claim about the whole
 	// scope: a specialist's `{y}.empire.cities.flat` read "on cities, empire-wide", which describes an
 	// empire-wide lump when the deposit actually lands in the ONE city holding that specialist.
-	if (!bPluralTarget)
+	else if (!bPluralTarget)
 	{
 		const wchar_t* szScopePhrase = etx_scopePhrase(entry.scope);
 		if (szScopePhrase[0] != L'\0')
@@ -990,7 +1164,7 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 		}
 	}
 
-	if (entry.hasPer)
+	if (entry.hasPer && bAuthored)
 	{
 		szLine += CvWString(L" ") + etx_perPhrase(entry);
 	}
@@ -1002,15 +1176,17 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 			szLine += CvWString(L" -- ") + szRank;
 		}
 	}
-	const CvWString szEnabled = entryConditionText(entry.enabled);
+	// A condition that only names the kind of unit reads "for Military units" on its own; "while" belongs to a
+	// state that holds or does not ("while in your capital").
+	const CvWString szEnabled = (szReachKey != NULL) ? CvWString() : entryConditionText(entry.enabled);
 	if (!szEnabled.empty() && !etx_isBareMentionOf(entry.enabled, eSubjectBucket, iSubjectId))
 	{
-		szLine += CvWString(L" -- while ") + szEnabled;
+		szLine += (etx_isUnitTagOnly(entry.enabled) ? CvWString(L" -- ") : CvWString(L" -- while ")) + szEnabled;
 	}
 	const CvWString szDisabled = entryConditionText(entry.disabled);
 	if (!szDisabled.empty())
 	{
-		szLine += CvWString(L" -- unless ") + szDisabled;
+		szLine += (etx_isUnitTagOnly(entry.disabled) ? CvWString(L" -- except ") : CvWString(L" -- unless ")) + szDisabled;
 	}
 	if (entry.unitQual != NULL)
 	{
@@ -1025,4 +1201,5 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 		szLine += L" [AI only]";
 	}
 	return szLine;
+}
 }

@@ -186,6 +186,16 @@ public:
 
 	void updateCulture(bool bBumpUnits, bool bUpdatePlotGroups);
 	void checkCityRevolt();
+	///<summary>The player this plot's city can revolt to this turn: its cultural owner, when the city is not
+	/// occupied, that player is on another team and adds more culture here this turn than the owner. NO_PLAYER when
+	/// no revolt can happen this turn.</summary>
+	PlayerTypes getCityRevoltAttacker() const;
+	///<summary>The percent chance the revolt test runs in a turn: REVOLT_TEST_PROB for the game speed, at least 1.</summary>
+	static int getCityRevoltTestPercent();
+	///<summary>The chance, in hundredths of a percent, that this plot's city revolts this turn: the test chance
+	/// times the city's revolt risk against the attacker, or the test chance alone for an NPC's city. 0 when no
+	/// revolt can happen this turn.</summary>
+	int getCityRevoltChance() const;
 	void checkFortRevolt();
 
 	void updateFog(const bool bApplyDecay = false);

@@ -483,6 +483,9 @@ class WBPlotScreen:
 		sText = "<font=3>" + sColor + INFO.getDescription("TERRAIN_", iTerrain) + "</font></color>"
 		screen.setTableText("WBPlotType", 0, 3, sText, INFO.getButton("TERRAIN_", iTerrain), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBPlotScreen", CvScreenEnums.WB_PLOT)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBPlotScreen", CvScreenEnums.WB_PLOT)
 		global bAdd

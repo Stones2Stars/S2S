@@ -94,6 +94,15 @@ enum CvCascPredKind
 	CASC_PRED_IS_TAG,
 	// outcome gate: the unit's owner may found a city on the plot (CvPlayer::canFound)
 	CASC_PRED_CAN_FOUND,
+	///<summary>The city is on its owner's capital's area -- the home-continent test (json §3.5); "other areas" is
+	/// its negation. Re-resolved on the capital facts, since moving the capital moves the home area.</summary>
+	CASC_PRED_IS_HOME_AREA,
+	///<summary>Trade route (json §3.5), evaluated against the route's partner (CvCascadeEvalCtx::routePartner):
+	/// the partner belongs to another team.</summary>
+	CASC_PRED_IS_FOREIGN,
+	///<summary>Trade route (json §3.5), evaluated against the route's partner: the partner's owner runs the
+	/// deposit's source civic (a source-slot predicate).</summary>
+	CASC_PRED_SHARES_CIVIC,
 
 	NUM_CASC_PRED_KINDS
 };

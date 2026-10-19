@@ -156,6 +156,9 @@ class CvTopCivs:
 
 	#####################################################################################################################################
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "CvTopCivs", self.screenId)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("CvTopCivs", self.screenId)
 

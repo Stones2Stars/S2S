@@ -112,6 +112,11 @@ two surfaces.
      against another, which no amount of care prevents once they are two implementations
      ([the DRY single-implementation law](03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). It is also why the resolved DELTA is
      the right return: it is simultaneously what an AI weight multiplies and what a tooltip line prints.
+     ⚖ The city screen's building hover asks a different question, *"what will this city make once it is
+     built?"*, and answers it with the realized what-if (`CvCity::getBuildingRateChanges` through
+     `InfoValuation::realizedAtCityWith`: the same deposits, put through the city's whole stack, less what the
+     building retires). The AI weighs the deltas, not that realized change: its weights already multiply a
+     percent by the city's rate, so feeding it the realized change would count the city's rate twice.
    - **⛔ A "HOW VALUABLE IS THIS YIELD" WEIGHT IS ASKED AT MOST ONCE PER YIELD, AT THE START OF A doTurn
 .** *"Those 'how valuable is this yield' questions is a question that at most should be asked once
      per yield at start of a doTurn, at absolute most."* This is the CADENCE half of the protocol, and it is a

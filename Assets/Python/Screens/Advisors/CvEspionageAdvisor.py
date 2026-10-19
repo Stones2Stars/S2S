@@ -34,6 +34,9 @@ class CvEspionageAdvisor:
 	def redraw(self, screen):
 		self.TheScreen.redraw(screen)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("EspionageAdvisor", CvScreenEnums.ESPIONAGE_ADVISOR)
+
 	def handleInput(self, inputClass):
 		self.TheScreen.handleInput(inputClass)
 

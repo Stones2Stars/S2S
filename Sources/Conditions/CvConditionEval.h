@@ -128,10 +128,14 @@ struct CvCascadeEvalCtx
 	// and {CIVIC_CATEGORY:X} then answers FALSE -- resolving it against whichever civic a walk reached last
 	// would be worse than declining (contexts.md § THE SOURCE SLOTS).
 	int civic;
+	///<summary>The TRADE ROUTE's partner, as its owner's empire context: set on a local copy by the read that
+	/// prices one route (InfoValuation::routeGatedTradeModifier) and NULL everywhere else, where IS_FOREIGN and
+	/// SHARES_CIVIC answer FALSE -- with no route in hand there is no partner to ask about.</summary>
+	const EmpireContext* routePartner;
 	// The AS-IF-HELD hypothetical (above) -- NULL on every ordinary evaluation, so the normal path pays one
 	// null test. Set ONLY by a caller asking a what-if, and never stored anywhere.
 	const CvCascadeHypothetical* hypothetical;
-	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), sourceBuilding(-1), civic(-1), hypothetical(NULL) {}
+	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), sourceBuilding(-1), civic(-1), routePartner(NULL), hypothetical(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.

@@ -114,6 +114,9 @@ class EventTriggerScreen:
 		if self.tooltip.bLockedTT:
 			self.tooltip.handle(self.getScreen())
 
+	def getScreen(self):
+		return CyGInterfaceScreen("EventTriggerScreen", self.screenID)
+
 	def handleInput(self, inputClass):
 		iCode	= inputClass.eNotifyCode
 		NAME	= inputClass.szFunctionName

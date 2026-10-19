@@ -511,6 +511,12 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	                                     ? (pr->id >= 0 && plotContext->bonusVisibleToOwner() == pr->id)
 	                                     : ev_cityPlotHas(cityContext, evp_workedBonus, pr);
 	case CASC_PRED_IS_CAPITAL:            return cityContext != NULL && cityContext->isCapital();
+	case CASC_PRED_IS_HOME_AREA:          return cityContext != NULL && cityContext->isHomeArea();
+	// The route-partner predicates (json §3.5): no route in hand answers FALSE.
+	case CASC_PRED_IS_FOREIGN:
+		return ctx.routePartner != NULL && empireContext != NULL && ctx.routePartner->teamId() != empireContext->teamId();
+	case CASC_PRED_SHARES_CIVIC:
+		return ctx.routePartner != NULL && ctx.civic >= 0 && ctx.routePartner->hasCivic(ctx.civic);
 	// Both predicates below read the CITY's own verdict through the context's forwards, and neither is a
 	// self-containment violation to re-flag.
 	// ⚖ isPowered resolves CvCity::isPowered -- the ONE definition of "powered" (a live grantor supplies it AND no

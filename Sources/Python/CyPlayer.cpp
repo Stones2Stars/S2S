@@ -20,6 +20,8 @@
 #include "CyUnit.h"
 #include "CyPyList.h"
 #include "Infos/CvInfoKinds.h"   // the NUM_<FAMILY>_KINDS the empire group reads are sized by
+#include "Engine/CvCityBreakdown.h"   // getFinanceRows -- the finance advisor's panels are engine breakdowns
+#include "UI/CvGameTextMgr.h"         // getFinanceRows -- the breakdown rendered as rows
 
 //
 // Python wrapper class for CvPlayer
@@ -1292,6 +1294,36 @@ bool CyPlayer::isEmpireBuildingActive(int iBuilding) const
 }
 
 // ---- THE EMPIRE-SCOPE GROUP READS (see the header for the grammar and the homing rule) ----
+
+python::list CyPlayer::getFinanceRows(int iPart) const
+{
+	python::list rows = python::list();
+	CvCityBreakdown kBreakdown;
+	switch (iPart)
+	{
+	case FINANCE_PART_COMMERCE:
+		kBreakdown.reset(CITY_BREAKDOWN_COMMERCE);
+		kBreakdown.setTotal(m_pPlayer->sumCityBreakdowns(CITY_BREAKDOWN_COMMERCE, kBreakdown));
+		break;
+	case FINANCE_PART_INCOME:
+		m_pPlayer->calculateBaseNetGold(&kBreakdown, NULL);
+		break;
+	case FINANCE_PART_EXPENSES:
+		m_pPlayer->calculateBaseNetGold(NULL, &kBreakdown);
+		break;
+	default:
+		return rows;
+	}
+	std::vector<CityBreakdownRow> kRows;
+	GAMETEXT.getCityBreakdownRows(kBreakdown, kRows);
+	const std::vector<CityBreakdownLine>& kLines = kBreakdown.getLines();
+	for (size_t iRow = 0; iRow < kRows.size(); ++iRow)
+	{
+		rows.append(python::make_tuple((int)kRows[iRow].role, (int)kLines[iRow].term,
+			std::wstring(kRows[iRow].label.GetCString()), std::wstring(kRows[iRow].value.GetCString())));
+	}
+	return rows;
+}
 
 python::list CyPlayer::getYields() const
 {

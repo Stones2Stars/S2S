@@ -1290,15 +1290,6 @@
 		<Russian>Âû âåðíóëè ïîòåðÿííûå òåððèòîðèè áåç åäèíîãî âûñòðåëà![NEWLINE][NEWLINE]Åñëè âû íå õîòèòå èõ âîçâðàùåíèå, òî ðåâîëþöèîíåðû ñôîðìèðóþò</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_INDEX_ANGER</Tag>
-		<English>+%d1_Change[ICON_UNHAPPY]: "We're feeling rebellious!"</English>
-		<French>+%d1_Change[ICON_UNHAPPY]: "Nous sommes prêts à nous rebeller!"</French>
-		<German>+%d1_Change[ICON_UNHAPPY]: " Unsere Stimmung ist rebellisch! "</German>
-		<Italian>+%d1_Change[ICON_UNHAPPY]: " Ci sentiamo ribelli! "</Italian>
-		<Spanish>+%d1_Change[ICON_UNHAPPY]: "¡Ansiamos una rebelión!"</Spanish>
-		<Russian>+%d1_Change[ICON_UNHAPPY]: "Â íàñ ðàñòåò ðåâîëþöèîííûé äóõ!"</Russian>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_ACTION</Tag>
 		<English>While they are not yet contemplating war, if you deny their request you should take immediate action to improve their situation. Increasing Culture or strengthening the garrisons may lessen their resolve.</English>
 		<French>Tandis qu'ils n'envisagent pas encore la guerre, si vous ignorez leur demande, vous devriez prendre des mesures immédiates pour améliorer leur situation. L'accroissement de la culture ou le renforcement des garnisons peut diminuer leur résolution.</French>
@@ -2205,15 +2196,6 @@
 		<Russian>îáùåñòâå â êà÷åñòâå ìåíüøèíñòâà ñëèøêîì äîëãî!</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_REQUEST_ANGER</Tag>
-		<English>+%d1_Change[ICON_UNHAPPY]: "You refused to grant our request!"</English>
-		<French>+%d1_Change[ICON_UNHAPPY]: " Vous avez refusé de répondre favorablement à notre demande! "</French>
-		<German>+%d1_Change[ICON_UNHAPPY]: " Sie haben unsere Forderung abgelehnt! "</German>
-		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]+%d1_Change[COLOR_REVERT] [ICON_UNHAPPY] Il leader ha rifiutato di accogliere la nostra richiesta!</Italian> <!-- city screen health panel -->
-		<Spanish>+%d1_Change[ICON_UNHAPPY]: "¡Rechazaste atender nuestras demandas!"</Spanish>
-		<Russian>+%d1_Change[ICON_UNHAPPY]: "Âû îòêàçàëèñü èñïîëíèòü íàøó ïðîñüáó!"</Russian>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_STATUS</Tag>
 		<English>Revolt Status</English>
 		<French>Statut de révolte</French>
@@ -2232,15 +2214,6 @@
 		<Spanish>- clic para ofrecer soborno a la ciudad[NEWLINE]==========================</Spanish>
 		<Polish>- kliknij, aby zaoferowa&#230; &#179;ap&#243;wk&#234; temu miastu[NEWLINE]==========================</Polish>
 		<Russian>- êëèêíèòå ÷òîáû çàäîáðèòü æèòåëåé[NEWLINE]==========================</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_REV_SUCCESS_HAPPINESS</Tag>
-		<English>+%d1_Change[ICON_HAPPY]: "Our rebellion has been successful"</English>
-		<French>+%d1_Change[ICON_HAPPY]: "Notre rébellion a été couronnée de succès"</French>
-		<German>+%d1_Change[ICON_HAPPY]: "Unser Aufstand war erfolgreich"</German>
-		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]+%d1_Change[COLOR_REVERT] [ICON_HAPPY]: La nostra ribellione ha avuto successo</Italian> <!-- city screen health panel -->
-		<Spanish>+%d1_Change[ICON_HAPPY]: "¡Nuestra rebelión ha sido un éxito!"</Spanish>
-		<Russian>+%d1_Change[ICON_HAPPY]: "Íàøå âîññòàíèå äîñòèãëî óñïåõà"</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_THE</Tag>

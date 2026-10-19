@@ -955,6 +955,9 @@ class CvTechChooser:
 		if scrollDiff != 0:
 			self.scrollTo(int(self.scrollOffs - scrollDiff * self.xCellDist / 2))
 
+	def getScreen(self):
+		return CyGInterfaceScreen("TechChooser", self.screenId)
+
 	def handleInput(self, inputClass):
 		if not self.created:
 			print "CvTechChooser.handleInput - aborted due to screen not being created"

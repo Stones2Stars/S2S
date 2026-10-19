@@ -18,9 +18,6 @@ def canBuild(argsList):
 def cannotMaintain(argsList):
 	return GameUtils.cannotMaintain(argsList)
 
-def calculateScore(argsList):
-	return GameUtils.calculateScore(argsList)
-
 def doPillageGold(argsList):
 	return GameUtils.doPillageGold(argsList)
 

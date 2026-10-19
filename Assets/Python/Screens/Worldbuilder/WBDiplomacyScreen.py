@@ -284,6 +284,9 @@ class WBDiplomacyScreen:
 			screen.setTableInt("WBEspionage", 5, iRow, "<font=3>" + sModifier, "", WidgetTypes.WIDGET_PYTHON, 1033, iTeam, 1<<1)
 			screen.setTableInt("WBEspionage", 6, iRow, "<font=3>" + sMemory, "", WidgetTypes.WIDGET_PYTHON, 1034, iPlayer, 1<<1)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen("WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
 		global iSelectedPlayer

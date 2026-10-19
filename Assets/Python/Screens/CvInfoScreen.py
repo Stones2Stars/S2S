@@ -1531,6 +1531,9 @@ class CvInfoScreen:
 		self.yMessage = 5
 
 
+	def getScreen(self):
+		return CyGInterfaceScreen("InfoScreen", self.screenId)
+
 	# handle the input for this screen...
 	def handleInput(self, inputClass):
 

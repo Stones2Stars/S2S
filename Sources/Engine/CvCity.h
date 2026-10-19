@@ -23,11 +23,13 @@
 
 class CvArea;
 class CvArtInfoBuilding;
+class CvCityBreakdown;
 class CvPlot;
 class CvPlotGroup;
 class CvUnit;
 class CvUnitSelectionCriteria;
 struct CvCommerceSplitTerms;   // getCommerceTerms fills it -- declared here rather than including the calc surface
+struct CvCityRateChanges;      // a what-if's added deposits, which expectedCommercesAtSliders takes
 
 #define CITY_MAX_YIELD_RATE    99000000
 #define CITY_MAX_YIELD_RATE100 1900000000
@@ -130,6 +132,9 @@ public:
 
 	bool isCitySelected() const;
 	DllExport bool canBeSelected() const;
+	///<summary>Whether eObserver may see inside this city -- its screen and its numbers: the observer's own team,
+	/// an investigation of its plot, or a passive espionage mission that reveals it (and debug mode).</summary>
+	bool isOpenTo(PlayerTypes eObserver) const;
 	DllExport void updateSelectedCity(bool bTestProduction);
 
 
@@ -253,7 +258,13 @@ public:
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 
+	///<summary>Turns until the city grows, or -1 when its food does not grow.</summary>
 	int getFoodTurnsLeft() const;
+	///<summary>Turns until starvation costs the city a citizen, or -1 when it is not starving or has one citizen.</summary>
+	int getStarvationTurnsLeft() const;
+	///<summary>Turns until the owner's culture here reaches the next culture level at the current culture rate,
+	/// at least 1; -1 at the top level or with no culture coming in.</summary>
+	int getCultureTurnsLeft() const;
 	bool isProduction() const;
 	bool isProductionUnitCombat(int iIndex) const;
 	bool isProductionUnit() const;
@@ -273,7 +284,9 @@ public:
 		int stateReligion;
 		int total;
 	};
-	int getProductionExperience(UnitTypes eUnit = NO_UNIT, ProductionExperienceLegs* pLegs = NULL) const;
+	///<summary>The experience a unit built here starts with. With no unit, eDomain asks it for that domain alone
+	/// (the domain's bonus, no combat class).</summary>
+	int getProductionExperience(UnitTypes eUnit = NO_UNIT, ProductionExperienceLegs* pLegs = NULL, DomainTypes eDomain = NO_DOMAIN) const;
 	void addProductionExperience(CvUnit* pUnit, bool bConscript = false);
 
 	UnitTypes getProductionUnit() const;
@@ -321,10 +334,20 @@ public:
 	int getProductionModifier(BuildingTypes eType) const;
 	int getProductionModifier(ProjectTypes eProject) const;
 
-	int getProductionPerTurn(ProductionCalc::flags flags) const;
+	///<summary>The production the city applies per turn under flags. With pBreakdown, the same pass writes its
+	/// parts there: the production yield's own breakdown, then overflow, chopping, food turned to production, the
+	/// whole-hammer cut and the minimum of one.</summary>
+	int getProductionPerTurn(ProductionCalc::flags flags, CvCityBreakdown* pBreakdown = NULL) const;
 
-	int getProductionDifference(const OrderData& orderData, ProductionCalc::flags flags) const;
-	int getCurrentProductionDifference(ProductionCalc::flags flags) const;
+	///<summary>The production going into orderData this turn under flags; pBreakdown as getProductionPerTurn.</summary>
+	int getProductionDifference(const OrderData& orderData, ProductionCalc::flags flags, CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>The production going into the head order this turn; pBreakdown as getProductionPerTurn.</summary>
+	int getCurrentProductionDifference(ProductionCalc::flags flags, CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>The food the head order turns into production this turn: the food surplus while it builds with
+	/// food, 0 otherwise.</summary>
+	int getCurrentFoodToProduction() const;
+	///<summary>The production a realized food yield makes once the city has eaten: the surplus in whole food.</summary>
+	int foodSurplusAsProduction(int iRealizedFood) const;
 
 	bool canHurry(const HurryTypes eHurry, const bool bTestVisible = false) const;
 	int64_t getHurryGold(const HurryTypes eHurry, int iHurryCost = -1) const;
@@ -359,6 +382,9 @@ public:
 	DllExport bool isVisible(TeamTypes eTeam, bool bDebug) const;
 
 	bool isCapital() const;
+	///<summary>Whether the city stands on the same area as its owner's capital (the IS_HOME_AREA predicate); a
+	/// player with no capital has no home area.</summary>
+	bool isHomeArea() const;
 	bool isCoastal(int iMinWaterSize) const;
 	bool isDisorder() const;
 	bool isHolyCity(ReligionTypes eIndex) const;
@@ -445,9 +471,15 @@ public:
 	int getPopulationPlusProgress(const int iExtra) const;
 	int getFoodConsumedPerPopulation(const int iExtra = 0) const;
 	int getFoodConsumedByPopulation(const int iExtra = 0) const;
-	int foodConsumption(const bool bNoAngry=false, const int iExtra=0, const bool bIncludeWastage=true) const;
-	int foodDifference(const bool bBottom=true, const bool bIncludeWastage=true, const bool bIgnoreFoodBuildOrRev=false) const;
-	float foodWastage(int surplass = -1) const;
+	///<summary>The food the city consumes per turn. With pBreakdown, each part is added there as a negative amount
+	/// as it is summed: eaten, the health penalty, wastage.</summary>
+	int foodConsumption(const bool bNoAngry=false, const int iExtra=0, const bool bIncludeWastage=true, CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>The city's net food per turn. With pBreakdown, the same pass writes its parts there: the food
+	/// yield's breakdown, consumption, food going into production and the size-1 guard, closing on the total.</summary>
+	int foodDifference(const bool bBottom=true, const bool bIncludeWastage=true, const bool bIgnoreFoodBuildOrRev=false, CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>The whole food wasted per turn on a surplus above WASTAGE_START_CONSUMPTION_PERCENT of consumption;
+	/// iSurplus -1 asks the city for its own surplus.</summary>
+	int foodWastage(int iSurplus = -1) const;
 	int growthThreshold(const int iPopChange = 0) const;
 
 	int productionLeft() const;
@@ -567,7 +599,19 @@ public:
 
 	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
-	int getTotalGreatPeopleRateModifier() const;
+	///<summary>The city's great people stack on top of the channel's own: 100 plus the state religion's percent
+	/// and the golden age's; with a breakdown, each part it adds as a percent line.</summary>
+	int getTotalGreatPeopleRateModifier(CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>Turns until the city's great people progress reaches the owner's threshold at the current rate, at
+	/// least 1; -1 with no great people coming in.</summary>
+	int getGreatPeopleTurnsLeft() const;
+	///<summary>Each great person type with progress in the city and its chance to be the next one born, in
+	/// hundredths of a percent (6000 is 60%): the type's share of the city's per-type progress, the weights
+	/// doGreatPeople draws by.</summary>
+	void getGreatPeopleUnitChances(std::vector<std::pair<UnitTypes, int> >& kChances) const;
+	///<summary>Each great person type whose per-type progress is not 0, in unit order, with that progress; returns
+	/// their sum. These are the weights doGreatPeople draws the next great person by.</summary>
+	int getGreatPeopleUnitProgresses(std::vector<std::pair<UnitTypes, int> >& kProgresses) const;
 
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
@@ -602,7 +646,10 @@ public:
 	// read composes the component KINDS against their own modifiers, takes the `amount` stack over the total,
 	// and declines wholesale under WLTKD or disorder -- a participation gate, not a term ([economy.md]).
 	int64_t getMaintenance() const;
-	int64_t getMaintenanceTimes100() const;
+	///<summary>The city's realized maintenance. With pBreakdown, the same pass also writes every part of it there
+	/// for the city hover: each kind with its own stack, the amount deposits, the subtotal, the sources of the
+	/// amount stack and the total.</summary>
+	int64_t getMaintenanceTimes100(CvCityBreakdown* pBreakdown = NULL) const;
 	// The realized value of ONE maintenance KIND -- the per-component breakdown read.
 	int64_t maintenanceOfKind(int iKind) const;
 	// The city's ONE additive maintenance percent stack, rolled over the scope chain the city sits under
@@ -870,9 +917,17 @@ public:
 	// paragraph; the arithmetic is InfoValuation::commerceSplit, never restated here). Culture is the lone dual
 	// consumer: its deposits term is this city's maintained culture receiver sum, which the slider never scales.
 	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
+	///<summary>The four commerces at sliderPercents. With pChanges, as though those deposits were also in the
+	/// city's chain: the yields the split divides and each channel's stack and deposits move with them.</summary>
 	void expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE_TYPES],
 									int (&commerces)[NUM_COMMERCE_TYPES],
-									CvCommerceSplitTerms* aTermsOut = NULL) const;
+									CvCommerceSplitTerms* aTermsOut = NULL,
+									const CvCityRateChanges* pChanges = NULL) const;
+	///<summary>What building eBuilding would change in this city, per yield and per commerce at the live sliders:
+	/// its flats, percents and radius yields less those of the buildings it sends dormant, through the city's
+	/// own combine and commerce split. Gold also carries the upkeep it saves.</summary>
+	void getBuildingRateChanges(BuildingTypes eBuilding, int (&yieldChanges)[NUM_YIELD_TYPES],
+		int (&commerceChanges)[NUM_COMMERCE_TYPES]) const;
 	// The CENSUS twin of getCommerces -- ONE channel's split, term by term, for a consumer that has to attribute a
 	// wrong number rather than merely show it (a tooltip; the served decomposition). It is the SAME gather and the
 	// SAME combine with the terms kept, so it can never describe arithmetic the realized read does not do
@@ -924,6 +979,10 @@ public:
 	void getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const;
 	void getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const;
 	void getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const;
+	///<summary>The city's wellbeing totals (CityWellbeingNetRead).</summary>
+	void getWellbeingNetRead(int (&nets)[NUM_CITY_WELLBEING_NET_READS]) const;
+	///<summary>The city's trade routes (CityTradeRead).</summary>
+	void getTradeRead(int (&trade)[NUM_CITY_TRADE_READS]) const;
 	void getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const;
 	void getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUILDING_READS]) const;
 	void getUnitInCity(UnitTypes eUnit, int (&read)[NUM_CITY_UNIT_READS]) const;
@@ -955,6 +1014,9 @@ public:
 	int cascadeDefense(int eKind) const;
 	int getTotalDefense(bool bIgnoreBuilding) const;
 	int getDefenseModifier(bool bIgnoreBuilding) const;
+	///<summary>The percent of the city's defenses still standing: 100 with no damage, 0 at
+	/// MAX_CITY_DEFENSE_DAMAGE, rounded down.</summary>
+	int getDefenseStandingPercent() const;
 
 	int getOccupationTimer() const;
 	bool isOccupation() const;
@@ -1034,11 +1096,15 @@ public:
 
 
 	int getTradeYield(YieldTypes eIndex) const;
-	int totalTradeModifier(const CvCity* pOtherCity = NULL) const;
+	///<summary>The percent a trade route's base profit is multiplied by (100 = unchanged): this city's, and with
+	/// pOtherCity the route-specific parts too. With pBreakdown, each part goes on it as a percent line.</summary>
+	int totalTradeModifier(const CvCity* pOtherCity = NULL, CvCityBreakdown* pBreakdown = NULL) const;
 	int getPopulationTradeModifier() const;
 	int getPeaceTradeModifier(TeamTypes eTeam) const;
 	int getBaseTradeProfit(const CvCity* pCity) const;
-	int calculateTradeProfit(const CvCity* pCity) const;
+	///<summary>The profit a route from this city to pCity carries. With pBreakdown, the base, the percent parts and
+	/// the profit go on it as the trade-route breakdown.</summary>
+	int calculateTradeProfit(const CvCity* pCity, CvCityBreakdown* pBreakdown = NULL) const;
 	int calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const;
 	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bBase = false) const;
 	void setTradeYield(YieldTypes eIndex, int iNewValue);

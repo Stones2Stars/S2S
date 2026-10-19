@@ -347,6 +347,9 @@ public:
 	// The grammar is the surface's, unchanged: one read per GROUP, the group's own enum indexes the RESULT, the
 	// whole group crosses in one call, and every AMOUNT is x100 native while a PERCENT is not scaled
 	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- so a reader divides at its own point of use and no read here reduces.
+	///<summary>One finance advisor panel (FinancePart) as rows of (role, term, label, value): the engine's
+	/// breakdown of the empire's commerce, gold income or expenses.</summary>
+	python::list getFinanceRows(int iPart) const;
 	python::list getYields() const;
 	python::list getCommerces() const;
 	python::list getWellbeing() const;

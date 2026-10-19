@@ -51,6 +51,84 @@ composer consumes rendered entry lines
 where the wanted look does not fall out of the renderer, the RENDERER gains the capability, centrally — never
 the composer a special case.
 
+## THE ONE HOVER
+
+Every hover in S2S shows in one box: the Python table `PythonToolTip.makeTooltip` draws, with one style
+(`Table_Help_Style`, the tile hover's skin). A hover's text always comes from an engine composer; the box formats
+nothing and derives nothing.
+
+- **Lines, columns, overflow.** The box lays its lines in one column; when they are taller than the screen they
+  fill side-by-side columns sized to the player's screen. A composer that hands over runs of sources
+  (`CityBreakdownTextRun`) lets `PythonToolTip.fitLines` show a run as its one summary line on a screen too
+  small even for columns, largest runs first, closing with a line that the full list is one click away.
+- **Widget hovers.** The game asks `CvDLLWidgetData::parseHelp` for a widget's text when the mouse is over it.
+  At its end the text goes to `CvScreensInterface.showWidgetHover`, and the game's own box is left empty.
+  `CvScreensInterface.handleInput` passes every screen's input to `PythonToolTip.noteHoverInput`, so the box
+  draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen answers
+  `getScreen()`; a screen with its own tooltip handling answers `showHover(szText)` / `hideHover()`.
+- **What the game does not report.** For a general widget the game passes Python no data, only the trailing
+  number of the widget's name (the ID), so a screen names such a widget `TYPE|Case<index>`. A stacked bar reports
+  neither arrive nor leave, so a bar is a general widget and its text carries the bar's hover. A label
+  (`setLabel`/`setLabelAt`) reports neither either, so text with a hover is `setText`. When no screen takes a
+  widget's text, the game's own box shows it.
+- **Arrival never hides the box.** The text can be drawn before the screen hears the mouse arrive (a table cell's
+  text is), so a screen hides the box on leave and on its other input, and its own hovers redraw on arrival.
+- **On screen.** A box that follows the cursor keeps inside the screen on every side
+  (`PythonToolTip.followCursor`, from the size `makeTooltip` drew it at).
+
+## THE CITY NUMBERS
+
+Every city number shares one composition: `CvGameTextMgr::getCityHoverLines` turns the engine's breakdown of the
+number (`CvCityBreakdown`, filled by the calculation itself) into lines; Python reads it through
+`CyGameTextMgr::getCityHover`, the game's widget help through `setCityHoverHelp`. The subjects are food,
+production, maintenance, the four commerce channels, happiness and health, great people, defense and a trade
+route.
+
+- Heading: the number and its icon.
+- Parts, one source per line (`+0.3 <beaker> Tale, Fennec Fox`), kind by kind (buildings, heritages, specialists,
+  civics, …), largest first; whatever the named sources leave of the part the calculation used is one "Other"
+  line, so the lines add up.
+- A subtotal, the percent sources on the same rule, the subtotal after them, the city's own flat sources and the
+  whole-unit cut, then the total. Each line states what the calculation did; none is worked out by the hover.
+- ⚖ A source is one line, summed over every scope it reached: a civic depositing an empire-wide flat and a
+  per-city entry is one line, because the player asks what that civic does. The attribution is the per-source
+  audit (`InfoValuation::cityRefusedDeposits` for the city's package, `InfoValuation::upperScopeDeposits` for the
+  empire and team packages it rolls down from), a read-time walk, never a stored per-source plane
+  ([cascade/16](../cascade/16-package-model.md)).
+- A run is two or more adjacent sources of one kind; the engine sums it (`CvCityBreakdown::getSourceRuns`) for the
+  one line that stands for it when the box cannot fit every line.
+- What opens a hover before its breakdown: culture, the owner's culture against the next level and the turns to
+  it; great people, the progress, the turns and each unit's chance; defense, its floor; maintenance, what it is.
+- Happiness and health are two blocks, the bad side first: each source of anger (or unhealth), the raw-state
+  terms (overcrowding, war weariness, hurry anger, …) and each anger percent's share of citizens, then the good
+  side the same way.
+- A trade route (`CvCity::calculateTradeProfit` fills it): the base profit, each percent part (the route-modifier
+  sources, city size, the capital connection, overseas, foreign at peace, and the sources gated on the route
+  itself), the profit, then what it delivers per yield.
+- The city screen names these widgets `CS|Food0`, `CS|ProdYield0`, `CS|Maintenance0/1`, `CS|Commerce<channel>`,
+  `CS|Culture0/1`, `CS|Happiness0`, `CS|Health0` and `CS|Defense0`; a click opens every line in a list that scrolls, closed by its
+  Close button or Esc.
+
+A city's breakdown for any subject comes from one place, `InfoValuation::cityBreakdown`, which hands the subject to
+the calculation that makes the number; the city hover and the empire sums (`CvPlayer::sumCityBreakdowns`) both
+use it.
+
+**The empire numbers.** The finance advisor's three panels are engine breakdowns (`CyPlayer::getFinanceRows`): the
+empire's commerce, its gold income and its expenses ([economy.md § Gold expense](economy.md#gold-expense-player)).
+Each line carries its part's hover. The trade hover states the domestic and the foreign routes, each with its
+commerce and its count. The domestic advisor's columns read the city group reads: growth, culture, wellbeing totals
+(`getWellbeingNets`), trade (`getTradeReads`) and the experience a unit of a domain starts with.
+
+A city the viewer cannot see inside (`CvCity::isOpenTo`: not their team, no investigation or espionage that reveals
+it) shows on the map only its owner, size, culture level and defense.
+
+The map city bar reads the same engine values: the growth and order group reads (food per turn, turns to grow
+or to starve, the food turned into production), the anger breakdown's hurry and draft lines, the engine's turns
+to the next culture level and great person, and the revolt chance `CvPlot::getCityRevoltChance` gives with the
+gates the revolt roll itself applies. A building's effects there are `CvCity::getBuildingRateChanges`: the city's
+own combine and commerce split fed the building's flats, percents and radius yields, less the buildings it sends
+dormant.
+
 ## The placeholder vocabulary
 
 Icons are written as `<name>` so a line says what it looks like without depending on a font symbol:
@@ -1401,30 +1479,6 @@ The `hideAndSeek` and `sizeMatters` blocks, and the `identity` eligibility (`uni
 - +%d1_Change<unhappy>: "Misc."  <!-- TXT_KEY_ANGER_MISC -->
 - Total Unhappiness: %d1_Num<unhappy>  <!-- TXT_KEY_ANGER_TOTAL_UNHAPPY -->
 
-### Design — the city screen's wellbeing hover (`setAngerHelp` / `setHappyHelp`)
-
-The deposit side is itemised **by source**, the raw-state side keeps one line per term. Both sides read the same
-way; the anger side is shown:
-
-- **Buildings** — one line per building when **five or fewer** deposit, otherwise one line for all of them:
-  - +%d1<unhappy>: <name of the thing>
-  - +%d1<unhappy> "Buildings and Effects in this city are directly irritating us!"  <!-- TXT_KEY_UNHAPPY_CITY_BUILDINGS -->
-- **One line per civic, trait, tech, project, heritage and difficulty level** that deposits:
-  - +%d1<unhappy>: <name of the thing>
-- **Resources**, **corporations** — one line each for the class:
-  - +%d1_Change<unhappy>: "Some goods are making us unhappy!"  <!-- TXT_KEY_ANGER_BONUS -->
-  - +%d1_Change<unhappy>: "Corporations are Harming our City!"  <!-- TXT_KEY_UNHAPPY_CORPORATIONS -->
-- **Specialists** — one line, as before.
-- **The raw-state terms** (overcrowding, war weariness, hurry anger, …) — one line each, as before.
-- **Misc** — whatever the named lines do not account for, so the lines always add up to the total.
-
-⚖ **A source is shown once, summed over every scope it reached.** A civic depositing both an empire-wide flat and
-a per-city `cities` entry is one line, because the player asked *"what is this civic doing to me"*, not which
-package it landed in. The attribution is the per-source audit (`InfoValuation::cityRefusedDeposits` for the
-city's own package, `InfoValuation::upperScopeDeposits` for the empire and team packages it rolls down from) —
-a read-time walk of what each live source authored, never a stored per-source plane
-([cascade/16](../cascade/16-package-model.md)).
-
 ## `setBadHealthHelp`
 
 - %D1_Change<unhealth> from %s2_FeatName  <!-- TXT_KEY_MISC_FEAT_HEALTH -->
@@ -2767,7 +2821,7 @@ shared line.
 
 ## `setScoreHelp`
 
-- %d1 from Population (%d2_pop/%d3_pop_max)%d4 from Land (%d5_land/%d6_land_max)%d7 from Technology (%d8_tech/%d9_tech_max)%d10 from Wonders (%d11_wonder/%d12_wonder_max)------------------------Total Score = %d13Score by winning this turn = %d14  <!-- TXT_KEY_SCORE_BREAKDOWN -->
+- %s1 from Population (%d2_pop/%d3_pop_max)%s4 from Land (%d5_land/%d6_land_max)%s7 from Technology (%d8_tech/%d9_tech_max)%s10 from Wonders (%d11_wonder/%d12_wonder_max)------------------------Total Score = %d13Score by winning this turn = %d14  <!-- TXT_KEY_SCORE_BREAKDOWN -->
 
 ## `setTechHelp`
 

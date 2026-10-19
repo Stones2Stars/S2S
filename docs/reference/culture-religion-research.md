@@ -96,8 +96,14 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
   `getEraCommerceChanges100` (an era→commerce map) stacks for all eras ≤ current, applied as a flat empire-wide
   `extraCommerce100`; on era advance the delta is applied. Acquired by `MISSION_HERITAGE` (the unit is consumed).
   Cascade atom `ATOMDOMAIN_HERITAGE` → `hasHeritage`.
-- **Score** (Python `CvGameUtils.py`): `Σ FACTOR·(score+free)/(free+max)` over pop/land/tech/wonders; tech weight
-  `1 + era`, wonder weight 6 (limited) / 1; computed in the frame loop (`CvGame::update`), not `doTurn`.
+- **Score** (`CvPlayer::calculateScoreParts`, integers, each part in millionths of a point so the total rounds
+  down once): `Σ FACTOR·(score+free)/(free+max)` over
+  pop/land/tech/wonders, free being `SCORE_FREE_PERCENT` of the max; a part whose max is 0 takes its whole factor.
+  A final score takes the difficulty percent and a victory the victory percent; a final victory score also grows
+  each max from its initial value toward the end turn (`initial · (max/initial)^(turn/endTurn)`, with the quotient
+  rounded down, by `intPowFraction`; wonders grow along a straight line). The total is the parts summed, rounded
+  down, and the score hover shows those same parts. Tech weight `1 + era`, wonder weight 6 (limited) / 1; computed in the frame loop
+  (`CvGame::update`), not `doTurn`.
 
 ## Corporations
 

@@ -4,6 +4,10 @@ import ScreenResolution as SR
 
 CyIF = CyInterface()
 
+# The font of the game's own tooltips (Resource/Theme/C2CTheme_ToolTip.thm: Font_Size1_Normal), so every
+# tooltip a Python screen draws reads like the ones the game draws.
+TOOLTIP_FONT = "<font=1>"
+
 
 class PythonToolTip:
 	def __init__(self):
@@ -11,31 +15,22 @@ class PythonToolTip:
 		self.iOffsetTT = [0, 0]
 		self.bLockedTT = False
 
-	def handle(self, screen, szText = None, xPos = -1, yPos = -1, uFont = ""):
+	def handle(self, screen, szText = None, xPos = -1, yPos = -1):
 		if not szText:
 			# None means something, while sending in an empty string is a fluke.
 			if szText is None:
-				# Move tooltip to cursor
-				POINT = Win32.getCursorPos()
-				iX = POINT.x + self.iOffsetTT[0]
-				iY = POINT.y + self.iOffsetTT[1]
-				if iX < 0: iX = 0
-				if iY < 0: iY = 0
-				screen.moveItem("Tooltip", iX, iY, 0)
+				followCursor(screen, "Tooltip", self.iOffsetTT)
 			return
 
 		if szText != self.szTextTT:
 			self.szTextTT = szText
-			if not uFont:
-				uFont = SR.aFontList[5]
-			iX, iY = makeTooltip(screen, xPos, yPos, szText, uFont, "Tooltip")
+			iX, iY = makeTooltip(screen, xPos, yPos, szText, "Tooltip")
 			POINT = Win32.getCursorPos()
 			self.iOffsetTT = [iX - POINT.x, iY - POINT.y]
 
 		else: # Already cached, move tooltip to cursor and make it visible
 			if xPos == yPos == -1:
-				POINT = Win32.getCursorPos()
-				screen.moveItem("Tooltip", POINT.x + self.iOffsetTT[0], POINT.y + self.iOffsetTT[1], 0)
+				followCursor(screen, "Tooltip", self.iOffsetTT)
 			screen.moveToFront("Tooltip")
 			screen.show("Tooltip")
 
@@ -46,64 +41,108 @@ class PythonToolTip:
 		screen.hide("Tooltip")
 		self.bLockedTT = False
 
-def makeTooltip(screen, xPos, yPos, szTxt, uFont, listBox):
-	bSetX = False
-	bSetY = False
-	if xPos == -1: bSetX = True
-	if yPos == -1: bSetY = True
-	if bSetX or bSetY:
-		POINT = Win32.getCursorPos()
-		if bSetX:
-			xPos = POINT.x
-		if bSetY:
-			yPos = POINT.y
-	xRes = SR.x
-	yRes = SR.y
+# The one hover (docs/reference/tooltip-look.md § THE ONE HOVER). The game asks the DLL for a widget's hover text
+# once, when the mouse arrives on it; the DLL hands that text to showWidgetHover, and the screen whose widget the
+# mouse is in draws it. Every screen's input passes noteHoverInput (CvScreensInterface.handleInput), so that
+# screen is known, and the box goes when the mouse leaves. A screen answers getScreen(); one that draws its own
+# hovers answers showHover(szText) / hideHover() instead.
+g_hoverScreen = None
+g_hoverTooltips = {}
+# The size makeTooltip last drew each box at, so a box that follows the cursor stays inside the screen.
+g_boxSizes = {}
 
-	# Enforce certain structure
-	szTxt = szTxt.replace("\n</color>", "</color>\n")
-	# Remove whitespace at the very end.
-	while szTxt[-1:] in ("\n", "\r", "\t", " "):
-		szTxt = szTxt[:-1]
+def followCursor(screen, listBox, aOffset):
+	# Moves the box to the cursor at the offset it was drawn with, kept inside the screen on every side.
+	POINT = Win32.getCursorPos()
+	dx, dy = g_boxSizes.get(listBox, (0, 0))
+	iX = min(max(POINT.x + aOffset[0], 0), max(SR.x - dx, 0))
+	iY = min(max(POINT.y + aOffset[1], 0), max(SR.y - dy, 0))
+	screen.moveItem(listBox, iX, iY, 0)
 
-	# Remove font literals
-	i1 = szTxt.find("<font=")
-	if i1 > -1:
-		while i1 > -1:
-			i2 = szTxt.find(">", i1+6)
-			szTxt = szTxt[:i1] + szTxt[i2+1:]
-			i1 = szTxt.find("<font=")
-		szTxt = szTxt.replace("</font>", "")
-	# Remove link literals
-	i1 = szTxt.find("<link=")
-	if i1 > -1:
-		while i1 > -1:
-			i2 = szTxt.find(">", i1+6)
-			szTxt = szTxt[:i1] + szTxt[i2+1:]
-			i1 = szTxt.find("<link=")
-		szTxt = szTxt.replace("</link>", "")
-	# Find longest text line in pixels
-	aList = szTxt.split('\n')
-	aWidthList = []
-	dx = 0
-	for aLine in aList:
-		iWidth = CyIF.determineWidth(uFont + aLine)
-		aWidthList.append((iWidth, aLine))
-		if iWidth > dx:
-			dx = iWidth
-	if not dx:
-		print "CvMainInterface: This will probably never happen, but hey it did."
-		dx = 1
-	else:
-		# A third of the screen unless the wrapped text would run tall; then widen in steps.
-		dxLongest = dx
-		for dxMax in (xRes/3, xRes/2, xRes*2/3):
-			dx = min(dxLongest, dxMax)
-			iLines = 0
-			for iWidth, aLine in aWidthList:
-				iLines += 1 + iWidth / dx
-			if iLines * 22 + 16 <= yRes*2/3:
-				break
+def noteHoverInput(screenObject, inputClass):
+	global g_hoverScreen
+	iCode = inputClass.eNotifyCode
+	if iCode == NotifyCode.NOTIFY_CURSOR_MOVE_ON:
+		g_hoverScreen = screenObject
+	elif iCode == NotifyCode.NOTIFY_CURSOR_MOVE_OFF and g_hoverScreen is screenObject:
+		hideHover(screenObject)
+		g_hoverScreen = None
+
+def showWidgetHover(szText):
+	# True when a screen drew the text; the DLL then leaves the game's own box empty.
+	global g_hoverScreen
+	screenObject = g_hoverScreen
+	if screenObject is None:
+		return False
+	if hasattr(screenObject, "showHover"):
+		screenObject.showHover(szText)
+		return True
+	if not hasattr(screenObject, "getScreen"):
+		return False
+	screen = screenObject.getScreen()
+	# A screen closed under the cursor never sent its MOVE_OFF; the game's own box shows the text then.
+	if not screen.isActive():
+		g_hoverScreen = None
+		return False
+	hoverTooltip(screenObject).handle(screen, szText)
+	return True
+
+def hideHover(screenObject):
+	if hasattr(screenObject, "hideHover"):
+		screenObject.hideHover()
+	elif hasattr(screenObject, "getScreen"):
+		hoverTooltip(screenObject).reset(screenObject.getScreen())
+
+def hoverTooltip(screenObject):
+	# The screen's own PythonToolTip when it has one, so one box object serves all of that screen's hovers.
+	tooltip = getattr(screenObject, "tooltip", None)
+	if isinstance(tooltip, PythonToolTip):
+		return tooltip
+	key = id(screenObject)
+	if key not in g_hoverTooltips:
+		g_hoverTooltips[key] = PythonToolTip()
+	return g_hoverTooltips[key]
+
+
+def fitLines(aLines, aRuns, szMoreLine):
+	# The lines the one hover shows of an engine breakdown on this screen: all of them when the columns fit them;
+	# otherwise the largest runs of sources each become the one summary line the engine made for it, as few as it
+	# takes, and szMoreLine closes the list. aRuns holds (firstLine, lineCount, summary) per run.
+	iMaxRows = (SR.y - 48) / 22
+	dxLongest = 1
+	for aLine in aLines:
+		dxLongest = max(dxLongest, CyIF.determineWidth(TOOLTIP_FONT + aLine))
+	iMaxColumns = max(1, min(8, (SR.x - 16) / (dxLongest + 28)))
+	iCapacity = iMaxRows * iMaxColumns
+	aBySize = list(aRuns)
+	aBySize.sort(lambda aLeft, aRight: cmp(aRight[1], aLeft[1]))
+	aCollapsed = {}
+	iShown = len(aLines)
+	for iFirst, iCount, szSummary in aBySize:
+		if iShown <= iCapacity:
+			break
+		if not aCollapsed:
+			iShown += 1 # szMoreLine
+		aCollapsed[iFirst] = (iCount, szSummary)
+		iShown -= iCount - 1
+	if not aCollapsed:
+		return list(aLines)
+	aShown = []
+	i = 0
+	while i < len(aLines):
+		if i in aCollapsed:
+			iCount, szSummary = aCollapsed[i]
+			aShown.append(szSummary)
+			i += iCount
+		else:
+			aShown.append(aLines[i])
+			i += 1
+	aShown.append(szMoreLine)
+	return aShown
+
+
+def wrapLines(aWidthList, dx, uFont):
+	# Breaks every line wider than dx into lines that fit, carrying an open colour onto the next line.
 	iMaxX = dx - 24
 	# Wrap long lines
 	aList = []
@@ -180,22 +219,91 @@ def makeTooltip(screen, xPos, yPos, szTxt, uFont, listBox):
 		else: # No wrapping was necessary.
 			aList.append(COLOR + aLine)
 			COLOR = evalColorCodes(aLine, COLOR)
+	return aList
+
+
+def makeTooltip(screen, xPos, yPos, szTxt, listBox):
+	uFont = TOOLTIP_FONT
+	bSetX = False
+	bSetY = False
+	if xPos == -1: bSetX = True
+	if yPos == -1: bSetY = True
+	if bSetX or bSetY:
+		POINT = Win32.getCursorPos()
+		if bSetX:
+			xPos = POINT.x
+		if bSetY:
+			yPos = POINT.y
+	xRes = SR.x
+	yRes = SR.y
+
+	# Enforce certain structure
+	szTxt = szTxt.replace("\n</color>", "</color>\n")
+	# Remove whitespace at the very end.
+	while szTxt[-1:] in ("\n", "\r", "\t", " "):
+		szTxt = szTxt[:-1]
+
+	# Remove font literals
+	i1 = szTxt.find("<font=")
+	if i1 > -1:
+		while i1 > -1:
+			i2 = szTxt.find(">", i1+6)
+			szTxt = szTxt[:i1] + szTxt[i2+1:]
+			i1 = szTxt.find("<font=")
+		szTxt = szTxt.replace("</font>", "")
+	# Remove link literals
+	i1 = szTxt.find("<link=")
+	if i1 > -1:
+		while i1 > -1:
+			i2 = szTxt.find(">", i1+6)
+			szTxt = szTxt[:i1] + szTxt[i2+1:]
+			i1 = szTxt.find("<link=")
+		szTxt = szTxt.replace("</link>", "")
+	# Find longest text line in pixels
+	aList = szTxt.split('\n')
+	aWidthList = []
+	dx = 0
+	for aLine in aList:
+		iWidth = CyIF.determineWidth(uFont + aLine)
+		aWidthList.append((iWidth, aLine))
+		if iWidth > dx:
+			dx = iWidth
+	dxLongest = dx
+	if not dx:
+		print "CvMainInterface: This will probably never happen, but hey it did."
+		dx = 1
+	else:
+		# A third of the screen unless the wrapped text would run tall; then widen in steps.
+		for dxMax in (xRes/3, xRes/2, xRes*2/3):
+			dx = min(dxLongest, dxMax)
+			iLines = 0
+			for iWidth, aLine in aWidthList:
+				iLines += 1 + iWidth / dx
+			if iLines * 22 + 16 <= yRes*2/3:
+				break
+	aList = wrapLines(aWidthList, dx, uFont)
+	# Taller than the screen: the lines go into as many side-by-side columns as it takes to fit.
+	iMaxRows = (yRes - 48) / 22
+	iColumns = 1
+	while (len(aList) + iColumns - 1) / iColumns > iMaxRows and iColumns < 8:
+		iColumns += 1
+		dx = min(dxLongest, (xRes - 16) / iColumns - 28)
+		aList = wrapLines(aWidthList, dx, uFont)
+	iRows = (len(aList) + iColumns - 1) / iColumns
+	dxColumn = dx + 24
+	dxTable = iColumns * dxColumn
 	# Find text height in pixels
-	dy = len(aList) * 22 + 16
+	dy = iRows * 22 + 16
 	# Find best position.
 	if xPos > xRes / 2:
-		x = xPos - 32 - dx
+		x = xPos - 8 - dxTable
 	else: # Left side of screen.
 		x = xPos + 24
 	# A widened tooltip can overrun either edge; keep it on screen.
-	if x + dx + 28 > xRes:
-		x = xRes - dx - 28
+	if x + dxTable + 4 > xRes:
+		x = xRes - dxTable - 4
 	if x < 4:
 		x = 4
-	'''
-	if dy > yRes - 16:
-		pass # WIP may want to split tooltip into two separate lists.
-	'''
 	if yPos > yRes / 2:
 		if yPos - dy - 12 > 4:
 			yOffset = -dy - 12
@@ -209,15 +317,17 @@ def makeTooltip(screen, xPos, yPos, szTxt, uFont, listBox):
 		else:
 			yOffset = 4 - yPos
 	y = yPos + yOffset
+	g_boxSizes[listBox] = (dxTable, dy)
 	# draw help hover
-	screen.addTableControlGFC(listBox, 1, x, y, dx + 24, dy, False, False, 0, 0, TableStyles.TABLE_STYLE_STANDARD)
-	if listBox == "PlotHelp":
-		screen.setStyle(listBox, "Table_Help_Alt_Style")
-	else:
-		screen.setStyle(listBox, "Table_Help_Style")
-	for i, aLine in enumerate(aList):
+	screen.addTableControlGFC(listBox, iColumns, x, y, dxTable, dy, False, False, 0, 0, TableStyles.TABLE_STYLE_STANDARD)
+	screen.setStyle(listBox, "Table_Help_Style")
+	for iColumn in xrange(iColumns):
+		screen.setTableColumnHeader(listBox, iColumn, "", dxColumn)
+	for iRow in xrange(iRows):
 		screen.appendTableRow(listBox)
-		screen.setTableText(listBox, 0, i, uFont + aLine, "", WidgetTypes.WIDGET_GENERAL, 0, 0, 1<<0)
+	# Column by column, top to bottom, so the lines read in their order.
+	for i, aLine in enumerate(aList):
+		screen.setTableText(listBox, i / iRows, i % iRows, uFont + aLine, "", WidgetTypes.WIDGET_GENERAL, 0, 0, 1<<0)
 	return x, y
 
 

@@ -174,7 +174,7 @@ class CvDomesticAdvisor:
 ("DEFENSE",					60,		"int",	None,					self.calculateDefense,	None,			unichr(8861)),
 ("ESPIONAGE_DEF",			60,		"int", "getEspionageDefenseModifier", None,				None,			self.commerceIcons[CommerceTypes.COMMERCE_ESPIONAGE] + "%"),
 ("FEATURES",				106,	"text",	None,					self.calculateFeatures,	None,			TRNSLTR.getText("TXT_KEY_MISC_FEATURES", ())),
-("FOOD",					40,		"int",	"foodDifference",			None,				True,			self.yieldIcons[YieldTypes.YIELD_FOOD]),
+("FOOD",					40,		"int",	None,					self.calculateFood,		None,			self.yieldIcons[YieldTypes.YIELD_FOOD]),
 ("FOUNDED",					90,		"date",	None,					self.calculateFounded,	None,			TRNSLTR.getText("TXT_KEY_DOMESTIC_ADVISOR_FOUNDED", ())),
 ("FREE_EXPERIENCE_LAND",	40,		"int",	None,			self.calculateFreeExperience,	"L",			unichr(8529)),
 ("FREE_EXPERIENCE_SEA",		40,		"int",	None,			self.calculateFreeExperience,	"S",			unichr(8530)),
@@ -548,24 +548,22 @@ class CvDomesticAdvisor:
 		return ""
 
 	def calculateNetHappiness(self, city, szKey="", arg=0):
-		aWellbeing = city.getWellbeing()
-		return aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]
+		return city.getWellbeingNets()[CityWellbeingNetRead.WELLBEING_NET_HAPPINESS]
 
 	def calculateNetHealth(self, city, szKey="", arg=0):
-		aWellbeing = city.getWellbeing()
-		return aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]
+		return city.getWellbeingNets()[CityWellbeingNetRead.WELLBEING_NET_HEALTH]
 
 	def calculateGrowth(self, CyCity, szKey, arg):
-		# Turns til Growth
-		nFood = CyCity.foodDifference(True)
-		# Not enough food, so calculate how many turns until we starve.
-		# We put this here because we still starve if building a food production
-		if nFood < 0:
-			# Use floor divide (//) because we want the number it'll drop below 0
-			# (that's also the reason for the additional 1)
-			return unicode((CyCity.getFood()+1) // nFood)
-
-		return unicode(CyCity.getFoodTurnsLeft())
+		# Turns until growth; a starving city shows its turns until it loses a citizen with a minus sign, and a city
+		# doing neither shows 0 (the column's colours: below 0 is a problem, 0 is neutral).
+		aGrowth = CyCity.getGrowth()
+		iStarvationTurns = aGrowth[CityGrowthRead.GROWTH_READ_STARVATION_TURNS_LEFT]
+		if iStarvationTurns > 0:
+			return u"-%d" % iStarvationTurns
+		iGrowthTurns = aGrowth[CityGrowthRead.GROWTH_READ_TURNS_LEFT]
+		if iGrowthTurns > 0:
+			return unicode(iGrowthTurns)
+		return u"0"
 
 
 	def calculateProduction(self, city, szKey, arg):
@@ -575,38 +573,22 @@ class CvDomesticAdvisor:
 		return unicode(city.getMaintenance())
 
 	def calculateTrade(self, CyCity, szKey, arg):
-		# arg: None to sum all, 'D' to count domestic, 'F' to count foreign.
-		iOwner = CyCity.getOwner()
-		iCityID = CyCity.getID()
-		nTotalTradeProfit = 0
-
-		for iPartnerOwner, iPartnerCity, iProfitTimes100 in GC.getPlayer(iOwner).getCity(iCityID).getTradeRoutes():
-			if iPartnerOwner < 0:
-				continue
-			bForeign = iOwner != iPartnerOwner
-			if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
-				nTotalTradeProfit += GC.getPlayer(iOwner).getCity(iCityID).getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
-
-		# the ONE reduce: the per-route yields summed on the x100 plane and come down once, here
-		return "%d" % (nTotalTradeProfit // 100)
-
+		# arg: None for all routes, 'D' for domestic, 'F' for foreign.
+		iRead = CityTradeRead.TRADE_READ_YIELD
+		if arg == "D":
+			iRead = CityTradeRead.TRADE_READ_DOMESTIC_YIELD
+		elif arg == "F":
+			iRead = CityTradeRead.TRADE_READ_FOREIGN_YIELD
+		return TEXT.getAmountText(CyCity.getTradeReads()[iRead])
 
 	def countTradeRoutes(self, city, szKey, arg):
-		# arg: None to count all, 'D' to count domestic, 'F' to count foreign.
-		nRoutes = 0
-
-		# For each trade route possible
-		for nTradeRoute in xrange(city.getMaxTradeRoutes()):
-			# Get the next trade city
-			pTradeCity = city.getTradeCity(nTradeRoute)
-			# Not quite sure what this does but it's in the MainInterface
-			# and I pretty much C&Ped :p
-			if pTradeCity and pTradeCity.getOwner() >= 0:
-				bForeign = city.getOwner() != pTradeCity.getOwner()
-				if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
-					nRoutes += 1
-
-		return unicode(nRoutes)
+		# arg: None for all routes, 'D' for domestic, 'F' for foreign.
+		iRead = CityTradeRead.TRADE_READ_ROUTES
+		if arg == "D":
+			iRead = CityTradeRead.TRADE_READ_DOMESTIC_ROUTES
+		elif arg == "F":
+			iRead = CityTradeRead.TRADE_READ_FOREIGN_ROUTES
+		return unicode(city.getTradeReads()[iRead])
 
 	def countFreeSpecialists(self, city, szKey, arg):
 		# arg: specialist type string (excluding "SPECIALIST_") e.g. use "ARTIST" to count artist specialists.
@@ -828,25 +810,23 @@ class CvDomesticAdvisor:
 		return szReturn
 
 	def calculateTotalCulture(self, CyCity, szKey, arg):
-		return (CyCity.getCultureForPlayer(self.iPlayer) / 100)
+		return CyCity.getCultureReads()[CityCultureRead.CULTURE_READ_OWNER_AMOUNT]
 
 	def calculateCultureTurns(self, city, szKey, arg):
-
-		iCultureRateTimes100 = city.getCommerceRateTimes100(CommerceTypes.COMMERCE_CULTURE)
-
-		if iCultureRateTimes100 > 0 and city.getCultureThreshold() > 0:
-
-			return (100*city.getCultureThreshold() - city.getCultureForPlayer(self.iPlayer) + iCultureRateTimes100 - 1) / iCultureRateTimes100
-
+		iTurns = city.getCultureReads()[CityCultureRead.CULTURE_READ_TURNS_LEFT]
+		if iTurns > 0:
+			return iTurns
 		return u"-"
 
 	def calculateGreatPeopleTurns(self, city, szKey, arg):
-
-		iGreatPersonRate = city.getGreatPeopleRate()
-		if iGreatPersonRate > 0:
-			iGPPLeft = self.CyPlayer.greatPeopleThresholdNonMilitary() - city.getGreatPeopleProgress()
-			return (iGPPLeft + iGreatPersonRate - 1) / iGreatPersonRate
+		iTurns = city.getGreatPeopleTurnsLeft()
+		if iTurns > 0:
+			return iTurns
 		return u"-"
+
+	def calculateFood(self, city, szKey, arg):
+		# The food the city banks this turn.
+		return city.getGrowth()[CityGrowthRead.GROWTH_READ_FOOD_PER_TURN]
 
 	def canHurry(self, city, szKey, arg):
 		if city.canHurry(arg, False):
@@ -953,25 +933,13 @@ class CvDomesticAdvisor:
 
 	def calculateFreeExperience(self, CyCity, szKey, arg):
 		# arg: Domain identifier; "L" for Land, "S" for Sea, "A" for Air, "I" for Immobile.
-		CyPlayer = self.CyPlayer
-		# Generic modifiers first
-		freeXP = CyCity.getSpecialistFreeExperience()
-		freeXP += CyCity.getFreeExperience()
-		freeXP += CyPlayer.getFreeExperience()
-		iStateRel = CyPlayer.getStateReligion()
-		if iStateRel > -1 and CyCity.isHasReligion(iStateRel):
-			freeXP += CyPlayer.getStateReligionFreeExperience()
-		# Then tack on the proper domain-based extras
-		if arg == "L":
-			freeXP += CyCity.getDomainFreeExperience(DomainTypes.DOMAIN_LAND)
-		elif arg == "S":
-			freeXP += CyCity.getDomainFreeExperience(DomainTypes.DOMAIN_SEA)
-		elif arg == "A":
-			freeXP += CyCity.getDomainFreeExperience(DomainTypes.DOMAIN_AIR)
-		elif arg == "I":
-			freeXP += CyCity.getDomainFreeExperience(DomainTypes.DOMAIN_IMMOBILE)
-
-		return unicode(freeXP)
+		aDomains = {
+			"L" : DomainTypes.DOMAIN_LAND,
+			"S" : DomainTypes.DOMAIN_SEA,
+			"A" : DomainTypes.DOMAIN_AIR,
+			"I" : DomainTypes.DOMAIN_IMMOBILE,
+		}
+		return unicode(CyCity.getDomainExperience(aDomains[arg]))
 
 	#	The grouped reads cannot be named as a bare method in COLUMNS_LIST -- that slot builds
 	#	`CyCity.<name>(<arg>)` and evals it, which has nowhere to put the index. So these columns take the
@@ -1324,6 +1292,21 @@ class CvDomesticAdvisor:
 				try:
 					columnDef = self.COLUMNS_LIST[self.COLUMNS_INDEX[key]]
 					type = columnDef[2]
+					# The cells' text, before anything is drawn, so a number column can be as wide as its widest value.
+					aValues = []
+					for i in cityRange:
+						if columnDef[3]:
+							CyCity = cityList[i]
+							expr = "CyCity." + columnDef[3] + "("
+							if columnDef[5] is not None:
+								expr += str(columnDef[5])
+							expr += ")"
+							aValues.append(unicode(eval(expr, globals(), locals())))
+						elif columnDef[4]:
+							aValues.append(unicode(columnDef[4](cityList[i], key, columnDef[5])))
+					if type == "int":
+						for szValue in aValues:
+							self.columnWidth[key] = max(self.columnWidth[key], CyInterface().determineWidth(u"<font=2>" + szValue) + 12)
 					if type == "bldg":
 						building = columnDef[5]
 						iBuildingId = self.BUILDING_INFO_LIST[building]
@@ -1352,20 +1335,8 @@ class CvDomesticAdvisor:
 					else:
 						return
 
-					if columnDef[3]:
-						expr = "CyCity." + columnDef[3] + "("
-						if columnDef[5] is not None:
-							expr += str(columnDef[5])
-						expr += ")"
-						for i in cityRange:
-							CyCity = cityList[i]
-							szValue = self.ColorCityValues(unicode(eval(expr, globals(), locals())), key)
-							funcTableWrite(PAGE, value + 2, i, szValue, "", eWidGen, 1, 1, justify)
-					else:
-						calcFunc = columnDef[4]
-						for i in cityRange:
-							szValue = self.ColorCityValues(unicode(calcFunc(cityList[i], key, columnDef[5])), key)
-							funcTableWrite(PAGE, value + 2, i, szValue, "", eWidGen, 1, 1, justify)
+					for i, szValue in enumerate(aValues):
+						funcTableWrite(PAGE, value + 2, i, self.ColorCityValues(szValue, key), "", eWidGen, 1, 1, justify)
 				except:
 					#	The column list is customizable, so one bad column must not take the screen down --
 					#	but it must SAY what broke. The bare message here hid every column whose read had

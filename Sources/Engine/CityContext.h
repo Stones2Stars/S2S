@@ -231,6 +231,8 @@ public:
 	bool isHeadquartersOf(int eCorp) const;   // CvCity::isHeadquarters(eCorp)    ({IS_HEADQUARTERS: X}; one game-level lookup)
 	bool isHeadquartersAny() const;           // CvCity::isHeadquarters() -- see the CONTEXT GAP note below
 	bool isCapital() const;                   // CvCity::isCapital (IS_CAPITAL)
+	///<summary>CvCity::isHomeArea (IS_HOME_AREA).</summary>
+	bool isHomeArea() const;
 	bool isGovernmentCenter() const;          // CvCity::isGovernmentCenter (the owner-sanctioned engine counter)
 	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS verdict
 	int  propertyValue(int eProperty) const;  // CvProperties::getValueByProperty (the PROPERTY_ band read)

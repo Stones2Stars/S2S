@@ -26,8 +26,10 @@
 #include <vector>                         // the collectors' out-lists
 #include <utility>                        // std::pair -- the keyed-combat (target, percent) rows
 #include "Defines/CvEnums.h"              // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the group out-array extents
+#include "Engine/CvCityBreakdown.h"       // CityBreakdownSubject -- the cityBreakdown dispatcher's subject
 
 class CvModifiers;
+class CvModEntry;
 class CvInfo;                   // the tagged-target reads take the CANDIDATE's info (its tag bitset is the filter)
 class CvTraitInfo;
 class CityContext;
@@ -70,12 +72,47 @@ struct CvCommerceSplitTerms
 	int     sliderPercent;      // the player's plain 0..100 counter for this channel
 	int64_t share;              // the slider's share of that yield, BEFORE the channel's own stack
 	int     percentSum;         // Σ percent for this channel across the chain (the stack is 100 + this)
+	int64_t stackedShare;       // the share after the stack, as the split computed it
 	int64_t deposits;           // the channel's own deposits (a CONSUMED channel's maintained receiver sum)
 	int64_t processConversion;  // TIER 2 -- production converted by an active process, never multiplied
 	int64_t rate;               // what the split produced
 
 	CvCommerceSplitTerms()
-		: commerceYield(0), sliderPercent(0), share(0), percentSum(0), deposits(0), processConversion(0), rate(0) {}
+		: commerceYield(0), sliderPercent(0), share(0), percentSum(0), stackedShare(0), deposits(0), processConversion(0), rate(0) {}
+};
+
+///<summary>Deposits a what-if adds to one city, per yield and per commerce: flats that go under the percent stack
+/// (upper scopes, radius yields), the city's own flats that come after it, and percents on the stack.</summary>
+struct CvCityRateChanges
+{
+	///<summary>Flats per yield the percent stack multiplies.</summary>
+	int64_t yieldUnderStack[NUM_YIELD_TYPES];
+	///<summary>The city's own flats per yield, added after the stack.</summary>
+	int64_t yieldAfterStack[NUM_YIELD_TYPES];
+	///<summary>Percents per yield on the stack.</summary>
+	int     yieldPercent[NUM_YIELD_TYPES];
+	///<summary>Flats per commerce the percent stack multiplies.</summary>
+	int64_t commerceUnderStack[NUM_COMMERCE_TYPES];
+	///<summary>The city's own flats per commerce, added after the stack.</summary>
+	int64_t commerceAfterStack[NUM_COMMERCE_TYPES];
+	///<summary>Percents per commerce on the stack.</summary>
+	int     commercePercent[NUM_COMMERCE_TYPES];
+
+	CvCityRateChanges()
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			yieldUnderStack[iYield] = 0;
+			yieldAfterStack[iYield] = 0;
+			yieldPercent[iYield] = 0;
+		}
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			commerceUnderStack[iCommerce] = 0;
+			commerceAfterStack[iCommerce] = 0;
+			commercePercent[iCommerce] = 0;
+		}
+	}
 };
 
 class InfoValuation
@@ -437,7 +474,11 @@ public:
 	// before re-scaling (the engine's documented integer-truncation order, mirrored verbatim). The receiver
 	// sum rebuild and every realized-rate consumer call THIS one function -- the combine exists once, on the
 	// calc surface.
-	static int64_t cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra);
+	///<summary>The combine above. pStackedOut receives (BASE + specialists) after the stack, pExtraOut the EXTRA
+	/// tier as the combine adds it, its fraction dropped -- the two parts the rate is the sum of, for a breakdown that
+	/// shows them.</summary>
+	static int64_t cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra,
+		int64_t* pStackedOut = NULL, int64_t* pExtraOut = NULL);
 
 	// THE PER-COMMERCE SPLIT (modifier.md §2a's commerce paragraph -- the §2a two-tier shape carried by the
 	// channel's own pieces; StoneBase's CommerceSplit calc package). A city's realized gold / research / culture /
@@ -602,7 +643,11 @@ public:
 		int64_t cityFlat;      // the city's own flats -- TIER 2 EXTRA, added AFTER the stack
 		int     percentSum;    // Σ percent across the chain (the stack is 100 + this)
 		int     workedPlots;   // how many plots the Σ above actually walked
-		int64_t rate;          // what the combine produced
+		int64_t traitImprovements;  // Σ of traitImprovementRows -- the trait leg of BASE
+		int64_t stackInput;    // BASE + upper flats + specialists -- what the stack multiplies
+		int64_t stacked;       // (BASE + specialists) after the stack, as the combine computed it
+		int64_t extraAdded;    // the EXTRA tier as the combine added it: the city's own flats, their fraction dropped
+		int64_t rate;          // what the combine produced (stacked + extraAdded)
 		// `specialists` DECOMPOSED, one row per held type -- filled from the same fold that produced the total,
 		// for the same reason the plot segments are (one number cannot say which type it came from).
 		std::vector<SpecialistTermRow> specialistRows;
@@ -611,6 +656,41 @@ public:
 		std::vector<TraitImprovementRow> traitImprovementRows;
 	};
 	static int64_t cityReceiverRate(const CvCity& city, int iChannel, CityRateTerms* pTermsOut = NULL);
+	///<summary>The city's realized rate of a channel the city consumes (cityReceiverRate), with its parts appended
+	/// to kBreakdown in the order the combine meets them: the base parts, a subtotal, the percent sources, the
+	/// stacked subtotal, the city's own flat sources and their whole-unit cut. pShare, when given, is a commerce
+	/// split whose slider share joins the parts under the same stack. The caller owns the breakdown's subject
+	/// and how it closes.</summary>
+	static int64_t cityRateBreakdown(const CvCity& city, int iChannel, CvCityBreakdown& kBreakdown,
+		const CvCommerceSplitTerms* pShare);
+	///<summary>cityRateBreakdown for the channel of eYield.</summary>
+	static int64_t cityYieldBreakdown(const CvCity& city, YieldTypes eYield, CvCityBreakdown& kBreakdown);
+	///<summary>The city's rate of eCommerce, the commerce split (CvCity::getCommerceTerms) with its parts in
+	/// kBreakdown: the slider share and the channel's flat sources, a subtotal, the percent sources, the
+	/// process conversion and the total.</summary>
+	static int64_t cityCommerceBreakdown(const CvCity& city, CommerceTypes eCommerce, CvCityBreakdown& kBreakdown);
+	///<summary>The trade-route modifier percent the deposits gated on the route itself (IS_FOREIGN, SHARES_CIVIC,
+	/// json §3.5) give a route from the city to partner: each such deposit whose source deposited into the city's,
+	/// the owner's or the team's package, resolved there with the partner in hand. Every other trade-route
+	/// modifier is in the packages already. With pBreakdown, each deposit goes on it as its source's percent.</summary>
+	static int routeGatedTradeModifier(const CvCity& city, const CvCity& partner, CvCityBreakdown* pBreakdown);
+	///<summary>The flat sources of iChannel at the city, as breakdown lines: the specialists by type with how many
+	/// are assigned, then every other source summed over the scopes it reached, and an "other" line for what they
+	/// leave of iFlatSum.</summary>
+	static void addFlatSourceLines(const CvCity& city, int iChannel, int64_t iFlatSum, CvCityBreakdown& kBreakdown);
+	///<summary>The city's great people rate (CvCity::getGreatPeopleRate) with its parts in kBreakdown: the channel's
+	/// flat sources, its percent sources, then the city's own great people stack.</summary>
+	static int64_t cityGreatPeopleBreakdown(const CvCity& city, CvCityBreakdown& kBreakdown);
+	///<summary>The city's defense (CvCity::getDefenseKinds, DEFENSE_AMOUNT) with its parts in kBreakdown: every
+	/// source that deposits the one defense stack. Counted in percents.</summary>
+	static int64_t cityDefenseBreakdown(const CvCity& city, CvCityBreakdown& kBreakdown);
+	///<summary>One side of the city's wellbeing (CvCity::realizedWellbeing) with its parts in kBreakdown: the
+	/// specialists' share, the deposits by source, then the raw-state terms the calculation adds; anger's percent
+	/// terms each as their share of the citizens, with the whole-citizen cut the calculation makes.</summary>
+	static int64_t cityWellbeingBreakdown(const CvCity& city, WellbeingChannel eWellbeing, CvCityBreakdown& kBreakdown);
+	///<summary>The city's breakdown of eSubject, filled by the calculation that makes the number, and its total. A
+	/// subject no single city number answers (a trade route, the empire's expenses) leaves it empty at 0.</summary>
+	static int64_t cityBreakdown(const CvCity& city, CityBreakdownSubject eSubject, CvCityBreakdown& kBreakdown);
 
 	// ONE deposit that COULD have landed at this city and did NOT, because its §3.9 condition answered no.
 	// ⛔ THIS IS THE ONLY WINDOW ONTO THE REFUSED HALF OF THE COMBINE. Every package read, every receiver total
@@ -630,7 +710,8 @@ public:
 		bool bApplied;                   // did it land? false = the gate refused it
 	};
 	// EVERY city-scope entry of iChannel that a LIVE source of this city authors -- its active buildings, the owner's
-	// civics / traits / techs / heritages / projects, and its held bonuses, religions and corporations --
+	// civics / traits / techs / heritages / projects, its held bonuses, religions and corporations, and its culture
+	// level --
 	// conditioned or not, applied or refused. Sorted by |value| descending.
 	// ⚖ BOTH SIDES OR IT ANSWERS NOTHING. A refusal list alone shows what is missing and hides what is wrong: a
 	// percent that should not be applying is exactly as invisible in a total as one that should be and is not.
@@ -648,7 +729,30 @@ public:
 	static void upperScopeDeposits(const CvPlayer& owner, int iChannel,
 		std::vector<RefusedDeposit>& depositsOut);
 
+	///<summary>Where one of a source's effects stands at a city: it applies (with the value it resolved to), it
+	/// is off (its condition fails there, or the building holding it is dormant), or it applies object by object
+	/// (a unit or plot target, or a unit qualifier), which the city cannot resolve as one value.</summary>
+	enum SourceEffectState
+	{
+		SOURCE_EFFECT_APPLIES,
+		SOURCE_EFFECT_OFF,
+		SOURCE_EFFECT_PER_OBJECT
+	};
+	struct SourceEffectAtCity
+	{
+		const CvModEntry* entry;     // BORROWED from the source's info
+		SourceEffectState state;
+		int64_t value;               // the resolved value when it applies, else the authored value
+	};
+	///<summary>Every effect a building in this city carries, each resolved the way the apply path resolves it:
+	/// city-scope entries against the city, empire-scope ones against the owner. A dormant building's effects are
+	/// all off; an obsolete one carries its whenObsolete effects instead.</summary>
+	static void buildingEffectsAtCity(const CvCity& city, BuildingTypes eBuilding, std::vector<SourceEffectAtCity>& effectsOut);
+
 	static int realizedAtCity(const CvCity& city, int iChannel);
+	///<summary>realizedAtCity with deposits added to the city's chain: iUnderStack flats under the percent stack,
+	/// iAfterStack flats after it, iPercent on the stack -- the same combine fed the what-if's inputs.</summary>
+	static int64_t realizedAtCityWith(const CvCity& city, int iChannel, int64_t iUnderStack, int64_t iAfterStack, int iPercent);
 	// The CITY chain's two LEGS, before the combine -- the ONE description of what a city sits under (team +
 	// empire + (area × owner) + city), shared by realizedAtCity and by every consumer that needs the ONE additive
 	// stack as a number of its own (the commerce split's slider share). It is the SAME roll-up, handed back

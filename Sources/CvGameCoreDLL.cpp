@@ -676,6 +676,61 @@ int64_t intPow64(const int64_t x, const int p)
 	return x * iTmp * iTmp;
 }
 
+int64_t intPowFraction(const int64_t x, const int iNumerator, const int iDenominator, const int iScale)
+{
+	if (iNumerator <= 0 || iDenominator <= 0)
+	{
+		return iScale;
+	}
+	if (x <= 1)
+	{
+		return std::max<int64_t>(0, x) * iScale;
+	}
+	FAssertMsg(x < ((int64_t)1 << 32), "intPowFraction: x must stay below 2^32");
+	const int iFractionBits = 30;
+	const uint64_t iOne = (uint64_t)1 << iFractionBits;
+	const uint64_t iHalf = iOne >> 1;
+	// log2(x): the whole part is the top bit; the fraction comes a bit at a time from squaring x / 2^whole.
+	int iWholeLog = 0;
+	for (uint64_t iRest = (uint64_t)x; iRest >= 2; iRest >>= 1)
+	{
+		++iWholeLog;
+	}
+	uint64_t iMantissa = ((uint64_t)x << iFractionBits) >> iWholeLog;
+	int64_t iLog = (int64_t)iWholeLog << iFractionBits;
+	for (int iBit = iFractionBits - 1; iBit >= 0; --iBit)
+	{
+		iMantissa = (iMantissa * iMantissa + iHalf) >> iFractionBits;
+		if (iMantissa >= 2 * iOne)
+		{
+			iMantissa = (iMantissa + 1) >> 1;
+			iLog |= (int64_t)1 << iBit;
+		}
+	}
+	// 2^(log2(x) * n / d): the whole part is a shift, the fraction a product of 2^(2^-k) for each set bit.
+	const int64_t iExponent = (iLog * iNumerator + iDenominator / 2) / iDenominator;
+	const int iWholeExponent = (int)(iExponent >> iFractionBits);
+	const int64_t iFractionExponent = iExponent & (int64_t)(iOne - 1);
+	static const uint64_t aiRootsOfTwo[iFractionBits] = {
+		1518500250, 1276901417, 1170923762, 1121280436, 1097253708, 1085434106, 1079572136, 1076653033,
+		1075196443, 1074468888, 1074105294, 1073923544, 1073832680, 1073787251, 1073764537, 1073753181,
+		1073747502, 1073744663, 1073743244, 1073742534, 1073742179, 1073742001, 1073741913, 1073741868,
+		1073741846, 1073741835, 1073741830, 1073741827, 1073741825, 1073741825
+	};
+	uint64_t iResult = iOne;
+	for (int iRoot = 0; iRoot < iFractionBits; ++iRoot)
+	{
+		if (iFractionExponent & ((int64_t)1 << (iFractionBits - 1 - iRoot)))
+		{
+			iResult = (iResult * aiRootsOfTwo[iRoot] + iHalf) >> iFractionBits;
+		}
+	}
+	const uint64_t iScaled = iResult * (uint64_t)iScale;
+	return (iWholeExponent >= iFractionBits)
+		? (int64_t)(iScaled << (iWholeExponent - iFractionBits))
+		: (int64_t)((iScaled + ((uint64_t)1 << (iFractionBits - iWholeExponent - 1))) >> (iFractionBits - iWholeExponent));
+}
+
 // int32 pow
 int intPow(const int x, const int p)
 {

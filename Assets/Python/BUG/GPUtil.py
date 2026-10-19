@@ -86,16 +86,12 @@ def findNextCity():
 	iCityId = -1
 	iTurns = 0
 	iPlayer = GAME.getActivePlayer()
-	iThreshold = GC.getPlayer(iPlayer).getGreatPeopleThresholdNonMilitary()
 
 	for iCityX in GC.getPlayer(iPlayer).getCityIds():
-		iRate = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleRate()
-		if iRate > 0:
-			iProgress = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleProgress()
-			iTurnsX = (iThreshold - iProgress + iRate - 1) / iRate
-			if not iTurns or iTurnsX < iTurns:
-				iTurns = iTurnsX
-				iCityId = iCityX
+		iTurnsX = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleTurnsLeft()
+		if iTurnsX > 0 and (not iTurns or iTurnsX < iTurns):
+			iTurns = iTurnsX
+			iCityId = iCityX
 
 	return [iCityId, iTurns]
 
@@ -114,32 +110,16 @@ def findMaxCity():
 
 def getCityTurns(iPlayer, iCityId):
 	if iCityId >= 0:
-		iThreshold = GC.getPlayer(iPlayer).getGreatPeopleThresholdNonMilitary()
-		iRate = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleRate()
-		if iRate > 0:
-			iProgress = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleProgress()
-			iTurns = (iThreshold - iProgress + iRate - 1) / iRate
+		iTurns = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleTurnsLeft()
+		if iTurns > 0:
 			return iTurns
 	return None
 
 def calcPercentages(iPlayer, iCityId):
-	# Calc total rate
-	iTotal = 0
-	for iUnit, _ in g_gpUnitTypes:
-		iTotal += GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleUnitProgress(iUnit)
-	# Calc individual percentages based on rates and total
+	# (chance, unit type) per great person type (CyCity.getGreatPeopleUnitChances).
 	percents = []
-	if iTotal > 0:
-		iLeftover = 100
-		for iUnit in range(GC.getNumUnitInfos()):
-			iProgress = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleUnitProgress(iUnit)
-			if iProgress > 0:
-				iPercent = 100 * iProgress / iTotal
-				iLeftover -= iPercent
-				percents.append((iPercent, iUnit))
-		# Add remaining from 100 to first in list to match Civ4
-		if iLeftover > 0:
-			percents[0] = (percents[0][0] + iLeftover, percents[0][1])
+	for iUnit, iChance in GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleUnitChances():
+		percents.append((iChance, iUnit))
 	return percents
 
 
@@ -204,7 +184,7 @@ def getGreatPeopleText(iPlayer, iCityId, iGPTurns, iGPBarWidth, bGPBarTypesNone,
 
 				szTypes = " -"
 				for iPercent, iUnit in lPercents:
-					szNewTypes = szTypes + " %s%d%%" % (getUnitIcon(iUnit), iPercent)
+					szNewTypes = szTypes + u" %s%s%%" % (getUnitIcon(iUnit), CyGameTextMgr().getAmountText(iPercent))
 					szNewText = szText + " -" + szTypes
 					if CyInterface().determineWidth(uFont + szNewText) > iGPBarWidth:
 						break

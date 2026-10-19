@@ -5939,7 +5939,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					iTempValue += 4 * (aiWith[iJ] - aiWithout[iJ]) / 100;
 				}
 
-				// The percents, applied against what the empire actually produces. A percent is NOT scaled.
+				// The percents, applied against what the empire actually produces.
 				int aiEmpireCommerces[NUM_COMMERCE_TYPES];
 				getCommerces(aiEmpireCommerces);
 				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
@@ -9385,13 +9385,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 							kLoopBuilding.expectedFlatYields(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
 							for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 							{
-								iTempValue += (aiWith[iYield] - aiWithout[iYield]) * 6 / 100;   // ×100 flat -> whole
+								iTempValue += (aiWith[iYield] - aiWithout[iYield]) * 6 / 100;
 							}
 							kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWith, &kBldWith);
 							kLoopBuilding.expectedYieldModifiers(kCityCtx, kEmpireCtx, pCapitalGroup, aiWithout, &kBldWithout);
 							for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 							{
-								iTempValue += (aiWith[iYield] - aiWithout[iYield]) / 2;   // a percent is unscaled
+								iTempValue += (aiWith[iYield] - aiWithout[iYield]) / 2;
 							}
 						}
 						{
@@ -13273,8 +13273,8 @@ static void pai_civicWellbeingAt(const CvCivicInfo& kCivic, const CvCity& kCity,
 {
 	kCivic.expectedWellbeing(kCity.getCityContext(), kOwner.getEmpireContext(),
 		kCity.plotGroup(kOwner.getID()), aiChannels);
-	iHappinessOut = InfoValuation::netHappiness(aiChannels) / 100;
-	iHealthOut = InfoValuation::netHealth(aiChannels) / 100;
+	iHappinessOut = InfoValuation::netHappiness(aiChannels);
+	iHealthOut = InfoValuation::netHealth(aiChannels);
 }
 
 // NULL-safe membership on an info's edge families -- an info with no edges enables nothing.

@@ -12,7 +12,6 @@ ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 TEXT = CyGameTextMgr()
-MAX_COMMERCE_RATE_MODIFIER_VALUE = 10000000
 
 class CvFinanceAdvisor:
 
@@ -56,8 +55,17 @@ class CvFinanceAdvisor:
 		self.iPlayer = iPlayer = GAME.getActivePlayer()
 		self.nWidgetCount = 0
 
-		self.goldFromCivs = 0
-		self.yBuildingExpenses = 0
+		self.aRowNames = []
+		# The hover each part of the panels has; a part not listed has none of its own.
+		self.TERM_WIDGETS = {
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_TRADE_ROUTES		: WidgetTypes.WIDGET_HELP_FINANCE_DOMESTIC_TRADE,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_UNIT_SUPPLY		: WidgetTypes.WIDGET_HELP_FINANCE_AWAY_SUPPLY,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_CITY_MAINTENANCE	: WidgetTypes.WIDGET_HELP_FINANCE_CITY_MAINT,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_CIVIC_UPKEEP		: WidgetTypes.WIDGET_HELP_FINANCE_CIVIC_UPKEEP,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_FOREIGN_INCOME	: WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_FOREIGN_PAYMENTS	: WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME,
+			CityBreakdownTerm.CITY_BREAKDOWN_TERM_INFLATION		: WidgetTypes.WIDGET_HELP_FINANCE_INFLATED_COSTS,
+		}
 		self.szTreasury = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_TREASURY", (0,))[:-3]
 
 		self.bStrike = bStrike = CyPlayer.isStrike()
@@ -117,204 +125,60 @@ class CvFinanceAdvisor:
 
 	def drawBase(self):
 		screen = self.getScreen()
-		# Enumerators
-		eWidGen = WidgetTypes.WIDGET_GENERAL
-		eGameFont = FontTypes.GAME_FONT
 		ePanelHudHelp = PanelStyles.PANEL_STYLE_HUD_HELP
-		# Variables
 		xRes = self.xRes
-		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
-		CyPlayer = self.CyPlayer
-		iPlayer = self.iPlayer
-
 		a3rdX = xRes / 3
 		dx = a3rdX / 16
 		x0 = dx
 		y0 = self.Y_TOP_PAGE + 16
 		dx = a3rdX - 2 * dx
 		dy = self.H_PAGE - 32
-		############
-		# Commerce #
-		############
-		iCommerce = iTiles = iYield0 = iYield1 = iYield2 = iYield3 = iYield4 = 0
-		iTeam = CyPlayer.getTeam()
-		for CyCity in CyPlayer.cities():
-			if not CyCity.isDisorder():
-				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
-				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
-				#  ([CyCity.h]: a panel that recomputes its own breakdown is a second answer that drifts).
-				aTerms = CyCity.getYieldTerms(YieldTypes.YIELD_COMMERCE)
-				iYield0 += int(aTerms[CityYieldTerm.YIELD_TERM_PLOT_BASE])
-				iTiles += int(aTerms[CityYieldTerm.YIELD_TERM_WORKED_PLOTS])
-				# Trade -- the per-route yields sum on the x100 plane; iYield1/iYield2 reduce once at display below
-				for iPartnerOwner, iPartnerCity, iProfitTimes100 in CyCity.getTradeRoutes():
-					if iPartnerOwner < 0: continue
+		self.xValues = dx - 24
+		for i in (1, 2, 3):
+			Pnl = "FinAdv_Scroll_%d" % i
+			screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
+			screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
+			x0 += a3rdX
+		# The empire's commerce as the engine sums its cities' commerce; the sliders follow it.
+		self.aBaseRowNames = []
+		self.yCommerceSlider = self.drawRows(screen, "FinAdv_Scroll_1", FinancePart.FINANCE_PART_COMMERCE, self.aBaseRowNames) + 32
 
-					trade = CyCity.getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
-					if GC.getPlayer(iPartnerOwner).getTeam() == iTeam:
-						iYield1 += trade
-					else: # Foreign Trade
-						iYield2 += trade
-				#  corporations -- the census carries no corporation TERM, so there is nothing to itemize here.
-				#  ⚠ The amount is not lost from the rate: it rides inside the flat terms. What is missing is the
-				#  SPLIT, so the row stays unrendered rather than showing a number this panel cannot source.
-				iYield3 += 0
-				#  specialists -- the census sums the whole specialist contribution, so this reads the one document
-				#  instead of multiplying a per-type rate by a per-type count and hoping the two agree.
-				iYield4 += int(aTerms[CityYieldTerm.YIELD_TERM_SPECIALISTS])
-
-		Pnl = "FinAdv_Scroll_1"
-		screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
-		screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
-
-		x = dx - 24
+	def drawRows(self, screen, Pnl, iPart, aNames):
+		# One line per line of the engine's breakdown of the panel: the label left, the value right, subtotals
+		# and the total in bold, and each line with the hover its part has. Returns the y below the last line.
+		uFont2b = self.aFontList[6]
+		uFont2 = self.aFontList[7]
+		eGameFont = FontTypes.GAME_FONT
 		y = 0
-		# Work plots
-		if iYield0:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_WORKED_TILES", (iTiles,))
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iYield0), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			iCommerce += iYield0
+		for iRole, iTerm, szLabel, szValue in self.CyPlayer.getFinanceRows(iPart):
+			uFont = uFont2
+			if iRole in (CityBreakdownRole.CITY_BREAKDOWN_SUBTOTAL, CityBreakdownRole.CITY_BREAKDOWN_TOTAL):
+				uFont = uFont2b
+				y += 8
+			eWidget = self.TERM_WIDGETS.get(iTerm, WidgetTypes.WIDGET_GENERAL)
+			iData1 = self.iPlayer
+			iData2 = 1
+			szBase = "FinAdv_Row"
+			if iTerm == CityBreakdownTerm.CITY_BREAKDOWN_TERM_UNIT_UPKEEP:
+				szBase = "FinAdv_UnitUpkeep"
+			for szText, iJustify, x in ((szLabel, 1<<0, 8), (szValue, 1<<1, self.xValues)):
+				# Each panel numbers its rows in its own thousand, so no two panels share a widget name.
+				szName = "%s%d" % (szBase, iPart * 1000 + len(aNames))
+				aNames.append(szName)
+				screen.setTextAt(szName, Pnl, uFont + szText, iJustify, x, y, 0, eGameFont, eWidget, iData1, iData2)
 			y += 20
+		return y
 
-		# trade
-		if iYield1:
-			iYield1 /= 100
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_DOMESTIC_TRADE", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_DOMESTIC_TRADE, iPlayer, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iYield1), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_DOMESTIC_TRADE, iPlayer, 1)
-			iCommerce += iYield1
-			y += 20
-
-		if iYield2:
-			iYield2 /= 100
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_FOREIGN_TRADE", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_TRADE, iPlayer, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iYield2), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_TRADE, iPlayer, 1)
-			iCommerce += iYield2
-			y += 20
-
-		# corporations
-		if iYield3 > 0:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_CORPORATIONS", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iYield3), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			iCommerce += iYield3
-			y += 20
-
-		# specialists
-		if iYield4 > 0:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_SPECIALISTS", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iYield4), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			iCommerce += iYield4
-			y += 20
-
-		# buildings
-		iTotalCommerce = CyPlayer.calculateTotalYield(YieldTypes.YIELD_COMMERCE)
-		# buildings include 50% capital bonus for Bureaucracy civic
-		iBuildings = iTotalCommerce - iCommerce
-		if iBuildings > 0:
-			szText = TRNSLTR.getText("TXT_KEY_WB_BUILDINGS", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(iBuildings), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			iCommerce += iBuildings
-			y += 20
-
-		y += 8
-		szText = TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_COMMERCE", ())
-		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		szText = str(iCommerce) + u'%c' % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_COMMERCE)
-		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-		y += 32
-
-		self.yCommerceSlider = y
-
-		# Income
-		x0 += a3rdX
-		Pnl = "FinAdv_Scroll_2"
-		screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
-		screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
-
-		# Expenses
-		x0 += a3rdX
-		Pnl = "FinAdv_Scroll_3"
-		screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
-		screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
-
-		if CyPlayer.isAnarchy():
-			return
-
-		iExpenses = 0
-		iFinalUnitUpkeep = CyPlayer.getFinalUnitUpkeep()
-		totalUnitSupply = CyPlayer.calculateUnitSupply()
-		iTreasuryUpkeep = CyPlayer.getTreasuryUpkeep()
-		totalMaintenance = CyPlayer.getTotalMaintenance()
-		totalCivicUpkeep = CyPlayer.getCivicUpkeep(False)
-		iCorporateMaintenance = CyPlayer.getCorporateMaintenance()
-
-		iInflation = CyPlayer.getFinalExpense() - CyPlayer.calculatePreInflatedCosts()
-		self.goldFromCivs = goldFromCivs = CyPlayer.getGoldPerTurn()
-
-		y = -2
-		screen.setTextAt("unitUpkeep0", Pnl, uFont2 + TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_UNIT_UPKEEP", ()), 1<<0, 6, y, 0, eGameFont, eWidGen, 1, 2)
-		screen.setLabelAt("unitUpkeep1", Pnl, uFont2 + str(iFinalUnitUpkeep), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 2)
-		iExpenses += iFinalUnitUpkeep
-		y += 22
-
-		szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_UNITSUPPLY", ())
-		screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_AWAY_SUPPLY, iPlayer, 1)
-		screen.setLabelAt("", Pnl, uFont2 + str(totalUnitSupply), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_AWAY_SUPPLY, iPlayer, 1)
-		iExpenses += totalUnitSupply
-		y += 20
-
-		szText = TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_CITY_MAINTENANCE", ())
-		screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_CITY_MAINT, iPlayer, 1)
-		screen.setLabelAt("", Pnl, uFont2 + str(totalMaintenance), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_CITY_MAINT, iPlayer, 1)
-		iExpenses += totalMaintenance
-		y += 20
-
-		screen.setLabelAt("", Pnl, uFont2 + TRNSLTR.getText("TXT_KEY_TREASURY_UPKEEP", ()), 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 2)
-		screen.setLabelAt("", Pnl, uFont2 + str(iTreasuryUpkeep), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 2)
-		iExpenses += iTreasuryUpkeep
-		y += 20
-
-		szText = TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_CIVIC_UPKEEP", ())
-		screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_CIVIC_UPKEEP, iPlayer, 1)
-		screen.setLabelAt("", Pnl, uFont2 + str(totalCivicUpkeep), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_CIVIC_UPKEEP, iPlayer, 1)
-		iExpenses += totalCivicUpkeep
-		y += 20
-
-		screen.setLabelAt("", Pnl, uFont2 + TRNSLTR.getText("TXT_INTERFACE_TREASURYHELP_CORPORATE_MAINTENANCE", ()), 1<<0, 8, y, 0, eGameFont, eWidGen, iPlayer, 1)
-		screen.setLabelAt("", Pnl, uFont2 + str(iCorporateMaintenance), 1<<1, x, y, 0, eGameFont, eWidGen, iPlayer, 1)
-		iExpenses += iCorporateMaintenance
-		y += 20
-
-		if goldFromCivs < 0:
-			szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_COST_PER_TURN", ())
-			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME, iPlayer, 1)
-			screen.setLabelAt("", Pnl, uFont2 + str(-goldFromCivs), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME, iPlayer, 1)
-			iExpenses -= goldFromCivs
-			y += 20
-
-		szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_INFLATION", ())
-		screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_INFLATED_COSTS, iPlayer, 1)
-		screen.setLabelAt("", Pnl, uFont2 + str(iInflation), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_INFLATED_COSTS, iPlayer, 1)
-		iExpenses += iInflation
-		y += 20
-
-		y += 8
-		szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_EXPENSES", ())
-		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		screen.setLabelAt("", Pnl, uFont2b + str(iExpenses), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-
-		self.yBuildingExpenses = y + 16
-
+	def clearRows(self, screen, aNames):
+		for szName in aNames:
+			screen.deleteWidget(szName)
+		del aNames[:]
 
 	def updateContents(self):
 		screen = self.getScreen()
 		aName = self.getNextWidgetName
 		self.deleteAllWidgets(screen, aName)
+		self.clearRows(screen, self.aRowNames)
 		# Enumerators
 		eWidGen = WidgetTypes.WIDGET_GENERAL
 		eGameFont = FontTypes.GAME_FONT
@@ -406,193 +270,10 @@ class CvFinanceAdvisor:
 				szCommerce = uFont2b + str(iIncome) + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szCommerce, 1<<1, x, y+yBtnOffset, 0, eGameFont, eWidGen, 1, 1)
 
-		if CyPlayer.isAnarchy():
-			return
+		# Income and expenses, as the engine's gold calculation makes them (CvPlayer::calculateBaseNetGold).
+		self.drawRows(screen, "FinAdv_Scroll_2", FinancePart.FINANCE_PART_INCOME, self.aRowNames)
+		self.drawRows(screen, "FinAdv_Scroll_3", FinancePart.FINANCE_PART_EXPENSES, self.aRowNames)
 
-		iPlayer = self.iPlayer
-		playerGoldModifier = CyPlayer.getCommerceRateModifier(eComGold)
-		playerCapitalGoldModifier = CyPlayer.getCapitalCommerceRateModifier(eComGold)
-
-		# Income
-		iTaxRate = CyPlayer.getCommercePercent(eComGold)
-
-		multipliers = []
-		for iType in range(GC.getNumBuildingInfos()):
-			#	The legacy "global" prefix was a SCOPE fragment: one kind read, asked at two scopes.
-			iMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_CITY)[eComGold]
-			iGlobalMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_EMPIRE)[eComGold]
-			if iMultiplier != 0 or iGlobalMultiplier != 0:
-				multipliers.append([iType, iMultiplier, iGlobalMultiplier, 0, 0.0])
-
-		iHeadquartersCount = 0
-		iShrinesCount = 0
-		fTaxes = 0.0
-		fPlayerGoldModifierEffect = 0.0
-		fBonusGoldModifierEffect = 0.0
-		fUnmodifiedTotal = 0.0
-		fBuildings = 0.0
-		fHeadquarters = 0.0
-		fShrines = 0.0
-		iCorporations = 0
-		fSpecialists = 0.0
-		iWealthCount = 0
-		fWealth = 0.0
-		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
-		for CyCity in CyPlayer.cities():
-			if not CyCity.isDisorder():
-				fCityTaxes = CyCity.getYields()[YieldTypes.YIELD_COMMERCE] * iTaxRate / 100.0
-				fTaxes += fCityTaxes
-
-				fCityBuildings = 0.0
-				fCityHeadquarters = 0.0
-				fCityShrines = 0.0
-				for iType in range(GC.getNumBuildingInfos()):
-					if CyCity.isActiveBuilding(iType):
-						iBuildingGold = CyCity.getBuildingCommerceByBuilding(eComGold, iType)
-						if iBuildingGold:
-							if BUILDING.getHeadquartersCorporation(iType) > -1:
-								fCityHeadquarters += iBuildingGold
-								iHeadquartersCount += 1
-							elif INFO.isShrine(iType):
-								fCityShrines += iBuildingGold
-								iShrinesCount += 1
-							else:
-								fCityBuildings += iBuildingGold
-				fBuildings += fCityBuildings
-				fHeadquarters += fCityHeadquarters
-				fShrines += fCityShrines
-
-				iCityCorporations = CyCity.getCorporationCommerce(eComGold)
-				iCorporations += iCityCorporations
-
-				fCitySpecialists = CyCity.getSpecialistCommerce(eComGold)
-				fSpecialists += fCitySpecialists
-
-				fSpecialists += (CyCity.getSpecialistPopulation() + CyCity.getNumGreatPeople()) * CyPlayer.getSpecialistExtraCommerce(eComGold)
-
-				#  The process conversion is read as the ANSWER, from the same commerce census the split itself
-				#  produces, rather than re-derived here by multiplying a modifier by a production rate. A view
-				#  that recomputes a term is a second implementation of it, free to disagree with the number the
-				#  engine actually used.
-				fCityWealth = 0.0
-				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
-					aCommerceTerms = CyCity.getCommerceTerms(eComGold)
-					fCityWealth = aCommerceTerms[CityCommerceTerm.COMMERCE_TERM_PROCESS_CONVERSION]
-					fWealth += fCityWealth
-					iWealthCount += 1
-
-				# modifiers don't multiply wealth
-				fCityTotal = fCityTaxes + fCityBuildings + fCityHeadquarters + fCityShrines + iCityCorporations + fCitySpecialists
-				fUnmodifiedTotal += fCityTotal
-
-				if CyCity.isCapital():
-					fPlayerGoldModifierEffect += fCityTotal * (playerGoldModifier + playerCapitalGoldModifier) / 100.0
-				else:
-					fPlayerGoldModifierEffect += fCityTotal * playerGoldModifier / 100.0
-
-				# #430 STOPGAP: CyCity.getBonusCommerceRateModifier was removed (m_aiBonus* cut); the bonus commerce-rate modifier is folded into the cascade's total commerce rate. This breakdown row is dropped until a cascade commerce-BREAKDOWN output exists (roadmap F8) -- DISPLAY-only, actual gold unaffected. (fBonusGoldModifierEffect stays 0.0.)
-
-				for entry in multipliers:
-					if CyCity.isActiveBuilding(entry[0]):
-						entry[3] += 1
-						entry[4] += fCityTotal * entry[1] / 100.0
-
-		iTotalMinusTaxes = min(MAX_COMMERCE_RATE_MODIFIER_VALUE,int(fBuildings) + int(fHeadquarters) + int(fShrines) + iCorporations + int(fSpecialists) + int(fWealth) + int(fPlayerGoldModifierEffect) + int(fBonusGoldModifierEffect))
-		for entry in multipliers:
-			if entry[3]:
-				iTotalMinusTaxes += int(entry[4])
-				if entry[2]:
-					fAdjust = fUnmodifiedTotal * entry[2] / 100.0
-					entry[4] += fAdjust
-					fPlayerGoldModifierEffect -= fAdjust
-
-		Pnl = "FinAdv_Scroll_2"
-		y = 0
-		szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_TAXES", ())
-		screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fTaxes)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-		y += 20
-
-		if fBuildings:
-			szText = TRNSLTR.getText("TXT_KEY_WB_BUILDINGS", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fBuildings)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if fHeadquarters:
-			szText = TRNSLTR.getText("TXT_KEY_CORPORATION_HEADQUARTERS", ()) + " (%d)" % iHeadquartersCount
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fHeadquarters)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if iCorporations:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_CORPORATIONS", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(iCorporations), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if fShrines:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_RELIGIOUS_SHRINES", ()) + " (%d)" % iShrinesCount
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fShrines)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if fSpecialists:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_SPECIALISTS", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_SPECIALISTS, iPlayer, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fSpecialists)), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_SPECIALISTS, iPlayer, 1)
-			y += 20
-
-		if fPlayerGoldModifierEffect:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_PLAYER_GOLD_MODIFIERS", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fPlayerGoldModifierEffect)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if fBonusGoldModifierEffect:
-			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_BONUS_GOLD_MODIFIERS", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fBonusGoldModifierEffect)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		if fWealth > 0.0 and iWealthCount > 0:
-			szText = TRNSLTR.getText("TXT_KEY_PROCESS_WEALTH", ()) + " (%d)" % iWealthCount
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fWealth)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-			y += 20
-
-		goldFromCivs = self.goldFromCivs
-		if goldFromCivs > 0:
-			szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_PER_TURN", ())
-			screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME, iPlayer, 1)
-			screen.setLabelAt(aName(), Pnl, uFont2 + str(goldFromCivs), 1<<1, x, y, 0, eGameFont, WidgetTypes.WIDGET_HELP_FINANCE_FOREIGN_INCOME, iPlayer, 1)
-			iIncome += goldFromCivs
-			y += 20
-
-		y += 8
-		szText = TRNSLTR.getText("TXT_KEY_FINANCIAL_ADVISOR_INCOME", ())
-		screen.setLabelAt(aName(), Pnl, uFont2b + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		screen.setLabelAt(aName(), Pnl, uFont2b + str(iIncome), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-		y += 16
-
-		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
-			if iCount and fGold > 0:
-				y += 20
-				szText = INFO.getDescription("BUILDING_", iType) + " "
-				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
-				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
-
-		# Expenses
-		Pnl = "FinAdv_Scroll_3"
-		y = self.yBuildingExpenses
-		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
-			if iCount and fGold < 0:
-				y += 20
-				szText = INFO.getDescription("BUILDING_", iType) + " "
-				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
-				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 
 
 	# returns a unique ID for a widget in this screen
@@ -627,11 +308,13 @@ class CvFinanceAdvisor:
 		NAME	= inputClass.szFunctionName
 
 		screen = self.getScreen()
-		self.tooltip.reset(screen)
+		# Not on arrival: a widget's own hover may already be drawn by then (PythonToolTip.showWidgetHover).
+		if iCode != 4:
+			self.tooltip.reset(screen)
 
 		if iCode == 4: # Mouse Enter
 
-			if NAME == "unitUpkeep":
+			if NAME == "FinAdv_UnitUpkeep":
 				self.tooltip.handle(screen, CyGameTextMgr().getFinanceUnitUpkeepString(self.iPlayer))
 
 		elif iCode == 11: # List Select
@@ -640,6 +323,7 @@ class CvFinanceAdvisor:
 			screen.deleteWidget("FinAdv_Scroll_1")
 			screen.deleteWidget("FinAdv_Scroll_2")
 			screen.deleteWidget("FinAdv_Scroll_3")
+			del self.aRowNames[:]
 			self.drawBase()
 			self.updateContents()
 			return 1
@@ -648,5 +332,5 @@ class CvFinanceAdvisor:
 	def onClose(self):
 		screen = self.getScreen()
 		screen.setDying(True)
-		del self.nWidgetCount, self.goldFromCivs, self.CyPlayer, self.iPlayer, self.bStrike, self.aFontList, self.iconCommerceList, \
-			self.szTreasury, self.yCommerceSlider, self.yBuildingExpenses
+		del self.nWidgetCount, self.CyPlayer, self.iPlayer, self.bStrike, self.aFontList, self.iconCommerceList, \
+			self.szTreasury, self.yCommerceSlider, self.aRowNames, self.aBaseRowNames, self.TERM_WIDGETS, self.xValues

@@ -312,6 +312,9 @@ class WBCityDataScreen:
 				sItem += " (" + str(iNum) + ")"
 			screen.setTableText("WBBonus", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", INFO.getButton("BONUS_", item[1]), WidgetTypes.WIDGET_PYTHON, 7878, item[1], 1<<0 )
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		global iChange

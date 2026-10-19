@@ -26426,7 +26426,9 @@ bool CvUnitAI::AI_hurryFood()
 			// Get a safe path
 			if (generateIgnoreDangerPath(cityX->plot(), &iPathTurns))
 			{
-				const int iTurnsLeft = cityX->getFoodTurnsLeft() - iPathTurns;
+				// A city that is not growing ranks by the food it still lacks for its next citizen.
+				const int iGrowthTurns = cityX->getFoodTurnsLeft();
+				const int iTurnsLeft = ((iGrowthTurns < 0) ? cityX->growthThreshold() - cityX->getFood() : iGrowthTurns) - iPathTurns;
 
 				// Worth actually going
 				if (iTurnsLeft > (1 + GC.getGame().getGameSpeedType()) * 2 / 3 && iTurnsLeft > iBestValue)

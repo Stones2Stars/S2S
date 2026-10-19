@@ -595,10 +595,6 @@
 		<Russian>[ICON_BULLET]%D1 îäíîðàçîâîé íåñòàáèëüíîñòè â ñëó÷àå ïðèíÿòèÿ èíñòèòóòà âëàñòè</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVICHELP_CITY_LIMIT_THRESHOLD</Tag>
-		<English>[ICON_BULLET]City limit: %d1 cities.</English>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_CIVICHELP_SPECIALIST_COMMERCE_CHANGE</Tag>
 		<English>[ICON_BULLET]%s1_Change %F2 from[SPACE]</English>
 		<French>[ICON_BULLET]%s1_Change %F2 :[SPACE]</French>

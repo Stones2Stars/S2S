@@ -133,8 +133,8 @@ namespace
 	// empire's maintenance is exactly that Σ over its cities. It is therefore the same cache holding a different
 	// slot -- never a hand-named scalar beside the package, which is the shape
 	// docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a DEFECT precisely because it forces its own bespoke invalidation path.
-	// ⚠ It is the FIRST non-commerce receiver, so it is also the first to exercise the gather's plain-rate
-	// branch instead of the commerce split.
+	// ⚠ It is the one non-commerce receiver: its member value is each city's realized maintenance
+	// (InfoValuation::realizedAtEmpire), never the commerce split.
 	void cr_addReceivers(CascadeScopeLayout& kLayout, const ModifierFamily* aFamilies, int iCount)
 	{
 		for (int iIndex = 0; iIndex < iCount; ++iIndex)

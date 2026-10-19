@@ -4,6 +4,7 @@
 #define CyPyList_h__
 
 #include <boost/python/list.hpp>
+#include "UI/CvEntryText.h"   // amountText -- the one amount format
 
 //	The ONE array->python::list conversion for the group reads. Every group read answers a fixed-size int array
 //	indexed by an engine enum, so turning it into the list Python indexes is a single shared operation rather
@@ -33,31 +34,15 @@ inline python::list cyToHumanList(const int (&values)[N])
 	return list;
 }
 
-///<summary>A group of AMOUNTS as display text, each reduced from the engine's x100 form with at most two
-/// decimals: "12", "12.5", "-0.75". The text twin of cyToHumanList, for a value a screen prints.</summary>
+///<summary>A group of amounts as display text, in the one amount format (amountText): "12", "12.5", "-0.75".
+/// The text twin of cyToHumanList, for a value a screen prints.</summary>
 template <int N>
 inline python::list cyToHumanTextList(const int (&values)[N])
 {
 	python::list list = python::list();
 	for (int i = 0; i < N; ++i)
 	{
-		const int iAbsValue = values[i] < 0 ? -values[i] : values[i];
-		const wchar_t* szSign = values[i] < 0 ? L"-" : L"";
-		const int iFraction = iAbsValue % 100;
-		wchar_t szText[32];
-		if (iFraction == 0)
-		{
-			swprintf(szText, L"%s%d", szSign, iAbsValue / 100);
-		}
-		else if (iFraction % 10 == 0)
-		{
-			swprintf(szText, L"%s%d.%d", szSign, iAbsValue / 100, iFraction / 10);
-		}
-		else
-		{
-			swprintf(szText, L"%s%d.%02d", szSign, iAbsValue / 100, iFraction);
-		}
-		list.append(std::wstring(szText));
+		list.append(std::wstring(amountText(values[i]).GetCString()));
 	}
 	return list;
 }
