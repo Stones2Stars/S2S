@@ -118,9 +118,7 @@ class CvMainInterface:
 		self.bPlotHelpBan = False
 		self.xMouseNoPlotHelp = -1
 		self.yMouseNoPlotHelp = -1
-		self.bLockedTT = False
-		self.iOffsetTT = []
-		self.szHelpText = ""
+		self.tooltip = pyTT.PythonToolTip()
 		self.szPlotHelp = ""
 		pyTT.noteSilentArea(self)
 
@@ -1438,8 +1436,8 @@ class CvMainInterface:
 			CyIF.setDirty(InterfaceDirtyBits.Help_DIRTY_BIT, False)
 
 		# Tooltip
-		if self.bTooltip and self.bLockedTT:
-			pyTT.followCursor(screen, "Tooltip", self.iOffsetTT)
+		if self.bTooltip and self.tooltip.bLockedTT:
+			self.tooltip.handle(screen)
 
 
 	def resetEndTurnObjects(self):
@@ -2145,27 +2143,30 @@ class CvMainInterface:
 			screen.enable("Conscript", bOfInterest and aCityFlags[CityFlagKind.CITY_FLAG_CAN_CONSCRIPT])
 
 		elif AtUnit:
-			# Unit action list
-			x, y, w, h = self.actionBarRect()
-			iSize = MainOpt.getUnitIconSize()
-			MuLi = "UnitButtons"
-			screen.addMultiListControlGFC(MuLi, "", x, y, w, h, 1, iSize, iSize, TableStyles.TABLE_STYLE_STANDARD)
+			pyTT.buildButtonLists(self.buildActionBar, screen, AtUnit)
 
-			actions = CyIF.getActionsToShow()
-			for i, iType in enumerate(actions):
-				BTN = INFO.getButton("ACTION_", iType)
-				screen.appendMultiListButton(MuLi, BTN, 0, WidgetTypes.WIDGET_ACTION, iType, 1, False)
-				if not CyIF.canHandleAction(iType, False):
-					screen.disableMultiListButton(MuLi, 0, i, BTN)
-				if GC.getPlayer(AtUnit.iPlayer).getUnit(AtUnit.iUnitID).isActionRecommended(iType):
-					screen.enableMultiListPulse(MuLi, True, 0, i)
-				else:
-					screen.enableMultiListPulse(MuLi, False, 0, i)
+	# Unit action list
+	def buildActionBar(self, screen, AtUnit):
+		x, y, w, h = self.actionBarRect()
+		iSize = MainOpt.getUnitIconSize()
+		MuLi = "UnitButtons"
+		screen.addMultiListControlGFC(MuLi, "", x, y, w, h, 1, iSize, iSize, TableStyles.TABLE_STYLE_STANDARD)
 
-			if CyIF.canCreateGroup():
-				screen.appendMultiListButton(MuLi, self.artPathButtonGroupCreate, 0, WidgetTypes.WIDGET_CREATE_GROUP, 0, 1, False)
-			if CyIF.canDeleteGroup():
-				screen.appendMultiListButton(MuLi, self.artPathButtonGroupSplit, 0, WidgetTypes.WIDGET_DELETE_GROUP, 0, 1, False)
+		actions = CyIF.getActionsToShow()
+		for i, iType in enumerate(actions):
+			BTN = INFO.getButton("ACTION_", iType)
+			screen.appendMultiListButton(MuLi, BTN, 0, WidgetTypes.WIDGET_ACTION, iType, 1, False)
+			if not CyIF.canHandleAction(iType, False):
+				screen.disableMultiListButton(MuLi, 0, i, BTN)
+			if GC.getPlayer(AtUnit.iPlayer).getUnit(AtUnit.iUnitID).isActionRecommended(iType):
+				screen.enableMultiListPulse(MuLi, True, 0, i)
+			else:
+				screen.enableMultiListPulse(MuLi, False, 0, i)
+
+		if CyIF.canCreateGroup():
+			screen.appendMultiListButton(MuLi, self.artPathButtonGroupCreate, 0, WidgetTypes.WIDGET_CREATE_GROUP, 0, 1, False)
+		if CyIF.canDeleteGroup():
+			screen.appendMultiListButton(MuLi, self.artPathButtonGroupSplit, 0, WidgetTypes.WIDGET_DELETE_GROUP, 0, 1, False)
 
 
 	def actionBarRect(self):
@@ -5245,31 +5246,17 @@ class CvMainInterface:
 
 	def hideTooltip(self, screen):
 		self.bTooltip = False
-		self.bLockedTT = False
 		self.dataTT = []
-		screen.hide("Tooltip")
+		self.tooltip.reset(screen)
 
 	def updateTooltip(self, screen, szHelpText, xPos=-1, yPos=-1):
 		if not szHelpText or self.iInterfaceType == InterfaceVisibility.INTERFACE_HIDE_ALL:
 			return
-		if szHelpText != self.szHelpText:
-			self.szHelpText = szHelpText
-			iX, iY = pyTT.makeTooltip(screen, xPos, yPos, szHelpText, "Tooltip")
-			POINT = Win32.getCursorPos()
-			self.iOffsetTT = [iX - POINT.x, iY - POINT.y]
-			self.xMouseTT = POINT.x
-			self.yMouseTT = POINT.y
-			if xPos == yPos == -1:
-				self.bLockedTT = True
-		else:
-			if xPos == yPos == -1:
-				POINT = Win32.getCursorPos()
-				self.xMouseTT = POINT.x
-				self.yMouseTT = POINT.y
-				pyTT.followCursor(screen, "Tooltip", self.iOffsetTT)
-				self.bLockedTT = True
-			screen.moveToFront("Tooltip")
-			screen.show("Tooltip")
+		self.tooltip.handle(screen, szHelpText, xPos, yPos)
+		# Where the mouse was when the box was shown, for the stuck check in updateScreen.
+		POINT = Win32.getCursorPos()
+		self.xMouseTT = POINT.x
+		self.yMouseTT = POINT.y
 		self.bTooltip = True
 		screen.hide("PlotHelp")
 

@@ -14,23 +14,25 @@ class PythonToolTip:
 		self.szTextTT = None
 		self.iOffsetTT = [0, 0]
 		self.bLockedTT = False
+		# Where the screen's own widget coordinates start on the display (setScreenOrigin).
+		self.aOrigin = (0, 0)
 
 	def handle(self, screen, szText = None, xPos = -1, yPos = -1):
 		if not szText:
 			# None means something, while sending in an empty string is a fluke.
 			if szText is None:
-				followCursor(screen, "Tooltip", self.iOffsetTT)
+				followCursor(screen, "Tooltip", self.iOffsetTT, self.aOrigin)
 			return
 
 		if szText != self.szTextTT:
 			self.szTextTT = szText
-			iX, iY = makeTooltip(screen, xPos, yPos, szText, "Tooltip")
+			iX, iY = makeTooltip(screen, xPos, yPos, szText, "Tooltip", self.aOrigin)
 			POINT = Win32.getCursorPos()
 			self.iOffsetTT = [iX - POINT.x, iY - POINT.y]
 
 		else: # Already cached, move tooltip to cursor and make it visible
 			if xPos == yPos == -1:
-				followCursor(screen, "Tooltip", self.iOffsetTT)
+				followCursor(screen, "Tooltip", self.iOffsetTT, self.aOrigin)
 			screen.moveToFront("Tooltip")
 			screen.show("Tooltip")
 
@@ -40,6 +42,8 @@ class PythonToolTip:
 	def reset(self, screen):
 		screen.hide("Tooltip")
 		self.bLockedTT = False
+		# The next hover draws afresh: by then the screen may have been rebuilt, or be another screen of the same object.
+		self.szTextTT = None
 
 # The one hover (docs/reference/tooltip-look.md § THE ONE HOVER). The game asks the DLL for a widget's hover text
 # once, when the mouse arrives on it; the DLL hands that text to showWidgetHover, and the screen whose widget the
@@ -51,17 +55,34 @@ g_hoverScreen = None
 # isCursorOverSilentArea(). The cursor over that area is the mouse on those widgets.
 g_silentAreaScreen = None
 g_bSilentAreaHover = False
+# True while a screen builds its button lists (buildButtonLists).
+g_bBuildingButtonLists = False
 g_hoverTooltips = {}
-# The size makeTooltip last drew each box at, so a box that follows the cursor stays inside the screen.
+# The size makeTooltip last drew each box at, so a box that follows the cursor stays inside the display.
 g_boxSizes = {}
 
-def followCursor(screen, listBox, aOffset):
-	# Moves the box to the cursor at the offset it was drawn with, kept inside the screen on every side.
+def followCursor(screen, listBox, aOffset, aOrigin=(0, 0)):
+	# Moves the box to the cursor at the offset it was drawn with, kept inside the display on every side, in the
+	# coordinates of a screen whose widgets start at aOrigin.
 	POINT = Win32.getCursorPos()
 	dx, dy = g_boxSizes.get(listBox, (0, 0))
 	iX = min(max(POINT.x + aOffset[0], 0), max(SR.x - dx, 0))
 	iY = min(max(POINT.y + aOffset[1], 0), max(SR.y - dy, 0))
-	screen.moveItem(listBox, iX, iY, 0)
+	screen.moveItem(listBox, iX - aOrigin[0], iY - aOrigin[1], 0)
+
+def setScreenOrigin(screenObject, iX, iY):
+	# The corner a screen was placed at with setDimensions (§ THE ONE HOVER, On screen).
+	hoverTooltip(screenObject).aOrigin = (iX, iY)
+
+def buildButtonLists(fBuild, *args):
+	# Runs fBuild(*args), which builds a screen's button lists; the text requests it causes are not hovers
+	# (§ THE ONE HOVER, Button lists).
+	global g_bBuildingButtonLists
+	g_bBuildingButtonLists = True
+	try:
+		return fBuild(*args)
+	finally:
+		g_bBuildingButtonLists = False
 
 def noteSilentArea(screenObject):
 	global g_silentAreaScreen
@@ -103,8 +124,11 @@ def leaveAll():
 def showWidgetHover(szText):
 	# True when a screen drew the text; the DLL then leaves the game's own box empty. The game also asks for every
 	# action button's text when the action bar is rebuilt, wherever the mouse is, so a request never grants the
-	# hover: the screen the mouse arrived on draws it, or the silent area when the cursor is over it now.
+	# hover: the screen the mouse arrived on draws it, or the silent area when the cursor is over it now. A request
+	# while button lists are built leaves the text with the game (§ THE ONE HOVER, Button lists).
 	global g_hoverScreen, g_bSilentAreaHover
+	if g_bBuildingButtonLists:
+		return False
 	screenObject = g_hoverScreen
 	if screenObject is None and g_silentAreaScreen is not None and g_silentAreaScreen.isCursorOverSilentArea():
 		screenObject = g_silentAreaScreen
@@ -259,7 +283,9 @@ def wrapLines(aWidthList, dx, uFont):
 	return aList
 
 
-def makeTooltip(screen, xPos, yPos, szTxt, listBox):
+def makeTooltip(screen, xPos, yPos, szTxt, listBox, aOrigin=(0, 0)):
+	# Lays the box out on the display at (xPos, yPos), the cursor when -1, and draws it in the coordinates of a
+	# screen whose widgets start at aOrigin. Returns the box's display position.
 	uFont = TOOLTIP_FONT
 	bSetX = False
 	bSetY = False
@@ -346,17 +372,17 @@ def makeTooltip(screen, xPos, yPos, szTxt, listBox):
 			yOffset = -dy - 12
 		else:
 			yOffset = 4 - yPos
-	else: # Bottom half of the screen.
+	else: # Top half of the screen.
 		if yPos + dy + 24 < yRes - 4:
 			yOffset = 24
-		elif yPos - yRes -dy - 4 > 4:
-			yOffset = yRes - yPos -dy - 4
+		elif yRes - dy - 4 > 4:
+			yOffset = yRes - yPos - dy - 4
 		else:
 			yOffset = 4 - yPos
 	y = yPos + yOffset
 	g_boxSizes[listBox] = (dxTable, dy)
 	# draw help hover
-	screen.addTableControlGFC(listBox, iColumns, x, y, dxTable, dy, False, False, 0, 0, TableStyles.TABLE_STYLE_STANDARD)
+	screen.addTableControlGFC(listBox, iColumns, x - aOrigin[0], y - aOrigin[1], dxTable, dy, False, False, 0, 0, TableStyles.TABLE_STYLE_STANDARD)
 	screen.setStyle(listBox, "Table_Help_Style")
 	for iColumn in xrange(iColumns):
 		screen.setTableColumnHeader(listBox, iColumn, "", dxColumn)

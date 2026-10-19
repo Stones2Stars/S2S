@@ -5,6 +5,7 @@
 ## Inspiration from zappara to handle new religions, extended to handle new types of buildings and units
 
 from CvPythonExtensions import *
+import PythonToolTip
 import CvScreenEnums
 
 import BugCore
@@ -147,7 +148,10 @@ class CvReligionScreen:
 		screen.showScreen( PopupStates.POPUPSTATE_IMMEDIATE, False)
 
 		# Set the background and exit button, and show the screen
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
+		iScreenX = screen.centerX(0)
+		iScreenY = screen.centerY(0)
+		screen.setDimensions(iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
+		PythonToolTip.setScreenOrigin(self, iScreenX, iScreenY)
 
 		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("MAINMENU_SLIDESHOW_LOAD").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )

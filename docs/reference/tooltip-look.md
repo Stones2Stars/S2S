@@ -57,26 +57,32 @@ Every hover in S2S shows in one box: the Python table `PythonToolTip.makeTooltip
 (`Table_Help_Style`, the tile hover's skin). A hover's text always comes from an engine composer; the box formats
 nothing and derives nothing.
 
-- **Lines, columns, overflow.** The box lays its lines in one column; when they are taller than the screen they
-  fill side-by-side columns sized to the player's screen. A composer that hands over runs of sources
-  (`CityBreakdownTextRun`) lets `PythonToolTip.fitLines` show a run as its one summary line on a screen too
+- **Lines, columns, overflow.** The box lays its lines in one column; when they are taller than the display they
+  fill side-by-side columns sized to the player's display. A composer that hands over runs of sources
+  (`CityBreakdownTextRun`) lets `PythonToolTip.fitLines` show a run as its one summary line on a display too
   small even for columns, largest runs first, closing with a line that the full list is one click away.
 - **Widget hovers.** At the end of `CvDLLWidgetData::parseHelp` the text goes to
   `CvScreensInterface.showWidgetHover`, and the game's own box is left empty when a screen draws it.
   `CvScreensInterface.handleInput` passes every screen's input to `PythonToolTip.noteHoverInput`, so the box
   draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen answers
-  `getScreen()`; a screen with its own tooltip handling answers `showHover(szText)` / `hideHover()`.
+  `getScreen()` and draws in its `PythonToolTip` (`hoverTooltip`); a screen with its own tooltip handling
+  answers `showHover(szText)` / `hideHover()`, and the main interface's draws in its own `PythonToolTip` too.
+  A box hidden on leave is drawn afresh on the next hover (`PythonToolTip.reset`), since by then its screen may
+  have been rebuilt or replaced.
 - ⛔ **Hover state comes ONLY from the mouse.** A screen owns the hover because the mouse arrived on one of its
-  widgets, and nothing else ever grants it. A help REQUEST is not a hover: the game asks `parseHelp` for every
-  action button whenever the action bar is rebuilt, with the mouse anywhere, so a request that set or implied the
-  owner painted the bar's last button into the box. Closing a screen (`CvScreensInterface.onClose` →
-  `PythonToolTip.noteScreenClosed`) and ending the active player's turn, which freezes the screen so no arrive or
-  leave survives it (`CvEventManager.onEndPlayerTurn` → `PythonToolTip.leaveAll`), only ever CLEAR it.
+  widgets, and nothing else ever grants it: a help REQUEST is not a hover. Closing a screen
+  (`CvScreensInterface.onClose` → `PythonToolTip.noteScreenClosed`) and ending the active player's turn, which
+  freezes the screen so no arrive or leave survives it (`CvEventManager.onEndPlayerTurn` →
+  `PythonToolTip.leaveAll`), only ever CLEAR it.
   ⇒ A widget that reports neither arrive nor leave — the action bar — is hovered while the CURSOR is over its
   area, asked live when the text arrives (`CvMainInterface.isCursorOverSilentArea`, laid out by the same
   `actionBarRect` that places the bar), and its box goes when an update finds the cursor off the area
-  (`PythonToolTip.pollSilentArea`). Its known ceiling: a rebuild while the cursor is ON the bar can show the
-  bar's last button until the cursor reaches another one, since the game asks only on arrival.
+  (`PythonToolTip.pollSilentArea`).
+- **Button lists.** While a button list is built (`appendMultiListButton`) the game asks for its buttons' texts,
+  with the mouse anywhere, and stores each with its button; a button stored with an empty text is never asked
+  again. A screen therefore builds its lists inside `PythonToolTip.buildButtonLists` (the action bar,
+  `CvMainInterface.buildActionBar`; the build list, `BuildListScreen.drawBuilds`), and a request during the build
+  leaves the text with the game and draws nothing.
 - **What the game does not report.** For a general widget the game passes Python no data, only the trailing
   number of the widget's name (the ID), so a screen names such a widget `TYPE|Case<index>`. A stacked bar reports
   neither arrive nor leave, so a bar is a general widget and its text carries the bar's hover. A label
@@ -84,8 +90,12 @@ nothing and derives nothing.
   widget's text, the game's own box shows it.
 - **Arrival never hides the box.** The text can be drawn before the screen hears the mouse arrive (a table cell's
   text is), so a screen hides the box on leave and on its other input, and its own hovers redraw on arrival.
-- **On screen.** A box that follows the cursor keeps inside the screen on every side
-  (`PythonToolTip.followCursor`, from the size `makeTooltip` drew it at).
+- **On screen.** The box keeps inside the display on every side: `makeTooltip` places it above the cursor in the
+  display's bottom half and below it in the top half, against the display edge on that side when it does not fit
+  there, and `followCursor` moves it from the size `makeTooltip` drew it at. A screen placed with `setDimensions`
+  lays its widgets out from that corner, so a screen placed off (0, 0) whose widgets carry engine hover text —
+  the tech popup (`TechWindow`, `TechWindowWide`) and the Religion advisor — registers the corner with
+  `PythonToolTip.setScreenOrigin`, and its box is laid out on the display and drawn in the screen's coordinates.
 - ⚖ **The box's LOOK belongs to the player.** Styling is subjective and depends on the screen, so the font size,
   colours and opacity are player options read when the box is drawn, never one value tuned to one screen
   ([#597](https://github.com/Stones2Stars/S2S/issues/597)).

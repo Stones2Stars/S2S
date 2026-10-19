@@ -2,6 +2,7 @@
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
 import CvScreenEnums
+import PythonToolTip
 
 # globals
 # The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
@@ -91,7 +92,7 @@ class BuildListScreen:
     self.drawQueue()
 
     # draw the builds
-    self.drawBuilds()
+    PythonToolTip.buildButtonLists(self.drawBuilds)
 
     # Show the screen
     screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)

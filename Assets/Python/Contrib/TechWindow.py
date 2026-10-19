@@ -6,6 +6,7 @@
 ## Copyright (c) 2008 The BUG Mod.
 
 from CvPythonExtensions import *
+import PythonToolTip
 
 import BugCore
 TechWindowOpt = BugCore.game.TechWindow
@@ -135,7 +136,10 @@ class CvTechSplashScreen:
 
 		screen.addDDSGFC("TechSplashBackground", CyArtFileMgr().getInterfaceArtInfo("TEMP_BG2").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.showWindowBackground(True)
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
+		iScreenX = screen.centerX(0)
+		iScreenY = screen.centerY(0)
+		screen.setDimensions(iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
+		PythonToolTip.setScreenOrigin(self, iScreenX, iScreenY)
 
 		# Create panels
 
