@@ -490,9 +490,13 @@ def update(argsList):
 		screen = screenMap[argsList[0]]
 		screen.update(argsList[1])
 
+def leaveHoversAtEndTurn():
+	PythonToolTip.leaveAll()
+
 def onClose(argsList):
 	if argsList[0] in screenMap:
 		screen = screenMap[argsList[0]]
+		PythonToolTip.noteScreenClosed(screen)
 		if hasattr(screen, "onClose") and isinstance(screen.onClose, types.MethodType):
 			screen.onClose()
 

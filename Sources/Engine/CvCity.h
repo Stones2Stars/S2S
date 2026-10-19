@@ -1321,6 +1321,9 @@ public:
 	void popOrder(int iNum, bool bFinish = false, bool bChoose = false, bool bResolveList = true);
 	void startHeadOrder();
 	void stopHeadOrder();
+	/// <summary>Moves the first order this city can work to the head when the head is a capped building that
+	/// other cities are actively building ahead of it; that building stays queued behind it.</summary>
+	void skipBlockedActiveBuild();
 
 	int getOrderQueueLength() const;
 	bst::optional<OrderData> getHeadOrder() const { return m_orderQueue.empty() ? bst::optional<OrderData>() : m_orderQueue.front(); }

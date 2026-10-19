@@ -215,6 +215,7 @@ public:
 	// NOT a gate reason -- set from the live getFirstBuildingOrder read on SEVT_CITY_ORDER_CHANGED (+ the load-end
 	// gate pass). Split out from the gate REASON precisely so bContinue can tell "queued" from "gate refused".
 	void setQueued(int iId, bool bQueued);
+	void setActiveElsewhere(int iId, bool bActiveElsewhere);
 	bool isHeld(int iId) const;
 	// The STATIC-EXCLUSION read (enabler.md par.8): the permanent, life-of-the-owner bars seeded at initDomain
 	// (a tech's identity.disable + its civilization's never-researchable list; a building's notConstructible; a
@@ -241,7 +242,10 @@ public:
 	// caller of setQueued, and that asymmetry is the DESIGN, not an unfinished half: wiring setQueued for units
 	// "for symmetry" would silently delete every queued unit from the frontier, and the AI production loops
 	// iterate exactly this list.
-	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED && !isQueued(iId); }
+	// The ACTIVE-ELSEWHERE overlay (FLAG_ACTIVE_ELSEWHERE) withholds the fresh offer the same way: a capped building
+	// other cities in its cap's scope are actively building as their current production, up to the cap
+	// ([enabler.md] par.4). Building-only, like QUEUED, and the CONTINUE verdict reads past it too.
+	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED && !isOfferWithheld(iId); }
 	// listedForContinue = the CONTINUE verdict (canConstruct bContinue=true): gate-passed, IGNORING the queued
 	// overlay. A building already in the queue IS queued by definition, so excluding it here would cancel every
 	// in-progress build each turn (the doCheckProduction purge). Reads past FLAG_QUEUED; the requires-gate still applies.
@@ -275,16 +279,16 @@ private:
 	// because the two genuinely differ once a hide-clause is in play, and inTree() must answer the membership
 	// half (docs/architecture/patterns.md §DRY (single implementation): one formula, one place -- refresh() applies it and both reads take it
 	// from there rather than each re-deriving it).
-	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_IN_TREE = 4, FLAG_QUEUED = 8 };
+	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_IN_TREE = 4, FLAG_QUEUED = 8, FLAG_ACTIVE_ELSEWHERE = 16 };
 
 	bool inRange(int iId) const { return iId >= 0 && iId < (int)m_aState.size(); }
-	bool isQueued(int iId) const { return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) != 0; }
+	bool isOfferWithheld(int iId) const { return inRange(iId) && (m_aFlags[iId] & (unsigned char)(FLAG_QUEUED | FLAG_ACTIVE_ELSEWHERE)) != 0; }
 	void refresh(int iId);                         // re-derive m_aState[iId] from the formula
 
 	std::vector<unsigned char> m_aState;           // tri-state per enum id -- the frontier the reads serve
 	std::vector<short> m_aiEnable;                 // held sources enabling id
 	std::vector<short> m_aiRemove;                 // held sources removing id (obsoletes/replaces/disables)
-	std::vector<unsigned char> m_aFlags;           // FLAG_HELD | FLAG_STATIC_EXCLUDED | FLAG_IN_TREE | FLAG_QUEUED
+	std::vector<unsigned char> m_aFlags;           // FLAG_HELD | FLAG_STATIC_EXCLUDED | FLAG_IN_TREE | FLAG_QUEUED | FLAG_ACTIVE_ELSEWHERE
 	std::vector<unsigned char> m_aGateReason;      // GateReason per id -- WHY the gate refused
 	bool m_bSeeded;
 };

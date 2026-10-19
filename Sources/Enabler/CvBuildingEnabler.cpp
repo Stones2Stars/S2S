@@ -285,6 +285,84 @@ static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 // edge re-gates it on the successor's flips), the allowed self-caps (world/team/empire, the tally's real
 // buildings domain), the per-CITY wonder-CATEGORY cap from the city's CultureLevel, AND the
 // SpecialBuilding GROUP cap above.
+// The cities in a cap's ACTIVE scope -- the owner's team for a world or team cap, the owner alone for an empire
+// cap -- whose current production is iB, this city left out ([enabler.md] par.4). bRankedAheadOnly keeps only
+// the ones that build before this city does: more production invested, then the lower owner, then the lower id.
+static int bd_activeBuilders(int iB, const CvCity& kCity, bool bTeamScope, bool bRankedAheadOnly)
+{
+	const BuildingTypes eBuilding = (BuildingTypes)iB;
+	const PlayerTypes eOwner = kCity.getOwner();
+	const TeamTypes eOwnerTeam = GET_PLAYER(eOwner).getTeam();
+	const int iOwnProgress = kCity.getProgressOnBuilding(eBuilding);
+	int iCount = 0;
+	for (int iP = 0; iP < MAX_PLAYERS; iP++)
+	{
+		const PlayerTypes eP = (PlayerTypes)iP;
+		const CvPlayer& kP = GET_PLAYER(eP);
+		if (bTeamScope ? kP.getTeam() != eOwnerTeam : eP != eOwner) continue;
+		// Nobody here has it queued, so nobody here is building it: the common case walks no city.
+		if (kP.getBuildingMaking(eBuilding) == 0) continue;
+		foreach_(const CvCity* pCity, kP.cities())
+		{
+			if (pCity == &kCity || !pCity->isProductionBuilding() || pCity->getProductionBuilding() != eBuilding) continue;
+			if (bRankedAheadOnly)
+			{
+				const int iProgress = pCity->getProgressOnBuilding(eBuilding);
+				const bool bAhead = iProgress > iOwnProgress
+					|| (iProgress == iOwnProgress && (eP < eOwner || (eP == eOwner && pCity->getID() < kCity.getID())));
+				if (!bAhead) continue;
+			}
+			iCount++;
+		}
+	}
+	return iCount;
+}
+
+// Do the existing copies plus the cities actively building iB reach one of its self-caps ([enabler.md] par.4)?
+static bool bd_activeBuildsReachCap(int iB, const CvCity& kCity, bool bRankedAheadOnly)
+{
+	const PlayerTypes eOwner = kCity.getOwner();
+	// An empire-level building is held once by the empire ([enabler.md] par.2), so it is one per empire with no
+	// authored cap: the holding, or another of the owner's cities actively building it, fills it.
+	if (GC.getBuildingInfo((BuildingTypes)iB).isEmpireLevel()
+	&& (GET_PLAYER(eOwner).hasEmpireBuilding((BuildingTypes)iB) || bd_activeBuilders(iB, kCity, false, bRankedAheadOnly) > 0))
+	{
+		return true;
+	}
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
+	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
+	if (a == NULL) return false;
+	for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
+	{
+		const int iCap = a->cap((EnAllowedCap)iKind);
+		if (iCap < 0) continue;
+		int iExisting;
+		bool bTeamScope;
+		if (iKind == ALLOWEDCAP_WORLD)
+		{
+			iExisting = CvCascadeTally::buildingCount(0, iB, CASCADE_COUNT_WORLD);
+			bTeamScope = true;
+		}
+		else if (iKind == ALLOWEDCAP_TEAM)
+		{
+			iExisting = CvCascadeTally::buildingCount((int)GET_PLAYER(eOwner).getTeam(), iB, CASCADE_COUNT_TEAM);
+			bTeamScope = true;
+		}
+		else if (iKind == ALLOWEDCAP_EMPIRE)
+		{
+			if (GC.getBuildingInfo((BuildingTypes)iB).isNoInstanceLimit()) continue;
+			iExisting = CvCascadeTally::buildingCount((int)eOwner, iB, CASCADE_COUNT_EMPIRE);
+			bTeamScope = false;
+		}
+		else
+		{
+			continue;
+		}
+		if (iExisting + bd_activeBuilders(iB, kCity, bTeamScope, bRankedAheadOnly) >= iCap) return true;
+	}
+	return false;
+}
+
 static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set<int>& waived, EnablerDomain& d, int iB)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
@@ -334,6 +412,9 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	// doCheckProduction cancelled every in-progress build EACH TURN (progress lost). Live object-owned read;
 	// re-run on SEVT_CITY_ORDER_CHANGED (onCityOrderChanged) + the load-end gate pass.
 	d.setQueued(iB, kCity.getFirstBuildingOrder((BuildingTypes)iB) != -1);
+	// ACTIVE-ELSEWHERE is the same kind of overlay: other cities actively building it fill the cap (par.4). Live
+	// reads, re-run whenever a queue head in the cap's scope may have moved (onCityActiveBuildMayHaveChanged).
+	d.setActiveElsewhere(iB, bd_activeBuildsReachCap(iB, kCity, false));
 }
 
 // The hide-replaced leg reads the SUCCESSOR's verdict, so a predecessor gated ahead of its successor in the
@@ -836,6 +917,52 @@ void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)
 	std::set<int> one;
 	one.insert(iBuilding);
 	bd_gateSet(kCity, one);
+}
+
+// Re-gate iB in every city of its cap's ACTIVE scope: the owner's team for a world or team cap, the owner alone
+// for an empire cap or an empire-level building ([enabler.md] par.4). Anything else moves no verdict anywhere.
+static void bd_gateActiveScope(int iB, PlayerTypes eOwner)
+{
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
+	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
+	const bool bTeamScope = a != NULL && (a->cap(ALLOWEDCAP_WORLD) >= 0 || a->cap(ALLOWEDCAP_TEAM) >= 0);
+	const bool bOwnerScope = GC.getBuildingInfo((BuildingTypes)iB).isEmpireLevel() || (a != NULL && a->cap(ALLOWEDCAP_EMPIRE) >= 0);
+	if (!bTeamScope && !bOwnerScope) return;
+	std::set<int> one;
+	one.insert(iB);
+	const TeamTypes eOwnerTeam = GET_PLAYER(eOwner).getTeam();
+	for (int iP = 0; iP < MAX_PLAYERS; iP++)
+	{
+		const PlayerTypes eP = (PlayerTypes)iP;
+		if (bTeamScope ? GET_PLAYER(eP).getTeam() != eOwnerTeam : eP != eOwner) continue;
+		foreach_(const CvCity* pCity, GET_PLAYER(eP).cities())
+		{
+			bd_gateSet(*pCity, one);
+		}
+	}
+}
+
+bool BuildingEnabler::mayActivelyBuild(const CvCity& kCity, BuildingTypes eBuilding)
+{
+	return !bd_activeBuildsReachCap((int)eBuilding, kCity, true);
+}
+
+void BuildingEnabler::onCityActiveBuildMayHaveChanged(const CvCity& kCity, int iLeftBuilding)
+{
+	// The queue moved, so its head may have: every building it still queues, and the one that left, may have
+	// started or stopped being actively built here. The queue is short; an uncapped entry re-gates nothing.
+	if (spineGameLoadInProgress()) return;
+	std::set<int> buildings;
+	if (iLeftBuilding >= 0) buildings.insert(iLeftBuilding);
+	for (int iOrder = 0; iOrder < kCity.getOrderQueueLength(); iOrder++)
+	{
+		const OrderData order = kCity.getOrderAt(iOrder);
+		if (order.eOrderType == ORDER_CONSTRUCT) buildings.insert((int)order.getBuildingType());
+	}
+	for (std::set<int>::const_iterator it = buildings.begin(); it != buildings.end(); ++it)
+	{
+		bd_gateActiveScope(*it, kCity.getOwner());
+	}
 }
 
 void BuildingEnabler::onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas)

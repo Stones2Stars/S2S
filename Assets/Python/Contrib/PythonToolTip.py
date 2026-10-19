@@ -4,9 +4,9 @@ import ScreenResolution as SR
 
 CyIF = CyInterface()
 
-# The font of the game's own tooltips (Resource/Theme/C2CTheme_ToolTip.thm: Font_Size1_Normal), so every
-# tooltip a Python screen draws reads like the ones the game draws.
-TOOLTIP_FONT = "<font=1>"
+# The one hover's font: one size above the game's own tooltips (Font_Size1_Normal), so the text holds against
+# the box's translucent background. Every width the box is sized by is measured in it.
+TOOLTIP_FONT = "<font=2>"
 
 
 class PythonToolTip:
@@ -47,6 +47,10 @@ class PythonToolTip:
 # screen is known, and the box goes when the mouse leaves. A screen answers getScreen(); one that draws its own
 # hovers answers showHover(szText) / hideHover() instead.
 g_hoverScreen = None
+# The screen with widgets that report neither arrive nor leave (the main interface's action bar); it answers
+# isCursorOverSilentArea(). The cursor over that area is the mouse on those widgets.
+g_silentAreaScreen = None
+g_bSilentAreaHover = False
 g_hoverTooltips = {}
 # The size makeTooltip last drew each box at, so a box that follows the cursor stays inside the screen.
 g_boxSizes = {}
@@ -59,19 +63,52 @@ def followCursor(screen, listBox, aOffset):
 	iY = min(max(POINT.y + aOffset[1], 0), max(SR.y - dy, 0))
 	screen.moveItem(listBox, iX, iY, 0)
 
+def noteSilentArea(screenObject):
+	global g_silentAreaScreen
+	g_silentAreaScreen = screenObject
+
+def pollSilentArea():
+	# Every update: the silent area reports no leave, so its box goes once the cursor is off the area.
+	global g_bSilentAreaHover
+	if g_bSilentAreaHover and not g_silentAreaScreen.isCursorOverSilentArea():
+		hideHover(g_silentAreaScreen)
+		g_bSilentAreaHover = False
+
 def noteHoverInput(screenObject, inputClass):
-	global g_hoverScreen
+	global g_hoverScreen, g_bSilentAreaHover
 	iCode = inputClass.eNotifyCode
 	if iCode == NotifyCode.NOTIFY_CURSOR_MOVE_ON:
 		g_hoverScreen = screenObject
+		g_bSilentAreaHover = False
 	elif iCode == NotifyCode.NOTIFY_CURSOR_MOVE_OFF and g_hoverScreen is screenObject:
 		hideHover(screenObject)
 		g_hoverScreen = None
 
-def showWidgetHover(szText):
-	# True when a screen drew the text; the DLL then leaves the game's own box empty.
+def noteScreenClosed(screenObject):
+	# A screen closed under the cursor sends no MOVE_OFF, and its getScreen() need not survive the close.
 	global g_hoverScreen
+	if g_hoverScreen is screenObject:
+		g_hoverScreen = None
+
+def leaveAll():
+	# Ending the turn freezes the screen, so no arrive or leave survives it: the mouse has left whatever it was on.
+	global g_hoverScreen, g_bSilentAreaHover
+	if g_hoverScreen is not None:
+		hideHover(g_hoverScreen)
+	if g_bSilentAreaHover:
+		hideHover(g_silentAreaScreen)
+	g_hoverScreen = None
+	g_bSilentAreaHover = False
+
+def showWidgetHover(szText):
+	# True when a screen drew the text; the DLL then leaves the game's own box empty. The game also asks for every
+	# action button's text when the action bar is rebuilt, wherever the mouse is, so a request never grants the
+	# hover: the screen the mouse arrived on draws it, or the silent area when the cursor is over it now.
+	global g_hoverScreen, g_bSilentAreaHover
 	screenObject = g_hoverScreen
+	if screenObject is None and g_silentAreaScreen is not None and g_silentAreaScreen.isCursorOverSilentArea():
+		screenObject = g_silentAreaScreen
+		g_bSilentAreaHover = True
 	if screenObject is None:
 		return False
 	if hasattr(screenObject, "showHover"):

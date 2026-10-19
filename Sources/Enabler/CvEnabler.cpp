@@ -118,6 +118,13 @@ void EnablerDomain::setQueued(int iId, bool bQueued)
 	else         m_aFlags[iId] &= (unsigned char)~FLAG_QUEUED;
 }
 
+void EnablerDomain::setActiveElsewhere(int iId, bool bActiveElsewhere)
+{
+	if (!inRange(iId)) return;
+	if (bActiveElsewhere) m_aFlags[iId] |= (unsigned char)FLAG_ACTIVE_ELSEWHERE;
+	else                  m_aFlags[iId] &= (unsigned char)~FLAG_ACTIVE_ELSEWHERE;
+}
+
 bool EnablerDomain::isHeld(int iId) const
 {
 	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_HELD) != 0;
@@ -149,8 +156,7 @@ void EnablerDomain::listedIds(std::vector<int>& out) const
 		// ⚠ The overlay only ever bites on the BUILDING domain, because only that domain sets it: a UNIT stays
 		// trainable while queued (you can build multiple copies), so its ids are never filtered here. See the
 		// ruling at FLAG_QUEUED in CvEnabler.h before making this read look symmetric.
-		if (m_aState[iId] == (unsigned char)STATE_LISTED
-			&& (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) == 0) out.push_back(iId);
+		if (m_aState[iId] == (unsigned char)STATE_LISTED && !isOfferWithheld(iId)) out.push_back(iId);
 	}
 }
 

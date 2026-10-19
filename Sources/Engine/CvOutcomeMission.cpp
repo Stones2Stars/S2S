@@ -116,7 +116,7 @@ void callSetPayer(const CvGameObject* pObject, const CvGameObject** ppPayer)
 //	`possible=0` on its own says nothing about WHICH refused -- and they have completely different causes
 //	(no gold, wrong plot, wrong unit, the outcome's own gates, an unaffordable property cost). Opt-in: the
 //	out-param is NULL for every gameplay caller, so nothing changes for them.
-bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible, int* piRefusalLeg) const
+bool CvOutcomeMission::isPossible(const CvUnit* pUnit, const CvPlot* pPlot, bool bTestVisible, int* piRefusalLeg) const
 {
 	PROFILE_EXTRA_FUNC();
 	if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_NONE;
@@ -132,7 +132,7 @@ bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible, int* p
 		}
 
 		if (m_pPlotCondition)
-			if (!m_pPlotCondition->evaluate(pUnit->plot()->getGameObject()))
+			if (!m_pPlotCondition->evaluate(pPlot->getGameObject()))
 			{
 				if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_PLOT_CONDITION;
 				return false;
@@ -146,7 +146,7 @@ bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible, int* p
 			return false;
 		}
 
-	if (!getOutcomeList()->isPossible(*pUnit))
+	if (!getOutcomeList()->isPossibleInPlot(*pUnit, *pPlot))
 	{
 		if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_OUTCOME_LIST;
 		return false;

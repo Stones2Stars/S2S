@@ -850,6 +850,9 @@ class CvEventManager:
 		# Called right before the turn is handed over to the next player.
 		iGameTurn, iPlayer = argsList
 
+		if iPlayer == GAME.getActivePlayer():
+			CvScreensInterface.leaveHoversAtEndTurn()
+
 		if iGameTurn:
 			CvAdvisorUtils.endTurnFeats(iPlayer)
 

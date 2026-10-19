@@ -9198,7 +9198,7 @@ bool CvUnit::doOutcomeMission(MissionTypes eMission)
 		return false;
 	}
 
-	if (!pOutcomeMission->isPossible(this))
+	if (!pOutcomeMission->isPossible(this, plot()))
 	{
 		return false;
 	}

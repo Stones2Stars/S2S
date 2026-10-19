@@ -39,12 +39,7 @@
    {
     "mission": "MISSION_JOIN_CITY_POPULATION",
     "requires": {
-     "outcome": "OUTCOME_JOIN_CITY_POPULATION",
-     "plot": {
-      "type": "POPULATION",
-      "scope": "city",
-      "min": 7
-     }
+     "outcome": "OUTCOME_JOIN_CITY_POPULATION"
     },
     "chance": 100,
     "consumes": true,

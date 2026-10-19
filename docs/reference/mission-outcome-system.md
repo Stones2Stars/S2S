@@ -66,6 +66,13 @@ Both `CvUnitInfo` **and** `CvUnitCombatInfo` expose both surfaces (runtime merge
 - **`Actions`** (`m_aOutcomeMissions`, `<Actions>/<Action>`) — **player/AI-triggered** outcome missions. Dispatch is
   the **`default:` case** of `CvSelectionGroup::canStartMission`/`startMission` → `CvUnit::doOutcomeMission` (9279) →
   `getOutcomeMissionByMission` (unit info, then each combat-class) → `isPossible` → `execute` → `isKill()` ? `kill`.
+  ⚖ **The button judges the MISSION PLOT, exactly as every hardcoded mission does:** `canStartMission`'s `pPlot` —
+  the end of a queued go-to while the player plans one, otherwise the unit's own plot — reaches
+  `CvOutcomeMission::isPossible(pUnit, pPlot)`, and the action help judges the same `pMissionPlot`. So a captive
+  aimed at a city offers Join there, as a great person offers Hurry. Execution judges the plot the unit stands on.
+  ⛔ **One evaluation, at a plot:** `CvOutcome::isPossibleInPlot` is the outcome gate, and `isPossible(unit)` is
+  that gate at the unit's own plot — never a second copy (two near-identical bodies had drifted apart on the
+  capture checks).
   AI: `CvUnitAI::AI_outcomeMission` (15168) scores every action list over reachable city plots.
 
 ### `captureContest` — a chance the LOSER resists
