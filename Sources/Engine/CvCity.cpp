@@ -11465,7 +11465,8 @@ bool CvCity::pushFirstValidBuildListOrder(int iListID)
 	{
 		const OrderData* pOrder = kPlayer.m_pBuildLists->getOrder(index, i);
 
-		if (canContinueProduction(*pOrder))
+		// A building already in this queue is not a new order (CvCity::pushOrder asks the offer for it).
+		if (pOrder->eOrderType == ORDER_CONSTRUCT ? isBuildingOffered(pOrder->getBuildingType()) : canContinueProduction(*pOrder))
 		{
 			pushOrder(pOrder->eOrderType, pOrder->iData1, pOrder->iData2, pOrder->bSave, false, true); //Calvitix, append buildings, not insert
 			return true;
@@ -11551,24 +11552,11 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		case ORDER_CONSTRUCT:
 		{
 			const BuildingTypes buildingType = static_cast<BuildingTypes>(iData1);
-			if ((getBuildingAvailability(buildingType) == EnablerDomain::STATE_LISTED) || bForce)
+			// A new order asks the fresh OFFER -- the gate held AND not already in this queue -- never the tri-state,
+			// which ignores the queued overlay by design (enabler.md §8, the availability read surface).
+			if (isBuildingOffered(buildingType) || bForce)
 			{
 				order = OrderData::createBuildingOrder(buildingType, bSave);
-
-				int alreadyQueued = 0;
-				for (std::vector<OrderData>::const_iterator it = m_orderQueue.begin(); it != m_orderQueue.end(); ++it) {
-					if (it->eOrderType == ORDER_CONSTRUCT && it->getBuildingType() == order.getBuildingType()) {
-						alreadyQueued += 1;
-					}
-				}
-
-				//don't add the same building after
-				if (!bIsHuman && (bAppend && !bForce) && alreadyQueued > 0) {
-					// [CIT/push/reject] -- duplicate-building guard blocked re-queuing this building.
-					logCityAI(2, "[CIT/push/reject] city=%S owner=%d BUILDING %S alreadyQueued=%d reason=dupGuard",
-						getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(buildingType).getDescription(), alreadyQueued);
-					return;
-				}
 
 				owner.changeBuildingMaking(buildingType, 1);
 
@@ -12231,6 +12219,33 @@ void CvCity::startHeadOrder()
 }
 
 
+void CvCity::skipBlockedActiveBuild()
+{
+	for (int iOrder = 1; iOrder < getOrderQueueLength(); iOrder++)
+	{
+		const OrderData order = m_orderQueue[iOrder];
+		if (order.eOrderType == ORDER_LIST) continue;
+		if (order.eOrderType == ORDER_CONSTRUCT && !BuildingEnabler::mayActivelyBuild(*this, order.getBuildingType())) continue;
+
+		stopHeadOrder();
+		std::rotate(m_orderQueue.begin(), m_orderQueue.begin() + iOrder, m_orderQueue.begin() + iOrder + 1);
+		startHeadOrder();
+		BuildingEnabler::onCityActiveBuildMayHaveChanged(*this, -1);
+
+		if (getTeam() == GC.getGame().getActiveTeam() || GC.getGame().isDebugMode())
+		{
+			setInfoDirty(true);
+		}
+		if (isCitySelected())
+		{
+			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+		}
+		return;
+	}
+}
+
+
 void CvCity::stopHeadOrder()
 {
 	bst::optional<OrderData> order = getHeadOrder();
@@ -12529,6 +12544,13 @@ void CvCity::doProduction(bool bAllowNoProduction)
 		return;
 	}
 
+	// A capped building other cities are actively building ahead of this one is not worked here
+	// (enabler.md §4): the city works its next order instead, and the building waits in the queue.
+	if (isProductionBuilding() && !BuildingEnabler::mayActivelyBuild(*this, getProductionBuilding()))
+	{
+		skipBlockedActiveBuild();
+	}
+
 	if (isProductionProcess())
 	{
 		const ProcessTypes eRunningProcess = getProductionProcess();
@@ -12550,6 +12572,18 @@ void CvCity::doProduction(bool bAllowNoProduction)
 
 	if (isDisorder())
 	{
+		return;
+	}
+
+	// Nothing else to work while it is not this city's turn to build it: the hammers wait as overflow, as for an
+	// idle order, and an AI city chooses something to work meanwhile.
+	if (isProductionBuilding() && !BuildingEnabler::mayActivelyBuild(*this, getProductionBuilding()))
+	{
+		changeOverflowProduction(getCurrentProductionDifference(ProductionCalc::FoodProduction));
+		if (!isHuman() || isProductionAutomated())
+		{
+			AI_setChooseProductionDirty(true);
+		}
 		return;
 	}
 

@@ -22,6 +22,27 @@ production queues (`CvPlayer::getUnitMaking`), so a cap of 1 is reached the mome
   ⚠ Units carry no queued overlay ([§7.1](07-recompute-cadence-the-runtime.md)), so this is the only place the
   two questions separate.
 
+⚖ **A BUILDING'S CAP COUNTS WHAT EXISTS PLUS WHAT IS *ACTIVELY BUILT* — NEVER WHAT IS MERELY QUEUED.** A city
+actively builds a capped building when it is the city's CURRENT production, the head of its queue. A building
+sitting further down a queue, or one with production already sunk into it but not being worked, is not actively
+built. The active scope is the owner's TEAM for a world or team cap and the owner alone for an empire cap, so a
+rival still races for a world wonder. This is what keeps one empire's cities from building the same wonder at
+once — the AI's cities coordinate nothing else.
+
+- **The fresh OFFER withholds it** while the existing copies plus the OTHER cities actively building it reach
+  the cap: the ACTIVE-ELSEWHERE overlay, a sibling of the QUEUED one
+  ([the read surface](08-the-machines-shape-components-host/04-the-availability-read-surface.md)). The continue
+  verdict reads past it, so a copy already queued elsewhere is never cancelled. Any order added to or removed
+  from a city can move its head, so it re-gates each capped building that city queues across the active scope
+  (`BuildingEnabler::onCityActiveBuildMayHaveChanged`).
+- **Moving it is a CONSCIOUS decision.** Taking it off the head in the city building it — removing it, or putting
+  another order ahead of it — frees it for the others; nothing moves it on its own.
+- ⚖ **Of several cities working it at once, the ones ranked first build** (`BuildingEnabler::mayActivelyBuild`):
+  more production invested, then the lower owner, then the lower city id, as many as the cap leaves room for. A
+  city outranked works its first other order it can work and keeps the building queued behind it
+  (`CvCity::skipBlockedActiveBuild`); with nothing else to work, its hammers wait as overflow, as for an idle
+  order, and an AI city chooses something meanwhile.
+
 **The two cap shapes gate in DIFFERENT places, because they have different scopes.** A **self-cap**
 (`world`/`team`/`empire`) is player-scoped and gates in `allowedOk`. A **category count-cap** — how many
 world/team/national wonders one CITY may hold, set by its `CultureLevel` — is per-CITY, which `allowedOk` cannot

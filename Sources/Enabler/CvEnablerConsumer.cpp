@@ -411,9 +411,9 @@ private:
 		case SEVT_CITY_ORDER_ADDED:
 		case SEVT_CITY_ORDER_REMOVED:   // queue push/pop: the buildings gate's queued-exclusion re-gate (par.7.1 step 3)
 		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (kEvent.iA == ORDER_CONSTRUCT)
 			{
-				const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 				if (pCity != NULL) BuildingEnabler::onCityOrderChanged(*pCity, kEvent.iType);
 			}
 			else if (kEvent.iA == ORDER_TRAIN)
@@ -421,6 +421,8 @@ private:
 				//	A unit in production counts toward its cap, so the queue moving re-checks that cap.
 				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
 			}
+			//	Any order moving can change the head, and a capped building at the head is ACTIVELY built (par.4).
+			if (pCity != NULL) BuildingEnabler::onCityActiveBuildMayHaveChanged(*pCity, (kEvent.iA == ORDER_CONSTRUCT) ? kEvent.iType : -1);
 			break;
 		}
 		case SEVT_EMPIRE_TECH_ADDED:

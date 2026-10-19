@@ -35,5 +35,10 @@ deliberately not folded in**: the domain keeps `FLAG_QUEUED` separate from `FLAG
 "already queued" stays distinguishable from "requires unmet", and collapsing a queued candidate onto GREYED would
 destroy that and misreport why it is not offered. The overlay rides only the two reads that care — the FRONTIER
 (fresh offer, queued excluded) and `CvCity::isBuildingContinuable` (reads past it, so the production-check sweep
-does not cancel every in-progress build).
+does not cancel every in-progress build). The ACTIVE-ELSEWHERE overlay (`FLAG_ACTIVE_ELSEWHERE`: other cities
+actively building a capped building fill its cap, [the allowed cap](../04-the-allowed-cap.md)) rides the same two
+reads the same way.
+⛔ **A NEW order asks the offer, never the tri-state.** `CvCity::pushOrder` takes a construct order only when
+`isBuildingOffered` holds (or the push is forced), so adding a building already in the queue — one city or every
+selected city at once — is refused for human and AI alike.
 

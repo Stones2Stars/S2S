@@ -77,6 +77,13 @@ public:
 	static void onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);
 	static void onCityOrderChanged(const CvCity& kCity, int iBuilding);   // queue push/pop of THIS building: the one-id re-gate (par.7.1 step 3)
+	// A capped building is ACTIVELY BUILT by a city whose current production it is (par.4): another city may not
+	// newly start it while those builds fill the cap, and of several cities working it at once the ones ranked
+	// first (most production invested, then lower owner, then lower city id) build while the others skip it.
+	static bool mayActivelyBuild(const CvCity& kCity, BuildingTypes eBuilding);
+	// Any order of this city was added or removed (iLeftBuilding: a construct order's building, else -1): re-gate
+	// each capped building it queues, and that one, across the cap's active scope.
+	static void onCityActiveBuildMayHaveChanged(const CvCity& kCity, int iLeftBuilding);
 	// par.7.1 step 2 for the PLOT plane: re-gate exactly the buildings whose requires names this atom.
 	// ⛔ It reads the enabler's own compiled (kind, id) index, NOT EDGEF_REQUIRED_BY -- the reverse pass lands no
 	// edge for any plot-substrate prefix, so that walk finds nothing and silently re-gates nobody (enabler.md
