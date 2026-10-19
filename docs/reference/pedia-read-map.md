@@ -16,8 +16,13 @@ Wiring (all verified live, no dead screens):
 - `Assets/Python/EntryPoints/CvScreensInterface.py`: `screenMap[PEDIA] = Pedia.Pedia(PEDIA)` + the entry points
   `pediaShow`/`pediaMain`/`pediaBack`/`pediaForward`/`linkToPedia`/`pediaShowHistorical` and the engine-invoked
   jumps `pediaJumpToBuilding`/`Unit`/`Tech`/`Promotion`/`Bonus`/`Terrain`.
-- Every page-body widget jump rides `WidgetTypes.WIDGET_PEDIA_JUMP_TO_*` (17 widget families used by the index
-  alone) — hover help on those widgets is served DLL-side (CvDLLWidgetData → the same CvGameTextMgr composers).
+- A page-body button is a general widget named `ToolTip|JumpTo|<KIND><id>` (a `|<slot>` token before the id
+  where a page shows one kind in two places): `Pedia.py` handleInput draws its hover through the text feeders
+  (tooltip mode) and jumps. The hub's item lists and the index (17 widget families) ride
+  `WidgetTypes.WIDGET_PEDIA_JUMP_TO_*` with data2 0, so their rows carry no hover; the concept lists ride
+  `WIDGET_PEDIA_DESCRIPTION` and a unit combat's unit table `WIDGET_PEDIA_JUMP_TO_UNIT`, whose hover help is served
+  DLL-side (CvDLLWidgetData → the same CvGameTextMgr composers) into the one hover
+  ([tooltip-look.md § THE ONE HOVER](tooltip-look.md#the-one-hover)).
 - Helpers pulled in by the hub: `Assets/Python/Contrib/UnitUpgradesGraph.py` (619 lines — the building/unit/
   promotion tree pages), `PythonToolTip` (the hub renders its OWN list-item tooltips through the text feeders,
   player-context mode — `Pedia.py` handleInput). The old `getGOMReqs` BoolExpr walker is gone (§3) — requires

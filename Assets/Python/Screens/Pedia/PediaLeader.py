@@ -38,6 +38,7 @@ class PediaLeader:
 		aName = self.main.getNextWidgetName
 
 		eWidGen			= WidgetTypes.WIDGET_GENERAL
+		PF = "ToolTip|JumpTo|"
 		ePanelBlue50	= PanelStyles.PANEL_STYLE_BLUE50
 
 		enumGBS	= self.main.enumGBS
@@ -67,12 +68,9 @@ class PediaLeader:
 		screen.addPanel(panelName, "", "", False, True, X_COL_1, Y_ROW_2, W_COL_1, H_BOT_ROW, ePanelBlue50)
 		screen.attachLabel(panelName, "", "  ")
 		screen.attachImageButton(panelName, "", INFO.getButton("LEADER_", iLeader), enumGBS, eWidGen, iLeader, 0, False)
-		# The civs this leader may lead -- the leader's OWN inverse of the civilization roster, landed at load.
-		# A civ names its leaders and a leaderhead names no civ, so sweeping every civilization asking
-		# `isLeaders(me)` was the own-data inversion (DEC-one-reverse-view).
-		iWidget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV
+		# The civs this leader may lead: the leader's own inverse of the civilization roster, landed at load.
 		for iCiv in INFO.getEdgeIds("LEADER_", iLeader, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_CIVILIZATIONS):
-			screen.attachImageButton(panelName, "", INFO.getButton("CIVILIZATION_", iCiv), enumGBS, iWidget, iCiv, 1, False)
+			screen.attachImageButton(panelName, PF + "CIV" + str(iCiv), INFO.getButton("CIVILIZATION_", iCiv), enumGBS, eWidGen, 1, 1, False)
 
 		# Favourite Civic & Religion
 		panelName = aName()
@@ -81,11 +79,11 @@ class PediaLeader:
 
 		iCivic = INFO.getIntrinsic("LEADER_", iLeader, IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 		if iCivic != -1:
-			screen.attachImageButton(panelName, "", INFO.getButton("CIVIC_", iCivic), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iCivic, 1, False)
+			screen.attachImageButton(panelName, PF + "CIVIC" + str(iCivic), INFO.getButton("CIVIC_", iCivic), enumGBS, eWidGen, 1, 1, False)
 
 		iReligion = INFO.getIntrinsic("LEADER_", iLeader, IntrinsicSlot.PYINT_FAVORITE_RELIGION)
 		if iReligion != -1:
-			screen.attachImageButton(panelName, "", INFO.getButton("RELIGION_", iReligion), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iReligion, 1, False)
+			screen.attachImageButton(panelName, PF + "RELIGION" + str(iReligion), INFO.getButton("RELIGION_", iReligion), enumGBS, eWidGen, 1, 1, False)
 
 		# History
 		screen.addPanel(aName(), "", "", True, True, X_COL_2, Y_ROW_1, W_COL_2, H_ROW_1, ePanelBlue50)

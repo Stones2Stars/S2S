@@ -28,6 +28,8 @@ class CvReligionScreen:
 	"Religion Advisor Screen"
 
 	def __init__(self):
+		# The city table's zoom column, a silent area (§ THE ONE HOVER, Hover state); None while it is not drawn.
+		self.cityTableRect = None
 
 		self.SCREEN_NAME = "ReligionScreen"
 		self.BUTTON_NAME = "ReligionScreenButton"
@@ -122,6 +124,7 @@ class CvReligionScreen:
 		return CyGInterfaceScreen(self.SCREEN_NAME, CvScreenEnums.RELIGION_SCREEN)
 
 	def interfaceScreen (self):
+		PythonToolTip.noteSilentArea(self)
 
 		self.SCREEN_ART = ArtFileMgr.getInterfaceArtInfo("TECH_BG").getPath()
 		self.NO_STATE_BUTTON_ART = ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath()
@@ -151,7 +154,7 @@ class CvReligionScreen:
 		iScreenX = screen.centerX(0)
 		iScreenY = screen.centerY(0)
 		screen.setDimensions(iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
-		PythonToolTip.setScreenOrigin(self, iScreenX, iScreenY)
+		PythonToolTip.setScreenArea(self, iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
 
 		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("MAINMENU_SLIDESHOW_LOAD").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )
@@ -399,8 +402,11 @@ class CvReligionScreen:
 			self.H_SCROLL_OFFSET = 0
 
 
-	# Draws the city list
+	# Draws the city list; its table is a button list (§ THE ONE HOVER, Button lists).
 	def drawCityInfo(self, iReligion):
+		PythonToolTip.buildButtonLists(self.buildCityInfo, iReligion)
+
+	def buildCityInfo(self, iReligion):
 		if (not self.bScreenUp):
 			return
 
@@ -409,6 +415,7 @@ class CvReligionScreen:
 		screen.deleteWidget(self.AREA2_ID)
 		screen.deleteWidget(self.TABLE_ID)
 		screen.deleteWidget(self.RELIGION_ANARCHY_WIDGET)
+		self.cityTableRect = None
 
 		if iReligion == self.NUM_RELIGIONS:
 			iLinkReligion = -1
@@ -437,15 +444,18 @@ class CvReligionScreen:
 
 		if AdvisorOpt.isReligious():
 			# create religion table
-			screen.addTableControlGFC(
-				self.TABLE_ID, self.TABLE_COLUMNS, self.X_RELIGION_AREA + 15,
-				self.Y_RELIGION_AREA + self.H_RELIGION_AREA + self.H_SCROLL_OFFSET + 3 + 15,
-				self.W_RELIGION_AREA - 2 * 15, self.H_CITY_AREA - self.H_SCROLL_OFFSET - 5,
-				True, True, 24,24, TableStyles.TABLE_STYLE_STANDARD
-			)
+			x = self.X_RELIGION_AREA + 15
+			y = self.Y_RELIGION_AREA + self.H_RELIGION_AREA + self.H_SCROLL_OFFSET + 3 + 15
+			w = self.W_RELIGION_AREA - 2 * 15
+			h = self.H_CITY_AREA - self.H_SCROLL_OFFSET - 5
+			iZoomWidth = 30
+			iRowHeight = 24
+			# The zoom column carries the cities' hovers.
+			self.cityTableRect = (x, y, iZoomWidth, h, iZoomWidth, iRowHeight)
+			screen.addTableControlGFC(self.TABLE_ID, self.TABLE_COLUMNS, x, y, w, h, True, True, iRowHeight, iRowHeight, TableStyles.TABLE_STYLE_STANDARD)
 			screen.enableSort(self.TABLE_ID)
 
-			screen.setTableColumnHeader(self.TABLE_ID, self.COL_ZOOM_CITY, "", 30)
+			screen.setTableColumnHeader(self.TABLE_ID, self.COL_ZOOM_CITY, "", iZoomWidth)
 			screen.setTableColumnHeader(self.TABLE_ID, self.COL_CITY_NAME, self.sCity, 115)
 
 			for iRel in range(self.NUM_RELIGIONS):   # columns for religious icons
@@ -619,7 +629,12 @@ class CvReligionScreen:
 		return 0
 
 	def update(self, fDelta):
-		return
+		PythonToolTip.pollSilentArea()
+
+	def silentAreaRects(self):
+		if self.cityTableRect is None or not self.getScreen().isActive():
+			return []
+		return [self.cityTableRect]
 
 	# Religion Button
 	def ReligionScreenButton( self, inputClass ):

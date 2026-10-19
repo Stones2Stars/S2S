@@ -61,10 +61,7 @@ class PediaBonus:
 		aName = self.main.getNextWidgetName
 
 		eWidGen				= WidgetTypes.WIDGET_GENERAL
-		eWidJuToBuilding	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING
-		eWidJuToImprove		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT
-		eWidJuToTech		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH
-		eWidJuToUnit		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT
+		PF = "ToolTip|JumpTo|"
 		ePanelBlue50		= PanelStyles.PANEL_STYLE_BLUE50
 		ePanelEmpty			= PanelStyles.PANEL_STYLE_EMPTY
 
@@ -199,23 +196,23 @@ class PediaBonus:
 				childPanelName = aName()
 				screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 				screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_APPEARANCE_AND_TRADE", ()))
-				screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iRevealTech), enumBS, eWidJuToTech, iRevealTech, 2, False)
+				screen.attachImageButton(childPanelName, PF + "TECH|Reveal" + str(iRevealTech), INFO.getButton("TECH_", iRevealTech), enumBS, eWidGen, 1, 1, False)
 			else:
 				if iRevealTech != -1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 					screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_APPEARANCE", ()))
-					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iRevealTech), enumBS, eWidJuToTech, iRevealTech, 2, False)
+					screen.attachImageButton(childPanelName, PF + "TECH|Reveal" + str(iRevealTech), INFO.getButton("TECH_", iRevealTech), enumBS, eWidGen, 1, 1, False)
 				if iEnableTech != -1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 					screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_TRADE", ()))
-					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iEnableTech), enumBS, eWidJuToTech, iEnableTech, 2, False)
+					screen.attachImageButton(childPanelName, PF + "TECH|Enable" + str(iEnableTech), INFO.getButton("TECH_", iEnableTech), enumBS, eWidGen, 1, 1, False)
 			if iObsoleteTech != -1:
 				childPanelName = aName()
 				screen.attachPanel(panelName, childPanelName, "", "", True, True, ePanelEmpty)
 				screen.attachLabel(childPanelName, "", szfont4b + TRNSLTR.getText("TXT_KEY_PEDIA_BONUS_OBSOLETE", ()))
-				screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", iObsoleteTech), enumBS, eWidJuToTech, iObsoleteTech, 2, False)
+				screen.attachImageButton(childPanelName, PF + "TECH|Obsolete" + str(iObsoleteTech), INFO.getButton("TECH_", iObsoleteTech), enumBS, eWidGen, 1, 1, False)
 		# Improvement -- the resource's OWN list of what makes it tradeable, plus that improvement's yield here.
 		aImpList = []
 		if bMapBonus:
@@ -257,12 +254,12 @@ class PediaBonus:
 				screen.addPanel(impPanel, szImp, "", False, True, X_COL_1, Y_TOP_ROW_2, W_PEDIA_PAGE, H_BOT_ROW + 16, ePanelBlue50)
 			if aSourceOfBonus:
 				for iBuilding in aSourceOfBonus:
-					screen.attachImageButton(sobPanel, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+					screen.attachImageButton(sobPanel, PF + "BUILDING|Source" + str(iBuilding), INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidGen, 1, 1, False)
 			if aImpList:
 				for i in xrange(len(aImpList)):
 					childPanelName = aName()
 					screen.attachPanel(impPanel, childPanelName, "", "", True, True, ePanelEmpty)
-					screen.attachImageButton(childPanelName, "", INFO.getButton("IMPROVEMENT_", aImpList[i][0]), enumGBS, eWidJuToImprove, aImpList[i][0], 1, False)
+					screen.attachImageButton(childPanelName, PF + "IMP" + str(aImpList[i][0]), INFO.getButton("IMPROVEMENT_", aImpList[i][0]), enumGBS, eWidGen, 1, 1, False)
 					screen.attachLabel(childPanelName, "", aImpList[i][1])
 		else:
 			Y_TOP_ROW_3 -= H_BOT_ROW + 16
@@ -277,7 +274,7 @@ class PediaBonus:
 			szBuildingsEnabled = TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ())
 			screen.addPanel(panelName, szBuildingsEnabled, "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 			for iBuilding in aNeededByBuildings:
-				screen.attachImageButton(panelName, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+				screen.attachImageButton(panelName, PF + "BUILDING|Needs" + str(iBuilding), INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidGen, 1, 1, False)
 		else:
 			Y_BOT_ROW_2 += H_BOT_ROW
 			Y_BOT_ROW_3 += H_BOT_ROW
@@ -287,7 +284,7 @@ class PediaBonus:
 			panelName = aName()
 			screen.addPanel(panelName, TRNSLTR.getText("TXT_KEY_PEDIA_UNITS_ENABLED", ()), "", False, True, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 			for iUnit in aNeededByUnits:
-				screen.attachImageButton(panelName, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
+				screen.attachImageButton(panelName, PF + "UNIT|Needs" + str(iUnit), INFO.getButton("UNIT_", iUnit), enumGBS, eWidGen, 1, 1, False)
 		else:
 			H_MID += H_BOT_ROW
 			Y_BOT_ROW_3 += H_BOT_ROW
@@ -321,10 +318,9 @@ class PediaBonus:
 				screen.addPanel(unitPanel, szUnit, "", False, True, X_COL_1, Y_BOT_ROW_3, W_PEDIA_PAGE, H_BOT_ROW, ePanelBlue50)
 			if aAffectedBuildings:
 				for iBuilding in aAffectedBuildings:
-					screen.attachImageButton(builPanel, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+					screen.attachImageButton(builPanel, PF + "BUILDING|Affected" + str(iBuilding), INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidGen, 1, 1, False)
 			if aAffectedUnits:
 				#	Grouped by the modifier VALUE, so one "{ +25% }" label heads every unit that shares it.
-				#	A percent is never scaled, so it prints as authored.
 				szBracketL = szfont4b + " {"
 				szBracketR = szfont4b + "} "
 				szChar = u'%c' % (TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
@@ -343,7 +339,7 @@ class PediaBonus:
 						szTxt += str(iModifier) + "%" + szChar
 						screen.attachLabel(unitPanel, "", szTxt)
 						test = iModifier
-					screen.attachImageButton(unitPanel, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
+					screen.attachImageButton(unitPanel, PF + "UNIT|Affected" + str(iUnit), INFO.getButton("UNIT_", iUnit), enumGBS, eWidGen, 1, 1, False)
 				screen.attachLabel(unitPanel, "", szBracketR)
 		else:
 			H_MID += H_BOT_ROW

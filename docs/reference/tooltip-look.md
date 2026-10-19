@@ -57,8 +57,8 @@ Every hover in S2S shows in one box: the Python table `PythonToolTip.makeTooltip
 (`Table_Help_Style`, the tile hover's skin). A hover's text always comes from an engine composer; the box formats
 nothing and derives nothing.
 
-- **Lines, columns, overflow.** The box lays its lines in one column; when they are taller than the display they
-  fill side-by-side columns sized to the player's display. A composer that hands over runs of sources
+- **Lines, columns, overflow.** The box lays its lines in one column; when they are taller than its screen they
+  fill side-by-side columns sized to that screen (§ On screen). A composer that hands over runs of sources
   (`CityBreakdownTextRun`) lets `PythonToolTip.fitLines` show a run as its one summary line on a display too
   small even for columns, largest runs first, closing with a line that the full list is one click away.
 - **Widget hovers.** At the end of `CvDLLWidgetData::parseHelp` the text goes to
@@ -74,28 +74,54 @@ nothing and derives nothing.
   (`CvScreensInterface.onClose` → `PythonToolTip.noteScreenClosed`) and ending the active player's turn, which
   freezes the screen so no arrive or leave survives it (`CvEventManager.onEndPlayerTurn` →
   `PythonToolTip.leaveAll`), only ever CLEAR it.
-  ⇒ A widget that reports neither arrive nor leave — the action bar — is hovered while the CURSOR is over its
-  area, asked live when the text arrives (`CvMainInterface.isCursorOverSilentArea`, laid out by the same
-  `actionBarRect` that places the bar), and its box goes when an update finds the cursor off the area
-  (`PythonToolTip.pollSilentArea`).
-- **Button lists.** While a button list is built (`appendMultiListButton`) the game asks for its buttons' texts,
-  with the mouse anywhere, and stores each with its button; a button stored with an empty text is never asked
-  again. A screen therefore builds its lists inside `PythonToolTip.buildButtonLists` (the action bar,
-  `CvMainInterface.buildActionBar`; the build list, `BuildListScreen.drawBuilds`), and a request during the build
-  leaves the text with the game and draws nothing.
+  ⇒ A widget that reports neither arrive nor leave is hovered while the CURSOR is over its area, asked live when
+  the text arrives. A screen with such widgets notes itself (`PythonToolTip.noteSilentArea`) and answers
+  `silentAreaRects()`: the rectangles that place them, in its own coordinates, each with the size of one widget in
+  it (an icon of a list, a row of a table, the whole of a single widget). A screen notes itself as it opens (the
+  main interface as it is made), one entry per screen, and the screen opened last is asked first, since it is in
+  front. The game asks for the text as the cursor enters a widget,
+  so the widget lies within one widget's size of that point; the box goes when an update of its screen
+  (`PythonToolTip.pollSilentArea`) finds the cursor off the rectangle or farther than that from where the box was
+  drawn, which is how it goes over the empty space of a list or a table. The game hovers a widget up to
+  `PythonToolTip.SILENT_AREA_MARGIN` pixels beyond the rectangle it is drawn in, so every rectangle is widened by
+  that margin; a dropdown is taken as `PythonToolTip.DROPDOWN_HEIGHT` tall, and a table's row as the icon size it
+  is created with. The silent areas:
+  - the main interface: the action bar, the End Turn button while it is shown, the unit model while it carries
+    its widget, a stack's unit table, and the city screen's Conscript, Hurry and Liberate buttons, religion and
+    corporation icons, trade route table (in its route view), bonus table and the sort dropdowns of the open tab;
+  - the Religion advisor's city table, the Domestic advisor's zoom column, the Info screen's wonders table (its
+    zoom and wonder columns) and the Victory screen's members table (its attitude columns);
+  - the Build List screen's button lists, dropdowns, queue table and list of build lists;
+  - the Pedia's item list while it lists concepts, and the unit table of a unit combat's page.
+- **Button lists.** While a button list, a table or a list box is built the game asks for its entries' texts,
+  with the mouse anywhere, and stores each with its entry; a button stored with an empty text is never asked
+  again. A screen therefore builds its button lists, tables and list boxes inside `PythonToolTip.buildButtonLists`,
+  and a request during the build leaves the text with the game and draws nothing; a build inside a build keeps the
+  outer one.
 - **What the game does not report.** For a general widget the game passes Python no data, only the trailing
   number of the widget's name (the ID), so a screen names such a widget `TYPE|Case<index>`. A stacked bar reports
   neither arrive nor leave, so a bar is a general widget and its text carries the bar's hover. A label
-  (`setLabel`/`setLabelAt`) reports neither either, so text with a hover is `setText`. When no screen takes a
+  (`setLabel`/`setLabelAt`) reports neither either, so text with a hover is `setText`. A button, text or image
+  whose name does not end in a number never reports arrive or leave, so one with hover text is named
+  `<name><number>` (`MainMenuButton0`, `TurnLogBtn0`); one attached to a panel without a name (`attachImageButton`
+  with `""`) reports neither, and its panel reports a leave as the mouse moves onto it. ⚠ A number is needed but
+  not always enough: the city screen's religion and corporation icons, and its Conscript and Hurry buttons
+  (`setButtonGFC`) while disabled, report neither under numbered names; its Liberate button is built the same way
+  and treated alike. A new widget's reports are therefore confirmed in game, never assumed from its name. A button
+  list (`addMultiListControlGFC`), a dropdown (`addDropDownBoxGFC`), a list box (`addListBoxGFC`), a table
+  (`addTableControlGFC`) and the unit model report neither whatever their name. Such widgets with hover text are
+  silent areas (§ Hover state). ⚠ The End Turn button keeps the name `EndTurnButton`: under another name the game
+  does not colour it by the turn's state (`setEndTurnState`), so it is a silent area. When no screen takes a
   widget's text, the game's own box shows it.
 - **Arrival never hides the box.** The text can be drawn before the screen hears the mouse arrive (a table cell's
   text is), so a screen hides the box on leave and on its other input, and its own hovers redraw on arrival.
-- **On screen.** The box keeps inside the display on every side: `makeTooltip` places it above the cursor in the
-  display's bottom half and below it in the top half, against the display edge on that side when it does not fit
+- **On screen.** The box keeps inside its screen on every side: `makeTooltip` places it above the cursor in the
+  screen's bottom half and below it in the top half, against the screen's edge on that side when it does not fit
   there, and `followCursor` moves it from the size `makeTooltip` drew it at. A screen placed with `setDimensions`
-  lays its widgets out from that corner, so a screen placed off (0, 0) whose widgets carry engine hover text —
-  the tech popup (`TechWindow`, `TechWindowWide`) and the Religion advisor — registers the corner with
-  `PythonToolTip.setScreenOrigin`, and its box is laid out on the display and drawn in the screen's coordinates.
+  lays its widgets out from that corner and draws nothing outside its area, so a screen smaller than the display
+  whose widgets carry engine hover text — the tech popup (`TechWindow`, `TechWindowWide`) and the Religion
+  advisor — registers its area with `PythonToolTip.setScreenArea`, and its box's lines and columns are sized to
+  that area.
 - ⚖ **The box's LOOK belongs to the player.** Styling is subjective and depends on the screen, so the font size,
   colours and opacity are player options read when the box is drawn, never one value tuned to one screen
   ([#597](https://github.com/Stones2Stars/S2S/issues/597)).

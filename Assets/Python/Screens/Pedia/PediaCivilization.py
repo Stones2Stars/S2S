@@ -73,14 +73,13 @@ class PediaCivilization:
 		# Leaders
 		Pnl = aName()
 		screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_CONCEPT_LEADERS", ()), "", False, True, X_COL_2, Y_TOP_ROW_1, W_COL_2, H_TOP_ROW, ePanelBlue50)
-		eWidJuToLeader = WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER
 		# Adjust image size to panel
 		size = H_TOP_ROW - 36
 		x = 8
 		#  The civilization carries its own leader list, so this reads it rather than asking every leaderhead in
 		#  turn whether it belongs here.
 		for iLeader in INFO.getCivilizationLeaders(iCivilization):
-			screen.setImageButtonAt("", Pnl, INFO.getButton("LEADER_", iLeader), x, 4, size, size, eWidJuToLeader, iLeader, -1)
+			screen.setImageButtonAt("ToolTip|JumpTo|LEADER" + str(iLeader), Pnl, INFO.getButton("LEADER_", iLeader), x, 4, size, size, eWidGen, 1, 1)
 			x += size + 8
 
 		# City List
