@@ -133,6 +133,10 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > not degrade to "no art": a max animation speed of **0** is a unit that plays its walk cycle and never
   > translates, and **0** group definitions is a formation with no per-member offsets, so the models stack on
   > one another.
+  > ⚑ **How many figures stand is a seventh export, `getSubUnitsAlive`**, read by the EXE and by the battle
+  > animation: it counts down with damage from `CvUnit::getGroupSize` and floors at one figure, so a group size
+  > of 0 leaves every unit drawn with one figure — a dog worker, whose first mesh group is the dog, then shows no
+  > worker.
   > ⛔ **AND THE SIX ANSWER THE AUTHORED MESH-GROUP BLOCK *ALONE* — a value from another system is the same
   > defect wearing a plausible name.** The EXE reads a figure COUNT and the per-member OFFSETS across these
   > calls and lays one formation out of them, so the layout is coherent only while all of them come from the one

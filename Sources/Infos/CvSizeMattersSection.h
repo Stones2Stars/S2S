@@ -43,9 +43,6 @@ public:
 	int cargoSmSpace;
 	int cargoVolume;
 	int cargoVolumeModifier;
-	// Unit-authored geometry (json.md par.9: groupSize / baseCargoVolume where authored; 0 = unauthored).
-	int groupSize;
-	int baseCargoVolume;
 
 private:
 	CvSizeMattersSection(const CvSizeMattersSection&);              // noncopyable (held by-value on the info)

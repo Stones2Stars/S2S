@@ -10417,16 +10417,10 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 	}
 	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	//The following checks to make sure that the upgrade won't make it impossible for a ship to hold
-	//the cargo it already does.
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		if (kUnitInfo.getSizeMatters().cargoSmSpace < SMgetCargo())
-		{
-			return NULL;
-		}
-	}
-	else if (kUnitInfo.getCargoSpaceTotal() / 100 < getCargo())
+	//	The upgraded unit must still hold what it carries: its cargo space as the new type against the volume (Size
+	//	Matters) or the count of what is aboard.
+	const int iCarried = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? SMgetCargo() : getCargo();
+	if (cargoSpaceAsType(kUnitInfo) < iCarried)
 	{
 		return NULL;
 	}
@@ -10627,11 +10621,16 @@ UnitCombatTypes CvUnit::getUnitCombatType() const
 
 DomainTypes CvUnit::getDomainType() const
 {
-        if (isCommodore())
-        {
-                return DOMAIN_LAND;
-        }
-        return m_pUnitInfo->getDomain();
+	return domainAsType(*m_pUnitInfo);
+}
+
+DomainTypes CvUnit::domainAsType(const CvUnitInfo& kType) const
+{
+	if (isCommodore())
+	{
+		return DOMAIN_LAND;
+	}
+	return kType.getDomain();
 }
 
 
@@ -13177,23 +13176,32 @@ int CvUnit::domainModifier(DomainTypes eDomain) const
 
 int CvUnit::cargoSpace() const
 {
+	return cargoSpaceWith(*m_pUnitInfo, GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? SMcargoSpaceFilter() : 0);
+}
+
+int CvUnit::cargoSpaceAsType(const CvUnitInfo& kType) const
+{
+	return cargoSpaceWith(kType, GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? SMcargoCapacityAsType(kType) : 0);
+}
+
+int CvUnit::cargoSpaceWith(const CvUnitInfo& kType, int iSMCapacity) const
+{
+	//	The empire's own hold allowances, by carrier kind. FLAT slots, so each reduces at its point of use.
+	int aiCargo[NUM_CARGO_KINDS];
+	GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
+	const bool bNaval = domainAsType(kType) == DOMAIN_SEA;
+	const bool bMissile = specialCargoAsType(kType) == GC.getSPECIALUNIT_MISSILE();
+
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{
-		int iCargoCapacity = SMcargoSpaceFilter();
-
-		//	The empire's own hold allowances, by carrier kind. FLAT slots, so each reduces at its point of use
-		//	before the rank scaling (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-		int aiCargo[NUM_CARGO_KINDS];
-		GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
-
-		if (getDomainType() == DOMAIN_SEA)
+		int iCargoCapacity = iSMCapacity;
+		if (bNaval)
 		{
 			iCargoCapacity += applySMRank(aiCargo[CARGO_NAVAL] / 100,
 				getSizeMattersSpacialOffsetValue(),
 				GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
 		}
-		const SpecialUnitTypes eMissile = (SpecialUnitTypes)GC.getInfoTypeForString("SPECIALUNIT_MISSILE");
-		if (getSpecialCargo() == eMissile)
+		if (bMissile)
 		{
 			iCargoCapacity += applySMRank(aiCargo[CARGO_MISSILE] / 100,
 				getSizeMattersSpacialOffsetValue(),
@@ -13203,16 +13211,12 @@ int CvUnit::cargoSpace() const
 	}
 	//	getCargoSpaceTotal, never getCargo(CARGO_SPACE): the point sum folds only UNCONDITIONED entries and every
 	//	authored carrier qualifies its hold, so the point read answers 0 for all of them.
-	int iCargoCapacity = m_pUnitInfo->getCargoSpaceTotal() / 100 + m_iCargoCapacity;
-
-	int aiCargo[NUM_CARGO_KINDS];
-	GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
-
-	if (getDomainType() == DOMAIN_SEA)
+	int iCargoCapacity = kType.getCargoSpaceTotal() / 100 + m_iCargoCapacity;
+	if (bNaval)
 	{
 		iCargoCapacity += aiCargo[CARGO_NAVAL] / 100;
 	}
-	if (getSpecialCargo() == GC.getSPECIALUNIT_MISSILE())
+	if (bMissile)
 	{
 		iCargoCapacity += aiCargo[CARGO_MISSILE] / 100;
 	}
@@ -18290,15 +18294,6 @@ UnitCombatTypes CvUnit::getBestHealingTypeConst() const
 	return eBestUnitCombat;
 }
 
-int CvUnit::getSubUnitCount() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && groupRank() > 0)
-	{
-		return groupRank();
-	}
-	return m_pUnitInfo->getSizeMatters().groupSize;
-}
-
 
 int CvUnit::getSubUnitsAlive() const
 {
@@ -18313,7 +18308,7 @@ int CvUnit::getSubUnitsAlive(int iDamage) const
 	{
 		return 0;
 	}
-	return std::max(1, (getSubUnitCount() * (iMaxHP - iDamage) + iMaxHP / (2*getSubUnitCount() + 1)) / iMaxHP);
+	return std::max(1, (getGroupSize() * (iMaxHP - iDamage) + iMaxHP / (2*getGroupSize() + 1)) / iMaxHP);
 }
 // returns true if unit can initiate a war action with plot (possibly by declaring war)
 bool CvUnit::potentialWarAction(const CvPlot* pPlot) const
@@ -24161,11 +24156,16 @@ void CvUnit::setNewDomainCargo(DomainTypes eDomain)
 
 SpecialUnitTypes CvUnit::getSpecialCargo() const
 {
+	return specialCargoAsType(*m_pUnitInfo);
+}
+
+SpecialUnitTypes CvUnit::specialCargoAsType(const CvUnitInfo& kType) const
+{
 	if (m_eNewSpecialCargo != NO_SPECIALUNIT)
 	{
 		return m_eNewSpecialCargo;
 	}
-	return (SpecialUnitTypes)m_pUnitInfo->getSpecialCargo();
+	return (SpecialUnitTypes)kType.getSpecialCargo();
 }
 
 void CvUnit::setNewSpecialCargo(SpecialUnitTypes eSpecialUnit)
@@ -24175,11 +24175,16 @@ void CvUnit::setNewSpecialCargo(SpecialUnitTypes eSpecialUnit)
 
 SpecialUnitTypes CvUnit::getSMNotSpecialCargo() const
 {
+	return smNotSpecialCargoAsType(*m_pUnitInfo);
+}
+
+SpecialUnitTypes CvUnit::smNotSpecialCargoAsType(const CvUnitInfo& kType) const
+{
 	if (m_eNewSMNotSpecialCargo != NO_SPECIALUNIT)
 	{
 		return m_eNewSMNotSpecialCargo;
 	}
-	return (SpecialUnitTypes)m_pUnitInfo->getSMNotSpecialCargo();
+	return (SpecialUnitTypes)kType.getSMNotSpecialCargo();
 }
 
 void CvUnit::setNewSMNotSpecialCargo(SpecialUnitTypes eSpecialUnit)
@@ -24201,23 +24206,68 @@ int CvUnit::SMcargoSpaceFilter() const
 {
 	if (getSMCargoCapacity() == 0)
 	{
-		return SMcargoCapacityPreCheck();
+		return SMcargoVolumeAsType(*m_pUnitInfo);
 	}
 	return getSMCargoCapacity();
 }
 
+int CvUnit::cargoCapacityForSpecialCargo(int iValue, SpecialUnitTypes eSpecialUnitDefined, SpecialUnitTypes eSpecialUnitDefinedNot)
+{
+	int rankChange = 0;
+	if (eSpecialUnitDefined == GC.getSPECIALUNIT_PEOPLE()
+	|| eSpecialUnitDefined == GC.getSPECIALUNIT_MISSILE())
+	{
+		rankChange = -3;
+	}
+	else if (eSpecialUnitDefined == GC.getSPECIALUNIT_FIGHTER()
+		|| eSpecialUnitDefined == GC.getSPECIALUNIT_SEAPLANE()
+		|| eSpecialUnitDefinedNot == GC.getSPECIALUNIT_MISSILE())
+	{
+		rankChange = -1;
+	}
+	return applySMRank(iValue, rankChange, GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
+}
+
 //	⚖ CAPACITY HAS ONE HOME AND SIZE MATTERS DERIVES FROM IT ([cascade/20-unit-plane.md]) -- smSpace follows from
 //	how many units the carrier holds, so it is never a second authored number. The authored hold is read in whole
-//	units and re-expressed as VOLUME (one nominal unit at its own type profile occupies 100), which is what makes
-//	the same authored 3 mean three hunters whether or not the option is on.
-int CvUnit::SMcargoCapacityPreCheck() const
+//	units and re-expressed as volume, which is what makes the same authored 3 mean three hunters whether or not the
+//	option is on.
+int CvUnit::SMcargoVolumeAsType(const CvUnitInfo& kType) const
 {
-	if (!isCarrier())
+	if (!isCarrierAsType(kType))
 	{
 		return 0;
 	}
-	const int iHold = m_pUnitInfo->getCargoSpaceTotal() / 100 + m_iCargoCapacity;
-	return std::max(1, getCargoCapacitybyType(std::max(1, iHold) * 100));
+	const int iHold = kType.getCargoSpaceTotal() / 100 + m_iCargoCapacity;
+	return std::max(1, cargoCapacityForSpecialCargo(std::max(1, iHold) * 100, specialCargoAsType(kType), smNotSpecialCargoAsType(kType)));
+}
+
+int CvUnit::SMcargoCapacityAsType(const CvUnitInfo& kType) const
+{
+	return applySMRank(SMcargoVolumeAsType(kType), getSizeMattersSpacialOffsetValue(), GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER())
+		+ SMcargoSpaceFromHeldSources();
+}
+
+int CvUnit::SMcargoSpaceFromHeldSources() const
+{
+	int iSpace = 0;
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kPromotions = getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator it = kPromotions.begin(); it != kPromotions.end(); ++it)
+	{
+		if (it->second.m_bHasPromotion)
+		{
+			iSpace += GC.getPromotionInfo(it->first).getSizeMatters().cargoSmSpace;
+		}
+	}
+	const std::map<UnitCombatTypes, UnitCombatKeyedInfo>& kUnitCombats = getUnitCombatKeyedInfo();
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = kUnitCombats.begin(); it != kUnitCombats.end(); ++it)
+	{
+		if (it->second.m_bHasUnitCombat)
+		{
+			iSpace += GC.getUnitCombatInfo(it->first).getSizeMatters().cargoSmSpace;
+		}
+	}
+	return iSpace;
 }
 
 int CvUnit::getSMCargoCapacity() const
@@ -24227,9 +24277,7 @@ int CvUnit::getSMCargoCapacity() const
 
 void CvUnit::setSMCargoCapacity()
 {
-	m_iSMCargoCapacity = applySMRank(
-		SMcargoCapacityPreCheck(), getSizeMattersSpacialOffsetValue(), GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER()
-		);
+	m_iSMCargoCapacity = SMcargoCapacityAsType(*m_pUnitInfo);
 	FASSERT_NOT_NEGATIVE(m_iSMCargoCapacity);
 }
 
@@ -24439,35 +24487,20 @@ int CvUnit::getSizeMattersSpacialOffsetValue() const
 	return groupRank() + sizeRank() - iTypePivot;
 }
 
-int CvUnit::getCargoCapacitybyType(int iValue) const
+bool CvUnit::isCarrier() const
 {
-	const SpecialUnitTypes eSpecialUnitDefined = getSpecialCargo();
-	const SpecialUnitTypes eSpecialUnitDefinedNot = getSMNotSpecialCargo();
-
-	int rankChange = 0;
-	if (eSpecialUnitDefined == GC.getSPECIALUNIT_PEOPLE()
-	|| eSpecialUnitDefined == GC.getSPECIALUNIT_MISSILE())
-	{
-		rankChange = -3;
-	}
-	else if (eSpecialUnitDefined == GC.getSPECIALUNIT_FIGHTER()
-		|| eSpecialUnitDefined == GC.getSPECIALUNIT_SEAPLANE()
-		|| eSpecialUnitDefinedNot == GC.getSPECIALUNIT_MISSILE())
-	{
-		rankChange = -1;
-	}
-	return applySMRank(iValue, rankChange, GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
+	return isCarrierAsType(*m_pUnitInfo);
 }
 
 //	A carrier is a unit that HAS A HOLD, and the hold is the authored `cargo.space` plane -- its capacity, and on
 //	its `unit:` qualifier what it may take ([cascade/20-unit-plane.md]). The two legacy scalars survive only as the
 //	PROMOTION-set overrides (getDomainCargo), which just 6 promotions author, so neither can be the test.
 //	⛔ NEVER ask cargoSpace() here: the Size Matters branch resolves its capacity THROUGH this predicate
-//	(SMcargoSpaceFilter -> SMcargoCapacityPreCheck), so doing so recurses without end.
-bool CvUnit::isCarrier() const
+//	(SMcargoSpaceFilter -> SMcargoVolumeAsType), so doing so recurses without end.
+bool CvUnit::isCarrierAsType(const CvUnitInfo& kType) const
 {
-	return m_pUnitInfo->getCargoSpaceTotal() + m_iCargoCapacity * 100 > 0
-		|| getSpecialCargo() != NO_SPECIALUNIT
+	return kType.getCargoSpaceTotal() + m_iCargoCapacity * 100 > 0
+		|| specialCargoAsType(kType) != NO_SPECIALUNIT
 		|| getDomainCargo() != NO_DOMAIN;
 }
 
