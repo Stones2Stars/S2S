@@ -493,6 +493,7 @@ def update(argsList):
 def onClose(argsList):
 	if argsList[0] in screenMap:
 		screen = screenMap[argsList[0]]
+		PythonToolTip.noteScreenClosed(screen, mainInterface)
 		if hasattr(screen, "onClose") and isinstance(screen.onClose, types.MethodType):
 			screen.onClose()
 

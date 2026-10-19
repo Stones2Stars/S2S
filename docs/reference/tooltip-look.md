@@ -64,7 +64,10 @@ nothing and derives nothing.
 - **Widget hovers.** The game asks `CvDLLWidgetData::parseHelp` for a widget's text when the mouse is over it.
   At its end the text goes to `CvScreensInterface.showWidgetHover`, and the game's own box is left empty.
   `CvScreensInterface.handleInput` passes every screen's input to `PythonToolTip.noteHoverInput`, so the box
-  draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen answers
+  draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen that closes
+  under the cursor sends no leave, so `CvScreensInterface.onClose` hands the hover back to the main interface
+  (`PythonToolTip.noteScreenClosed`) before the screen tears down what its `getScreen()` reads; some main
+  interface widgets never report the mouse arriving, so the hover cannot wait for one. A screen answers
   `getScreen()`; a screen with its own tooltip handling answers `showHover(szText)` / `hideHover()`.
 - **What the game does not report.** For a general widget the game passes Python no data, only the trailing
   number of the widget's name (the ID), so a screen names such a widget `TYPE|Case<index>`. A stacked bar reports

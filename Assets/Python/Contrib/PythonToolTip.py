@@ -68,6 +68,16 @@ def noteHoverInput(screenObject, inputClass):
 		hideHover(screenObject)
 		g_hoverScreen = None
 
+def noteScreenClosed(screenObject, baseScreen):
+	# A screen closed under the cursor sends no MOVE_OFF, and its getScreen() need not survive the close. The
+	# hover goes back to the screen beneath, since some of its widgets never report the mouse arriving.
+	global g_hoverScreen
+	if g_hoverScreen is screenObject:
+		if baseScreen is screenObject:
+			g_hoverScreen = None
+		else:
+			g_hoverScreen = baseScreen
+
 def showWidgetHover(szText):
 	# True when a screen drew the text; the DLL then leaves the game's own box empty.
 	global g_hoverScreen
