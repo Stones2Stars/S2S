@@ -14,6 +14,7 @@
 #include "CvProperties.h"
 
 class CvUnit;
+class CvPlot;
 class CvXMLLoadUtility;
 class BoolExpr;
 class IntExpr;
@@ -43,9 +44,10 @@ public:
 		OUTCOMEMISSION_LEG_PROPERTY_COST    // the payer cannot meet m_PropertyCost
 	};
 
-	/// <summary>May this unit take the mission now? `piRefusalLeg` is OPTIONAL and diagnostic: when non-NULL it
-	/// receives the OutcomeMissionLeg that refused. Every gameplay caller passes NULL and is unaffected.</summary>
-	bool isPossible(const CvUnit* pUnit, bool bTestVisible = false, int* piRefusalLeg = NULL) const;
+	/// <summary>May this unit take the mission on `pPlot` -- its own plot, or the end of its queued go-to, which is
+	/// where the button promises the mission will happen? `piRefusalLeg` is OPTIONAL and diagnostic: when non-NULL
+	/// it receives the OutcomeMissionLeg that refused. Every gameplay caller passes NULL and is unaffected.</summary>
+	bool isPossible(const CvUnit* pUnit, const CvPlot* pPlot, bool bTestVisible = false, int* piRefusalLeg = NULL) const;
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit* pUnit) const;
 	void execute(CvUnit* pUnit) const;
 

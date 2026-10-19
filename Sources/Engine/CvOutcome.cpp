@@ -328,219 +328,7 @@ int CvOutcome::getChance(const CvUnit &kUnit, int iDefeatedCaptureResistance) co
 
 bool CvOutcome::isPossible(const CvUnit& kUnit) const
 {
-	PROFILE_EXTRA_FUNC();
-	const CvTeam& kTeam = GET_TEAM(kUnit.getTeam());
-	const CvOutcomeInfo& kInfo = GC.getOutcomeInfo(m_eType);
-
-	if (!kTeam.isHasTech(kInfo.getPrereqTech()))
-	{
-		return false;
-	}
-
-	if (kInfo.getObsoleteTech() != NO_TECH)
-	{
-		if (kTeam.isHasTech(kInfo.getObsoleteTech()))
-		{
-			return false;
-		}
-	}
-
-	if (kInfo.getPrereqCivic() != NO_CIVIC)
-	{
-		if (!GET_PLAYER(kUnit.getOwner()).isCivic(kInfo.getPrereqCivic()))
-		{
-			return false;
-		}
-	}
-
-	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_CITY))
-	{
-		if (!kUnit.plot()->isCity())
-		{
-			return false;
-		}
-	}
-
-	if (kInfo.hasPlacement(OUTCOME_PLACEMENT_NOT_CITY))
-	{
-		if (kUnit.plot()->isCity())
-		{
-			return false;
-		}
-	}
-
-	if (kInfo.isCapture())
-	{
-		if (kUnit.isNoCapture())
-		{
-			return false;
-		}
-	}
-
-	//	A contested capture is taken by a land unit that is not an animal.
-	if (kInfo.isCaptureContest() && (kUnit.isAnimal() || kUnit.getDomainType() != DOMAIN_LAND))
-	{
-		return false;
-	}
-
-	const TeamTypes eOwnerTeam = GET_PLAYER(kUnit.getOwner()).getTeam();
-	const CvTeam& kOwnerTeam = GET_TEAM(eOwnerTeam);
-	const PlayerTypes ePlotOwner = kUnit.plot()->getOwner();
-	if (ePlotOwner == NO_PLAYER)
-	{
-		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
-		{
-			return false;
-		}
-	}
-	else if (GET_PLAYER(ePlotOwner).isNPC())
-	{
-		if (!kInfo.hasTerritory(OUTCOME_TERRITORY_BARBARIAN))
-		{
-			return false;
-		}
-	}
-	else
-	{
-		const TeamTypes ePlotOwnerTeam = GET_PLAYER(ePlotOwner).getTeam();
-		const CvTeam& kPlotOwnerTeam = GET_TEAM(ePlotOwnerTeam);
-		if (kOwnerTeam.isAtWar(ePlotOwnerTeam))
-		{
-			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_HOSTILE))
-			{
-				return false;
-			}
-		}
-		else if ((eOwnerTeam == ePlotOwnerTeam) || (kPlotOwnerTeam.isVassal(eOwnerTeam)))
-		{
-			if (!kInfo.hasTerritory(OUTCOME_TERRITORY_FRIENDLY))
-			{
-				return false;
-			}
-		}
-		else if (!kInfo.hasTerritory(OUTCOME_TERRITORY_NEUTRAL))
-		{
-			return false;
-		}
-	}
-
-	if (!kInfo.getPrereqBuildings().empty())
-	{
-		const CvCity* pCity = kUnit.plot()->getPlotCity();
-		if (!pCity)
-		{
-			return false;
-		}
-
-		foreach_(const BuildingTypes ePrereq, kInfo.getPrereqBuildings())
-		{
-			if (!pCity->isActiveBuilding(ePrereq))
-			{
-				return false;
-			}
-		}
-	}
-
-	// Removed because outcome has its own prereq and obsolete tech
-	/*if (m_ePromotionType != NO_PROMOTION)
-	{
-		CvPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
-		if (!kTeam.isHasTech(kPromotion.getTechPrereq()))
-		{
-			return false;
-		}
-		if (kPromotion.getObsoleteTech() != NO_TECH)
-		{
-			if (kTeam.isHasTech(kPromotion.getObsoleteTech()))
-			{
-				return false;
-			}
-		}
-	}*/
-
-	if (m_eBonusType != NO_BONUS)
-	{
-		const CvBonusInfo& kBonus = GC.getBonusInfo(m_eBonusType);
-		if (!kTeam.isHasTech((TechTypes)kBonus.getTechReveal()))
-		{
-			return false;
-		}
-		if ((TechTypes)kBonus.getTechObsolete() != NO_TECH)
-		{
-			if (kTeam.isHasTech((TechTypes)kBonus.getTechObsolete()))
-			{
-				return false;
-			}
-		}
-		if (kUnit.plot()->getBonusType() != NO_BONUS)
-		{
-			return false;
-		}
-		if (kUnit.plot()->getFeatureType() == NO_FEATURE)
-		{
-			if (!kBonus.isTerrain(kUnit.plot()->getTerrainType()))
-			{
-				return false;
-			}
-		}
-		else
-		{
-			if (!kBonus.isFeature(kUnit.plot()->getFeatureType()))
-			{
-				return false;
-			}
-			if (!kBonus.isFeatureTerrain(kUnit.plot()->getTerrainType()))
-			{
-				return false;
-			}
-		}
-
-		const int iCount = algo::count_if(kUnit.plot()->adjacent(), CvPlot::fn::getBonusType(NO_TEAM) == m_eBonusType);
-
-		if (!(iCount == 0 || (iCount == 1 && kUnit.plot()->isWater())))
-		{
-			return false;
-		}
-	}
-
-	if (m_eEventTrigger != NO_EVENTTRIGGER)
-	{
-		const CvPlayer& kOwner = GET_PLAYER(kUnit.getOwner());
-		const CvEventTriggerInfo& kTriggerInfo = GC.getEventTriggerInfo(m_eEventTrigger);
-		if (!kOwner.isEventTriggerPossible(m_eEventTrigger, true))
-		{
-			return false;
-		}
-
-		if (kTriggerInfo.isPickCity())
-		{
-			const CvCity* pCity = kUnit.plot()->getPlotCity();
-			if (pCity)
-			{
-				if (!pCity->isEventTriggerPossible(m_eEventTrigger))
-				{
-					return false;
-				}
-			}
-		}
-
-		if (!kUnit.plot()->canTrigger(m_eEventTrigger, kUnit.getOwner()))
-		{
-			return false;
-		}
-	}
-
-	if (!oc_gateHolds(m_pPlotCondition, kUnit, kUnit.plot()))
-	{
-		return false;
-	}
-
-	if (!oc_gateHolds(m_pUnitCondition, kUnit, kUnit.plot()))
-	{
-		return false;
-	}
-
-	return getChance(kUnit) > 0;
+	return isPossibleInPlot(kUnit, *kUnit.plot());
 }
 
 // Can return a false positive if an outcome requires a building combination
@@ -672,6 +460,20 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		{
 			return false;
 		}
+	}
+
+	if (kInfo.isCapture())
+	{
+		if (kUnit.isNoCapture())
+		{
+			return false;
+		}
+	}
+
+	//	A contested capture is taken by a land unit that is not an animal.
+	if (kInfo.isCaptureContest() && (kUnit.isAnimal() || kUnit.getDomainType() != DOMAIN_LAND))
+	{
+		return false;
 	}
 
 	const TeamTypes eOwnerTeam = GET_PLAYER(kUnit.getOwner()).getTeam();

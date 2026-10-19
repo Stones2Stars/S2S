@@ -1248,7 +1248,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				if (pOutcomeMission)
 				{
 					iFoundOn = 1;
-					bPossible = pOutcomeMission->isPossible(unitX, bTestVisible, &iLeg);
+					bPossible = pOutcomeMission->isPossible(unitX, pPlot, bTestVisible, &iLeg);
 				}
 				if (!bPossible)
 				{
@@ -1261,7 +1261,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 							if (pCombatMission)
 							{
 								iFoundOn = 2;
-								if (pCombatMission->isPossible(unitX, bTestVisible, &iLeg))
+								if (pCombatMission->isPossible(unitX, pPlot, bTestVisible, &iLeg))
 								{
 									bPossible = true;
 									break;
@@ -1289,7 +1289,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 						.addI(UNTF_POSSIBLE, bPossible ? 1 : 0)
 						.addI(UNTF_TESTVISIBLE, bTestVisible ? 1 : 0)
 						.addI(UNTF_LEG, iLeg)
-						.addI(UNTF_INCITY, (unitX->plot() != NULL && unitX->plot()->isCity()) ? 1 : 0));
+						.addI(UNTF_INCITY, pPlot->isCity() ? 1 : 0));
 				}
 				if (bPossible)
 				{

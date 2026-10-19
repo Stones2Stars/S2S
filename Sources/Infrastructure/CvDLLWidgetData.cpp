@@ -3270,7 +3270,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				foreach_(const CvUnit* pSelectedUnit, gDLL->getInterfaceIFace()->getSelectionList()->units())
 				{
 					const CvOutcomeMission* pSelectedUnitOutcomeMission = pSelectedUnit->getUnitInfo().getOutcomeMissionByMission(eMission);
-					if (pSelectedUnitOutcomeMission && pSelectedUnitOutcomeMission->isPossible(pSelectedUnit))
+					if (pSelectedUnitOutcomeMission && pSelectedUnitOutcomeMission->isPossible(pSelectedUnit, pMissionPlot))
 					{
 						pSelectedUnitOutcomeMission->buildDisplayString(szBuffer, pSelectedUnit);
 						break;
@@ -3284,7 +3284,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						if (pSelectedUnit->isHasUnitCombat(eCombat))
 						{
 							const CvOutcomeMission* pOutcomeMission = GC.getUnitCombatInfo(eCombat).getOutcomeMissionByMission(eMission);
-							if (pOutcomeMission && pOutcomeMission->isPossible(pSelectedUnit))
+							if (pOutcomeMission && pOutcomeMission->isPossible(pSelectedUnit, pMissionPlot))
 							{
 								pOutcomeMission->buildDisplayString(szBuffer, pSelectedUnit);
 								bFound = true;
