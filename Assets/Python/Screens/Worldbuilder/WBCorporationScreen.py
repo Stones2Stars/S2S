@@ -157,6 +157,9 @@ class WBCorporationScreen:
 				screen.setTableText("WBHeadquarter", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
 				screen.setTableText("WBHeadquarter", 2, iRow, "<font=3>" + sColor + pHeadquarter.getName() + "</color></font>", INFO.getButton("CIVILIZATION_", pHeadquarter.getCivilizationType()), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHeadquarter.getID(), 1<<0)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBCorporationScreen", CvScreenEnums.WB_CORPORATION)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBCorporationScreen", CvScreenEnums.WB_CORPORATION)
 		global iSelectedPlayer

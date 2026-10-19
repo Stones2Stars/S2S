@@ -228,6 +228,9 @@ class WBBuildingScreen:
 
 			screen.setTableText("WBWonders", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
 		global bApplyAll

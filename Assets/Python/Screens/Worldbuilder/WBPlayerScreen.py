@@ -295,6 +295,9 @@ class WBPlayerScreen:
 				screen.appendTableRow("WBPlayerCivics")
 				iCurrentMaxRow = iMaxRow + 2
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBPlayerScreen", CvScreenEnums.WB_PLAYER)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBPlayerScreen", CvScreenEnums.WB_PLAYER)
 		global iChange

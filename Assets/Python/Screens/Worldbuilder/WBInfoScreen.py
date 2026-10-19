@@ -503,6 +503,9 @@ class WBInfoScreen:
 			screen.setTableInt("InfoTable", 1, iRow, "<font=3>" + str(item[1]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 			screen.setTableInt("InfoTable", 2, iRow, "<font=3>" + str(item[2]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBInfoScreen", CvScreenEnums.WB_INFO)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBInfoScreen", CvScreenEnums.WB_INFO)
 		global iSelectedPlayer

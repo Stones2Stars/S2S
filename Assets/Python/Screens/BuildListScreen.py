@@ -376,6 +376,9 @@ class BuildListScreen:
     screen = CyGInterfaceScreen( "BuildListScreen", CvScreenEnums.BUILD_LIST_SCREEN )
     screen.hideScreen()
 
+  def getScreen(self):
+    return CyGInterfaceScreen( "BuildListScreen", CvScreenEnums.BUILD_LIST_SCREEN )
+
   # Will handle the input for this screen...
   def handleInput (self, inputClass):
     screen = CyGInterfaceScreen( "BuildListScreen", CvScreenEnums.BUILD_LIST_SCREEN )

@@ -177,9 +177,8 @@ public:
 	void parseFoundReligionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseFoundCorporationHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 
-	void parseFinanceDomesticTrade(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
-	void parseFinanceForeignTrade(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
-	void parseFinanceSpecialistGold(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	///<summary>WIDGET_HELP_FINANCE_DOMESTIC_TRADE: the empire's trade routes, domestic and foreign.</summary>
+	void parseFinanceTrade(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 
 	void parseFinanceNumUnits(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseFinanceUnitCost(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
@@ -208,10 +207,7 @@ public:
 	void parseDescriptionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer, bool bMinimal);
 	void parseKillDealHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 
-	void parseFoodModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
-
 	void parseLeaderheadHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
-	void parseCommerceModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 
 	void parseTradeRoutes(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 

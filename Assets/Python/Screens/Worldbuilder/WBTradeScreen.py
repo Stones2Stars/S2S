@@ -100,6 +100,9 @@ class WBTradeScreen:
 			return CyTranslator().getText("[ICON_GOLD]", ()) + CyTranslator().getText("TXT_KEY_MISC_GOLD", (iData,))
 		return ""
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBTradeScreen", CvScreenEnums.WB_TRADE)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBTradeScreen", CvScreenEnums.WB_TRADE)
 

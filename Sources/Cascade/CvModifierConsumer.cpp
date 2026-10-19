@@ -3101,6 +3101,9 @@ namespace
 					pPlayer, NULL, NULL);
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_GOVERNMENT_CENTER), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, NULL, NULL);
+				// The capital decides the home area, so every IS_HOME_AREA gate turns on the same facts.
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_HOME_AREA), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			// ⚖ NOTHING FOR THE MODIFIER, AND THAT IS A DEDUPLICATION RATHER THAN A HOLE.

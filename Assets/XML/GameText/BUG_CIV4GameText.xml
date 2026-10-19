@@ -2,16 +2,6 @@
 <!-- Composite texts: Texts starting with TXT_KEY_BUG_OPT(LABEL)_ are concatenated in Python: TXT_KEY_BUG_OPT_ + XXXX__YYYY + _TEXT / _HOVER / _LIST -->
 <Civ4GameText xmlns="http://www.firaxis.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.firaxis.com ../Schema/Civ4Gametext.xsd">
 	<TEXT>
-		<Tag>TXT_KEY_BUG_AVERAGE_TRADE_YIELD</Tag>
-		<English>[NEWLINE]Average Yield: %s1[ICON_COMMERCE]</English>
-		<French>[NEWLINE]Profit Moyen: %s1[ICON_COMMERCE]</French>
-		<German>[NEWLINE]Durchschnittliches Einkommen: %s1[ICON_COMMERCE]</German>
-		<Italian>[NEWLINE]Rendimento medio: %s1 [ICON_COMMERCE]</Italian>
-		<Spanish>[NEWLINE]Rendimiento medio: %s1[ICON_COMMERCE]</Spanish>
-		<Russian>[NEWLINE]Ñðåäíèé äîõîä: %s1[ICON_COMMERCE]</Russian>
-		<Polish>[NEWLINE]&#140;redni zysk:[ICON_COMMERCE] %s1</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUG_CANNOT_TRADE_CLOSED_BORDERS</Tag>
 		<English>[NEWLINE][ICON_BULLET]You have not signed an Open Borders agreement</English>
 		<French>[NEWLINE][ICON_BULLET]Vous n'avez pas signé d'accords de Libre Passage</French>
@@ -127,71 +117,6 @@
 		<French>[ICON_BULLET]%d1 années d'histoire ont doublé le %s2_commerce_type</French>
 		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%s2_commerce_type raddoppiata[COLOR_REVERT] dopo [COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT] anni di storia</Italian>
 		<Polish>[ICON_BULLET]%d1 lat historii podwoi&#179;o %s2_commerce_type</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE</Tag>
-		<English>(%d1 × %s2[ICON_GOLD] = %s3[ICON_GOLD])</English>
-		<Italian>(%d1 × %s2 [ICON_GOLD] = %s3 [ICON_GOLD])</Italian>
-		<Russian>(%d1 × %s2[ICON_GOLD] = %s3[ICON_GOLD])</Russian>
-		<Polish>(%d1 x %s2[ICON_GOLD] = %s3[ICON_GOLD])</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_COMMERCE</Tag>
-		<English>Total [ICON_COMMERCE]</English>
-		<French>Commerce total</French>
-		<German>Handel insgesamt</German>
-		<Italian>Commercio totale</Italian>
-		<Spanish>Comercio total</Spanish>
-		<Russian>Общая торговля</Russian>
-		<Polish>Og&#243;lne Bogactwo</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE</Tag>
-		<English>The Total [ICON_COMMERCE] from Domestic Trade Routes</English>
-		<French>Commerce Total provenant des Routes d'échange</French>
-		<German>Gesamteinkommen durch inländische Handelsverbindungen</German>
-		<Italian>Commercio totale dalle rotte commerciali interne</Italian>
-		<Spanish>Comercio total procedente del comercio interior</Spanish>
-		<Russian>Общий объем торговли по внутренним торговым маршрутам</Russian>
-		<Polish>Ca&#179;kowite Bogactwo z krajowych szlak&#243;w handlowych</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE</Tag>
-		<English>The Total [ICON_COMMERCE] from Foreign Trade Routes</English>
-		<French>Commerce Total provenant des Routes d'échange étrangères</French>
-		<German>Gesamteinkommen durch ausländische Handelsverbindungen</German>
-		<Italian>Commercio totale dalle rotte commerciali estere</Italian>
-		<Spanish>Comercio total proveniente del comercio exterior</Spanish>
-		<Russian>Общий объем торговли по иностранным торговым маршрутам</Russian>
-		<Polish>Ca&#179;kowite Bogactwo z zagranicznych szlak&#243;w handlowych</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS</Tag>
-		<English>The Total [ICON_GOLD] from Specialists</English>
-		<French>Revenus Totaux provenant des Spécialistes</French>
-		<German>Gesamteinkommen durch Spezialisten</German>
-		<Italian>Oro totale ottenuto dagli specialisti</Italian>
-		<Spanish>Oro total obtenido de especialistas</Spanish>
-		<Russian>Общий доход золота от специалистов</Russian>
-		<Polish>Ca&#179;e z&#179;oto od specjalist&#243;w</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_GOLD</Tag>
-		<English>[NEWLINE]%s1[ICON_GOLD]: %s3 (%d2)</English>
-		<French>[NEWLINE]%s1[ICON_GOLD] : %s3 (%d2)</French>
-		<Italian>[NEWLINE]%s1 [ICON_GOLD]: %s3 (%d2)</Italian>
-		<Russian>[NEWLINE]%s1[ICON_GOLD]: %s3 (%d2)</Russian>
-		<Polish>[NEWLINE]%s1[ICON_GOLD]: %s3 (%d2)</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_TOTAL_GOLD</Tag>
-		<English>[NEWLINE]------------------------[NEWLINE]TOTAL SPECIALISTS: %d1[ICON_GOLD]</English>
-		<French>[NEWLINE]------------------------[NEWLINE]TOTAL SPÉCIALISTES: %d1[ICON_GOLD]</French>
-		<German>[NEWLINE]------------------------[NEWLINE]SPEZIALISTEN GESAMT: %d1[ICON_GOLD]</German>
-		<Italian>[NEWLINE]------------------------[NEWLINE]TOTALE SPECIALISTI: %d1[ICON_GOLD]</Italian>
-		<Spanish>[NEWLINE]------------------------[NEWLINE]TOTAL DE ESPECIALISTAS: %d1[ICON_GOLD]</Spanish>
-		<Russian>[NEWLINE]------------------------[NEWLINE]ВСЕГО СПЕЦИАЛИСТОВ: %d1[ICON_GOLD]</Russian>
-		<Polish>[NEWLINE]------------------------[NEWLINE]&#163;&#165;CZNIE SPECJALI&#140;CI:[ICON_GOLD] %d1</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_FOREIGN_TRADE_HEADING</Tag>
@@ -9044,26 +8969,6 @@
 		<Russian>Çàìêè:</Russian>
 		<Spanish>Templos:</Spanish>
 		<!-- infoscreen Religion -->
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_TOTAL_TRADE_ROUTES</Tag>
-		<English>[NEWLINE]Number of Routes: %d1</English>
-		<French>[NEWLINE]Nombre de Routes: %d1</French>
-		<German>[NEWLINE]Anzahl der Handelsverbindungen: %d1</German>
-		<Italian>[NEWLINE]Numero di rotte: %d1</Italian>
-		<Spanish>[NEWLINE]Número de rutas: %d1</Spanish>
-		<Russian>[NEWLINE]×èñëî ïóòåé: %d1</Russian>
-		<Polish>[NEWLINE]Liczba szlak&#243;w: %d1</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_TOTAL_TRADE_YIELD</Tag>
-		<English>[NEWLINE]Total Yield: %s1[ICON_COMMERCE]</English>
-		<French>[NEWLINE]Total Profit: %s1[ICON_COMMERCE]</French>
-		<German>[NEWLINE]Gesamteinkommen: %s1[ICON_COMMERCE]</German>
-		<Italian>[NEWLINE]Rendimento totale: %s1 [ICON_COMMERCE]</Italian>
-		<Spanish>[NEWLINE]Rendimiento total: %s1[ICON_COMMERCE]</Spanish>
-		<Russian>[NEWLINE]Âñåãî äîõîä: %s1[ICON_COMMERCE]</Russian>
-		<Polish>[NEWLINE]Ca&#179;kowity zysk:[ICON_COMMERCE] %s1</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_TRADE_HEADING</Tag>

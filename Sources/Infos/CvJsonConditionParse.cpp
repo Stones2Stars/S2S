@@ -35,6 +35,11 @@ static CvCascPredKind cp_predKind(const std::string& s)
 	if (s == "CIVIC_CATEGORY") return CASC_PRED_CIVIC_CATEGORY;   // {CIVIC_CATEGORY: CIVICOPTION_X}, the civic-category gate
 	if (s == "IS_STATE_RELIGION") return CASC_PRED_IS_STATE_RELIGION;   // the counted-religion test (ruling 23)
 	if (s == "IS_HEADQUARTERS") return CASC_PRED_IS_HEADQUARTERS;   // corp HQ city (ruling 10; bare = any corp's HQ)
+	// Ahead of the IS_<TAG> fallback in cp_parseBareString, which would otherwise read it as a unit tag and
+	// answer false in every city.
+	if (s == "IS_HOME_AREA") return CASC_PRED_IS_HOME_AREA;
+	if (s == "IS_FOREIGN") return CASC_PRED_IS_FOREIGN;
+	if (s == "SHARES_CIVIC") return CASC_PRED_SHARES_CIVIC;
 	return CASC_PRED_UNKNOWN;
 }
 
@@ -85,6 +90,9 @@ const char* cascadeSpellPredKind(CvCascPredKind ePredKind)
 	case CASC_PRED_EXISTED_FOR:                return "existedFor";
 	case CASC_PRED_NATURE_YIELD:               return "natureYield";
 	case CASC_PRED_IS_TAG:                     return "IS_TAG";
+	case CASC_PRED_IS_HOME_AREA:               return "IS_HOME_AREA";
+	case CASC_PRED_IS_FOREIGN:                 return "IS_FOREIGN";
+	case CASC_PRED_SHARES_CIVIC:               return "SHARES_CIVIC";
 	default:                                   return "";
 	}
 }

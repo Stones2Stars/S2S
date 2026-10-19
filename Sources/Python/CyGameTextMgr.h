@@ -68,7 +68,12 @@ public:
 	std::wstring getUnitCombatHelp(int iUnitCombat, bool bCivilopediaText);
 	std::wstring getTraitHelp(int iTrait);
 	std::wstring getBonusHelp(int iBonus, bool bCivilopediaText);
-	std::wstring getProductionHelpCity(int iPlayer, int iCity);
+	///<summary>The hover of one city number as (lines, runs) for the one hover box: the text lines, and per run of
+	/// sources (firstLine, lineCount, summary line) for a screen too small to show them all. iSubject is a
+	/// CityBreakdownSubject (CvGameTextMgr::getCityHoverLines).</summary>
+	python::tuple getCityHover(int iPlayer, int iCity, int iSubject);
+	///<summary>An amount as the one amount format writes it (amountText): "12", "12.5", "-0.75".</summary>
+	std::wstring getAmountText(int iAmount);
 	std::wstring getReligionHelpCity(int iReligion, int iPlayer, int iCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion);
 	std::wstring getCorporationHelpCity(int iCorporation, int iPlayer, int iCity, bool bCityScreen, bool bForceCorporation);
 	std::wstring getImprovementHelp(int iImprovement, bool bCivilopediaText);
@@ -81,7 +86,6 @@ public:
 	std::wstring parseCivInfos(int /*CivilizationTypes*/ iCivilization, bool bDawnOfMan);
 	std::wstring parseLeaderTraits(int /*LeaderHeadTypes*/ iLeader, bool bDawnOfMan, bool bCivilopediaText);
 	std::wstring parseTraits(int /*TraitTypes*/ eTrait, bool bDawnOfMan, bool bEffectsOnly);
-	std::wstring getHappinessHelp();
 	std::wstring getSpecialistHelp(int iSpecialist, bool bCivilopediaText);
 	std::wstring buildHintsList();
 	std::wstring getAttitudeString(int iPlayer, int iTargetPlayer);
@@ -90,7 +94,6 @@ public:
 	std::wstring getActiveDealsString(int iThisPlayer, int iOtherPlayer);
 	std::wstring getDealString(CyDeal* pDeal, int iPlayerPerspective);
 	std::wstring getFinanceUnitUpkeepString(int iPlayer);
-	std::wstring getDefenseHelp(int iPlayer, int iCity);
 	std::wstring getFlagHelp();
 
 protected:

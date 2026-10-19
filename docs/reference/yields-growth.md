@@ -20,11 +20,13 @@
   (baseYieldRate + specialistYield)·baseYieldRateModifier + 100·extraYield))`.
 - **Consumption** = `getFoodConsumedByPopulation − healthRate − angryPop + foodWastage`, using
   `getPopulationPlusProgress100 = 100·pop + 100·food/growthThreshold` (fractional, scales as the food bar fills).
-  `FOOD_CONSUMPTION_PER_POPULATION = 4`. `foodDifference()` carries NO wastage; `isFoodProduction()` caps surplus
-  (→ hammers); `isDisorder()` → 0.
-- **Wastage** (when `WASTAGE_START_CONSUMPTION_PERCENT(50) ≥ 0` and surplus > consumption·50/100): memoised
-  `waste[N] = waste[N-1] + 1 − (0.05 + 0.95/(1+0.05·N))` — ~logarithmic, truncated to int (a static memo cache,
-  safe only because the game thread is serial).
+  `FOOD_CONSUMPTION_PER_POPULATION = 4`. `foodDifference()` includes wastage unless asked not to
+  (`bIncludeWastage`); `isFoodProduction()` caps surplus (→ hammers); `isDisorder()` → 0. With a `CvCityBreakdown`
+  it writes every one of these parts for the city's food hover in the same pass.
+- **Wastage** (when `WASTAGE_START_CONSUMPTION_PERCENT(50) ≥ 0`, on the surplus N above consumption·50/100, whole
+  food): `waste(N) = Σ k=1..N of 1 − (g + (1−g)/(1 + k/20))`, `g = WASTAGE_GROWTH_PERCENT(5)/100` — each further
+  unit wastes more, toward `1−g`, and a surplus of one wastes less than a whole food. Summed in integer ten-thousandths of a food and truncated to
+  whole food, so every machine computes the same waste; the sums are memoised per `g` (the game thread is serial).
 - **Granary:** +`max(1, delta·foodKeptPct/100)` on a positive delta, −`min(-1, delta/2)` on negative. **Growth:**
   subtract threshold, pull from granary if `food < foodKept`, then `+1 pop`. `growthThreshold = getModifiedIntValue(
   player.threshold(pop), cityGrowthRatePercent + playerGrowthRatePercent)`, halved for barbarian.

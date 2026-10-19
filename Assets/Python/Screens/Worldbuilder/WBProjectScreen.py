@@ -146,6 +146,9 @@ class WBProjectScreen:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			screen.setTableText("WBProject", iColumn, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("PROJECT_", item[1]), WidgetTypes.WIDGET_PYTHON, 6785, item[1], 1<<0 )
 
+	def getScreen(self):
+		return CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
 		global iChange

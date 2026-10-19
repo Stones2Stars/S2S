@@ -366,6 +366,9 @@ class WBTeamScreen:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setTableText("WBAbilities", 0, iRow, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_WB_WATER_WORK",()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_TECH_WATERWORK").getPath(), self.lAbilities[11][0], self.lAbilities[11][1], -1, 1<<0 )
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
 

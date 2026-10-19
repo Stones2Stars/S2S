@@ -75,6 +75,9 @@ public:
 	//	THE CITY YIELD CENSUS for ONE channel -- the same decomposition the /computed census renders, so a tooltip
 	//	reads the SAME DOCUMENT rather than recomputing its own breakdown. Indexed by CityYieldTerm.
 	python::list getYieldTerms(int iYield) const;
+	///<summary>The city's yield of iYield as the engine's breakdown, formatted by the city hover's renderer: one
+	/// (role, label, value) tuple per line, role a CityBreakdownRole.</summary>
+	python::list getYieldBreakdownRows(int iYield) const;
 	//	The COMMERCE half of that census, indexed by CityCommerceTerm. Same document the yield tooltip and the
 	//	commerce split itself read -- a view that re-derived a term from raw members would be a second answer.
 	python::list getCommerceTerms(int iCommerce) const;
@@ -132,6 +135,15 @@ public:
 	python::list getReligions() const;
 	python::list getCorporations() const;
 	python::list getCultureReads() const;
+	///<summary>The city's wellbeing totals, indexed by CityWellbeingNetRead.</summary>
+	python::list getWellbeingNets() const;
+	///<summary>The city's trade routes, indexed by CityTradeRead.</summary>
+	python::list getTradeReads() const;
+	///<summary>[allowed, production, gold]: what hurrying the current order with iHurry would carry over, the
+	/// production up to the cap and gold for the rest (CvCity::hurryOverflow).</summary>
+	python::list getHurryOverflow(int iHurry, bool bCountThisTurn) const;
+	///<summary>The experience a unit of the domain built here starts with.</summary>
+	int getDomainExperience(int iDomain) const;
 	//	Rows of [partnerOwner, partnerCity, profitTimes100]. Routes are live STATE, so they are walked rather
 	//	than looked up -- nothing authors a route.
 	python::list getTradeRoutes() const;
@@ -257,6 +269,10 @@ public:
 	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
 	int getGreatPeopleProgress() const;
+	///<summary>CvCity::getGreatPeopleTurnsLeft.</summary>
+	int getGreatPeopleTurnsLeft() const;
+	///<summary>CvCity::getGreatPeopleUnitChances as a list of (unit type, chance).</summary>
+	python::list getGreatPeopleUnitChances() const;
 	void changeGreatPeopleProgress(int iChange);
 	bool isGovernmentCenter() const;
 

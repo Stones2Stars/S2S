@@ -378,6 +378,7 @@ bool CityContext::hasActiveCorporation(int eCorp) const { return m_city != NULL 
 bool CityContext::isHeadquartersOf(int eCorp) const  { return m_city != NULL && m_city->isHeadquarters((CorporationTypes)eCorp); }
 bool CityContext::isHeadquartersAny() const          { return m_headquartersCount > 0; }
 bool CityContext::isCapital() const            { return m_city != NULL && m_city->isCapital(); }
+bool CityContext::isHomeArea() const           { return m_city != NULL && m_city->isHomeArea(); }
 bool CityContext::isGovernmentCenter() const   { return m_city != NULL && m_city->isGovernmentCenter(); }
 bool CityContext::hasFreshWaterAccess() const  { return m_city != NULL && m_city->hasFreshWater(); }
 int  CityContext::propertyValue(int eProperty) const

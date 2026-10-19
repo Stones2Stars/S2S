@@ -1453,92 +1453,676 @@
 		<English>In range of %s1 [ICON_BULLET] not currently worked</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_BASE</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Base (multiplied by the percent stack):[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_MAINTENANCE</Tag>
+		<English>City Maintenance: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_PLOTS</Tag>
-		<English>[ICON_BULLET]Worked plots: %s1 (from %d2 plots)</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_FOOD</Tag>
+		<English>Food: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_PLOTSEGMENTS</Tag>
-		<English>    nature %s1 [ICON_BULLET] improvements %s2 [ICON_BULLET] routes/other %s3</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_PRODUCTION</Tag>
+		<English>Production: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_TRADE</Tag>
-		<English>[ICON_BULLET]Trade routes: %s1</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_COMMERCE</Tag>
+		<English>Commerce: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_GOLDENAGE</Tag>
-		<English>[ICON_BULLET]Golden age: %s1</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_GOLD</Tag>
+		<English>Gold: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_UPPERFLAT</Tag>
-		<English>[ICON_BULLET]Empire and team: %s1</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_RESEARCH</Tag>
+		<English>Research: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_SPECIALISTS</Tag>
-		<English>[ICON_BULLET]Specialists: %s1</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_CULTURE</Tag>
+		<English>Culture: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_PERCENT</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (city +%d2% [ICON_BULLET] empire +%d3% [ICON_BULLET] team +%d4%)</English>
+		<Tag>TXT_KEY_CITYHELP_HEADING_ESPIONAGE</Tag>
+		<English>Espionage: %s1%s2 per turn</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_CITYFLAT</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Buildings in this city: %s1[COLOR_REVERT] (added after the percent stack)</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_TOTAL</Tag>
+		<English>Total</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_TOTAL</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_ROW_STACKED</Tag>
+		<English>%s1 (%s2%s3 %s4)</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_BONUSSTORES</Tag>
-		<English>[ICON_BULLET]Resources held: %d1 traded [ICON_BULLET] %d2 on site</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_SLIDER_SHARE</Tag>
+		<English>%d1% of the city's commerce</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_COMMERCEHELP_SHARE</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Slider share: %d1% of %s2 = %s3[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_SOURCE_COUNT</Tag>
+		<English>%s1 (%d2)</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_COMMERCEHELP_DEPOSITS</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]This channel's own sources: %s1[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_SUBTOTAL</Tag>
+		<English>Subtotal</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_COMMERCEHELP_PERCENT</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (applies to the slider share only)</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_WORKED_TILES</Tag>
+		<English>Worked tiles (%d1)</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_COMMERCEHELP_PROCESS</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]From production (process): %s1[COLOR_REVERT] (added after the percent stack)</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_ROUTES</Tag>
+		<English>Trade routes</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_COMMERCEHELP_TOTAL</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_GOLDEN_AGE</Tag>
+		<English>Golden age</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEFENSEHELP_TOTAL</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]City defense: +%d1%[COLOR_REVERT]</English>
+		<Tag>TXT_KEY_CITYHELP_TERM_PRODUCED</Tag>
+		<English>Produced</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_EATEN</Tag>
+		<English>Eaten by %d1 citizens</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_UNHEALTHY</Tag>
+		<English>Unhealthiness</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_WASTED</Tag>
+		<English>Wasted</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FOOD_PRODUCTION</Tag>
+		<English>Goes into production</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_STARVATION_GUARD</Tag>
+		<English>A size 1 city with no stored food does not starve</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_OVERFLOW</Tag>
+		<English>Overflow from the last build</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CHOPPING</Tag>
+		<English>From clearing features</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FOOD_TO_PRODUCTION</Tag>
+		<English>From surplus food</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MINIMUM_PRODUCTION</Tag>
+		<English>Minimum of 1 per turn</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_LINE_AMOUNT</Tag>
+		<English>%s1%s2 %s3</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_LINE_STACKED</Tag>
+		<English>%s1%s2 %s3 (%s4%s2 %s5)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_LINE_PERCENT</Tag>
+		<English>%s1 %s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_LINE_SUBTOTAL</Tag>
+		<English>%s1%s2 %s3</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_LINE_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]%s1%s2 Total[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_BUILDINGS</Tag>
+		<English>Buildings</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_HERITAGES</Tag>
+		<English>Heritages</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_SPECIALISTS</Tag>
+		<English>Specialists</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CIVICS</Tag>
+		<English>Civics</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TECHS</Tag>
+		<English>Technologies</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRAITS</Tag>
+		<English>Leader traits</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_PROJECTS</Tag>
+		<English>Projects</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_BONUSES</Tag>
+		<English>Resources</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_RELIGIONS</Tag>
+		<English>Religions</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CORPORATIONS</Tag>
+		<English>Corporations</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_PROCESSES</Tag>
+		<English>Processes</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_RUN</Tag>
+		<English>%s1 (%d2)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_CLICK_FULL_LIST</Tag>
+		<English>Click for the full list</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_CLOSE</Tag>
+		<English>Close</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_OTHER</Tag>
+		<English>Other</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MAINTENANCE_NUM_CITIES</Tag>
+		<English>Number of Cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MAINTENANCE_DISTANCE</Tag>
+		<English>Distance to Palace</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MAINTENANCE_COLONY</Tag>
+		<English>Colonial Expenses</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MAINTENANCE_BUILDINGS</Tag>
+		<English>Buildings</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CITY_PERCENTS</Tag>
+		<English>The cities' percent bonuses and whole-unit cuts</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_EXPENSES</Tag>
+		<English>Expenses: %s1%s2 per turn</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TREASURY_UPKEEP</Tag>
+		<English>Treasury upkeep</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CITY_MAINTENANCE</Tag>
+		<English>City maintenance</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CIVIC_UPKEEP</Tag>
+		<English>Civic upkeep</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_UNIT_UPKEEP</Tag>
+		<English>Unit upkeep</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_UNIT_SUPPLY</Tag>
+		<English>Units outside the borders</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CORPORATE_MAINTENANCE</Tag>
+		<English>Corporations</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_INFLATION</Tag>
+		<English>Inflation</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FOREIGN_INCOME</Tag>
+		<English>From other players</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FOREIGN_PAYMENTS</Tag>
+		<English>To other players</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_OUTSIDE_VIEW</Tag>
+		<English>[NEWLINE]%s1, size %d2[NEWLINE]Culture: %s3[NEWLINE]Defense: %d4%%</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TRADE_DOMESTIC</Tag>
+		<English>[NEWLINE]Domestic: %s1[ICON_COMMERCE] from %d2 [NUM2:route:routes]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TRADE_FOREIGN</Tag>
+		<English>[NEWLINE]Foreign: %s1[ICON_COMMERCE] from %d2 [NUM2:route:routes]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_WATER</Tag>
+		<English>on water</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_LAND</Tag>
+		<English>on land</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_FLATLANDS</Tag>
+		<English>on flat ground</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_AIR</Tag>
+		<English>in the air</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_PEAK</Tag>
+		<English>on a peak</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_HILLS</Tag>
+		<English>on hills</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_COAST</Tag>
+		<English>on the coast</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_COAST_MIN_AREA</Tag>
+		<English>on the coast of a body of water of at least %d1 tiles</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_RIVER</Tag>
+		<English>by a river</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_FRESHWATER</Tag>
+		<English>with fresh water</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_IRRIGATION</Tag>
+		<English>with irrigation</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_FEATURE</Tag>
+		<English>with a feature on the tile</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_FEATURE_TYPE</Tag>
+		<English>with %s1 on the tile</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_LANDMARK</Tag>
+		<English>on a landmark</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_VICINITY</Tag>
+		<English>in the city's radius</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_WORKABLE</Tag>
+		<English>on a tile the city can work</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_WORKED</Tag>
+		<English>on a tile the city works</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_NO_NUKES</Tag>
+		<English>under the ban on nuclear weapons</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_CAPITAL</Tag>
+		<English>in your capital</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_GOVERNMENT_CENTER</Tag>
+		<English>in a government center</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_HOME_AREA</Tag>
+		<English>on your capital's continent</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_POWER</Tag>
+		<English>with power</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_STATE_RELIGION</Tag>
+		<English>with a state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_STATE_RELIGION_IN_CITY</Tag>
+		<English>with your state religion in the city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_GOLDEN_AGE</Tag>
+		<English>in a golden age</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_STATE_RELIGION_HOLY_CITY</Tag>
+		<English>in the holy city of your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_ANARCHY</Tag>
+		<English>in anarchy</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_OWNED</Tag>
+		<English>on owned land</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_REBEL</Tag>
+		<English>in revolt against your parent civilization</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_STATE_RELIGION</Tag>
+		<English>with that religion as your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_TERRAIN_TYPE</Tag>
+		<English>on %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_IMPROVEMENT_TYPE</Tag>
+		<English>with %s1 on the tile</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_BONUS_TYPE</Tag>
+		<English>with %s1 on the tile</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_RELIGION_TYPE</Tag>
+		<English>with %s1 in the city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_STATE_RELIGION_TYPE</Tag>
+		<English>with %s1 as your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_HOLY_CITY</Tag>
+		<English>in a holy city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_HOLY_CITY_TYPE</Tag>
+		<English>in the holy city of %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_HAS_CORPORATION_TYPE</Tag>
+		<English>with %s1 in the city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_HEADQUARTERS</Tag>
+		<English>in a corporation's headquarters</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_HEADQUARTERS_TYPE</Tag>
+		<English>in the headquarters of %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_CIVIC_CATEGORY_TYPE</Tag>
+		<English>for %s1 civics</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_CAN_FOUND</Tag>
+		<English>where a city can be founded</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_BAR_FOOD_LOSING</Tag>
+		<English>[NEWLINE]%d1 [ICON_BAD_FOOD]/Turn[NEWLINE][COLOR_YELLOW]Losing food: %d2/%d3 [ICON_FOOD] (a city of one citizen does not shrink)[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_IS_FOREIGN</Tag>
+		<English>on trade routes to foreign cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_SHARES_CIVIC</Tag>
+		<English>on trade routes to players who run the same civic</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_NATURE_YIELD</Tag>
+		<English>where the tile yields at least %d1%s2 before any improvement</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_CAPITAL</Tag>
+		<English>in your capital</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_NOT_IS_CAPITAL</Tag>
+		<English>in cities other than your capital</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_HOME_AREA</Tag>
+		<English>in cities on your capital's continent</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_NOT_IS_HOME_AREA</Tag>
+		<English>in cities off your capital's continent</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_GOVERNMENT_CENTER</Tag>
+		<English>in government centers</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_HAS_POWER</Tag>
+		<English>in cities with power</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_HAS_COAST</Tag>
+		<English>in coastal cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_HAS_RIVER</Tag>
+		<English>in cities by a river</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_HAS_FRESHWATER</Tag>
+		<English>in cities with fresh water</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_HOLY_CITY</Tag>
+		<English>in holy cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_STATE_RELIGION_IN_CITY</Tag>
+		<English>in cities with your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_NOT_STATE_RELIGION_IN_CITY</Tag>
+		<English>in cities without your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_STATE_RELIGION_HOLY_CITY</Tag>
+		<English>in the holy city of your state religion</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_REACH_IS_HEADQUARTERS</Tag>
+		<English>in corporation headquarters</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONDITION_UNIT_TAG</Tag>
+		<English>for %s1 units</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_IN_THIS_CITY</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]In this city:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_PER_OBJECT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]For each unit or tile it applies to:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_OFF_HERE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Not in effect here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FRACTION_DROPPED</Tag>
+		<English>Fractions dropped (only whole units count)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_DISORDER</Tag>
+		<English>The city is in disorder.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_HAPPINESS</Tag>
+		<English>Happiness: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_ANGER</Tag>
+		<English>Unhappiness: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_HEALTH</Tag>
+		<English>Health: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_UNHEALTH</Tag>
+		<English>Unhealthiness: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_MILITARY_UNITS</Tag>
+		<English>Military units in the city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CELEBRITIES</Tag>
+		<English>Celebrities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_VASSALS</Tag>
+		<English>Vassals</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_REVOLUTION_SUCCESS</Tag>
+		<English>A successful revolution</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_EVENTS</Tag>
+		<English>Events</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TEMPORARY_HAPPINESS</Tag>
+		<English>Celebration (%d1 [NUM1:turn:turns] left)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_OVERCROWDING</Tag>
+		<English>Overcrowding</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_NO_MILITARY</Tag>
+		<English>No military protection</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_FOREIGN_CULTURE</Tag>
+		<English>Longing for another civilization</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_RELIGION_STRIFE</Tag>
+		<English>Religious strife</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_HURRY_ANGER</Tag>
+		<English>Forced labour</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_CONSCRIPT_ANGER</Tag>
+		<English>The draft</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_DEFIED_RESOLUTION</Tag>
+		<English>Defied resolutions</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_WAR_WEARINESS</Tag>
+		<English>War weariness</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_REVOLUTION_REQUEST</Tag>
+		<English>Refused revolution requests</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_REVOLUTION_INDEX</Tag>
+		<English>Revolutionary sentiment</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_VASSAL_UNREST</Tag>
+		<English>Unrest as a vassal</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_ESPIONAGE</Tag>
+		<English>Espionage</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_LANDMARKS</Tag>
+		<English>Landmarks</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_POPULATION</Tag>
+		<English>Population (%d1 [NUM1:citizen:citizens])</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_GREAT_PEOPLE</Tag>
+		<English>Great People: %s1%s2 per turn</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_GREAT_PEOPLE_PROGRESS</Tag>
+		<English>Progress: %d1/%d2 [ICON_GREATPEOPLE]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_GREAT_PERSON_CHANCE</Tag>
+		<English>%s1: %s2% chance next</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_STATE_RELIGION</Tag>
+		<English>State religion in the city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_NO_UNHAPPINESS</Tag>
+		<English>Nothing can make this city unhappy.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_DEFENSE</Tag>
+		<English>City defense: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_HEADING_TRADE_ROUTE</Tag>
+		<English>Route profit: %s1%s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_BASE_PROFIT</Tag>
+		<English>Base profit</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_CITY_SIZE</Tag>
+		<English>City size</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_CAPITAL_CONNECTION</Tag>
+		<English>Connected to the capital</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_OVERSEAS</Tag>
+		<English>Overseas route</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TERM_TRADE_FOREIGN</Tag>
+		<English>Foreign route at peace</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYHELP_TRADE_DELIVERS</Tag>
+		<English>Delivers %s1%s2</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DEFENSEHELP_FLOOR</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Defense floor: +%d1%[COLOR_REVERT] (defense never falls below this)</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_GPHELP_BASE</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Base rate: %d1[COLOR_REVERT] (before the percent stack)</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_GPHELP_MODIFIER</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: %d1%[COLOR_REVERT] (100% = unmodified)</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_GPHELP_RATE</Tag>
-		<English>[COLOR_HIGHLIGHT_TEXT]Great People per turn: %d1[COLOR_REVERT]</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_GPHELP_PROGRESS</Tag>
-		<English>[ICON_BULLET]Progress: %d1 of %d2</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GPHELP_SPECIALIST</Tag>

@@ -356,6 +356,9 @@ class WBCityEditScreen:
 				screen.setTableText("WBCityProduction", 2, iRow, "<font=3>" + sColor + INFO.getDescription("PROCESS_", i) + "</font></color>", INFO.getButton("PROCESS_", i), WidgetTypes.WIDGET_PYTHON, 6787, i, 1<<0)
 				iRow += 1
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBCityEditScreen", CvScreenEnums.WB_CITYEDIT)
+
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBCityEditScreen", CvScreenEnums.WB_CITYEDIT)
 		global iChange

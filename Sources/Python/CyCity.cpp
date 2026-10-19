@@ -16,6 +16,7 @@
 #include "AI/BetterBTSAI.h"      // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
 #include "Engine/CvPlot.h"          // the ring-ordered work-area read
 #include "Data/CvInfoValuation.h"   // CityRateTerms / CvCommerceSplitTerms -- the ONE yield + commerce decomposition
+#include "UI/CvGameTextMgr.h"       // the city hover's renderer the breakdown rows come from
 #include "Engine/CvUnit.h"                           // addUnitProductionExperience -- the unit it credits
 #include "AI/CvPlayerAI.h"                           // GET_PLAYER
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // select -- the engine action this relays
@@ -465,6 +466,23 @@ int CyCity::getGreatPeopleRate() const
 int CyCity::getGreatPeopleProgress() const
 {
 	return m_pCity->getGreatPeopleProgress();
+}
+
+int CyCity::getGreatPeopleTurnsLeft() const
+{
+	return m_pCity->getGreatPeopleTurnsLeft();
+}
+
+python::list CyCity::getGreatPeopleUnitChances() const
+{
+	python::list chances = python::list();
+	std::vector<std::pair<UnitTypes, int> > kChances;
+	m_pCity->getGreatPeopleUnitChances(kChances);
+	for (size_t iChance = 0; iChance < kChances.size(); ++iChance)
+	{
+		chances.append(python::make_tuple((int)kChances[iChance].first, kChances[iChance].second));
+	}
+	return chances;
 }
 
 void CyCity::changeGreatPeopleProgress(int iChange)
@@ -1203,6 +1221,27 @@ python::list CyCity::getYieldTerms(int iYield) const
 	return terms;
 }
 
+python::list CyCity::getYieldBreakdownRows(int iYield) const
+{
+	python::list rows = python::list();
+	if (m_pCity == NULL || iYield < 0 || iYield >= NUM_YIELD_TYPES) return rows;
+
+	const CityBreakdownSubject aeSubjects[NUM_YIELD_TYPES] = {
+		CITY_BREAKDOWN_FOOD, CITY_BREAKDOWN_PRODUCTION, CITY_BREAKDOWN_COMMERCE
+	};
+	CvCityBreakdown kBreakdown;
+	kBreakdown.reset(aeSubjects[iYield]);
+	kBreakdown.setTotal(InfoValuation::cityYieldBreakdown(*m_pCity, (YieldTypes)iYield, kBreakdown));
+	std::vector<CityBreakdownRow> kRows;
+	GAMETEXT.getCityBreakdownRows(kBreakdown, kRows);
+	for (size_t iRow = 0; iRow < kRows.size(); ++iRow)
+	{
+		rows.append(python::make_tuple((int)kRows[iRow].role, std::wstring(kRows[iRow].label.GetCString()),
+			std::wstring(kRows[iRow].value.GetCString())));
+	}
+	return rows;
+}
+
 python::list CyCity::getCommerceTerms(int iCommerce) const
 {
 	PERF_SCOPE("CyCity::getCommerceTerms", -1);
@@ -1589,6 +1628,42 @@ python::list CyCity::getCultureReads() const
 	int values[NUM_CITY_CULTURE_READS] = { 0 };
 	if (m_pCity) m_pCity->getCultureRead(values);
 	return cyToList(values);
+}
+
+python::list CyCity::getWellbeingNets() const
+{
+	int values[NUM_CITY_WELLBEING_NET_READS] = { 0 };
+	if (m_pCity) m_pCity->getWellbeingNetRead(values);
+	return cyToList(values);
+}
+
+python::list CyCity::getTradeReads() const
+{
+	int values[NUM_CITY_TRADE_READS] = { 0 };
+	if (m_pCity) m_pCity->getTradeRead(values);
+	return cyToList(values);
+}
+
+python::list CyCity::getHurryOverflow(int iHurry, bool bCountThisTurn) const
+{
+	python::list result = python::list();
+	int iProduction = 0;
+	int iGold = 0;
+	const bool bAllowed = m_pCity != NULL && iHurry >= 0 && iHurry < GC.getNumHurryInfos()
+		&& m_pCity->hurryOverflow((HurryTypes)iHurry, &iProduction, &iGold, bCountThisTurn);
+	result.append(bAllowed ? 1 : 0);
+	result.append(iProduction);
+	result.append(iGold);
+	return result;
+}
+
+int CyCity::getDomainExperience(int iDomain) const
+{
+	if (m_pCity == NULL || iDomain < 0 || iDomain >= NUM_DOMAIN_TYPES)
+	{
+		return 0;
+	}
+	return m_pCity->getProductionExperience(NO_UNIT, NULL, (DomainTypes)iDomain);
 }
 
 python::list CyCity::getProperties() const
@@ -2143,6 +2218,7 @@ void CyCity::pythonPublish()
 		.def("getAngryPopulation",   &CyCity::getAngryPopulation)
 		.def("getYieldModifiers",    &CyCity::getYieldModifiers)
 		.def("getYieldTerms",        &CyCity::getYieldTerms)
+		.def("getYieldBreakdownRows", &CyCity::getYieldBreakdownRows)
 		.def("getCommerceTerms",     &CyCity::getCommerceTerms)
 		.def("getSight",             &CyCity::getSight)
 		.def("getLiberationPlayer",  &CyCity::getLiberationPlayer)
@@ -2247,6 +2323,10 @@ void CyCity::pythonPublish()
 		.def("getReligions",          &CyCity::getReligions)
 		.def("getCorporations",       &CyCity::getCorporations)
 		.def("getCultureReads",       &CyCity::getCultureReads)
+		.def("getWellbeingNets",      &CyCity::getWellbeingNets)
+		.def("getTradeReads",         &CyCity::getTradeReads)
+		.def("getHurryOverflow",      &CyCity::getHurryOverflow)
+		.def("getDomainExperience",   &CyCity::getDomainExperience)
 		.def("getTradeRoutes",        &CyCity::getTradeRoutes)
 		.def("getHurryQuote",         &CyCity::getHurryQuote)
 		.def("flatHurryAngerLength",  &CyCity::flatHurryAngerLength)
@@ -2273,6 +2353,8 @@ void CyCity::pythonPublish()
 		.def("getRealPopulation",     &CyCity::getRealPopulation)
 		.def("getGreatPeopleRate",    &CyCity::getGreatPeopleRate)
 		.def("getGreatPeopleProgress", &CyCity::getGreatPeopleProgress)
+		.def("getGreatPeopleTurnsLeft", &CyCity::getGreatPeopleTurnsLeft)
+		.def("getGreatPeopleUnitChances", &CyCity::getGreatPeopleUnitChances)
 		.def("getMilitaryHappinessUnits", &CyCity::getMilitaryHappinessUnits)
 		.def("getScriptData",         &CyCity::getScriptData)
 		.def("getProductionName",     &CyCity::getProductionName)

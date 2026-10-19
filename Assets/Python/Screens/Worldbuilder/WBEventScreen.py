@@ -267,6 +267,9 @@ class WBEventScreen:
 			sText = "<font=4b>" + CyTranslator().getText("[COLOR_BLACK]", ()) + CyTranslator().getText("TXT_KEY_WB_TRIGGER_EVENT", (sHeader,)).upper() + "</color></font>"
 			screen.setButtonGFC("TriggerEvent", sText, "", screen.getXResolution()/4, 20, screen.getXResolution()/2, 30, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 
+	def getScreen(self):
+		return CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBEventScreen", CvScreenEnums.WB_EVENT)
 		global iSelectedEvent

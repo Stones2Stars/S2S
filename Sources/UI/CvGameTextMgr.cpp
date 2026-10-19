@@ -40,6 +40,7 @@
 #include "Enabler/CvOperatingBuildings.h"
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
+#include "Engine/CvCityBreakdown.h"
 #include "AI/CvCityAI.h"
 #include "Tools/CounterSet.h"
 #include "Engine/CvDeal.h"
@@ -2064,18 +2065,16 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	CvWString szTempBuffer;
 	CvWString szTempBuffer2;
 	bool bFirst;
-	int iFoodDifference;
 	int iProductionDiffNoFood;
-	int iProductionDiffJustFood;
 	int iRate;
 	int iI;
 	// BUG - Base Production and Commerce - start
 	bool bBaseValues = (gDLL->ctrlKey() && getBugOptionBOOL("CityBar__BaseValues", true, "BUG_CITYBAR_BASE_VALUES"));
 	// BUG - Base Production and Commerce - end
 
-	FAssert(pCity->isInViewport());
-
-	iFoodDifference = pCity->foodDifference() / 100;   // UI = a read edge
+	int aiGrowth[NUM_CITY_GROWTH_READS];
+	pCity->getGrowthRead(aiGrowth);
+	const int iFoodDifference = aiGrowth[GROWTH_READ_FOOD_PER_TURN];
 
 	szString.append(pCity->getName());
 
@@ -2084,10 +2083,19 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	szTempBuffer.Format(L" [%02d-%d]", (int)pCity->getOwner(), pCity->getID());
 	szString.append(szTempBuffer);
 
+	// A city the viewer cannot see inside shows what the map shows anyway.
+	if (!pCity->isOpenTo(GC.getGame().getActivePlayer()))
+	{
+		szString.append(gDLL->getText("TXT_KEY_CITYHELP_OUTSIDE_VIEW", GET_PLAYER(pCity->getOwner()).getCivilizationAdjective(),
+			pCity->getPopulation(), GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getTextKeyWide(),
+			pCity->getDefenseModifier(false)));
+		return;
+	}
+
 	// BUG - Health - start
 	if (getBugOptionBOOL("CityBar__Health", true, "BUG_CITYBAR_HEALTH"))
 	{
-		iRate = pCity->netHealth() / 100;   // the UI is a read edge: the verdict is ×100 native
+		iRate = pCity->netHealth();
 		if (iRate > 0)
 		{
 			szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HEALTHY_CHAR));
@@ -2115,7 +2123,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		}
 		else
 		{
-			iRate = pCity->netHappiness() / 100;   // the UI is a read edge: the verdict is ×100 native
+			iRate = pCity->netHappiness();
 			if (iRate > 0)
 			{
 				szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HAPPY_CHAR));
@@ -2130,63 +2138,66 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	}
 	// BUG - Happiness - end
 
-	// BUG - Hurry Anger Turns - start
-	if (getBugOptionBOOL("CityBar__HurryAnger", true, "BUG_CITYBAR_HURRY_ANGER") && pCity->getOwner() == GC.getGame().getActivePlayer())
+	// The angry citizens whipping and drafting cause now, as the anger breakdown counts them, and the turns
+	// until that anger is gone.
+	const bool bShowHurryAnger = getBugOptionBOOL("CityBar__HurryAnger", true, "BUG_CITYBAR_HURRY_ANGER")
+		&& pCity->getOwner() == GC.getGame().getActivePlayer() && pCity->getHurryAngerTimer() > 0;
+	const bool bShowDraftAnger = getBugOptionBOOL("CityBar__DraftAnger", true, "BUG_CITYBAR_DRAFT_ANGER")
+		&& pCity->getOwner() == GC.getGame().getActivePlayer() && pCity->getConscriptAngerTimer() > 0;
+	if (bShowHurryAnger || bShowDraftAnger)
 	{
-		iRate = pCity->getHurryAngerTimer();
-		if (iRate > 0)
+		CvCityBreakdown kAnger;
+		InfoValuation::cityWellbeingBreakdown(*pCity, WELLBEING_ANGER, kAnger);
+		if (bShowHurryAnger)
 		{
-			int iPop = ((iRate - 1) / pCity->flatHurryAngerLength() + 1) * GC.getHURRY_POP_ANGER();
-			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(ANGRY_POP_CHAR), iRate);
+			szTempBuffer.Format(L" (%s %c %d)", amountText(kAnger.getTermValue(CITY_BREAKDOWN_TERM_HURRY_ANGER)).GetCString(),
+				gDLL->getSymbolID(ANGRY_POP_CHAR), pCity->getHurryAngerTimer());
+			szString.append(szTempBuffer);
+		}
+		if (bShowDraftAnger)
+		{
+			szTempBuffer.Format(L" (%s %c %d)", amountText(kAnger.getTermValue(CITY_BREAKDOWN_TERM_CONSCRIPT_ANGER)).GetCString(),
+				gDLL->getSymbolID(ANGRY_POP_CHAR), pCity->getConscriptAngerTimer());
 			szString.append(szTempBuffer);
 		}
 	}
-	// BUG - Anger Anger Turns - end
-
-	// BUG - Draft Anger Turns - start
-	if (getBugOptionBOOL("CityBar__DraftAnger", true, "BUG_CITYBAR_DRAFT_ANGER") && pCity->getOwner() == GC.getGame().getActivePlayer())
-	{
-		iRate = pCity->getConscriptAngerTimer();
-		if (iRate > 0)
-		{
-			int iPop = ((iRate - 1) / pCity->flatConscriptAngerLength() + 1) * GC.getCONSCRIPT_POP_ANGER();
-			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(CITIZEN_CHAR), iRate);
-			szString.append(szTempBuffer);
-		}
-	}
-	// BUG - Draft Anger Turns - end
 
 	// BUG - Food Assist - start
-	if ((iFoodDifference != 0 || !pCity->isFoodProduction()) && getBugOptionBOOL("CityBar__FoodAssist", true, "BUG_CITYBAR_FOOD_ASSIST"))
+	const int iFoodStored = aiGrowth[GROWTH_READ_FOOD_STORED];
+	const int iGrowthThreshold = aiGrowth[GROWTH_READ_THRESHOLD];
+	if ((iFoodDifference != 0 || !aiGrowth[GROWTH_READ_IS_FOOD_PRODUCTION]) && getBugOptionBOOL("CityBar__FoodAssist", true, "BUG_CITYBAR_FOOD_ASSIST"))
 	{
 		if (iFoodDifference > 0)
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_GROW", iFoodDifference, pCity->getFood(), pCity->growthThreshold(), pCity->getFoodTurnsLeft()));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_GROW", iFoodDifference, iFoodStored, iGrowthThreshold, aiGrowth[GROWTH_READ_TURNS_LEFT]));
 		}
 		else if (iFoodDifference == 0)
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_STAGNATE", pCity->getFood(), pCity->growthThreshold()));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_STAGNATE", iFoodStored, iGrowthThreshold));
 		}
-		else if (pCity->getFood() + iFoodDifference >= 0)
+		else if (aiGrowth[GROWTH_READ_STARVATION_TURNS_LEFT] > 1)
 		{
-			int iTurnsToStarve = pCity->getFood() / -iFoodDifference + 1;
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_SHRINK", iFoodDifference, pCity->getFood(), pCity->growthThreshold(), iTurnsToStarve));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_SHRINK", iFoodDifference, iFoodStored, iGrowthThreshold, aiGrowth[GROWTH_READ_STARVATION_TURNS_LEFT]));
+		}
+		else if (aiGrowth[GROWTH_READ_STARVATION_TURNS_LEFT] < 0)
+		{
+			// a city of one citizen loses food without shrinking
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_LOSING", iFoodDifference, iFoodStored, iGrowthThreshold));
 		}
 		else
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_STARVE", iFoodDifference, pCity->getFood(), pCity->growthThreshold()));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_STARVE", iFoodDifference, iFoodStored, iGrowthThreshold));
 		}
 	}
 	else
 	{
-		// unchanged
 		if (iFoodDifference <= 0)
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GROWTH", pCity->getFood(), pCity->growthThreshold()));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GROWTH", iFoodStored, iGrowthThreshold));
 		}
 		else
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_GROWTH", iFoodDifference, pCity->getFood(), pCity->growthThreshold(), pCity->getFoodTurnsLeft()));
+			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_FOOD_GROWTH", iFoodDifference, iFoodStored, iGrowthThreshold, aiGrowth[GROWTH_READ_TURNS_LEFT]));
 		}
 	}
 	// BUG - Food Assist - end
@@ -2194,24 +2205,13 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	if (pCity->getProductionNeeded() != MAX_INT)
 	{
 		// BUG - Base Production - start
-		int iBaseProductionDiffNoFood;
-		if (bBaseValues)
-		{
-			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
-			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
-			// reader -- the cascade carries ×100 natively (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-			int aiRealizedYields[NUM_YIELD_TYPES];
-			pCity->getYields(aiRealizedYields);
-			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
-		}
-		else
-		{
-			iBaseProductionDiffNoFood = pCity->getCurrentProductionDifference(ProductionCalc::None);
-		}
+		const int iBaseProductionDiffNoFood = bBaseValues
+			? pCity->getProductionPerTurn(ProductionCalc::Yield)
+			: pCity->getCurrentProductionDifference(ProductionCalc::None);
 		// BUG - Base Production - end
 
 		iProductionDiffNoFood = pCity->getCurrentProductionDifference(ProductionCalc::Overflow);
-		iProductionDiffJustFood = (pCity->getCurrentProductionDifference(ProductionCalc::FoodProduction | ProductionCalc::Overflow) - iProductionDiffNoFood);
+		const int iProductionDiffJustFood = pCity->getCurrentFoodToProduction();
 
 		if (iProductionDiffJustFood > 0)
 		{
@@ -2263,21 +2263,10 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Base Production - start
 	else if (getBugOptionBOOL("CityBar__BaseProduction", true, "BUG_CITYBAR_BASE_PRODUCTION"))
 	{
-		int iOverflow = pCity->getOverflowProduction();
-		int iBaseProductionDiffNoFood;
-		if (bBaseValues)
-		{
-			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
-			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
-			// reader -- the cascade carries ×100 natively (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-			int aiRealizedYields[NUM_YIELD_TYPES];
-			pCity->getYields(aiRealizedYields);
-			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
-		}
-		else
-		{
-			iBaseProductionDiffNoFood = pCity->getCurrentProductionDifference(ProductionCalc::Overflow);
-		}
+		const int iOverflow = pCity->getOverflowProduction();
+		const int iBaseProductionDiffNoFood = bBaseValues
+			? pCity->getProductionPerTurn(ProductionCalc::Yield)
+			: pCity->getCurrentProductionDifference(ProductionCalc::Overflow);
 		if (iOverflow > 0 || iBaseProductionDiffNoFood > 0)
 		{
 			if (iOverflow > 0)
@@ -2348,32 +2337,31 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Trade Detail - start
 	if (getBugOptionBOOL("CityBar__TradeDetail", true, "BUG_CITYBAR_TRADE_DETAIL"))
 	{
-		int iTotalTrade = 0;
 		int iDomesticTrade = 0;
 		int iDomesticRoutes = 0;
 		int iForeignTrade = 0;
 		int iForeignRoutes = 0;
 
 		pCity->calculateTradeTotals(YIELD_COMMERCE, iDomesticTrade, iDomesticRoutes, iForeignTrade, iForeignRoutes, NO_PLAYER, bBaseValues);
-		iTotalTrade = iDomesticTrade + iForeignTrade;
 
 		bFirst = true;
+		// The commerce the city's routes give it; the base profits (ctrl) have no total of their own.
+		const int iTotalTrade = bBaseValues ? 0 : pCity->getTradeYield(YIELD_COMMERCE);
 		if (iTotalTrade != 0)
 		{
-			// the ONE reduce, at the surface that shows it
-			szTempBuffer.Format(L"%c: %d.%02d %c", gDLL->getSymbolID(TRADE_CHAR), iTotalTrade / 100, iTotalTrade % 100, GC.getYieldInfo(YIELD_COMMERCE).getChar());
+			szTempBuffer.Format(L"%c: %s %c", gDLL->getSymbolID(TRADE_CHAR), amountText(iTotalTrade).GetCString(), GC.getYieldInfo(YIELD_COMMERCE).getChar());
 			setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 			bFirst = false;
 		}
 		if (iDomesticTrade != 0)
 		{
-			szTempBuffer.Format(L"%c: %d.%02d %c", gDLL->getSymbolID(STAR_CHAR), iDomesticTrade / 100, iDomesticTrade % 100, GC.getYieldInfo(YIELD_COMMERCE).getChar());
+			szTempBuffer.Format(L"%c: %s %c", gDLL->getSymbolID(STAR_CHAR), amountText(iDomesticTrade).GetCString(), GC.getYieldInfo(YIELD_COMMERCE).getChar());
 			setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 			bFirst = false;
 		}
 		if (iForeignTrade != 0)
 		{
-			szTempBuffer.Format(L"%c: %d.%02d %c", gDLL->getSymbolID(SILVER_STAR_CHAR), iForeignTrade / 100, iForeignTrade % 100, GC.getYieldInfo(YIELD_COMMERCE).getChar());
+			szTempBuffer.Format(L"%c: %s %c", gDLL->getSymbolID(SILVER_STAR_CHAR), amountText(iForeignTrade).GetCString(), GC.getYieldInfo(YIELD_COMMERCE).getChar());
 			setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 			bFirst = false;
 		}
@@ -2385,54 +2373,36 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Commerce - start
 	if (getBugOptionBOOL("CityBar__Commerce", true, "BUG_CITYBAR_COMMERCE"))
 	{
-		// The city's REALIZED commerce yield in ONE read (see the production sites above); ÷100 at the reader.
-		// ⚠ The base-vs-realized branch is GONE: both halves answered the same value once the base tier stopped
-		// being a separate accessor, so the flag no longer distinguishes anything here.
 		int aiRealizedYields[NUM_YIELD_TYPES];
 		pCity->getYields(aiRealizedYields);
-		iRate = aiRealizedYields[YIELD_COMMERCE] / 100;
-		if (iRate != 0)
+		if (aiRealizedYields[YIELD_COMMERCE] != 0)
 		{
-			szTempBuffer.Format(L"%d %c", iRate, GC.getYieldInfo(YIELD_COMMERCE).getChar());
+			szTempBuffer.Format(L"%s %c", amountText(aiRealizedYields[YIELD_COMMERCE]).GetCString(), GC.getYieldInfo(YIELD_COMMERCE).getChar());
 			setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 			bFirst = false;
 		}
 	}
 	// BUG - Commerce - end
 
+	int aiCityCommerces[NUM_COMMERCE_TYPES];
+	pCity->getCommerces(aiCityCommerces);
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 	{
-		// BUG - Base Values - start
-		// The base-vs-realized branch is GONE: both halves answer the same value once the base tier stops
-		// being a separate accessor, so the flag no longer distinguishes anything here.
-		int aiCityCommerces[NUM_COMMERCE_TYPES];
-		pCity->getCommerces(aiCityCommerces);
-		iRate = aiCityCommerces[(CommerceTypes)iI];
-		// BUG - Base Values - end
-
-		if (iRate != 0)
+		if (aiCityCommerces[iI] != 0)
 		{
-			szTempBuffer.Format(L"%d.%02d %c", iRate/100, iRate%100, GC.getCommerceInfo((CommerceTypes)iI).getChar());
+			szTempBuffer.Format(L"%s %c", amountText(aiCityCommerces[iI]).GetCString(), GC.getCommerceInfo((CommerceTypes)iI).getChar());
 			setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 			bFirst = false;
 		}
 	}
 
 	// BUG - Base Values - start
-	if (bBaseValues)
-	{
-		iRate = pCity->getBaseGreatPeopleRate() / 100;   // UI = a read edge
-	}
-	else
-	{
-		// the modified rate inherits the base's ×100, so it reduces at the same edge
-		iRate = pCity->getGreatPeopleRate() / 100;
-	}
+	const int iGreatPeopleRate = bBaseValues ? pCity->getBaseGreatPeopleRate() : pCity->getGreatPeopleRate();
 	// BUG - Base Values - end
 
-	if (iRate != 0)
+	if (iGreatPeopleRate != 0)
 	{
-		szTempBuffer.Format(L"%d%c", iRate, gDLL->getSymbolID(GREAT_PEOPLE_CHAR));
+		szTempBuffer.Format(L"%s%c", amountText(iGreatPeopleRate).GetCString(), gDLL->getSymbolID(GREAT_PEOPLE_CHAR));
 		setListHelp(szString, NEWLINE, szTempBuffer, L", ", bFirst);
 		bFirst = false;
 	}
@@ -2444,10 +2414,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 
 	szString.append(NEWLINE);
 	szString.append(gDLL->getText("INTERFACE_CITY_MAINTENANCE"));
-
-	int iMaintenance = (int)pCity->getMaintenanceTimes100();
-
-	szString.append(CvWString::format(L" -%d.%02d %c", iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
+	szString.append(CvWString::format(L" -%s %c", amountText(pCity->getMaintenanceTimes100()).GetCString(), GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
 
 	{
 		const bool bBuildingIconBUG = getBugOptionBOOL("CityBar__BuildingIcons", true, "BUG_CITYBAR_BUILDING_ICONS");
@@ -2492,15 +2459,9 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 					GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getLevel()
 				)
 			);
-			int aiCityCommerces[NUM_COMMERCE_TYPES];
-			pCity->getCommerces(aiCityCommerces);
-			const int iCultureRate = aiCityCommerces[COMMERCE_CULTURE];
-			if (iCultureRate > 0)
+			const int iCultureTurns = pCity->getCultureTurnsLeft();
+			if (iCultureTurns > 0)
 			{
-				// all values are *100
-				const int64_t iCultureLeft = 100 * iThreshold - pCity->getCultureTimes100(pCity->getOwner());
-				// TURNS, so it is bounded and reduces here -- the culture it is derived from is not.
-				const int iCultureTurns = static_cast<int>((iCultureLeft + iCultureRate - 1) / iCultureRate);
 				szString.append(L" ");
 				szString.append(gDLL->getText("INTERFACE_CITY_TURNS", iCultureTurns));
 			}
@@ -2519,26 +2480,14 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	}
 
 	// BUG - Great Person Turns - start
-	// Reduced HERE, before the guard: the turns-left arithmetic divides it into the WAREHOUSE ledger
-	// (getGreatPeopleProgress + its threshold), which is human. Reducing at the read also keeps the
-	// `> 0` guard honest — a sub-1.00 rate floors to 0 and correctly skips the estimate.
-	int iGppRate = pCity->getGreatPeopleRate() / 100;
-	if (iGppRate > 0 && getBugOptionBOOL("CityBar__GreatPersonTurns", true, "BUG_CITYBAR_GREAT_PERSON_TURNS"))
+	const int iGreatPeopleTurns = pCity->getGreatPeopleTurnsLeft();
+	if (iGreatPeopleTurns > 0 || pCity->getGreatPeopleProgress() > 0)
 	{
-		int iGpp = pCity->getGreatPeopleProgress();
-		int iGppTotal = GET_PLAYER(pCity->getOwner()).greatPeopleThresholdNonMilitary();
-		szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GREAT_PEOPLE", iGpp, iGppTotal));
-		int iGppLeft = iGppTotal - iGpp;
-		int iGppTurns = (iGppLeft + iGppRate - 1) / iGppRate;
-		szString.append(L" ");
-		szString.append(gDLL->getText("INTERFACE_CITY_TURNS", iGppTurns));
-	}
-	else
-	{
-		// unchanged
-		if (pCity->getGreatPeopleProgress() > 0)
+		szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GREAT_PEOPLE", pCity->getGreatPeopleProgress(), GET_PLAYER(pCity->getOwner()).greatPeopleThresholdNonMilitary()));
+		if (iGreatPeopleTurns > 0 && getBugOptionBOOL("CityBar__GreatPersonTurns", true, "BUG_CITYBAR_GREAT_PERSON_TURNS"))
 		{
-			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GREAT_PEOPLE", pCity->getGreatPeopleProgress(), GET_PLAYER(pCity->getOwner()).greatPeopleThresholdNonMilitary()));
+			szString.append(L" ");
+			szString.append(gDLL->getText("INTERFACE_CITY_TURNS", iGreatPeopleTurns));
 		}
 	}
 	// BUG - Great Person Turns - end
@@ -2628,35 +2577,10 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		szString.append(gDLL->getText("TXT_KEY_CITY_BAR_AIR_UNIT_CAPACITY", iNumUnits, pCity->getAirUnitCapacity(GC.getGame().getActiveTeam())));
 	}
 
-	// BUG - Revolt Chance - start
 	if (getBugOptionBOOL("CityBar__RevoltChance", true, "BUG_CITYBAR_REVOLT_CHANCE"))
 	{
-		const PlayerTypes eCulturalOwner = pCity->plot()->calculateCulturalOwner();
-
-		if (eCulturalOwner != NO_PLAYER)
-		{
-			if (GET_PLAYER(eCulturalOwner).getTeam() != pCity->getTeam())
-			{
-				int iNetRevoltRisk100 = pCity->netRevoltRisk(eCulturalOwner);
-				int iOriginal100 = pCity->baseRevoltRisk(eCulturalOwner);
-				int iSpeedAdjustment = GC.getREVOLT_TEST_PROB() * 100 /
-					CvGameSpeedScale::speedPercent();
-				int iGarrison = pCity->unitRevoltRiskModifier(eCulturalOwner);
-
-				if (iNetRevoltRisk100 > 0)
-				{
-					szString.append(NEWLINE);
-					szString.append(gDLL->getText("TXT_KEY_MISC_CHANCE_OF_REVOLT",
-						CvWString::format(L"" SETCOLR L"%.2f%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), ((float)iNetRevoltRisk100*iSpeedAdjustment)/10000).GetCString(),
-						CvWString::format(L"" SETCOLR L"%.1f%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), (float)iOriginal100/100).GetCString(),
-						CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iSpeedAdjustment).GetCString(),
-						CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iGarrison).GetCString()
-					));
-				}
-			}
-		}
+		setCityRevoltHelp(szString, *pCity);
 	}
-	// BUG - Revolt Chance - end
 
 	// Citybar revolution info
 	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_REVOLUTION))
@@ -3093,29 +3017,18 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	{
 		szHelpText.append(kCivic.getDescription());
 	}
-	//	⚖ THE CITY LIMIT IS THE CIVIC'S OWN INTRINSIC, so the composer states it: no modifier entry carries the
-	//	number, and the entry renderer deliberately spells the over-limit anger as "per city over the city limit"
-	//	WITHOUT one, because an entry cannot resolve it -- the world-size scale lives on the SOURCE civic.
-	//	⛔ The MAGNITUDE stays the renderer's. The anger deposit renders itself out of the happiness family below,
-	//	so this line states the THRESHOLD and nothing else ([patterns.md] THE DIVISION OF LABOUR: a getText around
-	//	a magnitude is a hand-built sub-block).
+	//	A limit WITHOUT the over-limit anger deposit is a HARD cap -- the engine refuses the settle outright
+	//	(`CvPlayer::canFound`), and nothing else states it. WITH it, settling past the limit is allowed: the anger
+	//	entry's own line names the cost and the limit together ("per City over the city limit of 5"), so no second
+	//	line here repeats the limit apart from its cost.
 	//	⚑ `resolvedCityLimit` answers 0 whenever GAMEOPTION_EXP_OVEREXPANSION_PENALTIES is off, and returns BEFORE
 	//	it reads the world size -- so this is silent when the mechanic is off, and safe from the main-menu pedia
 	//	where there is no map to size.
 	const int iCityLimit = InfoValuation::resolvedCityLimit(kCivic.getCityLimit());
-	if (iCityLimit > 0)
+	if (iCityLimit > 0 && !kCivic.hasCityOverLimitAnger())
 	{
 		szHelpText.append(NEWLINE);
-		//	A limit WITHOUT the over-limit anger deposit is a HARD cap -- the engine refuses the settle outright
-		//	(`CvPlayer::canFound`). WITH it, settling past the limit is allowed and the anger is what it costs.
-		if (kCivic.hasCityOverLimitAnger())
-		{
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT_THRESHOLD", iCityLimit));
-		}
-		else
-		{
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT", iCityLimit));
-		}
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT", iCityLimit));
 	}
 	appendEntityBlocks(szHelpText, kCivic, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
@@ -3716,35 +3629,24 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
 		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iSpoiledFood, gDLL->getSymbolID(EATEN_FOOD_CHAR), false, bNewLine, bStarted);
 		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iStarvation, gDLL->getSymbolID(BAD_FOOD_CHAR), false, bNewLine, bStarted);
 
-		// Yield
+		// Yields and commerces, as the city's own combine and commerce split would change; the commerce yield shows
+		// as the commerces it splits into.
 		int aiYields[NUM_YIELD_TYPES];
+		int aiCommerces[NUM_COMMERCE_TYPES];
+		pCity->getBuildingRateChanges(eBuilding, aiYields, aiCommerces);
 		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 		{
-			aiYields[iI] = pCity->getAdditionalYieldByBuilding((YieldTypes)iI, eBuilding);
+			if (iI != YIELD_COMMERCE)
+			{
+				bStarted = setResumableValueTimes100ChangeHelp(szBuffer, szStart, L": ", L"", aiYields[iI],
+					GC.getYieldInfo((YieldTypes)iI).getChar(), bNewLine, bStarted);
+			}
 		}
-
-		int iCommerce = aiYields[YIELD_COMMERCE];
-		aiYields[YIELD_COMMERCE] = 0;
-
-		bStarted = setResumableYieldChangeHelp(szBuffer, szStart, L": ", L"", aiYields, false, bNewLine, bStarted);
-
-		// Commerce
-		int aiCommerces[NUM_COMMERCE_TYPES];
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
-		{
-			aiCommerces[iI] = pCity->getAdditionalCommerceByBuilding((CommerceTypes)iI, eBuilding);
-
-			aiCommerces[iI] += iCommerce * GET_PLAYER(pCity->getOwner()).getCommercePercent((CommerceTypes)iI);
-		}
-
-		// Maintenance - add to gold
-		aiCommerces[COMMERCE_GOLD] += pCity->getSavedMaintenanceTimes100ByBuilding(eBuilding);
 		bStarted = setResumableCommerceTimes100ChangeHelp(szBuffer, szStart, L": ", L"", aiCommerces, bNewLine, bStarted);
 
 		// Great People
-		// The delta inherits the rate's ×100 (both its operands are ×100), so it reduces at this read edge.
-		int iGreatPeopleRate = pCity->getAdditionalGreatPeopleRateByBuilding(eBuilding) / 100;
-		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iGreatPeopleRate, gDLL->getSymbolID(GREAT_PEOPLE_CHAR), false, bNewLine, bStarted);
+		bStarted = setResumableValueTimes100ChangeHelp(szBuffer, szStart, L": ", L"", pCity->getAdditionalGreatPeopleRateByBuilding(eBuilding),
+			gDLL->getSymbolID(GREAT_PEOPLE_CHAR), bNewLine, bStarted);
 	}
 }
 
@@ -3791,6 +3693,74 @@ void CvGameTextMgr::appendBuildingOperatingState(CvWStringBuffer& szBuffer, cons
 	szBuffer.append(gDLL->getText(szStateKey));
 }
 
+///<summary>A building the city has, as the engine resolves it there (docs/reference/tooltip-look.md, the building
+/// hover): what applies in this city with the values it resolved to, what is off here and why, and what applies
+/// object by object.</summary>
+static void gt_buildingEffectsInCity(CvWStringBuffer& szBuffer, const CvCity& city, BuildingTypes eBuilding)
+{
+	std::vector<InfoValuation::SourceEffectAtCity> kEffects;
+	InfoValuation::buildingEffectsAtCity(city, eBuilding, kEffects);
+	CvWString szFlatLine;
+	CvWStringBuffer szApplies;
+	CvWStringBuffer szOff;
+	CvWStringBuffer szPerObject;
+	for (size_t iEffect = 0; iEffect < kEffects.size(); ++iEffect)
+	{
+		const InfoValuation::SourceEffectAtCity& kEffect = kEffects[iEffect];
+		const CvModEntry& kEntry = *kEffect.entry;
+		if (entryHiddenByGameOptions(kEntry))
+		{
+			continue;
+		}
+		switch (kEffect.state)
+		{
+		case InfoValuation::SOURCE_EFFECT_APPLIES:
+			// A plain flat channel resolves to its own authored amount, so the compact one-line form says it.
+			if (entryIsPlainFlatChannel(kEntry))
+			{
+				szFlatLine += (szFlatLine.empty() ? CvWString() : CvWString(L" ")) + entryFlatSummary(kEntry);
+			}
+			else
+			{
+				szApplies.append(NEWLINE);
+				szApplies.append(entryResolvedLine(kEntry, kEffect.value));
+			}
+			break;
+		case InfoValuation::SOURCE_EFFECT_OFF:
+			szOff.append(NEWLINE);
+			szOff.append(entryDetailLine(kEntry));
+			break;
+		case InfoValuation::SOURCE_EFFECT_PER_OBJECT:
+			szPerObject.append(NEWLINE);
+			szPerObject.append(entryDetailLine(kEntry));
+			break;
+		}
+	}
+	if (!szFlatLine.empty() || !szApplies.isEmpty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_IN_THIS_CITY"));
+		if (!szFlatLine.empty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(szFlatLine);
+		}
+		szBuffer.append(szApplies);
+	}
+	if (!szPerObject.isEmpty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_PER_OBJECT"));
+		szBuffer.append(szPerObject);
+	}
+	if (!szOff.isEmpty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_OFF_HERE"));
+		szBuffer.append(szOff);
+	}
+}
+
 void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTypes eBuilding, const bool bActual, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
 {
 	if ((int)eBuilding < 0)
@@ -3803,6 +3773,20 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		szBuffer.append(kInfo.getDescription());
 	}
 	appendBuildingOperatingState(szBuffer, eBuilding, pCity);
+
+	//	A building the city HAS: what it does there, as the engine resolves it -- built, so no cost and no
+	//	requirements; what makes it obsolete still matters.
+	if (pCity != NULL && !bCivilopediaText && pCity->hasBuilding(eBuilding))
+	{
+		gt_buildingEffectsInCity(szBuffer, *pCity, eBuilding);
+		appendEdgeLines(szBuffer, kInfo, EDGEF_OBSOLETED_BY, "TXT_KEY_EDGE_OBSOLETED_BY", gDLL->altKey());
+		if (!CvWString(kInfo.getHelp()).empty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(kInfo.getHelp());
+		}
+		return;
+	}
 	appendBuildingProductionCost(szBuffer, eBuilding, pCity);
 
 	//	WHY it is not offered here, and — where the player can actually act on it — WHAT is missing. A greyed row
@@ -3968,415 +3952,6 @@ void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProc
 	}
 }
 
-// The four wellbeing composers are BLOCKS, not per-source sub-blocks ([patterns.md] the per-entry TEXT
-// render): a block is "different sources put together" and choosing/heading them is the text manager's job,
-// while the per-source render inside it is never hand-built. So each renders ONE line for the cascade CHANNEL
-// (every authored deposit -- buildings, civics, traits, features, bonuses, specialists, corporations, techs)
-// and one line per RAW-STATE input the city can still be asked for directly.
-// > Nothing here re-derives a term: the deposits come from the group read and the raw-state inputs from their
-// own accessors, so the lines sum toward the realized total by construction rather than by a maintained tally.
-void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	PROFILE_EXTRA_FUNC();
-	int aRealized[NUM_WELLBEING_CHANNELS];
-	city.realizedWellbeing(0, aRealized);
-	const int iBadHealthTotal = aRealized[WELLBEING_UNHEALTH] / 100;
-	if (iBadHealthTotal < 1)
-	{
-		return;
-	}
-	int aDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeing(aDeposits);
-	int iSum = 0;
-
-	int iHealth = aDeposits[WELLBEING_UNHEALTH] / 100;
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HEALTH_FROM_BUILDINGS", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	iHealth = city.unhealthyPopulation();
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HEALTH_FROM_POP", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	iHealth = city.getEspionageHealthCounter();
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HEALTH_FROM_ESPIONAGE", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	iHealth = -std::min(0, city.getExtraHealth() + GET_PLAYER(city.getOwner()).getExtraHealth());
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_BAD_HEALTH_FROM_EVENTS", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	if (iBadHealthTotal > iSum)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_MISC", iBadHealthTotal - iSum));
-		szBuffer.append(NEWLINE);
-	}
-	szBuffer.append(L"-----------------------\n");
-	szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_UNHEALTHY", iBadHealthTotal));
-}
-
-void CvGameTextMgr::setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	PROFILE_EXTRA_FUNC();
-	int aRealized[NUM_WELLBEING_CHANNELS];
-	city.realizedWellbeing(0, aRealized);
-	const int iGoodHealthTotal = aRealized[WELLBEING_HEALTH] / 100;
-	if (iGoodHealthTotal < 1)
-	{
-		return;
-	}
-	int aDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeing(aDeposits);
-	int iSum = 0;
-
-	int iHealth = aDeposits[WELLBEING_HEALTH] / 100;
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HEALTH_FROM_BUILDINGS", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	iHealth = std::max(0, city.getExtraHealth() + GET_PLAYER(city.getOwner()).getExtraHealth());
-	if (iHealth > 0)
-	{
-		iSum += iHealth;
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_GOOD_HEALTH_FROM_EVENTS", iHealth));
-		szBuffer.append(NEWLINE);
-	}
-	if (iGoodHealthTotal > iSum)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_MISC", iGoodHealthTotal - iSum));
-		szBuffer.append(NEWLINE);
-	}
-	szBuffer.append(L"-----------------------\n");
-	szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_HEALTHY", iGoodHealthTotal));
-}
-
-
-void CvGameTextMgr::parseHappinessHelp(CvWStringBuffer &szBuffer)
-{
-	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
-
-	if (pHeadSelectedCity)
-	{
-		// ⛔ A BREAKDOWN ITEMISES WHAT THE CITY HAS, AND NOTHING ELSE (owner). What stood here appended a
-		// preview of every building at STATE_LISTED -- what each WOULD contribute if it were built -- so the
-		// hover mixed held sources with unbuilt candidates under one heading and a separator. A reader cannot
-		// tell the two apart, which makes the whole panel unusable as an account of the city's actual state:
-		// London itemised a Terrorists Compound it does not own.
-		setAngerHelp(szBuffer, *pHeadSelectedCity);
-		szBuffer.append(L"\n=======================\n");
-		setHappyHelp(szBuffer, *pHeadSelectedCity);
-	}
-}
-
-static bool gt_sourceValueGreater(const std::pair<int64_t, const CvInfo*>& kLeft,
-	const std::pair<int64_t, const CvInfo*>& kRight)
-{
-	return kLeft.first > kRight.first;
-}
-
-/// <summary>One wellbeing side's DEPOSIT lines, itemised by source (docs/reference/tooltip-look.md, the wellbeing
-/// hover): what the city's own package and the empire and team packages above it hold, summed per source and
-/// named. Returns the whole units shown, so the caller's Misc residual still reconciles to the total.</summary>
-static int gt_wellbeingSourceLines(CvWStringBuffer& szBuffer, const CvCity& city, bool bAngerSide)
-{
-	const int iHappinessChannel = CascadeChannelRegistry::channelLookup(
-		infoWellbeingFamily(WELLBEING_HAPPINESS), (int)CHANNEL_AMOUNT, -1);
-	const int iSideChannel = bAngerSide ? CascadeChannelRegistry::wellbeingTwin(iHappinessChannel) : iHappinessChannel;
-	if (iHappinessChannel < 0 || iSideChannel < 0)
-	{
-		return 0;
-	}
-	std::vector<InfoValuation::RefusedDeposit> kDeposits;
-	std::vector<InfoValuation::RefusedDeposit> kUpperDeposits;
-	InfoValuation::cityRefusedDeposits(city, iHappinessChannel, kDeposits);
-	InfoValuation::upperScopeDeposits(GET_PLAYER(city.getOwner()), iHappinessChannel, kUpperDeposits);
-	kDeposits.insert(kDeposits.end(), kUpperDeposits.begin(), kUpperDeposits.end());
-
-	// One figure per source, whichever scopes it reached.
-	std::map<const CvInfo*, int64_t> kPerSource;
-	for (size_t iDeposit = 0; iDeposit < kDeposits.size(); ++iDeposit)
-	{
-		const InfoValuation::RefusedDeposit& kDeposit = kDeposits[iDeposit];
-		if (kDeposit.bApplied && !kDeposit.bPercentSide && kDeposit.iChannel == iSideChannel && kDeposit.pSource != NULL)
-		{
-			kPerSource[kDeposit.pSource] += kDeposit.iValue;
-		}
-	}
-	std::vector<std::pair<int64_t, const CvInfo*> > kBuildings;
-	std::vector<std::pair<int64_t, const CvInfo*> > kNamed;
-	int64_t iBonusTotal = 0;
-	int64_t iCorporationTotal = 0;
-	for (std::map<const CvInfo*, int64_t>::const_iterator itSource = kPerSource.begin(); itSource != kPerSource.end(); ++itSource)
-	{
-		const CvString szType(itSource->first->getType());
-		if (szType.find("BUILDING_") == 0)
-		{
-			kBuildings.push_back(std::make_pair(itSource->second, itSource->first));
-		}
-		else if (szType.find("BONUS_") == 0)
-		{
-			iBonusTotal += itSource->second;
-		}
-		else if (szType.find("CORPORATION_") == 0)
-		{
-			iCorporationTotal += itSource->second;
-		}
-		else
-		{
-			kNamed.push_back(std::make_pair(itSource->second, itSource->first));
-		}
-	}
-	std::sort(kBuildings.begin(), kBuildings.end(), gt_sourceValueGreater);
-	std::sort(kNamed.begin(), kNamed.end(), gt_sourceValueGreater);
-
-	const char* szSourceKey = bAngerSide ? "TXT_KEY_UNHAPPY_FROM_SOURCE" : "TXT_KEY_HAPPY_FROM_SOURCE";
-	int iShown = 0;
-	int iLineValue = 0;
-	if (kBuildings.size() <= 5)
-	{
-		for (size_t iBuilding = 0; iBuilding < kBuildings.size(); ++iBuilding)
-		{
-			iLineValue = (int)(kBuildings[iBuilding].first / 100);
-			if (iLineValue > 0)
-			{
-				iShown += iLineValue;
-				szBuffer.append(gDLL->getText(szSourceKey, iLineValue, kBuildings[iBuilding].second->getDescription()));
-				szBuffer.append(NEWLINE);
-			}
-		}
-	}
-	else
-	{
-		int64_t iBuildingTotal = 0;
-		for (size_t iBuilding = 0; iBuilding < kBuildings.size(); ++iBuilding)
-		{
-			iBuildingTotal += kBuildings[iBuilding].first;
-		}
-		iLineValue = (int)(iBuildingTotal / 100);
-		if (iLineValue > 0)
-		{
-			iShown += iLineValue;
-			szBuffer.append(gDLL->getText(bAngerSide ? "TXT_KEY_UNHAPPY_CITY_BUILDINGS" : "TXT_KEY_HAPPY_BUILDINGS", iLineValue));
-			szBuffer.append(NEWLINE);
-		}
-	}
-	for (size_t iSource = 0; iSource < kNamed.size(); ++iSource)
-	{
-		iLineValue = (int)(kNamed[iSource].first / 100);
-		if (iLineValue > 0)
-		{
-			iShown += iLineValue;
-			szBuffer.append(gDLL->getText(szSourceKey, iLineValue, kNamed[iSource].second->getDescription()));
-			szBuffer.append(NEWLINE);
-		}
-	}
-	iLineValue = (int)(iBonusTotal / 100);
-	if (iLineValue > 0)
-	{
-		iShown += iLineValue;
-		szBuffer.append(gDLL->getText(bAngerSide ? "TXT_KEY_ANGER_BONUS" : "TXT_KEY_HAPPY_BONUS", iLineValue));
-		szBuffer.append(NEWLINE);
-	}
-	iLineValue = (int)(iCorporationTotal / 100);
-	if (iLineValue > 0)
-	{
-		iShown += iLineValue;
-		szBuffer.append(gDLL->getText(bAngerSide ? "TXT_KEY_UNHAPPY_CORPORATIONS" : "TXT_KEY_HAPPY_CORPORATIONS", iLineValue));
-		szBuffer.append(NEWLINE);
-	}
-	return iShown;
-}
-
-void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	PROFILE_EXTRA_FUNC();
-	if (city.isOccupation())
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_RESISTANCE"));
-		return;
-	}
-	CvPlayer& kPlayer = GET_PLAYER(city.getOwner());
-	if (kPlayer.isAnarchy())
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ANARCHY"));
-		return;
-	}
-	int aRealized[NUM_WELLBEING_CHANNELS];
-	city.realizedWellbeing(0, aRealized);
-	const int iUnhappy = aRealized[WELLBEING_ANGER] / 100;
-	if (iUnhappy < 1)
-	{
-		return;
-	}
-	const int iPop = city.getPopulation();
-	const int iDivisor = GC.getPERCENT_ANGER_DIVISOR();
-	int iTotal = gt_wellbeingSourceLines(szBuffer, city, true);
-
-	int aSpecialistDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeingFrom(CvCity::WELLBEING_LEG_SPECIALISTS, aSpecialistDeposits);
-	int iAnger = aSpecialistDeposits[WELLBEING_ANGER] / 100;
-	if (iAnger > 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_UNHAPPY_CITY_SPECIALISTS", iAnger));
-		szBuffer.append(NEWLINE);
-	}
-
-	// The anger PERCENTS are raw runtime state with no entry list to render from, so each keeps its own line.
-	int aAngerPercent[10];
-	aAngerPercent[0] = city.getOvercrowdingPercentAnger();
-	aAngerPercent[1] = city.getNoMilitaryPercentAnger();
-	aAngerPercent[2] = city.getCulturePercentAnger();
-	aAngerPercent[3] = city.getReligionPercentAnger();
-	aAngerPercent[4] = city.getHurryPercentAnger();
-	aAngerPercent[5] = city.getConscriptPercentAnger();
-	aAngerPercent[6] = city.getDefyResolutionPercentAnger();
-	aAngerPercent[7] = city.getWarWearinessPercentAnger();
-	aAngerPercent[8] = city.getRevRequestPercentAnger();
-	aAngerPercent[9] = city.getRevIndexPercentAnger();
-	const char* aAngerKey[10];
-	aAngerKey[0] = "TXT_KEY_ANGER_OVERCROWDING";
-	aAngerKey[1] = "TXT_KEY_ANGER_MILITARY_PROTECTION";
-	aAngerKey[2] = "TXT_KEY_ANGER_OCCUPIED";
-	aAngerKey[3] = "TXT_KEY_ANGER_RELIGION_FIGHT";
-	aAngerKey[4] = "TXT_KEY_ANGER_OPPRESSION";
-	aAngerKey[5] = "TXT_KEY_ANGER_DRAFT";
-	aAngerKey[6] = "TXT_KEY_ANGER_DEFY_RESOLUTION";
-	aAngerKey[7] = "TXT_KEY_ANGER_WAR_WEAR";
-	aAngerKey[8] = "TXT_KEY_REV_REQUEST_ANGER";
-	aAngerKey[9] = "TXT_KEY_REV_INDEX_ANGER";
-	for (int iLine = 0; iLine < 10; ++iLine)
-	{
-		iAnger = aAngerPercent[iLine] * iPop / iDivisor;
-		if (iAnger > 0)
-		{
-			iTotal += iAnger;
-			szBuffer.append(gDLL->getText(aAngerKey[iLine], iAnger));
-			szBuffer.append(NEWLINE);
-		}
-	}
-	// The remaining raw-state inputs, each read directly off the state that produces it.
-	iAnger = city.getVassalUnhappiness();
-	if (iAnger > 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_UNHAPPY_VASSAL", iAnger));
-		szBuffer.append(NEWLINE);
-	}
-	iAnger = city.getEspionageHappinessCounter();
-	if (iAnger > 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ESPIONAGE", iAnger));
-		szBuffer.append(NEWLINE);
-	}
-	iAnger = city.getEventAnger();
-	if (iAnger > 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ARGH", iAnger));
-		szBuffer.append(NEWLINE);
-	}
-	if (iUnhappy > iTotal)
-	{
-		// The MISC residual -- what the named lines do not account for (the foreign-culture and landmark terms,
-		// and integer rounding across them).
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_MISC", iUnhappy - iTotal));
-		szBuffer.append(NEWLINE);
-	}
-	szBuffer.append(L"-----------------------\n");
-	szBuffer.append(gDLL->getText("TXT_KEY_ANGER_TOTAL_UNHAPPY", iUnhappy));
-}
-
-
-void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	PROFILE_EXTRA_FUNC();
-	if (city.isDisorder())
-	{
-		return;
-	}
-	int aRealized[NUM_WELLBEING_CHANNELS];
-	city.realizedWellbeing(0, aRealized);
-	const int iTotalHappy = aRealized[WELLBEING_HAPPINESS] / 100;
-	if (iTotalHappy < 1)
-	{
-		return;
-	}
-	CvPlayer& kPlayer = GET_PLAYER(city.getOwner());
-	int iSum = gt_wellbeingSourceLines(szBuffer, city, false);
-
-	int aSpecialistDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeingFrom(CvCity::WELLBEING_LEG_SPECIALISTS, aSpecialistDeposits);
-	int iHappy = aSpecialistDeposits[WELLBEING_HAPPINESS] / 100;
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_CITY_SPECIALISTS", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	iHappy = city.getMilitaryHappiness();
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_MILITARY_PRESENCE", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	iHappy = city.getCelebrityHappiness();
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_BIG_CITY", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	iHappy = city.getVassalHappiness();
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_VASSAL", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	iHappy = city.getRevSuccessHappiness();
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_REV_SUCCESS_HAPPINESS", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	iHappy = std::max(0, city.getExtraHappiness() + kPlayer.getExtraHappiness());
-	if (iHappy > 0)
-	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_FROM_EVENTS", iHappy));
-		szBuffer.append(NEWLINE);
-	}
-	if (city.getHappinessTimer() > 0)
-	{
-		iSum += GC.getTEMP_HAPPY();
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TEMP", GC.getTEMP_HAPPY(), city.getHappinessTimer()));
-		szBuffer.append(NEWLINE);
-	}
-	if (iTotalHappy > iSum)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_MISC", iTotalHappy - iSum));
-		szBuffer.append(NEWLINE);
-	}
-	szBuffer.append(L"-----------------------\n");
-	szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TOTAL_HAPPY", iTotalHappy));
-}
 
 
 // BUG - Resumable Value Change Help - start
@@ -6266,69 +5841,6 @@ void CvGameTextMgr::setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerr
 	}
 	appendEntityBlocks(szBuffer, kInfo, g_aePlotPlaneFamilies, sizeof(g_aePlotPlaneFamilies) / sizeof(g_aePlotPlaneFamilies[0]));
 }
-void CvGameTextMgr::buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (NO_PLAYER == ePlayer)
-	{
-		return;
-	}
-	const CvPlayer& player = GET_PLAYER(ePlayer);
-
-	int* iCounts = new int[GC.getNumSpecialistInfos()];
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		iCounts[iI] = 0;
-	}
-	int iTotalSpecialists = 0;
-	foreach_(const CvCity* pCity, player.cities())
-	{
-		int iCityGold = 0;
-		if (!pCity->isDisorder())
-		{
-			//	⛔ The GROUP read, ONCE. This loop asked the per-type count TWICE per specialist, and each ask
-			//	was a full walk (eval ctx + operating set + empire) -- so the demographics screen paid it
-			//	2 x specialists x cities.
-			std::vector<int64_t> aiFreeSpecialists;
-			pCity->getFreeSpecialists(aiFreeSpecialists);
-			for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-			{
-				const int iSpecialists = pCity->getSpecialistCount((SpecialistTypes)iI) + (int)(aiFreeSpecialists[iI] / 100);
-				iCounts[iI] += iSpecialists;
-
-				iCityGold += (iSpecialists * player.specialistCommerceTimes100((SpecialistTypes)iI, COMMERCE_GOLD))/100;
-			}
-
-			iTotalSpecialists += pCity->getSpecialistPopulation() + pCity->getNumGreatPeople();
-		}
-	}
-
-	bool bFirst = true;
-	int iTotal = 0;
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		int iGold = (iCounts[iI] * player.specialistCommerceTimes100((SpecialistTypes)iI, COMMERCE_GOLD));
-		if (iGold != 0)
-		{
-			if (bFirst)
-			{
-				szBuffer.append(NEWLINE);
-				bFirst = false;
-			}
-
-			CvWString buf;
-
-			buf.Format(L"%d.%02d",iGold/100, iGold%100);
-			szBuffer.append(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_GOLD", buf.GetCString(), iCounts[iI], GC.getSpecialistInfo((SpecialistTypes)iI).getDescription()));
-			iTotal += iGold;
-		}
-	}
-
-	szBuffer.append(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_TOTAL_GOLD", iTotal/100));
-	SAFE_DELETE_ARRAY(iCounts);
-}
-
-
 void CvGameTextMgr::buildFinanceInflationString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
 {
 	if (NO_PLAYER == ePlayer)
@@ -6337,15 +5849,13 @@ void CvGameTextMgr::buildFinanceInflationString(CvWStringBuffer& szBuffer, Playe
 	}
 	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
 
-	const long long iInflationCost = kPlayer.getInflationCost();
+	const int64_t iInflationCost = kPlayer.getInflationCost();
 	if (iInflationCost > 0)
 	{
-		const int iInflationRate10000 = kPlayer.getInflationMod10000();
-		const int iInflationRateInt = iInflationRate10000 / 100 - 100;
-		const int iInflationRateDec = iInflationRate10000 % 100;
-		const long long iPreInflation = kPlayer.calculatePreInflatedCosts();
-		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_0", iPreInflation));
-		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_1", iInflationRateInt, iInflationRateDec, iInflationCost));
+		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_0",
+			CvWString::format(L"%I64d", kPlayer.calculatePreInflatedCosts()).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_INFLATION_1", amountText(kPlayer.getInflationPercent()).GetCString(),
+			CvWString::format(L"%I64d", iInflationCost).GetCString()));
 	}
 }
 
@@ -6400,9 +5910,10 @@ void CvGameTextMgr::buildFinanceUnitUpkeepString(CvWStringBuffer& szBuffer, Play
 	}
 	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_TOTAL_1", iMilitaryNet));
 
-	//	Whatever the difficulty and the AI/era ramp add on top of the two nets. It is the residual by construction,
-	//	so it can never disagree with the total it is subtracted from.
-	const int iHandicap = iFinal - (iCivilianNet + iMilitaryNet);
+	//	What the difficulty and the AI/era ramp add on top of the two nets.
+	int64_t iDifficulty = 0;
+	kPlayer.calcFinalUnitUpkeepFrom(kPlayer.getUnitUpkeepCivilian100(), kPlayer.getUnitUpkeepMilitary100(), false, &iDifficulty);
+	const int iHandicap = (int)iDifficulty;
 	if (iHandicap != 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_HANDICAP_ADJUSTMENT", iHandicap));
@@ -6420,8 +5931,8 @@ void CvGameTextMgr::buildFinanceAwaySupplyString(CvWStringBuffer& szBuffer, Play
 
 	int iPaidUnits = 0;
 	int iBaseCost = 0;
-	const int iCost = player.calculateUnitSupply(iPaidUnits, iBaseCost);
-	const int iHandicap = iCost - iBaseCost;
+	int iHandicap = 0;
+	const int iCost = player.calculateUnitSupply(iPaidUnits, iBaseCost, iHandicap);
 
 	CvWString szHandicap;
 	if (iHandicap != 0)
@@ -6439,67 +5950,10 @@ void CvGameTextMgr::buildFinanceCityMaintString(CvWStringBuffer& szBuffer, Playe
 	{
 		return;
 	}
-	int iDistanceMaint = 0;
-	int iNumCityMaint = 0;
-	int iColonyMaint = 0;
-	int iCorporationMaint = 0;
-	int iBuildingMaint = 0;
-
-	const CvPlayer& player = GET_PLAYER(ePlayer);
-
-	foreach_(const CvCity* pLoopCity, player.cities())
-	{
-		if (!pLoopCity->isDisorder() && !pLoopCity->isWeLoveTheKingDay() && pLoopCity->getPopulation() > 0)
-		{
-			const int iMod = pLoopCity->maintenancePercentStack((int)MAINTENANCE_AMOUNT);
-
-			iDistanceMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_DISTANCE);
-			iNumCityMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_NUM_CITIES);
-			iColonyMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_COLONY);
-			iCorporationMaint += (int)pLoopCity->maintenanceOfKind(MAINTENANCE_CORPORATION);
-			int64_t iBuildingFlat = 0;
-			int64_t iBuildingPercent = 0;
-			pLoopCity->maintenanceLegs((int)MAINTENANCE_AMOUNT, iBuildingFlat, iBuildingPercent);
-			iBuildingMaint += getModifiedIntValue((int)iBuildingFlat, iMod);
-		}
-	}
-
-	if (iDistanceMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iDistanceMaint/100, iDistanceMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_CITY_MAINT_COST_DISTANCE", szMaint.GetCString()));
-	}
-	if (iNumCityMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iNumCityMaint/100, iNumCityMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_CITIES_FLOAT", szMaint.GetCString()));
-	}
-	if (iColonyMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iColonyMaint/100, iColonyMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_COLONY_MAINT_FLOAT", szMaint.GetCString()));
-	}
-	if (iCorporationMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iCorporationMaint/100, iCorporationMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_CORPORATION_MAINT_FLOAT", szMaint.GetCString()));
-	}
-	if (iBuildingMaint != 0)
-	{
-		CvWString szMaint = CvWString::format(L"%d.%02d", iBuildingMaint/100, iBuildingMaint%100);
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_BUILDING_MAINT_FLOAT", szMaint.GetCString()));
-	}
-	const int iTotal = (int)player.getTotalMaintenance();
-	if (iTotal != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_CITY_MAINT_COST_TOTAL", iTotal));
-	}
+	CvCityBreakdown kBreakdown;
+	GET_PLAYER(ePlayer).getTotalMaintenance(&kBreakdown);
+	szBuffer.append(NEWLINE);
+	appendCityBreakdown(szBuffer, kBreakdown);
 }
 
 void CvGameTextMgr::buildFinanceCivicUpkeepString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
@@ -6554,117 +6008,6 @@ void CvGameTextMgr::buildFinanceForeignIncomeString(CvWStringBuffer& szBuffer, P
 }
 
 
-/*
-	+14 from Worked Tiles
-	+2 from Specialists
-	+5 from Corporations
-	+1 from Buildings
-	----------------------- |
-	Base Food Produced: 22  |-- only if there are modifiers
-	+25% from Buildings	 |
-	-----------------------
-	Total Food Produced: 27
-	=======================
-	+16 for Population
-	+2 for Health
-	-----------------------
-	Total Food Consumed: 18
-	=======================
-	Net Food: +9			or
-	Net Food for Settler: 9
-	=======================
-	* Lighthouse: +3
-	* Supermarket: +1
-*/
-void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	FAssertMsg(NO_PLAYER != city.getOwner(), "City must have an owner");
-
-	// A displayed whole-food figure, so the rate reduces at this reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-	int aiRealizedYields[NUM_YIELD_TYPES];
-	city.getYields(aiRealizedYields);
-	int iRate = aiRealizedYields[YIELD_FOOD] / 100;
-
-	// shows Base Food and lists all modifiers
-	setYieldHelp(szBuffer, city, YIELD_FOOD);
-
-	szBuffer.append(DOUBLE_SEPARATOR);
-
-	int iFoodConsumed = 0;
-
-	// Eaten
-	int iEatenFood = city.getFoodConsumedByPopulation() / 100;   // UI = a read edge
-	if (iEatenFood != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_EATEN_FOOD", iEatenFood));
-		iFoodConsumed += iEatenFood;
-	}
-
-	// Wasted
-	int iWastedFood = (int)city.foodWastage();
-	if (iWastedFood != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_WASTED_FOOD", iWastedFood));
-		iFoodConsumed += iWastedFood;
-	}
-
-	// Health
-	int iSpoiledFood = - city.healthRate();
-	if (iSpoiledFood != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_SPOILED_FOOD", iSpoiledFood));
-		iFoodConsumed += iSpoiledFood;
-	}
-
-	// Total Consumed
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_TOTAL_FOOD_CONSUMED", iFoodConsumed));
-
-	// ==========================
-	szBuffer.append(DOUBLE_SEPARATOR NEWLINE);
-	iRate -= iFoodConsumed;
-
-	// Production
-	if (city.isFoodProduction() && iRate > 0)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_NET_FOOD_PRODUCTION", iRate, city.getProductionNameKey()));
-	}
-	else
-	{
-		// cannot starve a size 1 city with no food in
-		if (iRate < 0 && city.getPopulation() == 1 && city.getFood() == 0)
-		{
-			iRate = 0;
-		}
-
-		// Net Food
-		if (iRate > 0)
-		{
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_NET_FOOD_GROW", iRate));
-		}
-		else if (iRate < 0)
-		{
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_NET_FOOD_SHRINK", iRate));
-		}
-		else
-		{
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_NET_FOOD_STAGNATE"));
-		}
-	}
-
-}
-
-
-void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	FAssertMsg(NO_PLAYER != city.getOwner(), "City must have an owner");
-
-	setYieldHelp(szBuffer, city, YIELD_PRODUCTION);
-
-}
 
 
 void CvGameTextMgr::parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePlayer)
@@ -6994,137 +6337,501 @@ void CvGameTextMgr::buildHintsList(CvWStringBuffer& szBuffer)
 	}
 }
 
-void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType)
+void CvGameTextMgr::setCityRevoltHelp(CvWStringBuffer& szBuffer, const CvCity& city)
 {
-	if ((int)eCommerceType < 0 || city.getOwner() == NO_PLAYER)
+	const int iChance = city.plot()->getCityRevoltChance();
+	if (iChance <= 0)
 	{
 		return;
 	}
-	// A commerce channel is the city's COMMERCE YIELD divided by the empire's slider and then given its own
-	// stack and deposits (modifier.md §2a), so the breakdown is TWO censuses stacked: the yield that is being
-	// divided, then the split of it. Showing only the second leaves "the yield is short" indistinguishable from
-	// "my slider is low".
-	setYieldHelp(szBuffer, city, YIELD_COMMERCE);
-	szBuffer.append(DOUBLE_SEPARATOR);
-
-	// ⛔ THE TERMS COME OUT OF THE REAL SPLIT, never re-derived beside it (docs/architecture/patterns.md §DRY (single implementation)) -- the
-	// city's census read is the same gather and the same combine as its realized one, with the terms kept.
-	CvCommerceSplitTerms kTerms;
-	city.getCommerceTerms(eCommerceType, kTerms);
-
+	const PlayerTypes eAttacker = city.plot()->getCityRevoltAttacker();
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_SHARE",
-		kTerms.sliderPercent, amountText(kTerms.commerceYield).GetCString(),
-		amountText(kTerms.share).GetCString()));
-
-	// Shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one.
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_DEPOSITS", amountText(kTerms.deposits).GetCString()));
-
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PERCENT", kTerms.percentSum));
-
-	if (kTerms.processConversion != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PROCESS",
-			amountText(kTerms.processConversion).GetCString()));
-	}
-	szBuffer.append(SEPARATOR);
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_TOTAL", amountText(kTerms.rate).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_CHANCE_OF_REVOLT",
+		CvWString::format(L"" SETCOLR L"%s%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), amountText(iChance).GetCString()).GetCString(),
+		CvWString::format(L"" SETCOLR L"%s%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), amountText(city.baseRevoltRisk(eAttacker)).GetCString()).GetCString(),
+		CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), CvPlot::getCityRevoltTestPercent()).GetCString(),
+		CvWString::format(L"" SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), city.unitRevoltRiskModifier(eAttacker)).GetCString()));
 }
 
-void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType)
+void CvGameTextMgr::getCityHoverLines(CvCity& city, CityBreakdownSubject eSubject, std::vector<CvWString>& kTextLines,
+	std::vector<CityBreakdownTextRun>& kTextRuns) const
 {
-	const int iChannel = CascadeChannelRegistry::channelLookup(
-		infoYieldFamily(eYieldType), (int)CHANNEL_AMOUNT, -1);
-	if (iChannel < 0)
+	if (city.getOwner() == NO_PLAYER)
 	{
-		return;   // a yield no data authors anywhere has no terms to decompose
+		return;
 	}
-	// ⛔ THE TERMS COME OUT OF THE REAL COMBINE, never a re-derivation beside it
-	// (docs/architecture/patterns.md §DRY (single implementation)): a tooltip that recomputed its own decomposition could disagree with the
-	// number it claims to explain, which is the one thing it must never do.
-	InfoValuation::CityRateTerms kTerms;
-	InfoValuation::cityReceiverRate(city, iChannel, &kTerms);
-
-	// ---- TIER 1: the BASE the percent stack multiplies (modifier.md §2a) ----
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_BASE"));
-
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTS",
-		amountText(kTerms.plotBase).GetCString(), kTerms.workedPlots));
-	// the plot Σ's own three segments -- a short plot total says the plots are short and never WHICH leg is
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTSEGMENTS",
-		amountText(kTerms.plotNature).GetCString(),
-		amountText(kTerms.plotImprovement).GetCString(),
-		amountText(kTerms.plotRest).GetCString()));
-
-	if (kTerms.tradeYield != 0)
+	// The wellbeing hovers are two blocks, the bad side first.
+	if (eSubject == CITY_BREAKDOWN_HAPPINESS || eSubject == CITY_BREAKDOWN_HEALTH)
 	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TRADE", amountText(kTerms.tradeYield).GetCString()));
-	}
-	if (kTerms.goldenAge != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_GOLDENAGE", amountText(kTerms.goldenAge).GetCString()));
-	}
-	if (kTerms.upperFlat != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_UPPERFLAT", amountText(kTerms.upperFlat).GetCString()));
-	}
-	// shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_SPECIALISTS", amountText(kTerms.specialists).GetCString()));
-
-	// ---- the PERCENT stack, BY SCOPE ----
-	// ⚠ Split per scope deliberately: merging them into one "+131%" is exactly what hides which level a missing
-	// modifier belongs to, and the city/empire halves move for completely different reasons.
-	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
-	const int iCityPercent = city.getCityPercents().readPercent(iChannel);
-	const int iEmpirePercent = kOwner.getCascadePackage().readPercent(iChannel);
-	const int iTeamPercent = GET_TEAM(kOwner.getTeam()).getCascadePackage().readPercent(iChannel);
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PERCENT",
-		kTerms.percentSum, iCityPercent, iEmpirePercent, iTeamPercent));
-
-	// ---- TIER 2: the city's own flats, added AFTER the stack ----
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_CITYFLAT", amountText(kTerms.cityFlat).GetCString()));
-
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TOTAL", amountText(kTerms.rate).GetCString()));
-
-	// ---- THE BONUS STORES, LIVE ----
-	// ⛔ Read HERE rather than trusted from a load-time census, and the distinction is the whole point: the
-	// load-end census reports what the stores held when the load finished, and a plot group REGROUPED afterwards
-	// is a different object whose held-resource map starts empty (it is derived, never serialized). So a store
-	// that is full at load and empty in play produces two contradictory "measurements" that are both honest --
-	// and only the live read answers the question a player is actually asking.
-	// ⚑ Both lists are stated side by side because they are ORTHOGONAL and neither implies the other (owner): a
-	// resource can be held ON SITE and not in the NETWORK, having traded the only copy away. A bare
-	// `{type, scope:"city", min:1}` deposit gate asks the TRADED list alone.
-	{
-		int iTradedHeld = 0;
-		int iOnSiteHeld = 0;
-		for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
+		const bool bHappiness = (eSubject == CITY_BREAKDOWN_HAPPINESS);
+		if (bHappiness && city.isOccupation())
 		{
-			if (city.getNumBonuses((BonusTypes)iBonus) > 0)
+			kTextLines.push_back(gDLL->getText("TXT_KEY_ANGER_RESISTANCE"));
+		}
+		if (bHappiness && GET_PLAYER(city.getOwner()).isAnarchy())
+		{
+			kTextLines.push_back(gDLL->getText("TXT_KEY_ANGER_ANARCHY"));
+		}
+		const CityBreakdownSubject aeSides[2] = {
+			bHappiness ? CITY_BREAKDOWN_ANGER : CITY_BREAKDOWN_UNHEALTH, bHappiness ? CITY_BREAKDOWN_HAPPINESS : CITY_BREAKDOWN_HEALTH
+		};
+		for (int iSide = 0; iSide < 2; ++iSide)
+		{
+			if (iSide > 0)
 			{
-				++iTradedHeld;
+				// The separator macros start with their own line break; a line list carries the rule alone.
+				kTextLines.push_back(CvWString(DOUBLE_SEPARATOR + 1));
 			}
-			if (EnablerKernel::cityHasBonusOnSite(&city, iBonus))
+			CvCityBreakdown kSide;
+			InfoValuation::cityBreakdown(city, aeSides[iSide], kSide);
+			const size_t iSideOffset = kTextLines.size();
+			std::vector<CityBreakdownTextRun> kSideRuns;
+			getCityBreakdownLines(kSide, kTextLines, kSideRuns);
+			for (size_t iRun = 0; iRun < kSideRuns.size(); ++iRun)
 			{
-				++iOnSiteHeld;
+				kSideRuns[iRun].firstLine += iSideOffset;
+				kTextRuns.push_back(kSideRuns[iRun]);
 			}
 		}
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_BONUSSTORES", iTradedHeld, iOnSiteHeld));
+		return;
+	}
+	// What opens the hover before the breakdown.
+	switch (eSubject)
+	{
+	case CITY_BREAKDOWN_FOOD:
+	case CITY_BREAKDOWN_PRODUCTION:
+	case CITY_BREAKDOWN_COMMERCE:
+	case CITY_BREAKDOWN_GOLD:
+	case CITY_BREAKDOWN_RESEARCH:
+	case CITY_BREAKDOWN_ESPIONAGE:
+		break;
+	case CITY_BREAKDOWN_MAINTENANCE:
+		kTextLines.push_back(gDLL->getText("TXT_KEY_MISC_MAINT_INFO"));
+		break;
+	case CITY_BREAKDOWN_CULTURE:
+		kTextLines.push_back(cityCultureStandingLine(city));
+		// The separator macros start with their own line break; a line list carries the rule alone.
+		kTextLines.push_back(CvWString(DOUBLE_SEPARATOR + 1));
+		break;
+	case CITY_BREAKDOWN_DEFENSE:
+	{
+		int aiDefenses[NUM_DEFENSE_KINDS];
+		city.getDefenseKinds(aiDefenses);
+		if (aiDefenses[DEFENSE_MIN] != 0)
+		{
+			kTextLines.push_back(gDLL->getText("TXT_KEY_DEFENSEHELP_FLOOR", aiDefenses[DEFENSE_MIN]));
+		}
+		break;
+	}
+	case CITY_BREAKDOWN_GREAT_PEOPLE:
+	{
+		CvWString szProgress = gDLL->getText("TXT_KEY_CITYHELP_GREAT_PEOPLE_PROGRESS", city.getGreatPeopleProgress(),
+			GET_PLAYER(city.getOwner()).greatPeopleThresholdNonMilitary());
+		const int iTurnsLeft = city.getGreatPeopleTurnsLeft();
+		if (iTurnsLeft > 0)
+		{
+			szProgress += L" ";
+			szProgress += gDLL->getText("INTERFACE_CITY_TURNS", iTurnsLeft);
+		}
+		kTextLines.push_back(szProgress);
+		std::vector<std::pair<UnitTypes, int> > kChances;
+		city.getGreatPeopleUnitChances(kChances);
+		for (size_t iChance = 0; iChance < kChances.size(); ++iChance)
+		{
+			kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_GREAT_PERSON_CHANCE",
+				GC.getUnitInfo(kChances[iChance].first).getDescription(), amountText(kChances[iChance].second).GetCString()));
+		}
+		// The separator macros start with their own line break; a line list carries the rule alone.
+		kTextLines.push_back(CvWString(DOUBLE_SEPARATOR + 1));
+		break;
+	}
+	default:
+		return;
+	}
+	CvCityBreakdown kBreakdown;
+	InfoValuation::cityBreakdown(city, eSubject, kBreakdown);
+	// The breakdown's lines follow whatever opened the hover, so its runs move down by that much.
+	const size_t iOffset = kTextLines.size();
+	std::vector<CityBreakdownTextRun> kBreakdownRuns;
+	getCityBreakdownLines(kBreakdown, kTextLines, kBreakdownRuns);
+	for (size_t iRun = 0; iRun < kBreakdownRuns.size(); ++iRun)
+	{
+		kBreakdownRuns[iRun].firstLine += iOffset;
+		kTextRuns.push_back(kBreakdownRuns[iRun]);
+	}
+}
+
+void CvGameTextMgr::setCityHoverHelp(CvWStringBuffer &szBuffer, CvCity& city, CityBreakdownSubject eSubject) const
+{
+	std::vector<CvWString> kTextLines;
+	std::vector<CityBreakdownTextRun> kTextRuns;
+	getCityHoverLines(city, eSubject, kTextLines, kTextRuns);
+	for (size_t iLine = 0; iLine < kTextLines.size(); ++iLine)
+	{
+		if (iLine > 0)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		szBuffer.append(kTextLines[iLine]);
+	}
+}
+
+CvWString CvGameTextMgr::cityCultureStandingLine(const CvCity& city) const
+{
+	const int iThreshold = city.getCultureThreshold();
+	const CvWString szCulture = amountText(city.getCultureTimes100(city.getOwner()));
+	CvWString szStanding;
+	if (iThreshold > 0)
+	{
+		szStanding = gDLL->getText("TXT_KEY_MISC_CULTURE_FLOAT", szCulture.GetCString(), iThreshold);
+		const int iTurnsLeft = city.getCultureTurnsLeft();
+		if (iTurnsLeft > 0)
+		{
+			szStanding += L" ";
+			szStanding += gDLL->getText("INTERFACE_CITY_TURNS", iTurnsLeft);
+		}
+	}
+	else
+	{
+		szStanding = gDLL->getText("TXT_KEY_MISC_CULTURE_MAX", szCulture.GetCString());
+	}
+	return szStanding;
+}
+
+///<summary>The heading text key of a city breakdown's subject.</summary>
+static const char* gt_breakdownHeadingKey(CityBreakdownSubject eSubject)
+{
+	switch (eSubject)
+	{
+	case CITY_BREAKDOWN_FOOD:        return "TXT_KEY_CITYHELP_HEADING_FOOD";
+	case CITY_BREAKDOWN_PRODUCTION:  return "TXT_KEY_CITYHELP_HEADING_PRODUCTION";
+	case CITY_BREAKDOWN_COMMERCE:    return "TXT_KEY_CITYHELP_HEADING_COMMERCE";
+	case CITY_BREAKDOWN_GOLD:        return "TXT_KEY_CITYHELP_HEADING_GOLD";
+	case CITY_BREAKDOWN_RESEARCH:    return "TXT_KEY_CITYHELP_HEADING_RESEARCH";
+	case CITY_BREAKDOWN_CULTURE:     return "TXT_KEY_CITYHELP_HEADING_CULTURE";
+	case CITY_BREAKDOWN_ESPIONAGE:   return "TXT_KEY_CITYHELP_HEADING_ESPIONAGE";
+	case CITY_BREAKDOWN_MAINTENANCE: return "TXT_KEY_CITYHELP_HEADING_MAINTENANCE";
+	case CITY_BREAKDOWN_HAPPINESS:   return "TXT_KEY_CITYHELP_HEADING_HAPPINESS";
+	case CITY_BREAKDOWN_ANGER:       return "TXT_KEY_CITYHELP_HEADING_ANGER";
+	case CITY_BREAKDOWN_HEALTH:      return "TXT_KEY_CITYHELP_HEADING_HEALTH";
+	case CITY_BREAKDOWN_UNHEALTH:    return "TXT_KEY_CITYHELP_HEADING_UNHEALTH";
+	case CITY_BREAKDOWN_GREAT_PEOPLE: return "TXT_KEY_CITYHELP_HEADING_GREAT_PEOPLE";
+	case CITY_BREAKDOWN_DEFENSE:     return "TXT_KEY_CITYHELP_HEADING_DEFENSE";
+	case CITY_BREAKDOWN_TRADE_ROUTE: return "TXT_KEY_CITYHELP_HEADING_TRADE_ROUTE";
+	case CITY_BREAKDOWN_EXPENSES:    return "TXT_KEY_CITYHELP_HEADING_EXPENSES";
+	default:                         return NULL;
+	}
+}
+
+///<summary>The icon a city breakdown's subject is counted in.</summary>
+static CvWString gt_breakdownIcon(CityBreakdownSubject eSubject)
+{
+	switch (eSubject)
+	{
+	case CITY_BREAKDOWN_FOOD:        return CvWString::format(L"%c", GC.getYieldInfo(YIELD_FOOD).getChar());
+	case CITY_BREAKDOWN_PRODUCTION:  return CvWString::format(L"%c", GC.getYieldInfo(YIELD_PRODUCTION).getChar());
+	case CITY_BREAKDOWN_COMMERCE:    return CvWString::format(L"%c", GC.getYieldInfo(YIELD_COMMERCE).getChar());
+	case CITY_BREAKDOWN_GOLD:        return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+	case CITY_BREAKDOWN_RESEARCH:    return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_RESEARCH).getChar());
+	case CITY_BREAKDOWN_CULTURE:     return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_CULTURE).getChar());
+	case CITY_BREAKDOWN_ESPIONAGE:   return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_ESPIONAGE).getChar());
+	case CITY_BREAKDOWN_MAINTENANCE: return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+	case CITY_BREAKDOWN_HAPPINESS:   return CvWString::format(L"%c", gDLL->getSymbolID(HAPPY_CHAR));
+	case CITY_BREAKDOWN_ANGER:       return CvWString::format(L"%c", gDLL->getSymbolID(UNHAPPY_CHAR));
+	case CITY_BREAKDOWN_HEALTH:      return CvWString::format(L"%c", gDLL->getSymbolID(HEALTHY_CHAR));
+	case CITY_BREAKDOWN_UNHEALTH:    return CvWString::format(L"%c", gDLL->getSymbolID(UNHEALTHY_CHAR));
+	case CITY_BREAKDOWN_GREAT_PEOPLE: return CvWString::format(L"%c", gDLL->getSymbolID(GREAT_PEOPLE_CHAR));
+	case CITY_BREAKDOWN_DEFENSE:     return CvWString::format(L"%c", gDLL->getSymbolID(DEFENSE_CHAR));
+	case CITY_BREAKDOWN_TRADE_ROUTE: return CvWString::format(L"%c", GC.getYieldInfo(YIELD_COMMERCE).getChar());
+	case CITY_BREAKDOWN_EXPENSES:    return CvWString::format(L"%c", GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+	default:                         return CvWString();
+	}
+}
+
+///<summary>The text key naming a fixed breakdown term; NULL for a term a source info names.</summary>
+static const char* gt_breakdownTermKey(CityBreakdownTerm eTerm)
+{
+	switch (eTerm)
+	{
+	case CITY_BREAKDOWN_TERM_BUILDINGS:               return "TXT_KEY_CITYHELP_TERM_BUILDINGS";
+	case CITY_BREAKDOWN_TERM_HERITAGES:               return "TXT_KEY_CITYHELP_TERM_HERITAGES";
+	case CITY_BREAKDOWN_TERM_SPECIALISTS:             return "TXT_KEY_CITYHELP_TERM_SPECIALISTS";
+	case CITY_BREAKDOWN_TERM_CIVICS:                  return "TXT_KEY_CITYHELP_TERM_CIVICS";
+	case CITY_BREAKDOWN_TERM_TECHS:                   return "TXT_KEY_CITYHELP_TERM_TECHS";
+	case CITY_BREAKDOWN_TERM_TRAITS:                  return "TXT_KEY_CITYHELP_TERM_TRAITS";
+	case CITY_BREAKDOWN_TERM_PROJECTS:                return "TXT_KEY_CITYHELP_TERM_PROJECTS";
+	case CITY_BREAKDOWN_TERM_BONUSES:                 return "TXT_KEY_CITYHELP_TERM_BONUSES";
+	case CITY_BREAKDOWN_TERM_RELIGIONS:               return "TXT_KEY_CITYHELP_TERM_RELIGIONS";
+	case CITY_BREAKDOWN_TERM_CORPORATIONS:            return "TXT_KEY_CITYHELP_TERM_CORPORATIONS";
+	case CITY_BREAKDOWN_TERM_PROCESSES:               return "TXT_KEY_CITYHELP_TERM_PROCESSES";
+	case CITY_BREAKDOWN_TERM_OTHER:                   return "TXT_KEY_CITYHELP_TERM_OTHER";
+	case CITY_BREAKDOWN_TERM_SUBTOTAL:                return "TXT_KEY_CITYHELP_TERM_SUBTOTAL";
+	case CITY_BREAKDOWN_TERM_WORKED_TILES:            return "TXT_KEY_CITYHELP_TERM_WORKED_TILES";
+	case CITY_BREAKDOWN_TERM_TRADE_ROUTES:            return "TXT_KEY_CITYHELP_TERM_TRADE_ROUTES";
+	case CITY_BREAKDOWN_TERM_GOLDEN_AGE:              return "TXT_KEY_CITYHELP_TERM_GOLDEN_AGE";
+	case CITY_BREAKDOWN_TERM_PRODUCED:                return "TXT_KEY_CITYHELP_TERM_PRODUCED";
+	case CITY_BREAKDOWN_TERM_EATEN:                   return "TXT_KEY_CITYHELP_TERM_EATEN";
+	case CITY_BREAKDOWN_TERM_UNHEALTHY:               return "TXT_KEY_CITYHELP_TERM_UNHEALTHY";
+	case CITY_BREAKDOWN_TERM_WASTED:                  return "TXT_KEY_CITYHELP_TERM_WASTED";
+	case CITY_BREAKDOWN_TERM_FOOD_PRODUCTION:         return "TXT_KEY_CITYHELP_TERM_FOOD_PRODUCTION";
+	case CITY_BREAKDOWN_TERM_STARVATION_GUARD:        return "TXT_KEY_CITYHELP_TERM_STARVATION_GUARD";
+	case CITY_BREAKDOWN_TERM_OVERFLOW:                return "TXT_KEY_CITYHELP_TERM_OVERFLOW";
+	case CITY_BREAKDOWN_TERM_CHOPPING:                return "TXT_KEY_CITYHELP_TERM_CHOPPING";
+	case CITY_BREAKDOWN_TERM_FOOD_TO_PRODUCTION:      return "TXT_KEY_CITYHELP_TERM_FOOD_TO_PRODUCTION";
+	case CITY_BREAKDOWN_TERM_MINIMUM_PRODUCTION:      return "TXT_KEY_CITYHELP_TERM_MINIMUM_PRODUCTION";
+	case CITY_BREAKDOWN_TERM_SLIDER_SHARE:            return "TXT_KEY_CITYHELP_TERM_SLIDER_SHARE";
+	case CITY_BREAKDOWN_TERM_TOTAL:                   return "TXT_KEY_CITYHELP_TERM_TOTAL";
+	case CITY_BREAKDOWN_TERM_MAINTENANCE_NUM_CITIES:  return "TXT_KEY_CITYHELP_TERM_MAINTENANCE_NUM_CITIES";
+	case CITY_BREAKDOWN_TERM_MAINTENANCE_DISTANCE:    return "TXT_KEY_CITYHELP_TERM_MAINTENANCE_DISTANCE";
+	case CITY_BREAKDOWN_TERM_MAINTENANCE_COLONY:      return "TXT_KEY_CITYHELP_TERM_MAINTENANCE_COLONY";
+	case CITY_BREAKDOWN_TERM_MAINTENANCE_BUILDINGS:   return "TXT_KEY_CITYHELP_TERM_MAINTENANCE_BUILDINGS";
+	case CITY_BREAKDOWN_TERM_CITY_PERCENTS:           return "TXT_KEY_CITYHELP_TERM_CITY_PERCENTS";
+	case CITY_BREAKDOWN_TERM_FRACTION_DROPPED:        return "TXT_KEY_CITYHELP_TERM_FRACTION_DROPPED";
+	case CITY_BREAKDOWN_TERM_WE_LOVE_THE_KING_DAY:    return "TXT_KEY_MISC_WE_LOVE_KING_MAINT";
+	case CITY_BREAKDOWN_TERM_DISORDER:                return "TXT_KEY_CITYHELP_TERM_DISORDER";
+	case CITY_BREAKDOWN_TERM_SPECIALISTS_WELLBEING:   return "TXT_KEY_CITYHELP_TERM_SPECIALISTS";
+	case CITY_BREAKDOWN_TERM_MILITARY_UNITS:          return "TXT_KEY_CITYHELP_TERM_MILITARY_UNITS";
+	case CITY_BREAKDOWN_TERM_CELEBRITIES:             return "TXT_KEY_CITYHELP_TERM_CELEBRITIES";
+	case CITY_BREAKDOWN_TERM_VASSALS:                 return "TXT_KEY_CITYHELP_TERM_VASSALS";
+	case CITY_BREAKDOWN_TERM_REVOLUTION_SUCCESS:      return "TXT_KEY_CITYHELP_TERM_REVOLUTION_SUCCESS";
+	case CITY_BREAKDOWN_TERM_EVENTS:                  return "TXT_KEY_CITYHELP_TERM_EVENTS";
+	case CITY_BREAKDOWN_TERM_TEMPORARY_HAPPINESS:     return "TXT_KEY_CITYHELP_TERM_TEMPORARY_HAPPINESS";
+	case CITY_BREAKDOWN_TERM_OVERCROWDING:            return "TXT_KEY_CITYHELP_TERM_OVERCROWDING";
+	case CITY_BREAKDOWN_TERM_NO_MILITARY:             return "TXT_KEY_CITYHELP_TERM_NO_MILITARY";
+	case CITY_BREAKDOWN_TERM_FOREIGN_CULTURE:         return "TXT_KEY_CITYHELP_TERM_FOREIGN_CULTURE";
+	case CITY_BREAKDOWN_TERM_RELIGION_STRIFE:         return "TXT_KEY_CITYHELP_TERM_RELIGION_STRIFE";
+	case CITY_BREAKDOWN_TERM_HURRY_ANGER:             return "TXT_KEY_CITYHELP_TERM_HURRY_ANGER";
+	case CITY_BREAKDOWN_TERM_CONSCRIPT_ANGER:         return "TXT_KEY_CITYHELP_TERM_CONSCRIPT_ANGER";
+	case CITY_BREAKDOWN_TERM_DEFIED_RESOLUTION:       return "TXT_KEY_CITYHELP_TERM_DEFIED_RESOLUTION";
+	case CITY_BREAKDOWN_TERM_WAR_WEARINESS:           return "TXT_KEY_CITYHELP_TERM_WAR_WEARINESS";
+	case CITY_BREAKDOWN_TERM_REVOLUTION_REQUEST:      return "TXT_KEY_CITYHELP_TERM_REVOLUTION_REQUEST";
+	case CITY_BREAKDOWN_TERM_REVOLUTION_INDEX:        return "TXT_KEY_CITYHELP_TERM_REVOLUTION_INDEX";
+	case CITY_BREAKDOWN_TERM_VASSAL_UNREST:           return "TXT_KEY_CITYHELP_TERM_VASSAL_UNREST";
+	case CITY_BREAKDOWN_TERM_ESPIONAGE:               return "TXT_KEY_CITYHELP_TERM_ESPIONAGE";
+	case CITY_BREAKDOWN_TERM_LANDMARKS:               return "TXT_KEY_CITYHELP_TERM_LANDMARKS";
+	case CITY_BREAKDOWN_TERM_POPULATION:              return "TXT_KEY_CITYHELP_TERM_POPULATION";
+	case CITY_BREAKDOWN_TERM_NO_UNHAPPINESS:          return "TXT_KEY_CITYHELP_TERM_NO_UNHAPPINESS";
+	case CITY_BREAKDOWN_TERM_STATE_RELIGION:          return "TXT_KEY_CITYHELP_TERM_STATE_RELIGION";
+	case CITY_BREAKDOWN_TERM_TRADE_BASE_PROFIT:       return "TXT_KEY_CITYHELP_TERM_TRADE_BASE_PROFIT";
+	case CITY_BREAKDOWN_TERM_TRADE_CITY_SIZE:         return "TXT_KEY_CITYHELP_TERM_TRADE_CITY_SIZE";
+	case CITY_BREAKDOWN_TERM_TRADE_CAPITAL_CONNECTION: return "TXT_KEY_CITYHELP_TERM_TRADE_CAPITAL_CONNECTION";
+	case CITY_BREAKDOWN_TERM_TRADE_OVERSEAS:          return "TXT_KEY_CITYHELP_TERM_TRADE_OVERSEAS";
+	case CITY_BREAKDOWN_TERM_TRADE_FOREIGN:           return "TXT_KEY_CITYHELP_TERM_TRADE_FOREIGN";
+	case CITY_BREAKDOWN_TERM_TREASURY_UPKEEP:         return "TXT_KEY_CITYHELP_TERM_TREASURY_UPKEEP";
+	case CITY_BREAKDOWN_TERM_CITY_MAINTENANCE:        return "TXT_KEY_CITYHELP_TERM_CITY_MAINTENANCE";
+	case CITY_BREAKDOWN_TERM_CIVIC_UPKEEP:            return "TXT_KEY_CITYHELP_TERM_CIVIC_UPKEEP";
+	case CITY_BREAKDOWN_TERM_UNIT_UPKEEP:             return "TXT_KEY_CITYHELP_TERM_UNIT_UPKEEP";
+	case CITY_BREAKDOWN_TERM_UNIT_SUPPLY:             return "TXT_KEY_CITYHELP_TERM_UNIT_SUPPLY";
+	case CITY_BREAKDOWN_TERM_CORPORATE_MAINTENANCE:   return "TXT_KEY_CITYHELP_TERM_CORPORATE_MAINTENANCE";
+	case CITY_BREAKDOWN_TERM_INFLATION:               return "TXT_KEY_CITYHELP_TERM_INFLATION";
+	case CITY_BREAKDOWN_TERM_FOREIGN_INCOME:          return "TXT_KEY_CITYHELP_TERM_FOREIGN_INCOME";
+	case CITY_BREAKDOWN_TERM_FOREIGN_PAYMENTS:        return "TXT_KEY_CITYHELP_TERM_FOREIGN_PAYMENTS";
+	default:                                          return NULL;
+	}
+}
+
+///<summary>An amount with its sign, as a part line shows it: "+8.68", "-1".</summary>
+static CvWString gt_signedAmountText(int64_t iAmount)
+{
+	return (iAmount > 0) ? CvWString(L"+") + amountText(iAmount) : amountText(iAmount);
+}
+
+///<summary>A percent with its sign: "+10%", "-4%".</summary>
+static CvWString gt_signedPercentText(int64_t iPercent)
+{
+	return CvWString::format((iPercent > 0) ? L"+%I64d%%" : L"%I64d%%", iPercent);
+}
+
+///<summary>Whether a breakdown's subject is counted in percents (defense) rather than amounts.</summary>
+static bool gt_isPercentSubject(CityBreakdownSubject eSubject)
+{
+	return eSubject == CITY_BREAKDOWN_DEFENSE;
+}
+
+///<summary>A heading, subtotal or total value of a breakdown: an amount ("12.5"), or for a subject counted in
+/// percents a percent ("25%").</summary>
+static CvWString gt_breakdownValueText(CityBreakdownSubject eSubject, int64_t iValue)
+{
+	return gt_isPercentSubject(eSubject) ? CvWString::format(L"%I64d%%", iValue) : amountText(iValue);
+}
+
+///<summary>A source's name as a line shows it, with its count when it has one ("Priest (3)").</summary>
+static CvWString gt_sourceName(const CvInfo* pSource, int iCount)
+{
+	if (pSource == NULL)
+	{
+		return CvWString();
+	}
+	return (iCount > 0)
+		? gDLL->getText("TXT_KEY_CITYHELP_SOURCE_COUNT", pSource->getDescription(), iCount)
+		: CvWString(pSource->getDescription());
+}
+
+///<summary>What a breakdown line is called: the source's own name, or the fixed term's text.</summary>
+static CvWString gt_breakdownLineLabel(const CityBreakdownLine& kLine)
+{
+	if (kLine.term == CITY_BREAKDOWN_TERM_SOURCE)
+	{
+		return gt_sourceName(kLine.source, kLine.count);
+	}
+	const char* szKey = gt_breakdownTermKey(kLine.term);
+	if (szKey == NULL)
+	{
+		return CvWString();
+	}
+	// The terms that count something carry it in their text ("Worked tiles (6)", "Eaten by 11 citizens").
+	switch (kLine.term)
+	{
+	case CITY_BREAKDOWN_TERM_WORKED_TILES:
+	case CITY_BREAKDOWN_TERM_EATEN:
+	case CITY_BREAKDOWN_TERM_SLIDER_SHARE:
+	case CITY_BREAKDOWN_TERM_TEMPORARY_HAPPINESS:
+	case CITY_BREAKDOWN_TERM_POPULATION:
+		return gDLL->getText(szKey, kLine.count);
+	default:
+		return gDLL->getText(szKey);
+	}
+}
+
+///<summary>One part line: the signed amount or percent, the icon and the label.</summary>
+static CvWString gt_partLineText(CityBreakdownRole eRole, int64_t iValue, const CvWString& szIcon, const CvWString& szLabel)
+{
+	if (eRole == CITY_BREAKDOWN_PERCENT)
+	{
+		return gDLL->getText("TXT_KEY_CITYHELP_LINE_PERCENT", gt_signedPercentText(iValue).GetCString(), szLabel.GetCString());
+	}
+	return gDLL->getText("TXT_KEY_CITYHELP_LINE_AMOUNT", gt_signedAmountText(iValue).GetCString(), szIcon.GetCString(),
+		szLabel.GetCString());
+}
+
+///<summary>Appends kLines to the buffer, one per line.</summary>
+static void gt_appendLines(CvWStringBuffer& szBuffer, const std::vector<CvWString>& kLines)
+{
+	for (size_t iLine = 0; iLine < kLines.size(); ++iLine)
+	{
+		if (iLine > 0)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		szBuffer.append(kLines[iLine]);
+	}
+}
+
+void CvGameTextMgr::getCityBreakdownLines(const CvCityBreakdown& kBreakdown, std::vector<CvWString>& kTextLines,
+	std::vector<CityBreakdownTextRun>& kTextRuns) const
+{
+	// The separator macros start with their own line break; a line list carries the rule alone.
+	const CvWString szSeparator(SEPARATOR + 1);
+	const CityBreakdownSubject eSubject = kBreakdown.getSubject();
+	const CvWString szIcon = gt_breakdownIcon(eSubject);
+	// A subject counted in percents (defense) shows its parts as percents, not amounts.
+	const CityBreakdownRole ePartRole = gt_isPercentSubject(eSubject) ? CITY_BREAKDOWN_PERCENT : CITY_BREAKDOWN_AMOUNT;
+	const char* szHeadingKey = gt_breakdownHeadingKey(eSubject);
+	if (szHeadingKey != NULL)
+	{
+		const CvWString szTotal = gt_breakdownValueText(eSubject, kBreakdown.getTotal());
+		kTextLines.push_back(gDLL->getText(szHeadingKey, szTotal.GetCString(), szIcon.GetCString()));
+	}
+	const std::vector<CityBreakdownLine>& kLines = kBreakdown.getLines();
+	std::vector<size_t> kTextLineOf(kLines.size(), 0);
+	for (size_t iLine = 0; iLine < kLines.size(); ++iLine)
+	{
+		const CityBreakdownLine& kLine = kLines[iLine];
+		const CvWString szLabel = gt_breakdownLineLabel(kLine);
+		switch (kLine.role)
+		{
+		case CITY_BREAKDOWN_AMOUNT:
+			if (kLine.hasOwnStack)
+			{
+				kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_LINE_STACKED", gt_signedAmountText(kLine.value).GetCString(),
+					szIcon.GetCString(), szLabel.GetCString(), amountText(kLine.stackBase).GetCString(),
+					gt_signedPercentText(kLine.stackPercent).GetCString()));
+			}
+			else
+			{
+				kTextLines.push_back(gt_partLineText(ePartRole, kLine.value, szIcon, szLabel));
+			}
+			break;
+		case CITY_BREAKDOWN_PERCENT:
+			kTextLines.push_back(gt_partLineText(kLine.role, kLine.value, szIcon, szLabel));
+			break;
+		case CITY_BREAKDOWN_SUBTOTAL:
+			kTextLines.push_back(szSeparator);
+			kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_LINE_SUBTOTAL", gt_breakdownValueText(eSubject, kLine.value).GetCString(),
+				szIcon.GetCString(), szLabel.GetCString()));
+			break;
+		case CITY_BREAKDOWN_TOTAL:
+			kTextLines.push_back(szSeparator);
+			kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_LINE_TOTAL", gt_breakdownValueText(eSubject, kLine.value).GetCString(),
+				szIcon.GetCString()));
+			break;
+		case CITY_BREAKDOWN_NOTE:
+			kTextLines.push_back(szLabel);
+			break;
+		}
+		kTextLineOf[iLine] = kTextLines.size() - 1;
+	}
+	// Each run of sources, mapped onto the text lines it occupies, with the one line that stands for it.
+	std::vector<CityBreakdownRun> kRuns;
+	kBreakdown.getSourceRuns(kRuns);
+	for (size_t iRun = 0; iRun < kRuns.size(); ++iRun)
+	{
+		const CityBreakdownRun& kRun = kRuns[iRun];
+		CityBreakdownTextRun kTextRun;
+		kTextRun.firstLine = kTextLineOf[kRun.firstLine];
+		kTextRun.lineCount = kRun.lineCount;
+		const CvWString szRunLabel = gDLL->getText("TXT_KEY_CITYHELP_RUN", gDLL->getText(gt_breakdownTermKey(kRun.term)).GetCString(),
+			(int)kRun.lineCount);
+		kTextRun.summary = gt_partLineText(kRun.role == CITY_BREAKDOWN_AMOUNT ? ePartRole : kRun.role, kRun.total, szIcon,
+			szRunLabel);
+		kTextRuns.push_back(kTextRun);
+	}
+}
+
+void CvGameTextMgr::appendCityBreakdown(CvWStringBuffer& szBuffer, const CvCityBreakdown& kBreakdown) const
+{
+	std::vector<CvWString> kTextLines;
+	std::vector<CityBreakdownTextRun> kTextRuns;
+	getCityBreakdownLines(kBreakdown, kTextLines, kTextRuns);
+	gt_appendLines(szBuffer, kTextLines);
+}
+
+void CvGameTextMgr::getCityBreakdownRows(const CvCityBreakdown& kBreakdown, std::vector<CityBreakdownRow>& kRows) const
+{
+	const CityBreakdownSubject eSubject = kBreakdown.getSubject();
+	const CvWString szIcon = gt_breakdownIcon(eSubject);
+	const std::vector<CityBreakdownLine>& kLines = kBreakdown.getLines();
+	for (size_t iLine = 0; iLine < kLines.size(); ++iLine)
+	{
+		const CityBreakdownLine& kLine = kLines[iLine];
+		CityBreakdownRow kRow;
+		kRow.role = kLine.role;
+		kRow.label = gt_breakdownLineLabel(kLine);
+		// A subject counted in percents (defense) shows its parts as percents, as the hover does.
+		const CityBreakdownRole eRole = (kLine.role == CITY_BREAKDOWN_AMOUNT && gt_isPercentSubject(eSubject))
+			? CITY_BREAKDOWN_PERCENT : kLine.role;
+		switch (eRole)
+		{
+		case CITY_BREAKDOWN_AMOUNT:
+			if (kLine.hasOwnStack)
+			{
+				kRow.label = gDLL->getText("TXT_KEY_CITYHELP_ROW_STACKED", kRow.label.GetCString(),
+					amountText(kLine.stackBase).GetCString(), szIcon.GetCString(),
+					gt_signedPercentText(kLine.stackPercent).GetCString());
+			}
+			kRow.value = gt_signedAmountText(kLine.value) + szIcon;
+			break;
+		case CITY_BREAKDOWN_PERCENT:
+			kRow.value = gt_signedPercentText(kLine.value);
+			break;
+		case CITY_BREAKDOWN_SUBTOTAL:
+		case CITY_BREAKDOWN_TOTAL:
+			kRow.value = gt_breakdownValueText(eSubject, kLine.value) + szIcon;
+			break;
+		case CITY_BREAKDOWN_NOTE:
+			break;
+		}
+		kRows.push_back(kRow);
 	}
 }
 
@@ -7215,69 +6922,6 @@ void CvGameTextMgr::setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMa
 	if (GC.getVASSAL_REVOLT_MASTER_LOSSES_FACTOR() > 0 && kVassal.getMasterPower() > 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_MASTER_AREA_LOSS", (iMasterLand * 100) / kVassal.getMasterPower(), GC.getVASSAL_REVOLT_MASTER_LOSSES_FACTOR()));
-	}
-}
-
-void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	if (city.getOwner() == NO_PLAYER)
-	{
-		return;
-	}
-	// The GP rate is the same TWO-TIER shape as a yield rate -- a base the stack multiplies, then the stack
-	// -- so it decomposes the same way. The rate alone cannot say whether a low
-	// number is a thin base or a missing modifier, and those move for completely different reasons.
-	const int iBase = city.getBaseGreatPeopleRate();
-	const int iModifier = city.getTotalGreatPeopleRateModifier();
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_BASE", iBase));
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_MODIFIER", iModifier));
-	szBuffer.append(SEPARATOR);
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_RATE", city.getGreatPeopleRate()));
-
-	// Progress against the threshold -- the number that says WHEN, which a per-turn rate never does.
-	const int iThreshold = GET_PLAYER(city.getOwner()).greatPeopleThresholdNonMilitary();
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_PROGRESS", city.getGreatPeopleProgress(), iThreshold));
-
-	// The per-source attribution. A GP rate comes from OPERATING buildings and from ASSIGNED specialists, and a
-	// specialist's contribution scales by how many are seated -- so the count rides the line, since one merchant
-	// and six merchants are the same authored entry and very different numbers.
-	foreach_(const BuildingTypes eType, city.getHasBuildings())
-	{
-		if (city.isDormantBuilding(eType))
-		{
-			continue;
-		}
-		const CvInfo& kBuilding = GC.getBuildingInfo(eType);
-		CvWStringBuffer szLines;
-		appendEntryLines(szLines, kBuilding, MODFAM_GREAT_PEOPLE_RATE);
-		if (!szLines.isEmpty())
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(kBuilding.getDescription());
-			szBuffer.append(szLines);
-		}
-	}
-	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
-	{
-		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
-		if (iCount <= 0)
-		{
-			continue;
-		}
-		const CvInfo& kSpecialist = GC.getSpecialistInfo((SpecialistTypes)iSpecialist);
-		CvWStringBuffer szLines;
-		appendEntryLines(szLines, kSpecialist, MODFAM_GREAT_PEOPLE_RATE);
-		if (!szLines.isEmpty())
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_SPECIALIST",
-				kSpecialist.getDescription(), iCount));
-			szBuffer.append(szLines);
-		}
 	}
 }
 
@@ -7478,7 +7122,8 @@ void CvGameTextMgr::buildCityBillboardCityNameString( CvWStringBuffer& szBuffer,
 
 				if ((iTurns > 1) || !(pCity->AI_isEmphasizeAvoidGrowth()))
 				{
-					if (iTurns < MAX_INT)
+					// a surplus under one food grows nothing (-1)
+					if (iTurns > 0 && iTurns < MAX_INT)
 					{
 						szBuffer.append(CvWString::format(L" (%d)", iTurns));
 					}
@@ -7569,41 +7214,22 @@ void CvGameTextMgr::setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer)
 {
 	if (NO_PLAYER != ePlayer)
 	{
-		CvPlayer& player = GET_PLAYER(ePlayer);
-
-		int iPop = player.getPopScore();
-		int iMaxPop = GC.getGame().getMaxPopulation();
-		int iPopScore = 0;
-		if (iMaxPop > 0)
+		const CvPlayer& player = GET_PLAYER(ePlayer);
+		const CvGame& kGame = GC.getGame();
+		int64_t aiParts[NUM_SCORE_PARTS];
+		player.calculateScoreParts(false, false, aiParts);
+		// The parts show to two decimals, the amount text's form.
+		CvWString aszParts[NUM_SCORE_PARTS];
+		for (int iPart = 0; iPart < NUM_SCORE_PARTS; iPart++)
 		{
-			iPopScore = (GC.getSCORE_POPULATION_FACTOR() * iPop) / iMaxPop;
+			aszParts[iPart] = amountText(aiParts[iPart] / 10000);
 		}
-		int iLand = player.getLandScore();
-		int iMaxLand = GC.getGame().getMaxLand();
-		int iLandScore = 0;
-		if (iMaxLand > 0)
-		{
-			iLandScore = (GC.getSCORE_LAND_FACTOR() * iLand) / iMaxLand;
-		}
-		int iTech = player.getTechScore();
-		int iMaxTech = GC.getGame().getMaxTech();
-		int iTechScore = 0;
-		if (iMaxTech > 0)
-		{
-			iTechScore = (GC.getSCORE_TECH_FACTOR() * iTech) / std::max(1, iMaxTech);
-		}
-		int iWonders = player.getWondersScore();
-		int iMaxWonders = GC.getGame().getMaxWonders();
-		int iWondersScore = 0;
-		if (iMaxWonders > 0)
-		{
-			iWondersScore = (GC.getSCORE_WONDER_FACTOR() * iWonders) / std::max(1, iMaxWonders);
-		}
-		int iTotalScore = iPopScore + iLandScore + iTechScore + iWondersScore;
-		int iVictoryScore = player.calculateScore(true, true);
 		szString.append(gDLL->getText("TXT_KEY_SCORE_BREAKDOWN",
-			iPopScore, iPop, iMaxPop, iLandScore, iLand, iMaxLand, iTechScore,
-			iTech, iMaxTech, iWondersScore, iWonders, iMaxWonders, iTotalScore, iVictoryScore)
+			aszParts[SCORE_PART_POPULATION].GetCString(), player.getPopScore(), kGame.getMaxPopulation(),
+			aszParts[SCORE_PART_LAND].GetCString(), player.getLandScore(), kGame.getMaxLand(),
+			aszParts[SCORE_PART_TECH].GetCString(), player.getTechScore(), kGame.getMaxTech(),
+			aszParts[SCORE_PART_WONDERS].GetCString(), player.getWondersScore(), kGame.getMaxWonders(),
+			player.calculateScore(), player.calculateScore(true, true))
 		);
 	}
 }
@@ -8548,35 +8174,24 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 		return;
 	}
 
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_WITH", pPartner->getName().GetCString()));
+	std::vector<CvWString> kTextLines;
+	kTextLines.push_back(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_WITH", pPartner->getName().GetCString()));
+	CvCityBreakdown kBreakdown;
+	const int iProfit = pCity->calculateTradeProfit(pPartner, &kBreakdown);
+	std::vector<CityBreakdownTextRun> kTextRuns;
+	getCityBreakdownLines(kBreakdown, kTextLines, kTextRuns);
 
-	const int iBaseProfit = pCity->getBaseTradeProfit(pPartner);
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_BASE", amountText(iBaseProfit).GetCString()));
-
-	const int iModifier = pCity->totalTradeModifier(pPartner);
-	if (iModifier != 100)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_MODIFIER", iModifier - 100));
-	}
-
-	const int iProfit = pCity->calculateTradeProfit(pPartner);
-	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_PROFIT", amountText(iProfit).GetCString()));
-
-	//	What the route actually delivers, per channel. A channel with no trade share contributes nothing and is
-	//	simply absent rather than printed as a zero.
-	CvWString szYield;
+	// What the route delivers, per yield; a yield with no trade share is absent rather than printed as a zero.
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 	{
 		const int iTradeYield = pCity->calculateTradeYield((YieldTypes)iYield, iProfit);
 		if (iTradeYield != 0)
 		{
-			szYield.Format(L"%s %c", amountText(iTradeYield).GetCString(), GC.getYieldInfo((YieldTypes)iYield).getChar());
-			szBuffer.append(NEWLINE);
-			szBuffer.append(szYield);
+			kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_TRADE_DELIVERS", amountText(iTradeYield).GetCString(),
+				CvWString::format(L"%c", GC.getYieldInfo((YieldTypes)iYield).getChar()).GetCString()));
 		}
 	}
+	gt_appendLines(szBuffer, kTextLines);
 }
 
 //	What a mission costs, decomposed into the terms that set it: the contextual base, the modifier stack that
@@ -8862,15 +8477,6 @@ void CvGameTextMgr::getTradeScreenHeader(CvWString& szHeader, PlayerTypes ePlaye
 }
 
 // BUG - Trade Hover - start
-void CvGameTextMgr::buildDomesticTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
-{
-	buildTradeString(szBuffer, ePlayer, NO_PLAYER, true, false, false);
-}
-
-void CvGameTextMgr::buildForeignTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
-{
-	buildTradeString(szBuffer, ePlayer, NO_PLAYER, false, true, false);
-}
 
 void CvGameTextMgr::buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eWithPlayer, bool bDomestic, bool bForeign, bool bHeading) const
 {
@@ -8953,31 +8559,13 @@ void CvGameTextMgr::buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePla
 
 	player.calculateTradeTotals(YIELD_COMMERCE, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, false);
 
-	int iTotalYield = 0;
-	int iTotalRoutes = 0;
 	if (bDomestic)
 	{
-		iTotalYield += iDomesticYield;
-		iTotalRoutes += iDomesticRoutes;
+		szBuffer.append(gDLL->getText("TXT_KEY_CITYHELP_TRADE_DOMESTIC", amountText(iDomesticYield).GetCString(), iDomesticRoutes));
 	}
 	if (bForeign)
 	{
-		iTotalYield += iForeignYield;
-		iTotalRoutes += iForeignRoutes;
-	}
-
-	CvWString szYield;
-	szYield.Format(L"%d.%02d", iTotalYield / 100, iTotalYield % 100);
-	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_YIELD", szYield.GetCString()));
-	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_ROUTES", iTotalRoutes));
-
-	if (iTotalRoutes > 0)
-	{
-		// the total is ×100 and the divisor is a plain route COUNT, so the average is still ×100
-		int iAverage = iTotalYield / iTotalRoutes;
-		CvWString szAverage;
-		szAverage.Format(L"%d.%02d", iAverage / 100, iAverage % 100);
-		szBuffer.append(gDLL->getText("TXT_KEY_BUG_AVERAGE_TRADE_YIELD", szAverage.GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_CITYHELP_TRADE_FOREIGN", amountText(iForeignYield).GetCString(), iForeignRoutes));
 	}
 }
 // BUG - Trade Hover - end
@@ -9769,115 +9357,6 @@ void CvGameTextMgr::getCorporationDataForWB(bool bHeadquarters, std::vector<CvWB
 }
 
 
-/*
-	+50% from Buildings
-	+25% from Wonders
-	+10% from resources
-	+25% from Civics
-	+25% from Culture
-	+10% from Terrain
-	=======================
-	Base Defense: 100%
-	=======================
-	Percent Siege Damaged: 25%
-	Siege Damage 25%
-	Current Defense: 75%
-	=======================
-	Base Bombard Defense: 60%
-	=======================
-	* Walls: +30%
-*/
-void CvGameTextMgr::getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
-{
-	// ⛔ Defense is ONE additive stack: BUILDINGS and CULTURE LEVELS author the same `defense.city.amount`
-	// ([json.md] par.6), so the legacy building / wonder / resource / civic / trait buckets were never five
-	// quantities -- they were five hand-summed legs of one, and there is no `max(building, natural)` here either.
-	// What a census owes instead is the TOTAL, then WHICH SOURCE each contribution came from.
-	// ⚠ A defense value is a PERCENT and percents are NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so these render plain
-	// -- a ÷100 here would zero the whole stack.
-	int aiDefenses[NUM_DEFENSE_KINDS];
-	city.getDefenseKinds(aiDefenses);
-	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_DEFENSEHELP_TOTAL", aiDefenses[DEFENSE_AMOUNT]));
-	if (aiDefenses[DEFENSE_MIN] != 0)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_DEFENSEHELP_FLOOR", aiDefenses[DEFENSE_MIN]));
-	}
-	szBuffer.append(SEPARATOR);
-
-	//	The per-source attribution. ⚠ It walks EVERY live source, not just the buildings: culture levels author
-	//	the same `defense.city.amount` as buildings do ([json.md] par.6), and civics and traits deposit into it
-	//	too -- so a buildings-only walk left part of the total above with nothing naming it, which is precisely
-	//	the failure a decomposition census exists to prevent (a route that serves ONE number answers nothing when
-	//	that number is wrong).
-	appendCitySourceLines(szBuffer, city, MODFAM_DEFENSE);
-}
-
-//	ONE source of a city-scope family -> its heading + its own rendered entry lines. A source that deposits
-//	nothing into the family says nothing at all, so a census lists only what actually contributed.
-void CvGameTextMgr::appendSourceIfAny(CvWStringBuffer& szBuffer, const CvInfo& source, ModifierFamily eFamily) const
-{
-	CvWStringBuffer szLines;
-	appendEntryLines(szLines, source, eFamily);
-	if (szLines.isEmpty())
-	{
-		return;
-	}
-	szBuffer.append(NEWLINE);
-	szBuffer.append(source.getDescription());
-	szBuffer.append(szLines);
-}
-
-//	WHICH SOURCES built this city's total for a family -- the attribution half of a decomposition census.
-//
-//	⚑ The source SET is the composition this composer owns ([patterns.md] THE DIVISION OF LABOUR: the blocks are
-//	"different sources put together"); every magnitude still renders itself through the ONE entry renderer, so a
-//	newly authored kind appears here with no edit. It is shared rather than per-census because the source set is
-//	the same question every city census asks.
-//	⛔ A DORMANT building deposits nothing ([enabler.md] par.3.2), so it is skipped -- listing it would attribute a
-//	contribution the city is not receiving.
-void CvGameTextMgr::appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCity& city, ModifierFamily eFamily) const
-{
-	foreach_(const BuildingTypes eType, city.getHasBuildings())
-	{
-		if (!city.isDormantBuilding(eType))
-		{
-			appendSourceIfAny(szBuffer, GC.getBuildingInfo(eType), eFamily);
-		}
-	}
-
-	//	The EMPIRE-scope sources reach every city of the player, so they are as much a part of THIS city's total
-	//	as its own buildings are -- and they are the ones a buildings-only census silently dropped.
-	if (city.getOwner() == NO_PLAYER)
-	{
-		return;
-	}
-	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
-	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); ++iOption)
-	{
-		const CivicTypes eCivic = kOwner.getCivics((CivicOptionTypes)iOption);
-		if (eCivic != NO_CIVIC)
-		{
-			appendSourceIfAny(szBuffer, GC.getCivicInfo(eCivic), eFamily);
-		}
-	}
-	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
-	{
-		if (kOwner.hasTrait((TraitTypes)iTrait))
-		{
-			appendSourceIfAny(szBuffer, GC.getTraitInfo((TraitTypes)iTrait), eFamily);
-		}
-	}
-
-	//	The city's CULTURE LEVEL -- the other authored half of the defense stack, and a source no other census
-	//	surface names at all.
-	const CultureLevelTypes eCultureLevel = city.getCultureLevel();
-	if (eCultureLevel != NO_CULTURELEVEL)
-	{
-		appendSourceIfAny(szBuffer, GC.getCultureLevelInfo(eCultureLevel), eFamily);
-	}
-}
 
 
 void CvGameTextMgr::setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city)

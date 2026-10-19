@@ -21,6 +21,7 @@
 #include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
 #include "TraitContext.h"    // the empire's held-trait set: storage + maintenance, one place
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
+#include "CvCityBreakdown.h"    // CityBreakdownSubject -- the subject sumCityBreakdowns sums
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
 #include "AI/CvSelectionGroupAI.h"
 #include "UI/CvTalkingHeadMessage.h"
@@ -33,6 +34,7 @@
 #endif
 
 class CvArea;
+class CvCityBreakdown;
 class CvDiploParameters;
 class CvEventTriggerInfo;
 class CvPlot;
@@ -255,7 +257,13 @@ public:
 	void endChoosingFreeTech();
 	void chooseTech(int iDiscover = 0, CvWString szText = CvWString(), bool bFront = false);
 
+	///<summary>The player's score: its four parts summed and rounded down (calculateScoreParts).</summary>
 	int calculateScore(bool bFinal = false, bool bVictory = false) const;
+	///<summary>The four score parts, in millionths of a point so the total rounds down once. Each part is its
+	/// factor times (raw + free) / (max + free), where free is SCORE_FREE_PERCENT of the game's max. A final score
+	/// takes the difficulty percent, a victory takes the victory percent, and a final victory score grows the max
+	/// toward the end turn.</summary>
+	void calculateScoreParts(bool bFinal, bool bVictory, int64_t (&aiParts)[NUM_SCORE_PARTS]) const;
 
 	int findBestFoundValue() const;
 
@@ -343,19 +351,27 @@ public:
 	void getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 
 
-	int calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const;
+	///<summary>The gold the units outside the borders cost: iPaidUnits are the ones past the free allowance,
+	/// iBaseSupplyCost their cost with the player's own modifier, iDifficultyCost what the AI difficulty adds.</summary>
+	int calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost, int& iDifficultyCost) const;
 	int calculateUnitSupply() const;
-	int64_t calculatePreInflatedCosts() const;
+	///<summary>The expenses before inflation. With pBreakdown, each expense goes on it as an amount line.</summary>
+	int64_t calculatePreInflatedCosts(CvCityBreakdown* pBreakdown = NULL) const;
 	int getInflationMod10000() const;
+	///<summary>The inflation rate in hundredths of a percent: what getInflationMod10000 adds to the expenses.</summary>
+	int getInflationPercent() const;
 	int64_t getInflationCost() const;
-	int64_t getFinalExpense() const;
+	///<summary>The expenses the treasury pays. With pBreakdown, the expenses, their subtotal and inflation.</summary>
+	int64_t getFinalExpense(CvCityBreakdown* pBreakdown = NULL) const;
 	short getProfitMargin(int64_t &iNetExpenses, int iExtraExpense=0, int iExtraExpenseMod=0) const;
 	short getProfitMargin(int iExtraExpense=0, int iExtraExpenseMod=0) const;
 	void cacheKeyFinanceNumbers();
 	int64_t getMinTaxIncome() const;
 	int64_t getMaxTaxIncome() const;
 
-	int64_t calculateBaseNetGold() const;
+	///<summary>The gold the treasury gains this turn. With pIncome, the cities' gold summed source by source and
+	/// the income from other players; with pExpenses, the expenses and the payments to other players.</summary>
+	int64_t calculateBaseNetGold(CvCityBreakdown* pIncome = NULL, CvCityBreakdown* pExpenses = NULL) const;
 	int calculateBaseNetResearch(TechTypes eTech = NO_TECH) const;
 	int calculateResearchModifier(TechTypes eTech) const;
 	int calculateGoldRate() const;
@@ -574,7 +590,9 @@ public:
 	int64_t getUnitUpkeepMilitaryNet() const;
 	int64_t getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep = MAX_INT) const;
 	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
-	int64_t calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal=true) const;
+	///<summary>The unit upkeep the two raw buckets cost after modifiers, free allowances and difficulty; bReal
+	/// stores it as the player's upkeep. pDifficultyOut, when given, receives what the difficulty steps added.</summary>
+	int64_t calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal=true, int64_t* pDifficultyOut = NULL) const;
 	int64_t getFinalUnitUpkeep() const;
 	// ! Unit Upkeep
 
@@ -600,12 +618,15 @@ public:
 
 
 
-	// The empire's realized maintenance TOTAL: a bare fetch of its package's RECEIVER slot -- the Σ of its
-	// member cities' realized values, which is what a cross-scope receiver total IS
-	// ([state-repositories.md]). It carries no cache of its own: a receiver is the same cache holding a
-	// different slot, and a hand-named one beside the package is the shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a
-	// DEFECT, because it forces a bespoke invalidation path no derived mask can reach.
-	int64_t getTotalMaintenance() const;
+	///<summary>The empire's city maintenance, the expense calculatePreInflatedCosts charges: the Σ of its cities'
+	/// realized maintenance (InfoValuation::realizedAtEmpire) with its fraction dropped. With pBreakdown, the same
+	/// cities' parts summed per part, what the cities' percents and cuts add as one line, the Σ as the subtotal and
+	/// the charged amount as the total.</summary>
+	int64_t getTotalMaintenance(CvCityBreakdown* pBreakdown = NULL) const;
+	///<summary>Adds to kBreakdown the amount parts of eSubject's breakdown in every city the empire's receivers sum
+	/// (not in disorder): each fixed part and each source summed over the cities, and what the cities' percents
+	/// and cuts add on top of those parts as one line. Returns the Σ of those cities' totals.</summary>
+	int64_t sumCityBreakdowns(CityBreakdownSubject eSubject, CvCityBreakdown& kBreakdown) const;
 
 
 
@@ -1410,8 +1431,6 @@ public:
 
 
 	bool m_bChoosingReligion;
-
-	int getScoreComponent(int iRawScore, int iInitial, int iMax, int iFactor, bool bExponential, bool bFinal, bool bVictory) const;
 
 	int getHurriedCount() const;
 	void changeHurriedCount(int iChange);

@@ -20,6 +20,12 @@
 #include "Engine/CvPlayer.h"              // isHuman -- the audience resolution
 #include "CvCascadeChannelRegistry.h"     // the roll-up's channel identity + the per-scope/receiver layout
 #include "Engine/CvCity.h"                // the roll-up's city package + its area/owner axes
+#include "Engine/CvCityBreakdown.h"       // the city hover's breakdown the yield combine fills
+#include "CvProcessInfo.h"                // the process a commerce breakdown names
+#include "CvCultureLevelInfo.h"           // the city's culture level, one of the sources the deposit audit walks
+#include "CvCivicInfo.h"                  // a route-gated deposit's civic, the SHARES_CIVIC source slot
+#include "Data/CvDepositIndex.h"          // the deposits gated on the trade-route predicates
+#include "Conditions/CvConditionQuery.h"  // hasPredicate -- a deposit gated on both route predicates is counted once
 #include "Engine/CvPlot.h"                // the roll-up's plot package
 #include "Engine/CvTeam.h"                // the roll-up's team package
 #include "AI/CvPlayerAI.h"                // GET_PLAYER -- the city's owning empire
@@ -683,7 +689,8 @@ int64_t InfoValuation::plotScaledYield(int64_t iBaseTotal, int64_t iInterval, in
 	return (iScaled < 0) ? 0 : iScaled;
 }
 
-int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra)
+int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra,
+	int64_t* pStackedOut, int64_t* pExtraOut)
 {
 	// modifier.md §2a: ONE additive percent stack applied once, floored at zero; the EXTRA tier truncates to
 	// whole units before re-scaling (the engine's getExtraYield100 order -- a documented integer-truncation
@@ -697,15 +704,24 @@ int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentS
 	{
 		iModifier = 0;
 	}
-	return (base + specialists) * iModifier / 100 + 100 * (extra / 100);
+	const int64_t iStacked = (base + specialists) * iModifier / 100;
+	const int64_t iExtra = 100 * (extra / 100);
+	if (pStackedOut != NULL)
+	{
+		*pStackedOut = iStacked;
+	}
+	if (pExtraOut != NULL)
+	{
+		*pExtraOut = iExtra;
+	}
+	return iStacked + iExtra;
 }
 
 int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPercent, int64_t channelPercentSum,
 	int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce,
 	CvCommerceSplitTerms* pTerms)
 {
-	// TIER 1 -- the slider share of the COMMERCE yield. The slider is a plain 0..100 counter (json §3.1), so the
-	// ÷100 is the percent-to-fraction conversion, not a fixed-point de-scale.
+	// TIER 1 -- the slider's share of the COMMERCE yield; the slider is a percent (json §3.1).
 	int64_t iShare = commerceYieldRate * (int64_t)iSliderPercent / 100;
 	// The ONE additive stack (modifier.md §2a), floored at zero exactly as the yield rate's is -- a stack below
 	// -100% zeroes the share, it never flips its sign. A stored percent is PLAIN, so it combines directly.
@@ -715,17 +731,17 @@ int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPerce
 		iModifier = 0;
 	}
 	// TIER 2 -- the process conversion, added AFTER the percentages and never multiplied by them. The production
-	// yield truncates to whole hammers BEFORE the conversion scales it (the engine's order, mirrored verbatim).
-	// The rate is an authored PERCENT, so it is unscaled: whole hammers × the percent IS the ×100 amount this
-	// sum is in, and no divisor belongs here.
+	// yield truncates to whole hammers BEFORE the authored percent converts it (the engine's order).
 	int64_t iProcessConversion = (productionYieldRate / 100) * (int64_t)iProductionToCommerce;
-	const int64_t iRate = iShare * iModifier / 100 + channelDeposits + iProcessConversion;
+	const int64_t iStackedShare = iShare * iModifier / 100;
+	const int64_t iRate = iStackedShare + channelDeposits + iProcessConversion;
 	if (pTerms != NULL)
 	{
 		pTerms->commerceYield = commerceYieldRate;
 		pTerms->sliderPercent = iSliderPercent;
 		pTerms->share = iShare;
 		pTerms->percentSum = (int)channelPercentSum;
+		pTerms->stackedShare = iStackedShare;
 		pTerms->deposits = channelDeposits;
 		pTerms->processConversion = iProcessConversion;
 		pTerms->rate = iRate;
@@ -1020,6 +1036,10 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->cityFlat = 0;
 		pTermsOut->percentSum = 0;
 		pTermsOut->workedPlots = 0;
+		pTermsOut->traitImprovements = 0;
+		pTermsOut->stackInput = 0;
+		pTermsOut->stacked = 0;
+		pTermsOut->extraAdded = 0;
 		pTermsOut->rate = 0;
 		pTermsOut->specialistRows.clear();
 		pTermsOut->traitImprovementRows.clear();
@@ -1046,6 +1066,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	int iWorkedPlots = 0;
 	std::map<int, int> kWorkedImprovements;   // improvement id -> worked tiles carrying it (the trait leg's key)
 	int64_t iBase = iPlotBase;
+	int64_t iTraitImprovements = 0;
 	// ⛔ ONE ctx and ONE held-trait fetch per call, shared by both trait legs below -- building either per leg
 	// would resolve the same state twice for one read.
 	CvCascadeEvalCtx evalCtx;
@@ -1192,6 +1213,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 					const int64_t iPerTile = MMKernel::perScale(kEntry, evalCtx, kEntry.value);
 					const int64_t iContribution = iPerTile * itWorked->second;
 					iBase += iContribution;
+					iTraitImprovements += iContribution;
 					// ⚑ The census row comes OUT of this fold, never a second walk beside it: a decomposition
 					// that recomputed itself could disagree with the number it claims to explain
 					// (docs/architecture/patterns.md §DRY (single implementation)).
@@ -1270,9 +1292,15 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	{
 		specialistTerm(city, iChannel, evalCtx, &pTermsOut->specialistRows, &kHeldTraits);
 	}
-	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum);
+	int64_t iStacked = 0;
+	int64_t iExtraAdded = 0;
+	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum, &iStacked, &iExtraAdded);
 	if (pTermsOut != NULL)
 	{
+		pTermsOut->traitImprovements = iTraitImprovements;
+		pTermsOut->stackInput = iBase + iUpperFlatSum + iSpecialists;
+		pTermsOut->stacked = iStacked;
+		pTermsOut->extraAdded = iExtraAdded;
 		pTermsOut->plotBase = iPlotBase;
 		pTermsOut->plotNature = iPlotNature;
 		pTermsOut->plotImprovement = iPlotImprovement;
@@ -1288,6 +1316,507 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->rate = iRate;
 	}
 	return iRate;
+}
+
+int64_t InfoValuation::cityYieldBreakdown(const CvCity& city, YieldTypes eYield, CvCityBreakdown& kBreakdown)
+{
+	return cityRateBreakdown(city,
+		CascadeChannelRegistry::channelLookup(infoYieldFamily(eYield), (int)CHANNEL_AMOUNT, -1), kBreakdown, NULL);
+}
+
+int64_t InfoValuation::cityRateBreakdown(const CvCity& city, int iChannel, CvCityBreakdown& kBreakdown,
+	const CvCommerceSplitTerms* pShare)
+{
+	if (iChannel < 0 || city.getOwner() == NO_PLAYER)
+	{
+		return 0;
+	}
+	CityRateTerms kTerms;
+	const int64_t iRate = cityReceiverRate(city, iChannel, &kTerms);
+	int64_t iShare = 0;
+	int64_t iStackedShare = 0;
+	if (pShare != NULL)
+	{
+		iShare = pShare->share;
+		iStackedShare = pShare->stackedShare;
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_SLIDER_SHARE, iShare, pShare->sliderPercent);
+	}
+
+	// ---- BASE, in the combine's order ----
+	kBreakdown.addAmount(CITY_BREAKDOWN_TERM_WORKED_TILES, kTerms.plotBase, kTerms.workedPlots);
+	{
+		std::map<const CvInfo*, int64_t> kPerTrait;
+		for (size_t iRow = 0; iRow < kTerms.traitImprovementRows.size(); ++iRow)
+		{
+			kPerTrait[(const CvInfo*)MMKernel::traitData(kTerms.traitImprovementRows[iRow].trait)] +=
+				kTerms.traitImprovementRows[iRow].contribution;
+		}
+		kBreakdown.addSourceLines(kPerTrait, CITY_BREAKDOWN_AMOUNT, kTerms.traitImprovements);
+	}
+	kBreakdown.addAmount(CITY_BREAKDOWN_TERM_TRADE_ROUTES, kTerms.tradeYield);
+	kBreakdown.addAmount(CITY_BREAKDOWN_TERM_GOLDEN_AGE, kTerms.goldenAge);
+	{
+		// The team and empire flats rolled down to this city, one line per source that deposited them.
+		std::vector<RefusedDeposit> kUpperDeposits;
+		upperScopeDeposits(GET_PLAYER(city.getOwner()), iChannel, kUpperDeposits);
+		std::map<const CvInfo*, int64_t> kPerSource;
+		for (size_t iDeposit = 0; iDeposit < kUpperDeposits.size(); ++iDeposit)
+		{
+			const RefusedDeposit& kDeposit = kUpperDeposits[iDeposit];
+			if (kDeposit.bApplied && !kDeposit.bPercentSide && kDeposit.iChannel == iChannel && kDeposit.pSource != NULL)
+			{
+				kPerSource[kDeposit.pSource] += kDeposit.iValue;
+			}
+		}
+		kBreakdown.addSourceLines(kPerSource, CITY_BREAKDOWN_AMOUNT, kTerms.upperFlat);
+	}
+	{
+		int64_t iNamedSpecialists = 0;
+		for (size_t iRow = 0; iRow < kTerms.specialistRows.size(); ++iRow)
+		{
+			const SpecialistTermRow& kRow = kTerms.specialistRows[iRow];
+			kBreakdown.addSourceAmount(&GC.getSpecialistInfo((SpecialistTypes)kRow.specialist), kRow.contribution, kRow.assigned);
+			iNamedSpecialists += kRow.contribution;
+		}
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_OTHER, kTerms.specialists - iNamedSpecialists);
+	}
+
+	// ---- the PERCENT stack over BASE + specialists (+ the slider share, stacked on its own) ----
+	if (kTerms.percentSum != 0)
+	{
+		kBreakdown.addSubtotal(kTerms.stackInput + iShare);
+		kBreakdown.addPercentSources(city, iChannel, kTerms.percentSum);
+		const int64_t iModifier = std::max<int64_t>(0, 100 + (int64_t)kTerms.percentSum);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED,
+			kTerms.stacked + iStackedShare - (kTerms.stackInput + iShare) * iModifier / 100);
+	}
+
+	// ---- EXTRA: the city's own flats, added after the stack with their fraction dropped ----
+	if (kTerms.cityFlat != 0)
+	{
+		kBreakdown.addSubtotal(kTerms.stacked + iStackedShare);
+		std::vector<RefusedDeposit> kCityDeposits;
+		cityRefusedDeposits(city, iChannel, kCityDeposits);
+		std::map<const CvInfo*, int64_t> kPerSource;
+		for (size_t iDeposit = 0; iDeposit < kCityDeposits.size(); ++iDeposit)
+		{
+			const RefusedDeposit& kDeposit = kCityDeposits[iDeposit];
+			if (kDeposit.bApplied && !kDeposit.bPercentSide && kDeposit.iChannel == iChannel && kDeposit.pSource != NULL)
+			{
+				kPerSource[kDeposit.pSource] += kDeposit.iValue;
+			}
+		}
+		kBreakdown.addSourceLines(kPerSource, CITY_BREAKDOWN_AMOUNT, kTerms.cityFlat);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED, kTerms.extraAdded - kTerms.cityFlat);
+	}
+	return iRate;
+}
+
+int InfoValuation::routeGatedTradeModifier(const CvCity& city, const CvCity& partner, CvCityBreakdown* pBreakdown)
+{
+	if (city.getOwner() == NO_PLAYER || partner.getOwner() == NO_PLAYER)
+	{
+		return 0;
+	}
+	const CvPlayer& owner = GET_PLAYER(city.getOwner());
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(city.getCityContext(), owner.getEmpireContext(), NULL, evalCtx);
+	evalCtx.routePartner = &GET_PLAYER(partner.getOwner()).getEmpireContext();
+	// A gated deposit counts where its source deposited -- the city's buildings into the city's package, the
+	// owner's civics, traits and techs into the empire and team packages -- at the multiplicity it applied there.
+	const CvCascScope aeScopes[3] = { CASC_SCOPE_CITY, CASC_SCOPE_EMPIRE, CASC_SCOPE_TEAM };
+	const ContextDict* apApplied[3] = {
+		&city.getBuildingYields().appliedSources,
+		&owner.getCascadePackage().appliedSources,
+		&GET_TEAM(owner.getTeam()).getCascadePackage().appliedSources
+	};
+	const CvCascPredKind aePredicates[2] = { CASC_PRED_IS_FOREIGN, CASC_PRED_SHARES_CIVIC };
+	int64_t iModifier = 0;
+	for (int iPredicate = 0; iPredicate < 2; ++iPredicate)
+	{
+		const std::vector<DepositIndex::GatedDeposit>* pGated = DepositIndex::gatedByPredicate(aePredicates[iPredicate]);
+		if (pGated == NULL)
+		{
+			continue;
+		}
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit == NULL || kGated.deposit->entry == NULL)
+			{
+				continue;
+			}
+			const CvModEntry& kEntry = *kGated.deposit->entry;
+			if (kEntry.family != MODFAM_TRADE_ROUTES || kEntry.kind != (int)TRADE_ROUTE_MODIFIER)
+			{
+				continue;
+			}
+			// A deposit gated on both predicates sits in both lists; the IS_FOREIGN pass has counted it.
+			if (aePredicates[iPredicate] == CASC_PRED_SHARES_CIVIC
+				&& (CvConditionQuery::hasPredicate(kEntry.enabled, CASC_PRED_IS_FOREIGN)
+					|| CvConditionQuery::hasPredicate(kEntry.disabled, CASC_PRED_IS_FOREIGN)))
+			{
+				continue;
+			}
+			int iScope = 0;
+			while (iScope < 3 && !apApplied[iScope]->has(kGated.sourceIndex))
+			{
+				++iScope;
+			}
+			if (iScope == 3)
+			{
+				continue;
+			}
+			// SHARES_CIVIC asks about the deposit's own civic, so the walk names it (the source slot).
+			CvCascadeEvalCtx kSourceCtx = evalCtx;
+			if (dynamic_cast<const CvCivicInfo*>(kGated.source) != NULL)
+			{
+				kSourceCtx.civic = GC.getInfoTypeForString(kGated.source->getType());
+			}
+			// THE ONE RESOLVE decides the scope the entry lands at; the first package its source deposited into
+			// where it resolves is where it counts.
+			for (; iScope < 3; ++iScope)
+			{
+				const int iMultiplicity = apApplied[iScope]->count(kGated.sourceIndex);
+				int iEntryChannel = -1;
+				bool bEntryPercent = false;
+				int64_t iEntryValue = 0;
+				if (iMultiplicity > 0 && MMKernel::resolveEntry(kEntry, iMultiplicity, aeScopes[iScope], kSourceCtx, NULL,
+					false, iEntryChannel, bEntryPercent, iEntryValue))
+				{
+					iModifier += iEntryValue;
+					if (pBreakdown != NULL)
+					{
+						pBreakdown->addSourcePercent(kGated.source, (int)iEntryValue);
+					}
+					break;
+				}
+			}
+		}
+	}
+	return (int)iModifier;
+}
+
+void InfoValuation::addFlatSourceLines(const CvCity& city, int iChannel, int64_t iFlatSum, CvCityBreakdown& kBreakdown)
+{
+	if (iChannel < 0 || city.getOwner() == NO_PLAYER)
+	{
+		return;
+	}
+	// The specialists by type, with how many are assigned.
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
+	std::vector<SpecialistTermRow> kRows;
+	specialistTerm(city, iChannel, evalCtx, &kRows);
+	int64_t iSpecialists = 0;
+	for (size_t iRow = 0; iRow < kRows.size(); ++iRow)
+	{
+		kBreakdown.addSourceAmount(&GC.getSpecialistInfo((SpecialistTypes)kRows[iRow].specialist), kRows[iRow].contribution,
+			kRows[iRow].assigned);
+		iSpecialists += kRows[iRow].contribution;
+	}
+	// Every other source, summed over every scope it reached.
+	std::vector<RefusedDeposit> kDeposits;
+	std::vector<RefusedDeposit> kUpperDeposits;
+	cityRefusedDeposits(city, iChannel, kDeposits);
+	upperScopeDeposits(GET_PLAYER(city.getOwner()), iChannel, kUpperDeposits);
+	kDeposits.insert(kDeposits.end(), kUpperDeposits.begin(), kUpperDeposits.end());
+	std::map<const CvInfo*, int64_t> kPerSource;
+	for (size_t iDeposit = 0; iDeposit < kDeposits.size(); ++iDeposit)
+	{
+		const RefusedDeposit& kDeposit = kDeposits[iDeposit];
+		if (kDeposit.bApplied && !kDeposit.bPercentSide && kDeposit.iChannel == iChannel && kDeposit.pSource != NULL)
+		{
+			kPerSource[kDeposit.pSource] += kDeposit.iValue;
+		}
+	}
+	kBreakdown.addSourceLines(kPerSource, CITY_BREAKDOWN_AMOUNT, iFlatSum - iSpecialists);
+}
+
+int64_t InfoValuation::cityDefenseBreakdown(const CvCity& city, CvCityBreakdown& kBreakdown)
+{
+	kBreakdown.reset(CITY_BREAKDOWN_DEFENSE);
+	int aiDefenses[NUM_DEFENSE_KINDS];
+	city.getDefenseKinds(aiDefenses);
+	if (city.getOwner() == NO_PLAYER)
+	{
+		kBreakdown.setTotal(aiDefenses[DEFENSE_AMOUNT]);
+		return aiDefenses[DEFENSE_AMOUNT];
+	}
+	// Buildings, culture levels, civics and traits all deposit the one defense stack, a percent channel: its
+	// number is the percent sum alone.
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_DEFENSE, (int)DEFENSE_AMOUNT, -1);
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
+	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+	if (iPercentSum != 0)
+	{
+		kBreakdown.addPercentSources(city, iChannel, (int)iPercentSum);
+	}
+	kBreakdown.setTotal(aiDefenses[DEFENSE_AMOUNT]);
+	return aiDefenses[DEFENSE_AMOUNT];
+}
+
+int64_t InfoValuation::cityGreatPeopleBreakdown(const CvCity& city, CvCityBreakdown& kBreakdown)
+{
+	kBreakdown.reset(CITY_BREAKDOWN_GREAT_PEOPLE);
+	if (city.getOwner() == NO_PLAYER)
+	{
+		kBreakdown.setTotal(0);
+		return 0;
+	}
+	if (city.isDisorder())
+	{
+		kBreakdown.addNote(CITY_BREAKDOWN_TERM_DISORDER);
+		kBreakdown.setTotal(0);
+		return 0;
+	}
+	// The base is the channel's own combine (its flats under its percents); the city's GP stack applies on top.
+	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT, -1);
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
+	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+	addFlatSourceLines(city, iChannel, iFlatSum, kBreakdown);
+	const int64_t iBase = city.getBaseGreatPeopleRate();
+	if (iPercentSum != 0)
+	{
+		kBreakdown.addSubtotal(iFlatSum);
+		kBreakdown.addPercentSources(city, iChannel, (int)iPercentSum);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED,
+			iBase - iFlatSum * std::max<int64_t>(0, 100 + iPercentSum) / 100);
+	}
+	CvCityBreakdown kStack;
+	const int iModifier = city.getTotalGreatPeopleRateModifier(&kStack);
+	if (iModifier != 100)
+	{
+		kBreakdown.addSubtotal(iBase);
+		const std::vector<CityBreakdownLine>& kStackLines = kStack.getLines();
+		for (size_t iLine = 0; iLine < kStackLines.size(); ++iLine)
+		{
+			kBreakdown.addPercent(kStackLines[iLine].term, (int)kStackLines[iLine].value);
+		}
+	}
+	const int64_t iRate = city.getGreatPeopleRate();
+	kBreakdown.setTotal(iRate);
+	return iRate;
+}
+
+int64_t InfoValuation::cityWellbeingBreakdown(const CvCity& city, WellbeingChannel eWellbeing, CvCityBreakdown& kBreakdown)
+{
+	const CityBreakdownSubject aeSubjects[NUM_WELLBEING_CHANNELS] = {
+		CITY_BREAKDOWN_HAPPINESS, CITY_BREAKDOWN_ANGER, CITY_BREAKDOWN_HEALTH, CITY_BREAKDOWN_UNHEALTH
+	};
+	kBreakdown.reset(aeSubjects[eWellbeing]);
+	if (city.getOwner() == NO_PLAYER)
+	{
+		kBreakdown.setTotal(0);
+		return 0;
+	}
+	int aiRealized[NUM_WELLBEING_CHANNELS];
+	CvCity::WellbeingTerms kTerms;
+	city.realizedWellbeing(0, aiRealized, &kTerms);
+	if (eWellbeing == WELLBEING_ANGER && kTerms.noUnhappiness)
+	{
+		kBreakdown.addNote(CITY_BREAKDOWN_TERM_NO_UNHAPPINESS);
+		kBreakdown.setTotal(aiRealized[eWellbeing]);
+		return aiRealized[eWellbeing];
+	}
+
+	// ---- the deposits: the specialists' share, then every other source ----
+	int aiDeposits[NUM_WELLBEING_CHANNELS];
+	city.getWellbeing(aiDeposits);
+	int aiSpecialists[NUM_WELLBEING_CHANNELS];
+	city.getWellbeingFrom(CvCity::WELLBEING_LEG_SPECIALISTS, aiSpecialists);
+	kBreakdown.addAmount(CITY_BREAKDOWN_TERM_SPECIALISTS_WELLBEING, aiSpecialists[eWellbeing]);
+	{
+		// A side's deposits are authored on the pair's positive channel and land on its twin when negative.
+		const bool bHealthPair = (eWellbeing == WELLBEING_HEALTH || eWellbeing == WELLBEING_UNHEALTH);
+		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(
+			infoWellbeingFamily(bHealthPair ? WELLBEING_HEALTH : WELLBEING_HAPPINESS), (int)CHANNEL_AMOUNT, -1);
+		const int iSideChannel = (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+			? CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel) : iAuthoredChannel;
+		std::map<const CvInfo*, int64_t> kPerSource;
+		if (iAuthoredChannel >= 0 && iSideChannel >= 0)
+		{
+			std::vector<RefusedDeposit> kDeposits;
+			std::vector<RefusedDeposit> kUpperDeposits;
+			cityRefusedDeposits(city, iAuthoredChannel, kDeposits);
+			upperScopeDeposits(GET_PLAYER(city.getOwner()), iAuthoredChannel, kUpperDeposits);
+			kDeposits.insert(kDeposits.end(), kUpperDeposits.begin(), kUpperDeposits.end());
+			for (size_t iDeposit = 0; iDeposit < kDeposits.size(); ++iDeposit)
+			{
+				const RefusedDeposit& kDeposit = kDeposits[iDeposit];
+				if (kDeposit.bApplied && !kDeposit.bPercentSide && kDeposit.iChannel == iSideChannel && kDeposit.pSource != NULL)
+				{
+					kPerSource[kDeposit.pSource] += kDeposit.iValue;
+				}
+			}
+		}
+		kBreakdown.addSourceLines(kPerSource, CITY_BREAKDOWN_AMOUNT, aiDeposits[eWellbeing] - aiSpecialists[eWellbeing]);
+	}
+
+	// ---- the raw-state terms the calculation adds ----
+	switch (eWellbeing)
+	{
+	case WELLBEING_HAPPINESS:
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_MILITARY_UNITS, kTerms.militaryHappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_CELEBRITIES, kTerms.celebrityHappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_VASSALS, kTerms.vassalHappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_REVOLUTION_SUCCESS, kTerms.revSuccessHappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_EVENTS, kTerms.eventGrantedHappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_TEMPORARY_HAPPINESS, kTerms.happinessTimer, city.getHappinessTimer());
+		break;
+	case WELLBEING_ANGER:
+	{
+		// The percent terms are summed and applied to the citizens once, cut to whole citizens; each line is its
+		// share before the cut, and the cut is its own line.
+		const int64_t iCitizens = city.getPopulation();
+		const int64_t iDivisor = GC.getPERCENT_ANGER_DIVISOR();
+		const int aiPercents[10] = {
+			kTerms.overcrowdingPercentAnger, kTerms.noMilitaryPercentAnger, kTerms.culturePercentAnger,
+			kTerms.religionPercentAnger, kTerms.hurryPercentAnger, kTerms.conscriptPercentAnger,
+			kTerms.defyResolutionPercentAnger, kTerms.warWearinessPercentAnger, kTerms.revRequestPercentAnger,
+			kTerms.revIndexPercentAnger
+		};
+		const CityBreakdownTerm aeTerms[10] = {
+			CITY_BREAKDOWN_TERM_OVERCROWDING, CITY_BREAKDOWN_TERM_NO_MILITARY, CITY_BREAKDOWN_TERM_FOREIGN_CULTURE,
+			CITY_BREAKDOWN_TERM_RELIGION_STRIFE, CITY_BREAKDOWN_TERM_HURRY_ANGER, CITY_BREAKDOWN_TERM_CONSCRIPT_ANGER,
+			CITY_BREAKDOWN_TERM_DEFIED_RESOLUTION, CITY_BREAKDOWN_TERM_WAR_WEARINESS,
+			CITY_BREAKDOWN_TERM_REVOLUTION_REQUEST, CITY_BREAKDOWN_TERM_REVOLUTION_INDEX
+		};
+		int64_t iShares = 0;
+		for (int iTerm = 0; iTerm < 10; ++iTerm)
+		{
+			const int64_t iShare = iDivisor > 0 ? 100 * aiPercents[iTerm] * iCitizens / iDivisor : 0;
+			kBreakdown.addAmount(aeTerms[iTerm], iShare);
+			iShares += iShare;
+		}
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED, kTerms.angerFromPercents - iShares);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_VASSAL_UNREST, kTerms.vassalUnhappiness);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_ESPIONAGE, kTerms.espionageHappinessCounter);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_EVENTS, kTerms.eventAnger + kTerms.eventGrantedAnger);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_LANDMARKS, kTerms.landmarkAnger);
+		break;
+	}
+	case WELLBEING_HEALTH:
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_EVENTS, kTerms.eventGrantedHealth);
+		break;
+	case WELLBEING_UNHEALTH:
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_EVENTS, kTerms.eventGrantedUnhealth);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_ESPIONAGE, kTerms.espionageHealthCounter);
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_POPULATION, kTerms.populationUnhealth, kTerms.populationUnhealth / 100);
+		break;
+	default:
+		break;
+	}
+	kBreakdown.setTotal(aiRealized[eWellbeing]);
+	return aiRealized[eWellbeing];
+}
+
+int64_t InfoValuation::cityBreakdown(const CvCity& city, CityBreakdownSubject eSubject, CvCityBreakdown& kBreakdown)
+{
+	switch (eSubject)
+	{
+	case CITY_BREAKDOWN_FOOD:
+		city.foodDifference(true, true, false, &kBreakdown);
+		break;
+	case CITY_BREAKDOWN_PRODUCTION:
+		// The production the head order receives this turn -- the call CvCity::doProduction applies.
+		city.getCurrentProductionDifference(ProductionCalc::FoodProduction | ProductionCalc::Overflow, &kBreakdown);
+		break;
+	case CITY_BREAKDOWN_COMMERCE:
+		kBreakdown.reset(CITY_BREAKDOWN_COMMERCE);
+		kBreakdown.setTotal(cityYieldBreakdown(city, YIELD_COMMERCE, kBreakdown));
+		break;
+	case CITY_BREAKDOWN_GOLD:
+		cityCommerceBreakdown(city, COMMERCE_GOLD, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_RESEARCH:
+		cityCommerceBreakdown(city, COMMERCE_RESEARCH, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_CULTURE:
+		cityCommerceBreakdown(city, COMMERCE_CULTURE, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_ESPIONAGE:
+		cityCommerceBreakdown(city, COMMERCE_ESPIONAGE, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_MAINTENANCE:
+		city.getMaintenanceTimes100(&kBreakdown);
+		break;
+	case CITY_BREAKDOWN_HAPPINESS:
+		cityWellbeingBreakdown(city, WELLBEING_HAPPINESS, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_ANGER:
+		cityWellbeingBreakdown(city, WELLBEING_ANGER, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_HEALTH:
+		cityWellbeingBreakdown(city, WELLBEING_HEALTH, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_UNHEALTH:
+		cityWellbeingBreakdown(city, WELLBEING_UNHEALTH, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_GREAT_PEOPLE:
+		cityGreatPeopleBreakdown(city, kBreakdown);
+		break;
+	case CITY_BREAKDOWN_DEFENSE:
+		cityDefenseBreakdown(city, kBreakdown);
+		break;
+	default:
+		kBreakdown.reset(eSubject);
+		kBreakdown.setTotal(0);
+		break;
+	}
+	return kBreakdown.getTotal();
+}
+
+int64_t InfoValuation::cityCommerceBreakdown(const CvCity& city, CommerceTypes eCommerce, CvCityBreakdown& kBreakdown)
+{
+	const CityBreakdownSubject aeSubjects[NUM_COMMERCE_TYPES] = {
+		CITY_BREAKDOWN_GOLD, CITY_BREAKDOWN_RESEARCH, CITY_BREAKDOWN_CULTURE, CITY_BREAKDOWN_ESPIONAGE
+	};
+	kBreakdown.reset(aeSubjects[eCommerce]);
+	if (city.getOwner() == NO_PLAYER)
+	{
+		kBreakdown.setTotal(0);
+		return 0;
+	}
+	CvCommerceSplitTerms kTerms;
+	city.getCommerceTerms(eCommerce, kTerms);
+	const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily((int)eCommerce), (int)CHANNEL_AMOUNT, -1);
+
+	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
+	{
+		// A channel the city consumes (culture) is a rate of its own, built like a yield; the slider share is
+		// one more part under its stack.
+		cityRateBreakdown(city, iChannel, kBreakdown, &kTerms);
+	}
+	else
+	{
+		// The slider share and every scope's flats, under one stack: the share stacks on its own and the flats
+		// together (realizedChannel), and the fraction line carries the difference.
+		kBreakdown.addAmount(CITY_BREAKDOWN_TERM_SLIDER_SHARE, kTerms.share, kTerms.sliderPercent);
+		int64_t iFlatSum = 0;
+		int64_t iPercentSum = 0;
+		rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+		addFlatSourceLines(city, iChannel, iFlatSum, kBreakdown);
+		if (kTerms.percentSum != 0)
+		{
+			kBreakdown.addSubtotal(kTerms.share + iFlatSum);
+			kBreakdown.addPercentSources(city, iChannel, kTerms.percentSum);
+			const int64_t iModifier = std::max<int64_t>(0, 100 + (int64_t)kTerms.percentSum);
+			kBreakdown.addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED,
+				kTerms.stackedShare + kTerms.deposits - (kTerms.share + iFlatSum) * iModifier / 100);
+		}
+	}
+
+	// ---- TIER 2: the process converting production, never under the stack ----
+	if (kTerms.processConversion != 0)
+	{
+		kBreakdown.addSubtotal(kTerms.rate - kTerms.processConversion);
+		kBreakdown.addSourceAmount(&GC.getProcessInfo(city.getProductionProcess()), kTerms.processConversion);
+	}
+	kBreakdown.setTotal(kTerms.rate);
+	return kTerms.rate;
 }
 
 namespace
@@ -1434,6 +1963,11 @@ void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
 	{
 		if (kCityContext.hasCorporation(iId)) { kSources.push_back(&GC.getCorporationInfo((CorporationTypes)iId)); }
 	}
+	// The city's culture level authors city-scope entries too (defense among them).
+	if (city.getCultureLevel() != NO_CULTURELEVEL)
+	{
+		kSources.push_back(&GC.getCultureLevelInfo(city.getCultureLevel()));
+	}
 
 	for (size_t iSource = 0; iSource < kSources.size(); ++iSource)
 	{
@@ -1478,6 +2012,85 @@ void InfoValuation::upperScopeDeposits(const CvPlayer& owner, int iChannel,
 	std::sort(depositsOut.begin(), depositsOut.end(), val_refusedBigger);
 }
 
+void InfoValuation::buildingEffectsAtCity(const CvCity& city, BuildingTypes eBuilding,
+	std::vector<SourceEffectAtCity>& effectsOut)
+{
+	effectsOut.clear();
+	if ((int)eBuilding < 0 || city.getOwner() == NO_PLAYER || !city.hasBuilding(eBuilding))
+	{
+		return;
+	}
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(&city);
+	const bool bObsolete = kOperating.obsolete.find((int)eBuilding) != kOperating.obsolete.end();
+	const bool bActive = kOperating.active.find((int)eBuilding) != kOperating.active.end();
+	const CvModifiers* pModifiers = bObsolete ? kBuilding.getWhenObsolete() : kBuilding.getModifiers();
+	if (pModifiers == NULL || pModifiers->empty())
+	{
+		return;
+	}
+	// The two contexts the apply path resolves a building's entries in: its city for city-scope entries (and an
+	// empire entry aimed at the cities), its owner for the empire- and team-scope ones.
+	CvCascadeEvalCtx cityEvalCtx;
+	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(),
+		city.plotGroup(city.getOwner()), cityEvalCtx);
+	EnablerKernel::wireOperatingBuildings(&city, cityEvalCtx);
+	CvCascadeEvalCtx empireEvalCtx;
+	GET_PLAYER(city.getOwner()).getEmpireContext().fillEvalCtx(empireEvalCtx);
+	const int iCitiesSegment = modSegmentLookup("cities");
+
+	const std::vector<CvModEntry*>& entries = pModifiers->entries();
+	for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = entries[iEntry];
+		if (pEntry == NULL)
+		{
+			continue;
+		}
+		SourceEffectAtCity kEffect;
+		kEffect.entry = pEntry;
+		kEffect.value = pEntry->value;
+		if (!bActive && !bObsolete)
+		{
+			kEffect.state = SOURCE_EFFECT_OFF;
+			effectsOut.push_back(kEffect);
+			continue;
+		}
+		const bool bCitiesTarget = iCitiesSegment >= 0 && pEntry->targetSeg == iCitiesSegment;
+		// An entry aimed at every unit or plot (or qualified by unit) is resolved per object, and its condition is
+		// asked of that object, never of the city: judged against the city it would read as off when it is not.
+		if (pEntry->unitQual != NULL || (pEntry->targetSeg >= 0 && pEntry->targetFk < 0 && !bCitiesTarget))
+		{
+			kEffect.state = SOURCE_EFFECT_PER_OBJECT;
+			effectsOut.push_back(kEffect);
+			continue;
+		}
+		const bool bCityResolved = pEntry->scope == CASC_SCOPE_CITY || (pEntry->scope == CASC_SCOPE_EMPIRE && bCitiesTarget);
+		const CvCascScope eScope = bCityResolved ? CASC_SCOPE_CITY : pEntry->scope;
+		const CvCascadeEvalCtx& evalCtx = bCityResolved ? cityEvalCtx : empireEvalCtx;
+		int iChannel = -1;
+		bool bPercentSide = false;
+		int64_t iValue = 0;
+		if (MMKernel::resolveEntry(*pEntry, 1, eScope, evalCtx, NULL, false, iChannel, bPercentSide, iValue))
+		{
+			kEffect.state = SOURCE_EFFECT_APPLIES;
+			kEffect.value = iValue;
+		}
+		else if ((pEntry->enabled != NULL || pEntry->disabled != NULL)
+			&& !MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+		{
+			kEffect.state = SOURCE_EFFECT_OFF;
+		}
+		else
+		{
+			// Neither one value here nor refused here: a unit or plot target, a unit qualifier or a keyed effect
+			// the engine applies object by object as each one comes up.
+			kEffect.state = SOURCE_EFFECT_PER_OBJECT;
+		}
+		effectsOut.push_back(kEffect);
+	}
+}
+
 int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
 {
 	if (iChannel < 0)
@@ -1495,6 +2108,27 @@ int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
 	int64_t iPercentSum = 0;
 	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_CITY));
+}
+
+int64_t InfoValuation::realizedAtCityWith(const CvCity& city, int iChannel, int64_t iUnderStack, int64_t iAfterStack,
+	int iPercent)
+{
+	if (iChannel < 0)
+	{
+		return 0;
+	}
+	if (CascadeChannelRegistry::scopeReceiverIndex(CASC_SCOPE_CITY, iChannel) >= 0)
+	{
+		CityRateTerms kTerms;
+		cityReceiverRate(city, iChannel, &kTerms);
+		return cityRate(kTerms.stackInput - kTerms.specialists + iUnderStack, kTerms.specialists,
+			kTerms.percentSum + iPercent, kTerms.cityFlat + iAfterStack, NULL, NULL);
+	}
+	int64_t iFlatSum = 0;
+	int64_t iPercentSum = 0;
+	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
+	return realizedChannel(iFlatSum + iUnderStack + iAfterStack, iPercentSum + iPercent,
+		val_channelCanonicalUnit(iChannel, CASC_SCOPE_CITY));
 }
 
 int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
@@ -1538,9 +2172,17 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 				pCity->getCommerces(aiCityCommerces);
 				iTotal += aiCityCommerces[iCommerceIndex];
 			}
-			else if (!pCity->isWeLoveTheKingDay())
+			// ⛔ MAINTENANCE'S PER-CITY QUANTITY IS THE CITY'S REALIZED MAINTENANCE, NEVER ITS AMOUNT DEPOSITS: the
+			// distance / numCities / colony kinds each resolve against their own modifiers before the amount stack
+			// applies, and cityReceiverRate over the amount channel sees none of them (economy.md § Gold expense).
+			// The city read also carries the WLTKD/disorder decline itself.
+			else if (CascadeChannelRegistry::channelFamily(iChannel) == MODFAM_MAINTENANCE)
 			{
-				iTotal += cityReceiverRate(*pCity, iChannel);
+				iTotal += pCity->getMaintenanceTimes100();
+			}
+			else
+			{
+				FErrorMsg("an empire receiver with no member value");
 			}
 		}
 		return (int)iTotal;

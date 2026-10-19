@@ -9,6 +9,7 @@
 #include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
+#include "CvCityBreakdown.h"
 #include "AI/CvContractBroker.h"
 #include "Infrastructure/CvDLLEntity.h"
 #include "UI/CvEventReporter.h"
@@ -199,10 +200,20 @@ void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 // hypothetical slider -- never by exposing the combine's internals through a base-rate accessor.
 void CvCity::expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE_TYPES],
 										int (&commerces)[NUM_COMMERCE_TYPES],
-										CvCommerceSplitTerms* aTermsOut) const
+										CvCommerceSplitTerms* aTermsOut,
+										const CvCityRateChanges* pChanges) const
 {
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
+	if (pChanges != NULL)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			aiRealizedYields[iYield] = (int)InfoValuation::realizedAtCityWith(*this,
+				CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1),
+				pChanges->yieldUnderStack[iYield], pChanges->yieldAfterStack[iYield], pChanges->yieldPercent[iYield]);
+		}
+	}
 	const int (&aiCommerceRates)[NUM_COMMERCE_TYPES] = sliderPercents;
 	// The EXTRA tier's rate: the city's active process, which is the ONE source of a hammers->commerce conversion
 	// (json §9 `conversion`; a city building anything else converts nothing).
@@ -219,11 +230,19 @@ void CvCity::expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE
 		{
 			iProductionToCommerce = GC.getProcessInfo(eProcess).getProductionToCommerce(eCommerce, CASC_SCOPE_CITY);
 		}
+		const int64_t iChannelDeposits = (pChanges != NULL)
+			? InfoValuation::realizedAtCityWith(*this, iChannel, pChanges->commerceUnderStack[iCommerce],
+				pChanges->commerceAfterStack[iCommerce], pChanges->commercePercent[iCommerce])
+			: InfoValuation::realizedAtCity(*this, iChannel);
+		if (pChanges != NULL)
+		{
+			iChannelPercentSum += pChanges->commercePercent[iCommerce];
+		}
 		commerces[iCommerce] = (int)InfoValuation::commerceSplit(
 			aiRealizedYields[YIELD_COMMERCE],
 			aiCommerceRates[iCommerce],
 			iChannelPercentSum,
-			InfoValuation::realizedAtCity(*this, iChannel),
+			iChannelDeposits,
 			aiRealizedYields[YIELD_PRODUCTION],
 			iProductionToCommerce,
 			(aTermsOut != NULL) ? &aTermsOut[iCommerce] : NULL);
@@ -487,29 +506,50 @@ void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
 	order[ORDER_READ_PRODUCTION_NEEDED]   = getProductionNeeded();
 	order[ORDER_READ_GENERAL_TURNS_LEFT]  = getGeneralProductionTurnsLeft();
 	order[ORDER_READ_TURNS_LEFT]          = getProductionTurnsLeft();
-	//	The two rates the city screen actually needs: everything, and everything-except-food-conversion. Their
-	//	DIFFERENCE is the food-derived part, so a third slot would be derivable and therefore redundant.
 	order[ORDER_READ_PRODUCTION_PER_TURN]         = getCurrentProductionDifference(ProductionCalc::FoodProduction | ProductionCalc::Overflow);
 	order[ORDER_READ_PRODUCTION_PER_TURN_NO_FOOD] = getCurrentProductionDifference(ProductionCalc::Overflow);
 	order[ORDER_READ_MAX_OVERFLOW]        = getMaxProductionOverflow();
+	order[ORDER_READ_FOOD_TO_PRODUCTION]  = getCurrentFoodToProduction();
 }
 
 
 void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
 {
 	growth[GROWTH_READ_FOOD_STORED]        = getFood();
-	// A READ EDGE (this group is published to Python and read nowhere else), so the two x100 RATE slots reduce
-	// here -- which also keeps the group uniform, since every other member is already a whole quantity: the
-	// threshold and turns-left are the whole-unit food BAR's (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
+	// The food doTurn banks this turn (changeFood(foodDifference() / 100)).
 	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference() / 100;
 	growth[GROWTH_READ_FOOD_CONSUMPTION]   = foodConsumption() / 100;
 	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
 	growth[GROWTH_READ_TURNS_LEFT]         = getFoodTurnsLeft();
 	growth[GROWTH_READ_IS_FOOD_PRODUCTION] = isFoodProduction() ? 1 : 0;
-	//	The food CARRIED OVER on growth -- a whole-unit quantity like every other member of this group.
+	//	The food CARRIED OVER on growth.
 	growth[GROWTH_READ_FOOD_KEPT]          = getFoodKept();
+	growth[GROWTH_READ_STARVATION_TURNS_LEFT] = getStarvationTurnsLeft();
 }
 
+
+void CvCity::getWellbeingNetRead(int (&nets)[NUM_CITY_WELLBEING_NET_READS]) const
+{
+	nets[WELLBEING_NET_HAPPINESS]        = netHappiness();
+	nets[WELLBEING_NET_HEALTH]           = netHealth();
+	nets[WELLBEING_NET_ANGRY_POPULATION] = angryPopulation();
+	nets[WELLBEING_NET_FOOD_LOST]        = -healthRate();
+}
+
+void CvCity::getTradeRead(int (&trade)[NUM_CITY_TRADE_READS]) const
+{
+	int iDomesticYield = 0;
+	int iDomesticRoutes = 0;
+	int iForeignYield = 0;
+	int iForeignRoutes = 0;
+	calculateTradeTotals(YIELD_COMMERCE, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, NO_PLAYER, false);
+	trade[TRADE_READ_YIELD]           = getTradeYield(YIELD_COMMERCE);
+	trade[TRADE_READ_DOMESTIC_YIELD]  = iDomesticYield;
+	trade[TRADE_READ_DOMESTIC_ROUTES] = iDomesticRoutes;
+	trade[TRADE_READ_FOREIGN_YIELD]   = iForeignYield;
+	trade[TRADE_READ_FOREIGN_ROUTES]  = iForeignRoutes;
+	trade[TRADE_READ_ROUTES]          = iDomesticRoutes + iForeignRoutes;
+}
 
 void CvCity::getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const
 {
@@ -519,6 +559,7 @@ void CvCity::getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const
 	culture[CULTURE_READ_OWNER_AMOUNT] = (eOwner == NO_PLAYER) ? 0 : (int)getCulture(eOwner);
 	culture[CULTURE_READ_THRESHOLD]    = getCultureThreshold();
 	culture[CULTURE_READ_LEVEL]        = (int)getCultureLevel();
+	culture[CULTURE_READ_TURNS_LEFT]   = getCultureTurnsLeft();
 }
 
 
@@ -619,6 +660,7 @@ void CvCity::getCityCounts(int (&counts)[NUM_CITY_COUNT_READS]) const
 	counts[CITY_COUNT_MAX_WORLD_WONDERS]    = getMaxNumWorldWonders();
 	counts[CITY_COUNT_DEFENSE_MODIFIER]     = getDefenseModifier(false);
 	counts[CITY_COUNT_DEFENSE_DAMAGE]       = getDefenseDamage();
+	counts[CITY_COUNT_DEFENSE_STANDING_PERCENT] = getDefenseStandingPercent();
 	counts[CITY_COUNT_REVOLUTION_INDEX]     = getRevolutionIndex();
 	counts[CITY_COUNT_REVOLUTION_AVERAGE]   = getRevIndexAverage();
 	counts[CITY_COUNT_GAME_TURN_FOUNDED]    = getGameTurnFounded();
@@ -634,6 +676,7 @@ void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES
 	//	The gold cost is 64-bit at source; it is narrowed HERE, at the read, because a hurry price that
 	//	overflows 32 bits is not a price any interface can render either.
 	quote[HURRY_QUOTE_GOLD_COST]          = (int)getHurryGold(eHurry);
+	quote[HURRY_QUOTE_ANGER_TURNS]        = getHurryAngerTimer() + hurryAngerLength(eHurry);
 }
 
 
@@ -1833,18 +1876,24 @@ bool CvCity::isCitySelected() const
 
 bool CvCity::canBeSelected() const
 {
+	return isOpenTo(GC.getGame().getActivePlayer());
+}
+
+bool CvCity::isOpenTo(PlayerTypes eObserver) const
+{
 	PROFILE_EXTRA_FUNC();
-	if ((getTeam() == GC.getGame().getActiveTeam()) || GC.getGame().isDebugMode())
+	if (GC.getGame().isDebugMode())
 	{
 		return true;
 	}
-
-	if (GC.getGame().getActiveTeam() != NO_TEAM)
+	if (eObserver == NO_PLAYER)
 	{
-		if (plot()->isInvestigate(GC.getGame().getActiveTeam()))
-		{
-			return true;
-		}
+		return false;
+	}
+	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	if (getTeam() == eObserverTeam || plot()->isInvestigate(eObserverTeam))
+	{
+		return true;
 	}
 
 	// EspionageEffect
@@ -1854,7 +1903,7 @@ bool CvCity::canBeSelected() const
 		if (GC.getEspionageMissionInfo((EspionageMissionTypes)iLoop).isPassive() && GC.getEspionageMissionInfo((EspionageMissionTypes)iLoop).isInvestigateCity())
 		{
 			// Is Mission good?
-			if (GET_PLAYER(GC.getGame().getActivePlayer()).canDoEspionageMission((EspionageMissionTypes)iLoop, getOwner(), plot(), -1, NULL))
+			if (GET_PLAYER(eObserver).canDoEspionageMission((EspionageMissionTypes)iLoop, getOwner(), plot(), -1, NULL))
 			{
 				return true;
 			}
@@ -2398,14 +2447,12 @@ bool CvCity::canMaintain(ProcessTypes eProcess) const
 
 int CvCity::getFoodTurnsLeft() const
 {
-	// The projection divides into the whole-unit food BAR (threshold - stored), so the x100 rate reduces at this
-	// use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). A sub-1.00 surplus floors to 0 and correctly reports no growth rather than
-	// dividing by it.
+	// The store moves by the whole food doTurn banks (changeFood(foodDifference() / 100)).
 	const int iFoodDifference = foodDifference() / 100;
 
 	if (iFoodDifference <= 0)
 	{
-		return growthThreshold() - getFood();
+		return -1;
 	}
 	const int iFoodLeft = growthThreshold() - getFood();
 
@@ -2417,6 +2464,39 @@ int CvCity::getFoodTurnsLeft() const
 	}
 
 	return std::max(1, iTurnsLeft);
+}
+
+int CvCity::getStarvationTurnsLeft() const
+{
+	const int iFoodDifference = foodDifference() / 100;
+	// changeFood: the store falling below 0 costs a citizen, and a city of one citizen stays at 0 instead.
+	if (iFoodDifference >= 0 || getPopulation() <= 1)
+	{
+		return -1;
+	}
+	return std::max(0, getFood()) / -iFoodDifference + 1;
+}
+
+int CvCity::getCultureTurnsLeft() const
+{
+	const int iThreshold = getCultureThreshold();
+	if (iThreshold <= 0 || getOwner() == NO_PLAYER)
+	{
+		return -1;
+	}
+	int aiCityCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiCityCommerces);
+	const int64_t iCultureRate = aiCityCommerces[COMMERCE_CULTURE];
+	if (iCultureRate <= 0)
+	{
+		return -1;
+	}
+	const int64_t iCultureLeft = 100 * (int64_t)iThreshold - getCultureTimes100(getOwner());
+	if (iCultureLeft <= 0)
+	{
+		return 1;
+	}
+	return (int)std::max<int64_t>(1, (iCultureLeft + iCultureRate - 1) / iCultureRate);
 }
 
 
@@ -2628,7 +2708,7 @@ void xpEmitProduction(const CvUnit* pUnit, int iCityId, int iFlat, int iPercent,
 	int iKeyedDomain, int iStateReligion, int iTotal);
 
 // The experience a unit trained here starts with.
-int CvCity::getProductionExperience(UnitTypes eUnit, ProductionExperienceLegs* pLegs) const
+int CvCity::getProductionExperience(UnitTypes eUnit, ProductionExperienceLegs* pLegs, DomainTypes eDomain) const
 {
 	PROFILE_EXTRA_FUNC();
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
@@ -2675,6 +2755,11 @@ int CvCity::getProductionExperience(UnitTypes eUnit, ProductionExperienceLegs* p
 			lKeyedDomain += keyedExperience(iDomainsSegment, (int)kUnit.getDomain(), &aiFreeSpecialists);
 			lExperience += lKeyedCombat + lKeyedDomain;
 		}
+	}
+	else if (eDomain != NO_DOMAIN)
+	{
+		lKeyedDomain = keyedExperience(InfoValuation::keyedTargetSegment("domains"), (int)eDomain, NULL);
+		lExperience += lKeyedDomain;
 	}
 
 	if (kPlayer.getStateReligion() != NO_RELIGION && isHasReligion(kPlayer.getStateReligion()))
@@ -3430,10 +3515,19 @@ int CvCity::getProductionModifier(ProjectTypes eProject) const
 }
 
 
-int CvCity::getProductionPerTurn(ProductionCalc::flags flags = ProductionCalc::Yield) const
+int CvCity::getProductionPerTurn(ProductionCalc::flags flags, CvCityBreakdown* pBreakdown) const
 {
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->reset(CITY_BREAKDOWN_PRODUCTION);
+	}
 	if (isDisorder())
 	{
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addNote(CITY_BREAKDOWN_TERM_DISORDER);
+			pBreakdown->setTotal(0);
+		}
 		return 0;
 	}
 	// The REALIZED yields in ONE read: the cascade folds the worked-plot Σ, the specialists, the percent
@@ -3445,26 +3539,68 @@ int CvCity::getProductionPerTurn(ProductionCalc::flags flags = ProductionCalc::Y
 
 	// Both rates reduce HERE, where the amount plane meets whole HAMMERS and whole food
 	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- a reader reduces at its point of use).
-	const int iFoodProduction = (flags & ProductionCalc::FoodProduction)
-		? std::max(0, (aiRealizedYields[YIELD_FOOD] - foodConsumption(true)) / 100) : 0;
-	const int iOverflow = (flags & ProductionCalc::Overflow) ? getOverflowProduction() + getFeatureProduction() : 0;
+	const int iFoodProduction = (flags & ProductionCalc::FoodProduction) ? foodSurplusAsProduction(aiRealizedYields[YIELD_FOOD]) : 0;
+	const int iOverflowProduction = (flags & ProductionCalc::Overflow) ? getOverflowProduction() : 0;
+	const int iChopProduction = (flags & ProductionCalc::Overflow) ? getFeatureProduction() : 0;
 	const int iYield = (flags & ProductionCalc::Yield) ? aiRealizedYields[YIELD_PRODUCTION] / 100 : 0;
+	const int iSum = iOverflowProduction + iChopProduction + iFoodProduction + iYield;
+	const int iProduction = std::max(1, iSum);
 
-	return std::max(1, iOverflow + iFoodProduction + iYield);
+	if (pBreakdown != NULL)
+	{
+		if (flags & ProductionCalc::Yield)
+		{
+			const int64_t iProduced = InfoValuation::cityYieldBreakdown(*this, YIELD_PRODUCTION, *pBreakdown);
+			pBreakdown->addSubtotal(iProduced, CITY_BREAKDOWN_TERM_PRODUCED);
+			pBreakdown->addAmount(CITY_BREAKDOWN_TERM_FRACTION_DROPPED, 100 * iYield - aiRealizedYields[YIELD_PRODUCTION]);
+		}
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_OVERFLOW, 100 * iOverflowProduction);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_CHOPPING, 100 * iChopProduction);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_FOOD_TO_PRODUCTION, 100 * iFoodProduction);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_MINIMUM_PRODUCTION, 100 * (iProduction - iSum));
+		pBreakdown->setTotal(100 * iProduction);
+	}
+	return iProduction;
 }
 
-int CvCity::getProductionDifference(const OrderData& orderData, ProductionCalc::flags flags) const
+int CvCity::getProductionDifference(const OrderData& orderData, ProductionCalc::flags flags, CvCityBreakdown* pBreakdown) const
 {
 	const ProductionCalc::flags foodFlag = ((flags & ProductionCalc::FoodProduction) && isFoodProduction(orderData)) ? ProductionCalc::FoodProduction : ProductionCalc::None;
 	const ProductionCalc::flags overflowProd = (flags & ProductionCalc::Overflow) ? ProductionCalc::Overflow : ProductionCalc::None;
 
-	return range(getProductionPerTurn(foodFlag | overflowProd | ProductionCalc::Yield), 0, MAX_INT);
+	return range(getProductionPerTurn(foodFlag | overflowProd | ProductionCalc::Yield, pBreakdown), 0, MAX_INT);
 }
 
-int CvCity::getCurrentProductionDifference(ProductionCalc::flags flags) const
+int CvCity::foodSurplusAsProduction(int iRealizedFood) const
+{
+	return std::max(0, (iRealizedFood - foodConsumption(true)) / 100);
+}
+
+int CvCity::getCurrentFoodToProduction() const
 {
 	bst::optional<OrderData> order = getHeadOrder();
-	return order ? getProductionDifference(*order, flags) : 0;
+	if (!order || !isFoodProduction(*order) || isDisorder())
+	{
+		return 0;
+	}
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	return foodSurplusAsProduction(aiRealizedYields[YIELD_FOOD]);
+}
+
+int CvCity::getCurrentProductionDifference(ProductionCalc::flags flags, CvCityBreakdown* pBreakdown) const
+{
+	bst::optional<OrderData> order = getHeadOrder();
+	if (order)
+	{
+		return getProductionDifference(*order, flags, pBreakdown);
+	}
+	// No order: nothing receives production. The breakdown still shows what the city produces.
+	if (pBreakdown != NULL)
+	{
+		getProductionPerTurn(ProductionCalc::Yield, pBreakdown);
+	}
+	return 0;
 }
 
 
@@ -4044,6 +4180,12 @@ bool CvCity::isCapital() const
 	return (GET_PLAYER(getOwner()).getCapitalCity() == this);
 }
 
+bool CvCity::isHomeArea() const
+{
+	const CvCity* pCapital = GET_PLAYER(getOwner()).getCapitalCity();
+	return pCapital != NULL && pCapital->area() == area();
+}
+
 bool CvCity::isCoastal(int iMinWaterSize) const
 {
 	return plot()->isCoastalLand(iMinWaterSize);
@@ -4612,95 +4754,119 @@ int CvCity::getFoodConsumedByPopulation(const int iExtra) const
 	return getPopulationPlusProgress(iExtra) * getFoodConsumedPerPopulation() / 100;
 }
 
-int CvCity::foodConsumption(const bool bNoAngry, const int iExtra, const bool bIncludeWastage) const
+int CvCity::foodConsumption(const bool bNoAngry, const int iExtra, const bool bIncludeWastage, CvCityBreakdown* pBreakdown) const
 {
-	return getFoodConsumedByPopulation(iExtra)
-		// ⚠ ANGRY CITIZENS and the HEALTH RATE are both WHOLE counts at this edge and LIFT to the x100 food
-		// plane: healthRate() is min(0, netHealth), and InfoValuation::netHealth already reduced at the
-		// discrete boundary (whole health points), so the deficit converts HERE like its angry sibling.
-		- (bNoAngry ? 100 * angryPopulation(iExtra) : 0) // Doesn't belong here, should be extracted out to wherever it is needed
-		- 100 * healthRate(iExtra)
-		+ (bIncludeWastage ? 100 * (int)foodWastage() : 0);
+	const int iEaten = getFoodConsumedByPopulation(iExtra);
+	const int iAngryNotEating = bNoAngry ? 100 * angryPopulation(iExtra) : 0;
+	const int iUnhealthy = -100 * healthRate(iExtra);
+	const int iWasted = bIncludeWastage ? 100 * foodWastage() : 0;
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_EATEN, -iEaten, getPopulation() + iExtra);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_UNHEALTHY, -iUnhealthy);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_WASTED, -iWasted);
+	}
+	return iEaten - iAngryNotEating + iUnhealthy + iWasted;
 }
 // ! Toffer - Gradual food consumption change
 
 
-// Included by Thunderbrd 6/8/2019, code contributed by Sorcdk
-float CvCity::foodWastage(int surplass) const
+namespace
 {
-#define MAX_SURPLASS    200
-	static float calculatedWaste[MAX_SURPLASS];
-	static int calculatedTo = -1;
-	const int startWasteAtConsumptionPercent = GC.getWASTAGE_START_CONSUMPTION_PERCENT();
-	float wastageGrowthFactor = GC.getWASTAGE_GROWTH_FACTOR();
-
-	if (wastageGrowthFactor == 0)
+	///<summary>The waste of a surplus of iSurplus whole food, in ten-thousandths of a food: unit k of the surplus
+	/// wastes 1 - (g + (1 - g) / (1 + k / 20)) of itself, g the growth share, so each further unit wastes more,
+	/// toward 1 - g. Integer throughout, so every machine computes the same waste; the sums are kept per growth
+	/// share because they depend on nothing else.</summary>
+	int64_t wastedFoodTenThousandths(int iSurplus, int iGrowthPercent)
 	{
-		wastageGrowthFactor = (float)0.05; // default
-	}
-
-	if (startWasteAtConsumptionPercent >= 0)
-	{
-		if (surplass == -1)
+		static std::vector<int64_t> s_wasteSums;
+		static int s_iSumsGrowthPercent = -1;
+		if (s_iSumsGrowthPercent != iGrowthPercent)
 		{
-			// AN EDGE: the memo table below is indexed by WHOLE surplus (`calculatedWaste[surplass]`, 0..200), so
-			// the x100 food plane reduces to a whole index exactly here and nowhere else in this body.
-			surplass = (foodDifference(true, false) - getFoodConsumedByPopulation() * startWasteAtConsumptionPercent / 100) / 100;
+			s_wasteSums.assign(1, 0);
+			s_iSumsGrowthPercent = iGrowthPercent;
 		}
-	}
-	else surplass = -1;
-
-	// Nothing wasted if there is no surplass
-	if (surplass <= 0)
-	{
-		return 0;
-	}
-	// Cache what we can as it's not a trivially cheap computation
-	else if (surplass <= calculatedTo)
-	{
-		return calculatedWaste[surplass];
-	}
-	else if (surplass >= MAX_SURPLASS)
-	{
-		// After the max we shift to from assymtotic behavior toward the limit to the limit of efficiency
-		return foodWastage(MAX_SURPLASS - 1) + (foodWastage(MAX_SURPLASS - 1) - foodWastage(MAX_SURPLASS - 2)) * (surplass - MAX_SURPLASS + 1);
-	}
-	else
-	{
-		calculatedWaste[surplass] = foodWastage(surplass - 1) + (float)1.0 - (wastageGrowthFactor + ((float)1.0 - wastageGrowthFactor) / ((float)1.0 + (float)0.05 * (float)surplass));
-		calculatedTo = surplass;
-
-		return calculatedWaste[surplass];
+		const int64_t iGrowth = 100 * (int64_t)iGrowthPercent;
+		while ((int)s_wasteSums.size() <= iSurplus)
+		{
+			const int64_t iUnit = (int64_t)s_wasteSums.size();
+			const int64_t iUnitWaste = 10000 - iGrowth - (10000 - iGrowth) * 20 / (20 + iUnit);
+			s_wasteSums.push_back(s_wasteSums.back() + iUnitWaste);
+		}
+		return s_wasteSums[iSurplus];
 	}
 }
 
-
-int CvCity::foodDifference(const bool bBottom, const bool bIncludeWastage, const bool bIgnoreFoodBuildOrRev) const
+int CvCity::foodWastage(int iSurplus) const
 {
-	if (!bIgnoreFoodBuildOrRev && isDisorder())
+	const int iStartWasteAtConsumptionPercent = GC.getWASTAGE_START_CONSUMPTION_PERCENT();
+	if (iStartWasteAtConsumptionPercent < 0)
 	{
 		return 0;
 	}
-	// x100 THROUGHOUT -- the realized yield enters as it is and the surplus stays on the same scale as the rate
-	// it came from. The reduce lives at the three edges named on foodConsumption (the warehouse deposit, the
-	// wastage index, the UI), never here.
+	if (iSurplus == -1)
+	{
+		// The surplus above the share of consumption the city keeps without waste, in whole food.
+		iSurplus = (foodDifference(true, false) - getFoodConsumedByPopulation() * iStartWasteAtConsumptionPercent / 100) / 100;
+	}
+	if (iSurplus <= 0)
+	{
+		return 0;
+	}
+	return (int)(wastedFoodTenThousandths(iSurplus, GC.getWASTAGE_GROWTH_PERCENT()) / 10000);
+}
+
+
+int CvCity::foodDifference(const bool bBottom, const bool bIncludeWastage, const bool bIgnoreFoodBuildOrRev, CvCityBreakdown* pBreakdown) const
+{
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->reset(CITY_BREAKDOWN_FOOD);
+	}
+	if (!bIgnoreFoodBuildOrRev && isDisorder())
+	{
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addNote(CITY_BREAKDOWN_TERM_DISORDER);
+			pBreakdown->setTotal(0);
+		}
+		return 0;
+	}
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
 	const int iFoodRate = aiYields[YIELD_FOOD];
+	if (pBreakdown != NULL)
+	{
+		const int64_t iProduced = InfoValuation::cityYieldBreakdown(*this, YIELD_FOOD, *pBreakdown);
+		pBreakdown->addSubtotal(iProduced, CITY_BREAKDOWN_TERM_PRODUCED);
+	}
 
-	int iDifference;
+	const int iNet = iFoodRate - foodConsumption(false, 0, bIncludeWastage, pBreakdown);
+	int iDifference = iNet;
 
 	if (!bIgnoreFoodBuildOrRev && isFoodProduction())
 	{
-		iDifference = std::min(0, iFoodRate - foodConsumption(false, 0, bIncludeWastage));
+		iDifference = std::min(0, iNet);
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addAmount(CITY_BREAKDOWN_TERM_FOOD_PRODUCTION, iDifference - iNet);
+		}
 	}
-	else iDifference = iFoodRate - foodConsumption(false, 0, bIncludeWastage);
 
 	if (bBottom && getPopulation() == 1 && getFood() == 0)
 	{
+		const int iBeforeGuard = iDifference;
 		iDifference = std::max(0, iDifference);
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addAmount(CITY_BREAKDOWN_TERM_STARVATION_GUARD, iDifference - iBeforeGuard);
+		}
 	}
 
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->setTotal(iDifference);
+	}
 	return iDifference;
 }
 
@@ -5955,7 +6121,7 @@ int CvCity::getGreatPeopleRate() const
 }
 
 
-int CvCity::getTotalGreatPeopleRateModifier() const
+int CvCity::getTotalGreatPeopleRateModifier(CvCityBreakdown* pBreakdown) const
 {
 	const CvPlayer& owner = GET_PLAYER(getOwner());
 
@@ -5974,14 +6140,75 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 		int aiStateReligion[NUM_STATE_RELIGION_KINDS];
 		owner.getStateReligionKinds(aiStateReligion);
 		iModifier += aiStateReligion[STATE_RELIGION_GREAT_PEOPLE_RATE];
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addPercent(CITY_BREAKDOWN_TERM_STATE_RELIGION, aiStateReligion[STATE_RELIGION_GREAT_PEOPLE_RATE]);
+		}
 	}
 
 	if (owner.isGoldenAge())
 	{
 		iModifier += GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER();
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addPercent(CITY_BREAKDOWN_TERM_GOLDEN_AGE, GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER());
+		}
 	}
 
 	return std::max(0, iModifier);
+}
+
+void CvCity::getGreatPeopleUnitChances(std::vector<std::pair<UnitTypes, int> >& kChances) const
+{
+	// doGreatPeople draws the type with each type's progress as its weight, so a type's chance is its share.
+	std::vector<std::pair<UnitTypes, int> > kProgresses;
+	const int iTotal = getGreatPeopleUnitProgresses(kProgresses);
+	if (iTotal <= 0)
+	{
+		return;
+	}
+	for (size_t iEntry = 0; iEntry < kProgresses.size(); ++iEntry)
+	{
+		if (kProgresses[iEntry].second > 0)
+		{
+			kChances.push_back(std::make_pair(kProgresses[iEntry].first, (int)(10000 * (int64_t)kProgresses[iEntry].second / iTotal)));
+		}
+	}
+}
+
+int CvCity::getGreatPeopleUnitProgresses(std::vector<std::pair<UnitTypes, int> >& kProgresses) const
+{
+	int iTotal = 0;
+	for (int iUnit = 0; iUnit < GC.getNumUnitInfos(); ++iUnit)
+	{
+		const int iProgress = getGreatPeopleUnitProgress((UnitTypes)iUnit);
+		if (iProgress != 0)
+		{
+			kProgresses.push_back(std::make_pair((UnitTypes)iUnit, iProgress));
+			iTotal += iProgress;
+		}
+	}
+	return iTotal;
+}
+
+int CvCity::getGreatPeopleTurnsLeft() const
+{
+	if (getOwner() == NO_PLAYER)
+	{
+		return -1;
+	}
+	// The progress doGreatPeople banks each turn.
+	const int iBanked = getGreatPeopleRate() / 100;
+	if (iBanked <= 0)
+	{
+		return -1;
+	}
+	const int iLeft = GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary() - getGreatPeopleProgress();
+	if (iLeft <= 0)
+	{
+		return 1;
+	}
+	return (iLeft + iBanked - 1) / iBanked;
 }
 
 
@@ -6234,8 +6461,12 @@ int64_t CvCity::getMaintenance() const
 	return getMaintenanceTimes100() / 100;
 }
 
-int64_t CvCity::getMaintenanceTimes100() const
+int64_t CvCity::getMaintenanceTimes100(CvCityBreakdown* pBreakdown) const
 {
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->reset(CITY_BREAKDOWN_MAINTENANCE);
+	}
 	// ⚖ DISORDER SUPPRESSES IT THE SAME WAY (owner) -- a city in disorder produces no output, so it takes no
 	// maintenance either. It is the same read-time decline, for the same reason: both are transient conditions
 	// the city is IN, never inputs the stored value was built from.
@@ -6244,6 +6475,11 @@ int64_t CvCity::getMaintenanceTimes100() const
 	// those two counters move onto the status store this reads off it and nothing else here changes.
 	if (hasStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY) || isDisorder())
 	{
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addNote(isDisorder() ? CITY_BREAKDOWN_TERM_DISORDER : CITY_BREAKDOWN_TERM_WE_LOVE_THE_KING_DAY);
+			pBreakdown->setTotal(0);
+		}
 		return 0;
 	}
 	// ⛔ THE DOWNWARD ROLL IS REALIZED AT READ ([modifier.md] §1), which is why NOTHING is cached here: a lower
@@ -6280,13 +6516,34 @@ int64_t CvCity::getMaintenanceTimes100() const
 		maintenanceLegs(iKind, iKindFlat, iKindPercent);
 		if (iKindFlat != 0)
 		{
-			iBase += InfoValuation::realizedChannel(iKindFlat, iKindPercent, CASC_UNIT_FLAT);
+			const int64_t iKindValue = InfoValuation::realizedChannel(iKindFlat, iKindPercent, CASC_UNIT_FLAT);
+			iBase += iKindValue;
+			if (pBreakdown != NULL)
+			{
+				const CityBreakdownTerm eKindTerm =
+					(iKind == (int)MAINTENANCE_NUM_CITIES) ? CITY_BREAKDOWN_TERM_MAINTENANCE_NUM_CITIES :
+					(iKind == (int)MAINTENANCE_DISTANCE) ? CITY_BREAKDOWN_TERM_MAINTENANCE_DISTANCE :
+					CITY_BREAKDOWN_TERM_MAINTENANCE_COLONY;
+				pBreakdown->addStackedAmount(eKindTerm, iKindFlat, (int)iKindPercent, iKindValue);
+			}
 		}
 	}
 	int64_t iAmountFlat = 0;
 	int64_t iAmountPercent = 0;
 	maintenanceLegs((int)MAINTENANCE_AMOUNT, iAmountFlat, iAmountPercent);
-	return InfoValuation::realizedChannel(iBase + iAmountFlat, iAmountPercent, CASC_UNIT_FLAT);
+	const int64_t iTotal = InfoValuation::realizedChannel(iBase + iAmountFlat, iAmountPercent, CASC_UNIT_FLAT);
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_MAINTENANCE_BUILDINGS, iAmountFlat);
+		if (iAmountPercent != 0)
+		{
+			pBreakdown->addSubtotal(iBase + iAmountFlat);
+			pBreakdown->addPercentSources(*this,
+				CascadeChannelRegistry::channelLookup(MODFAM_MAINTENANCE, (int)MAINTENANCE_AMOUNT, -1), (int)iAmountPercent);
+		}
+		pBreakdown->setTotal(iTotal);
+	}
+	return iTotal;
 }
 
 // The realized value of ONE maintenance kind at this city -- what the per-component breakdowns display. It is
@@ -6557,9 +6814,7 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
  */
 int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) const
 {
-	// Whole health points throughout (iGood/iBad/iHealthAdjust and the returned food figure), so the ×100-native
-	// verdict reduces here to join them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the reduce lives at the point of use).
-	const int iRate = netHealth() / 100 + iHealthAdjust;
+	const int iRate = netHealth() + iHealthAdjust;
 
 	return std::min(0, iRate) - std::min(0, iRate + iGood - iBad);
 }
@@ -6864,8 +7119,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		realizedWellbeing(0, aNoUnhappyWellbeing);
 		iBad = iStartingBad - aNoUnhappyWellbeing[WELLBEING_ANGER] / 100;
 	}
-	// Effect on Angry Population -- the ×100 verdict reduces to the whole-citizen scale iGood/iBad/iPop use here.
-	const int iAngerBalance = -netHappiness() / 100;
+	// Effect on Angry Population
+	const int iAngerBalance = -netHappiness();
 	const int iPop = getPopulation();
 	iAngryPop += range(iAngerBalance + iBad - iGood, 0, iPop) - range(iAngerBalance, 0, iPop);
 
@@ -6970,7 +7225,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	}
 
 	// Effect on Spoiled Food
-	const int iHealthBalance = netHealth() / 100;   // whole health points against a whole food figure
+	const int iHealthBalance = netHealth();
 	int aiWhatIfYields[NUM_YIELD_TYPES];
 	getYields(aiWhatIfYields);
 	int iFood = (aiWhatIfYields[YIELD_FOOD] - foodConsumption()) / 100;
@@ -7626,6 +7881,16 @@ int CvCity::getDefenseModifier(bool bIgnoreBuilding) const
 	return (std::max(getExtraMinDefense(), ((getTotalDefense(bIgnoreBuilding) * (GC.getMAX_CITY_DEFENSE_DAMAGE() - getDefenseDamage())) / GC.getMAX_CITY_DEFENSE_DAMAGE())));
 }
 
+int CvCity::getDefenseStandingPercent() const
+{
+	const int iMaxDamage = GC.getMAX_CITY_DEFENSE_DAMAGE();
+	if (iMaxDamage <= 0)
+	{
+		return 100;
+	}
+	return 100 * (iMaxDamage - getDefenseDamage()) / iMaxDamage;
+}
+
 
 int CvCity::getOccupationTimer() const
 {
@@ -8131,10 +8396,8 @@ int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuild
 	//	   an availability fact, and it is authored on the SUPERSEDED building (`requires.operate.dormant` names
 	//	   its successor -- enabler.md §2), never as a "what I replace" list on the candidate.
 	//	2. VALUE -- the VALUATION answers what each one is worth AGAINST THIS CITY, contexts in / delta out
-	//	   (patterns.md § THE VALUATION PROTOCOL). The candidate's gain minus what the superseded stop giving.
-	//
-	//	The hand-assembled `(base + add) * (mod + addMod) - base * mod` combine this replaces is gone with the
-	//	base tier it read: the valuation resolves the percent side against the live context itself.
+	//	   (patterns.md § THE VALUATION PROTOCOL). The candidate's FLAT yields minus what the superseded stop giving;
+	//	   getBuildingRateChanges answers the city's whole change, percents and radius yields included.
 	const CvPlayer& kOwner = GET_PLAYER(getOwner());
 	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
 
@@ -8243,7 +8506,7 @@ int CvCity::getTradeYield(YieldTypes eIndex) const
 }
 
 
-int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
+int CvCity::totalTradeModifier(const CvCity* pOtherCity, CvCityBreakdown* pBreakdown) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iModifier = 100;
@@ -8254,10 +8517,21 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 	getTradeRouteKinds(aiTradeRoutes);
 	iModifier += aiTradeRoutes[TRADE_ROUTE_MODIFIER];
 	iModifier += getPopulationTradeModifier();
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->addPercentSources(*this,
+			CascadeChannelRegistry::channelLookup(MODFAM_TRADE_ROUTES, (int)TRADE_ROUTE_MODIFIER, -1),
+			aiTradeRoutes[TRADE_ROUTE_MODIFIER]);
+		pBreakdown->addPercent(CITY_BREAKDOWN_TERM_TRADE_CITY_SIZE, getPopulationTradeModifier());
+	}
 
 	if (isConnectedToCapital())
 	{
 		iModifier += GC.getCAPITAL_TRADE_MODIFIER();
+		if (pBreakdown != NULL)
+		{
+			pBreakdown->addPercent(CITY_BREAKDOWN_TERM_TRADE_CAPITAL_CONNECTION, GC.getCAPITAL_TRADE_MODIFIER());
+		}
 	}
 
 	if (NULL != pOtherCity)
@@ -8265,21 +8539,23 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 		if (area() != pOtherCity->area())
 		{
 			iModifier += GC.getOVERSEAS_TRADE_MODIFIER();
+			if (pBreakdown != NULL)
+			{
+				pBreakdown->addPercent(CITY_BREAKDOWN_TERM_TRADE_OVERSEAS, GC.getOVERSEAS_TRADE_MODIFIER());
+			}
 		}
 
 		if (getTeam() != pOtherCity->getTeam())
 		{
-			// ⚠ The SHARED-CIVIC route bonus is authored as a CONDITIONED `tradeRoutes.empire.modifier.percent`
-			// entry gated `all: [IS_FOREIGN, SHARES_CIVIC]` (curate_civic), and both predicates are evaluated
-			// against the ROUTE'S PARTNER ([json.md §3.5]) -- an axis CvCascadeEvalCtx carries no slot for, so
-			// nothing can evaluate them yet. The group read above serves the UNCONDITIONED sum only.
-			// ⛔ It is left UNSERVED rather than re-summed unconditionally here: folding a conditioned entry in
-			// without its gate pays the bonus on every foreign route, to partners running different civics
-			// ([modifier.md §5] -- honestly unserved is the correct exposed state).
-			// MISSING MACHINE: the route-partner axis on the eval ctx, which the IS_FOREIGN / SHARES_CIVIC
-			// predicates read.
 			iModifier += getPeaceTradeModifier(pOtherCity->getTeam());
+			if (pBreakdown != NULL)
+			{
+				pBreakdown->addPercent(CITY_BREAKDOWN_TERM_TRADE_FOREIGN, getPeaceTradeModifier(pOtherCity->getTeam()));
+			}
 		}
+		// The deposits gated on the route itself (IS_FOREIGN, SHARES_CIVIC: the shared-civic route bonus) resolve
+		// against this partner; the group read above holds everything else.
+		iModifier += InfoValuation::routeGatedTradeModifier(*this, *pOtherCity, pBreakdown);
 	}
 
 	return iModifier;
@@ -8326,13 +8602,22 @@ int CvCity::getBaseTradeProfit(const CvCity* pCity) const
 // `totalTradeModifier` is a plain percent, so the single `/100` here APPLIES the percentage -- it is not a scale
 // reduce, and there is deliberately no human twin beside it (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): no getter has a ×100
 // variant, and no name carries the scale). A reader wanting whole gold divides at its own point of use.
-int CvCity::calculateTradeProfit(const CvCity* pCity) const
+int CvCity::calculateTradeProfit(const CvCity* pCity, CvCityBreakdown* pBreakdown) const
 {
 	int iProfit = getBaseTradeProfit(pCity);
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->reset(CITY_BREAKDOWN_TRADE_ROUTE);
+		pBreakdown->addAmount(CITY_BREAKDOWN_TERM_TRADE_BASE_PROFIT, iProfit);
+	}
 
-	iProfit *= totalTradeModifier(pCity);
+	iProfit *= totalTradeModifier(pCity, pBreakdown);
 	iProfit /= 100;
 
+	if (pBreakdown != NULL)
+	{
+		pBreakdown->setTotal(iProfit);
+	}
 	return iProfit;
 }
 
@@ -8464,6 +8749,81 @@ int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes 
 		iDelta -= aiDormed[eIndex];
 	}
 	return iDelta;
+}
+
+void CvCity::getBuildingRateChanges(BuildingTypes eBuilding, int (&yieldChanges)[NUM_YIELD_TYPES],
+	int (&commerceChanges)[NUM_COMMERCE_TYPES]) const
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		yieldChanges[iYield] = 0;
+	}
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		commerceChanges[iCommerce] = 0;
+	}
+	if (getOwner() == NO_PLAYER)
+	{
+		return;
+	}
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
+	// The candidate's deposits, less those of the buildings it sends dormant (the enabler owns which).
+	std::vector<int> kSources;
+	EnablerKernel::dormedByBuilding(this, (int)eBuilding, kSources);
+	kSources.insert(kSources.begin(), (int)eBuilding);
+	CvCityRateChanges kChanges;
+	for (size_t iSource = 0; iSource < kSources.size(); ++iSource)
+	{
+		const CvBuildingInfo& kSource = GC.getBuildingInfo((BuildingTypes)kSources[iSource]);
+		const int iSign = (iSource == 0) ? 1 : -1;
+		int aiFlatYields[NUM_YIELD_TYPES];
+		int aiYieldModifiers[NUM_YIELD_TYPES];
+		int aiPlotYields[NUM_YIELD_TYPES];
+		kSource.expectedFlatYields(getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiFlatYields);
+		kSource.expectedYieldModifiers(getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiYieldModifiers);
+		kSource.expectedPlotYields(getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiPlotYields);
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			// The city's own flats come after the stack; upper-scope flats and radius yields go under it.
+			const int iCityFlat = kSource.expectedModifierAt(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, CASC_UNIT_FLAT,
+				CASC_SCOPE_CITY, getCityContext(), kOwner.getEmpireContext(), pPlotGroup);
+			kChanges.yieldAfterStack[iYield] += iSign * iCityFlat;
+			kChanges.yieldUnderStack[iYield] += iSign * (aiFlatYields[iYield] - iCityFlat + aiPlotYields[iYield]);
+			kChanges.yieldPercent[iYield] += iSign * aiYieldModifiers[iYield];
+		}
+		int aiFlatCommerce[NUM_COMMERCE_TYPES];
+		int aiCommerceModifiers[NUM_COMMERCE_TYPES];
+		kSource.expectedFlatCommerce(getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiFlatCommerce);
+		kSource.expectedCommerceModifiers(getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiCommerceModifiers);
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			const int iCityFlat = kSource.expectedModifierAt(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT,
+				CASC_UNIT_FLAT, CASC_SCOPE_CITY, getCityContext(), kOwner.getEmpireContext(), pPlotGroup);
+			kChanges.commerceAfterStack[iCommerce] += iSign * iCityFlat;
+			kChanges.commerceUnderStack[iCommerce] += iSign * (aiFlatCommerce[iCommerce] - iCityFlat);
+			kChanges.commercePercent[iCommerce] += iSign * aiCommerceModifiers[iCommerce];
+		}
+	}
+	int aiYieldsNow[NUM_YIELD_TYPES];
+	getYields(aiYieldsNow);
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+		yieldChanges[iYield] = (int)(InfoValuation::realizedAtCityWith(*this, iChannel, kChanges.yieldUnderStack[iYield],
+			kChanges.yieldAfterStack[iYield], kChanges.yieldPercent[iYield]) - aiYieldsNow[iYield]);
+	}
+	int aiSliders[NUM_COMMERCE_TYPES];
+	kOwner.getEmpireContext().commerceRates(aiSliders);
+	int aiCommercesNow[NUM_COMMERCE_TYPES];
+	int aiCommercesWith[NUM_COMMERCE_TYPES];
+	expectedCommercesAtSliders(aiSliders, aiCommercesNow);
+	expectedCommercesAtSliders(aiSliders, aiCommercesWith, NULL, &kChanges);
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		commerceChanges[iCommerce] = aiCommercesWith[iCommerce] - aiCommercesNow[iCommerce];
+	}
+	commerceChanges[COMMERCE_GOLD] += getSavedMaintenanceTimes100ByBuilding(eBuilding);
 }
 
 // BUG - Building Additional Commerce - end
@@ -12527,34 +12887,29 @@ void CvCity::doGreatPeople()
 
 	if (getGreatPeopleProgress() >= GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary())
 	{
-		int iTotalGreatPeopleUnitProgress = 0;
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
-		{
-			iTotalGreatPeopleUnitProgress += getGreatPeopleUnitProgress((UnitTypes)iI);
-		}
+		// A type with no progress can neither be drawn nor move the draw, so the draw walks the types that have some.
+		std::vector<std::pair<UnitTypes, int> > kProgresses;
+		const int iTotalGreatPeopleUnitProgress = getGreatPeopleUnitProgresses(kProgresses);
 		int iGreatPeopleUnitRand = GC.getGame().getSorenRandNum(iTotalGreatPeopleUnitProgress, "Great Person");
 
 		UnitTypes eGreatPeopleUnit = NO_UNIT;
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+		for (size_t iEntry = 0; iEntry < kProgresses.size(); ++iEntry)
 		{
-			if (iGreatPeopleUnitRand < getGreatPeopleUnitProgress((UnitTypes)iI))
+			if (iGreatPeopleUnitRand < kProgresses[iEntry].second)
 			{
-				eGreatPeopleUnit = ((UnitTypes)iI);
+				eGreatPeopleUnit = kProgresses[iEntry].first;
 				break;
 			}
-			else
-			{
-				iGreatPeopleUnitRand -= getGreatPeopleUnitProgress((UnitTypes)iI);
-			}
+			iGreatPeopleUnitRand -= kProgresses[iEntry].second;
 		}
 
 		if (eGreatPeopleUnit != NO_UNIT)
 		{
 			changeGreatPeopleProgress(-(GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary()));
 
-			for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+			for (size_t iEntry = 0; iEntry < kProgresses.size(); ++iEntry)
 			{
-				setGreatPeopleUnitProgress(((UnitTypes)iI), 0);
+				setGreatPeopleUnitProgress(kProgresses[iEntry].first, 0);
 			}
 			createGreatPeople(eGreatPeopleUnit, true, false);
 		}
@@ -13808,6 +14163,7 @@ bool CvCity::getProductionBarPercentages(std::vector<float>& afPercentages) cons
 	{
 		afPercentages.resize(NUM_INFOBAR_TYPES, 0.0f);
 		const int iProductionDiffNoFood = getCurrentProductionDifference(ProductionCalc::Overflow);
+		// The two parts add up to what the city applies with food (the minimum of one is in the part without it).
 		const int iProductionDiffJustFood = getCurrentProductionDifference(ProductionCalc::FoodProduction | ProductionCalc::Overflow) - iProductionDiffNoFood;
 		afPercentages[INFOBAR_STORED] = getProductionProgress() / (float)getProductionNeeded();
 		afPercentages[INFOBAR_RATE] = iProductionDiffNoFood / (float)getProductionNeeded();

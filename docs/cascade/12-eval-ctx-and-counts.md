@@ -33,6 +33,14 @@ the bound game objects. Consequences, each already implied by the model above:
   a time, so it sets one; the EMPIRE fold walks a building the player may hold N copies of, each acquired at a
   different moment, so the question has no single answer and the slot stays unset by design. That is a
   structural limit, not an unwired leg — do not "complete" it by setting the slot there.
+- **THE ROUTE-PARTNER SLOT — `routePartner`, the trade route's partner as its owner's EMPIRE CONTEXT.** The
+  route predicates (`IS_FOREIGN`, `SHARES_CIVIC`, json §3.5) ask about the route, which no scope holds, so the
+  ctx carries the partner the way it carries a source: set on a LOCAL COPY by the one read that prices a single
+  route (`InfoValuation::routeGatedTradeModifier`, called from `CvCity::totalTradeModifier`), and NULL
+  everywhere else, where both predicates answer FALSE. That read also sets `civic` per civic-authored deposit, so
+  `SHARES_CIVIC` asks the partner about the deposit's own civic. ⇒ The packages never hold a route-gated deposit:
+  every other read sees the gate as closed, and the route read adds each such deposit, route by route, from the
+  sources the packages' `appliedSources` record.
 - **A context that cannot answer a needed fact is a CONTEXT GAP to close** (add the forward), never a reason to
   re-add an object pointer. That is the forcing function the structural form buys.
 

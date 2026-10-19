@@ -10,6 +10,13 @@
 **Six additive pre-inflation components:** treasury upkeep + total maintenance + civic upkeep + unit upkeep + unit
 supply + corporate maintenance.
 
+The treasury moves by `calculateBaseNetGold`: the cities' gold in whole gold, plus the net from other players,
+less `getFinalExpense`. Its breakdowns are what the finance advisor shows: the income is every city's gold
+breakdown summed source by source (`CvPlayer::sumCityBreakdowns`, the cities the receiver sums, not those in
+disorder) and the income from other players; the expenses are the six components, their subtotal, inflation
+(`getInflationPercent`, the rate in hundredths) and the payments to other players. Unit upkeep and unit supply
+hand out what their difficulty steps add (`calcFinalUnitUpkeepFrom`, `calculateUnitSupply`).
+
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
 - **City maintenance is ORDINARY CASCADE, end to end — no engine components left.** Distance, city count and
   colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the root tech every

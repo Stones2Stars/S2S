@@ -270,6 +270,10 @@ int64_t intSqrt64(const uint64_t iValue);
 
 int intPow(const int x, const int p);
 int64_t intPow64(const int64_t x, const int p);
+///<summary>x raised to iNumerator/iDenominator, times iScale and rounded, for x from 0 to below 2^32, by
+/// fixed-point log2 and exp2 with 30 fractional bits -- integers only. The result is good to a few parts in a
+/// billion, and must fit in 64 bits once multiplied by iScale.</summary>
+int64_t intPowFraction(const int64_t x, const int iNumerator, const int iDenominator, const int iScale);
 
 int getModifiedIntValue(const int iValue, const int iMod);
 int64_t getModifiedIntValue64(const int64_t iValue, const int iMod);

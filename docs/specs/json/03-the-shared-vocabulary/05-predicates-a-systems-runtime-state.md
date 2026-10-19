@@ -97,7 +97,9 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   - **trade route** (evaluated against the ROUTE/its partner city): **`IS_FOREIGN`** (the route's partner belongs to
     another team — the engine's foreign-trade gate, `CvCity::totalTradeModifier`; domestic routes are the plain
     negation `"!IS_FOREIGN"`, never a second predicate) · **`SHARES_CIVIC`** (the route partner's owner runs the
-    deposit's SOURCE civic — the shared-civic trade bonus; only meaningful on a deposit a civic authors).
+    deposit's SOURCE civic — the shared-civic trade bonus; only meaningful on a deposit a civic authors). Both
+    answer FALSE outside a route, so no package holds a deposit gated on them; the route's own modifier adds each
+    one per route ([the route-partner slot](../../../cascade/12-eval-ctx-and-counts.md)).
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_IMPROVEMENT: IMPROVEMENT_X}` (the plot carries that improvement — the plots-filter twin of terrain/feature) ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·

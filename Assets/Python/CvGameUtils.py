@@ -20,12 +20,6 @@ TEXT = CyGameTextMgr()
 class CvGameUtils:
 
 	def __init__(self):
-		self.fScoreFreeMod = GC.getDefineINT("SCORE_FREE_PERCENT") / 100.0
-		self.SCORE_POPULATION_FACTOR = GC.getDefineINT("SCORE_POPULATION_FACTOR")
-		self.SCORE_LAND_FACTOR = GC.getDefineINT("SCORE_LAND_FACTOR")
-		self.SCORE_TECH_FACTOR = GC.getDefineINT("SCORE_TECH_FACTOR")
-		self.SCORE_WONDER_FACTOR = GC.getDefineINT("SCORE_WONDER_FACTOR")
-
 		self.BASE_CAPTURE_GOLD = GC.getDefineINT("BASE_CAPTURE_GOLD")
 		self.CAPTURE_GOLD_PER_POP = GC.getDefineINT("CAPTURE_GOLD_PER_POPULATION")
 		self.CAPTURE_GOLD_RAND1 = GC.getDefineINT("CAPTURE_GOLD_RAND1")
@@ -94,84 +88,6 @@ class CvGameUtils:
 			elif PROCESS == TYPE:
 				bFound = True
 		return False
-
-	def calculateScore(self, argsList):
-		iEndTurn = GAME.getEstimateEndTurn()
-		if not iEndTurn: return 0
-		iPlayer, bFinal, bVictory, = argsList
-		if bFinal and bVictory:
-			fTurnRatio = GAME.getGameTurn() / float(iEndTurn)
-		else: fTurnRatio = 0
-
-		if bVictory:
-			fVictory = (100 + GC.getDefineINT("SCORE_VICTORY_PERCENT")) / 100.0
-		else: fVictory = 1
-
-		if bFinal:
-			fFinal = (100 + GC.getDefineINT("SCORE_HANDICAP_PERCENT_OFFSET") + GAME.getHandicapType() * GC.getDefineINT("SCORE_HANDICAP_PERCENT_PER")) / 100.0
-		else: fFinal = 1
-
-		CyPlayer = GC.getPlayer(iPlayer)
-		score = 0
-		fFreePercent = self.fScoreFreeMod
-		# Population
-		iInitial = GAME.getInitPopulation()
-		iMax = GAME.getMaxPopulation()
-		if fTurnRatio:
-			if iInitial:
-				iMax = iInitial * (iMax / iInitial)**fTurnRatio
-			else:
-				iMax = iInitial + fTurnRatio * (iMax - iInitial)
-
-		fFree = iMax * fFreePercent
-		temp = self.SCORE_POPULATION_FACTOR * fVictory * fFinal
-		fDiv = fFree + iMax
-		if fDiv:
-			temp *= (CyPlayer.getPopScore() + fFree) / fDiv
-		score += temp
-		# Land
-		iInitial = GAME.getInitLand()
-		iMax = GAME.getMaxLand()
-		if fTurnRatio:
-			if iInitial:
-				iMax = iInitial * (iMax / iInitial)**fTurnRatio
-			else:
-				iMax = iInitial + fTurnRatio * (iMax - iInitial)
-
-		fFree = iMax * fFreePercent
-		temp = self.SCORE_LAND_FACTOR * fVictory * fFinal
-		fDiv = fFree + iMax
-		if fDiv:
-			temp *= (CyPlayer.getLandScore() + fFree) / fDiv
-		score += temp
-		# Tech
-		iInitial = GAME.getInitTech()
-		iMax = GAME.getMaxTech()
-		if fTurnRatio:
-			if iInitial:
-				iMax = iInitial * (iMax / iInitial)**fTurnRatio
-			else:
-				iMax = iInitial + fTurnRatio * (iMax - iInitial)
-
-		fFree = iMax * fFreePercent
-		temp = self.SCORE_TECH_FACTOR * fVictory * fFinal
-		fDiv = fFree + iMax
-		if fDiv:
-			temp *= (CyPlayer.getTechScore() + fFree) / fDiv
-		score += temp
-		# Wonder
-		iInitial = GAME.getInitWonders()
-		iMax = GAME.getMaxWonders()
-		if fTurnRatio:
-			iMax = iInitial + fTurnRatio * (iMax - iInitial)
-
-		fFree = iMax * fFreePercent
-		temp = self.SCORE_WONDER_FACTOR * fVictory * fFinal
-		fDiv = fFree + iMax
-		if fDiv:
-			temp *= (CyPlayer.getWondersScore() + fFree) / fDiv
-		score += temp
-		return int(score)
 
 	def doPillageGold(self, argsList):
 		# ⚠ The PLOT crosses as a handle (only CvCity/CvUnit carry an identity), the UNIT as its (owner, id) pair.

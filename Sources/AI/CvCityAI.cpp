@@ -6716,9 +6716,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 		kBuilding.expectedYieldModifiers(
 			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
-		const int iMod = aYieldModifiers[eYield] / 100;
-
-		iValue += iBaseRate * iMod / 12;
+		iValue += iBaseRate * aYieldModifiers[eYield] / 12;
 	}
 	return iValue;
 }
@@ -12936,8 +12934,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	bool bCulturalVictory1 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1);
 	bool bCulturalVictory3 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 
-	// The SAME valuation the build-list tooltip reads -- one call, so the number the AI acts on and the number
-	// the player is shown cannot diverge ([patterns.md] TWO CONSUMERS, ONE CALL). x100, like the term beside it.
+	// The candidate's flat commerce; the percent side is valued below.
 	int iBaseCommerceChange = getAdditionalCommerceByBuilding((CommerceTypes)iI, eBuilding);
 
 	int iResult = 4 * (iBaseCommerceChange + 100 * aiFreeSpecialistCommerce[iI]); // iResult is scaled by 100 at this point
@@ -12969,13 +12966,11 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	kBuilding.expectedYieldModifiers(
 		getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
-	// The city's REALIZED commerce yield (÷100 at the reader) scaled by the CANDIDATE's expected modifier -- the
-	// what-if delta this building would add on top of what the city already makes.
+	// The city's realized commerce yield scaled by the candidate's expected modifier -- the what-if delta this
+	// building would add on top of what the city already makes.
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
-	const int iSemiModifiedBase = (
-		(aiRealizedYields[YIELD_COMMERCE] / 100) * (aYieldModifiers[YIELD_COMMERCE] / 100)
-	);
+	const int iSemiModifiedBase = (aiRealizedYields[YIELD_COMMERCE] / 100) * aYieldModifiers[YIELD_COMMERCE];
 	int iTempValue = iSemiModifiedBase * kOwner.getCommercePercent((CommerceTypes)iI) / 3000;
 
 	// if this is a limited wonder, and we are not one of the top 4 in this category, subtract the value
@@ -13014,7 +13009,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	const int iCommerceModifier =
 		kBuilding.expectedModifier(
 			infoCommerceFamily((CommerceTypes)iI), CHANNEL_AMOUNT, CASC_UNIT_PERCENT,
-			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
+			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
 
 	if (aiBaseCommerceRate[iI] == MAX_INT)
 	{

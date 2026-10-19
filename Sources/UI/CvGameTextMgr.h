@@ -18,8 +18,27 @@
 #pragma warning( disable: 4251 )	// needs to have dll-interface to be used by clients of class
 
 #include "Infos/CvEdges.h"   // EnEdgeBucket -- the gate axis appendEntryLinesFiltered narrows on
+#include "Engine/CvCityBreakdown.h"
 
 #define ENABLE_ROLES_HOVER
+
+///<summary>One line of a city breakdown as a table shows it: the line's role, its label and its value with the
+/// icon, formatted by the same renderer as the hover.</summary>
+struct CityBreakdownRow
+{
+	CityBreakdownRole role;
+	CvWString label;
+	CvWString value;
+};
+
+///<summary>A run of sources (CityBreakdownRun) in a breakdown's text lines: the first line it occupies, how many,
+/// and the one line that stands for all of them ("+47.5 Buildings (98)") when a display cannot fit them.</summary>
+struct CityBreakdownTextRun
+{
+	size_t firstLine;
+	size_t lineCount;
+	CvWString summary;
+};
 
 class CounterSet;
 class CvCity;
@@ -77,6 +96,8 @@ public:
 	// so it is a per-player list and never one total ([culture-religion-research.md]).
 	void appendPlotCultureLines(CvWStringBuffer& szString, const CvPlot* pPlot) const;
 	void setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity);
+	///<summary>A new line with the city's chance to revolt this turn and its parts, when it can revolt this turn.</summary>
+	void setCityRevoltHelp(CvWStringBuffer& szBuffer, const CvCity& city);
 	void setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer);
 
 	void parseBuildUp(CvWStringBuffer &szHelpString, PromotionLineTypes eTrait, CivilizationTypes eCivilization = NO_CIVILIZATION);
@@ -95,7 +116,6 @@ public:
 	void parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePlayer);
 	void parsePlayerHasFixedBorders(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer);
 	void parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
-	void parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer);
 	void appendTechResearchProgress(CvWStringBuffer& szBuffer, TechTypes eTech);
 	void setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText = false, bool bPlayerContext = false, bool bStrategyText = false, bool bTreeInfo = true, TechTypes eFromTech = NO_TECH);
@@ -113,11 +133,6 @@ public:
 
 	void setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProject, bool bCivilopediaText = false, CvCity* pCity = NULL);
 	void setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProcess);
-	void setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	void setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	void parseHappinessHelp(CvWStringBuffer& szBuffer);
-	void setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	void setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setYieldChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);
 	void listCommerceChange(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szEnd, const int* aList, bool bPercent = false);
 	void setYieldPerPopChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);
@@ -179,14 +194,8 @@ public:
 	///<summary>What an entity changes on things that already exist: every other entity holding an entry whose
 	/// condition mentions it. The candidates are its load-built related lists; bShowAll lifts the resting cap.</summary>
 	void appendImprovesLines(CvWStringBuffer& szBuffer, const CvInfo& info, bool bShowAll) const;
-	// ONE source's contribution to a city-scope family (its heading + its own entry lines), and the WALK over
-	// every live source that feeds one: the city's operating buildings, the empire's adopted civics and held
-	// traits, and the city's culture level. This is the ATTRIBUTION half of a decomposition census -- a total
-	// with no named sources answers nothing when it is wrong ([http-endpoints.md] the census shape).
-	void appendSourceIfAny(CvWStringBuffer& szBuffer, const CvInfo& source, ModifierFamily eFamily) const;
-	void appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCity& city, ModifierFamily eFamily) const;
-	// The §8/§9 CLASSIFICATION twin of the two above: an entity's authored block keys, rendered one per line
-	// through the ONE name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
+	// The §8/§9 CLASSIFICATION renderer: an entity's authored block keys, rendered one per line through the ONE
+	// name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
 	// has no compiled entry to hand appendEntryLines -- which is why the widget cases that ask about one were the
 	// only ones with nothing to call (docs/architecture/patterns.md §DRY (single implementation): one renderer, not a builder per key).
 	void appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const;
@@ -216,10 +225,27 @@ public:
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);
 	void setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeature, bool bCivilopediaText = false);
-	void setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	void setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	void setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType);
-	void setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType);
+	///<summary>The hover of one city number as text lines and runs (CityBreakdownTextRun), for the one hover box
+	/// (docs/reference/tooltip-look.md § THE CITY NUMBERS): food, production, commerce and its channels,
+	/// maintenance, happiness, health, culture, defense and great people. Culture opens with the owner's culture
+	/// against the next level and the turns to reach it; a subject with no single city number shows
+	/// nothing.</summary>
+	void getCityHoverLines(CvCity& city, CityBreakdownSubject eSubject, std::vector<CvWString>& kTextLines,
+		std::vector<CityBreakdownTextRun>& kTextRuns) const;
+	///<summary>getCityHoverLines as one text, for the game's widget help.</summary>
+	void setCityHoverHelp(CvWStringBuffer &szBuffer, CvCity& city, CityBreakdownSubject eSubject) const;
+	///<summary>The owner's culture in the city against the next level, with the turns to reach it.</summary>
+	CvWString cityCultureStandingLine(const CvCity& city) const;
+	///<summary>The shared city hover: a breakdown the engine filled, laid out as heading, parts, subtotal,
+	/// percents and total (docs/reference/tooltip-look.md § THE CITY NUMBERS). It formats and adds nothing.</summary>
+	void appendCityBreakdown(CvWStringBuffer& szBuffer, const CvCityBreakdown& kBreakdown) const;
+	///<summary>The same breakdown as table rows, one per line, for a screen that lays it out itself (the Raw
+	/// Yields panel).</summary>
+	void getCityBreakdownRows(const CvCityBreakdown& kBreakdown, std::vector<CityBreakdownRow>& kRows) const;
+	///<summary>The same breakdown as the hover's text lines, one per line, with its runs of sources mapped onto
+	/// them.</summary>
+	void getCityBreakdownLines(const CvCityBreakdown& kBreakdown, std::vector<CvWString>& kTextLines,
+		std::vector<CityBreakdownTextRun>& kTextRuns) const;
 	void setConvertHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, ReligionTypes eReligion);
 	void setRevolutionHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer);
 	void setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMaster, TeamTypes eVassal);
@@ -251,7 +277,6 @@ public:
 	void buildSpecialBuildingString( CvWStringBuffer& szBuffer, TechTypes eTech, int iBuildingType, bool bList = false, bool bPlayerContext = false );
 	// The int is an IMPROVEMENT id, not a yield -- the widget asks what this tech does to that improvement's output.
 	void buildYieldChangeString( CvWStringBuffer& szBuffer, TechTypes eTech, int iImprovement, bool bList = false, bool bPlayerContext = false );
-	void getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city);
 
 	bool buildBonusRevealString( CvWStringBuffer& szBuffer, TechTypes eTech, int iBonusType, bool bFirst, bool bList = false, bool bPlayerContext = false );
@@ -298,7 +323,6 @@ public:
 	void getActiveTeamRelationsString(CvWStringBuffer& szString, TeamTypes eThisTeam);
 	void getOtherRelationsString(CvWStringBuffer& szString, TeamTypes eThisTeam, TeamTypes eOtherTeam, TeamTypes eSkipTeam);
 
-	void buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const;
 	void buildFinanceInflationString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
 	void buildFinanceUnitUpkeepString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
 	void buildFinanceAwaySupplyString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
@@ -310,8 +334,6 @@ public:
 	DllExport void getTradeScreenIcons(std::vector< std::pair<CvString, CvWidgetDataStruct> >& aIconInfos, PlayerTypes ePlayer);
 	DllExport void getTradeScreenHeader(CvWString& szHeader, PlayerTypes ePlayer, PlayerTypes eOtherPlayer, bool bAttitude);
 
-	void buildDomesticTradeString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
-	void buildForeignTradeString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
 	void buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eWithPlayer=NO_PLAYER, bool bDomestic=true, bool bForeign=true, bool bHeading=true) const;
 
 	DllExport void getGlobeLayerName(GlobeLayerTypes eType, int iOption, CvWString& strName);
