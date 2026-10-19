@@ -78,6 +78,9 @@ nothing and derives nothing.
   text is), so a screen hides the box on leave and on its other input, and its own hovers redraw on arrival.
 - **On screen.** A box that follows the cursor keeps inside the screen on every side
   (`PythonToolTip.followCursor`, from the size `makeTooltip` drew it at).
+- ⚖ **The box's LOOK belongs to the player.** Styling is subjective and depends on the screen, so the font size,
+  colours and opacity are player options read when the box is drawn, never one value tuned to one screen
+  ([#597](https://github.com/Stones2Stars/S2S/issues/597)).
 
 ## THE CITY NUMBERS
 

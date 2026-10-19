@@ -4,9 +4,9 @@ import ScreenResolution as SR
 
 CyIF = CyInterface()
 
-# The font of the game's own tooltips (Resource/Theme/C2CTheme_ToolTip.thm: Font_Size1_Normal), so every
-# tooltip a Python screen draws reads like the ones the game draws.
-TOOLTIP_FONT = "<font=1>"
+# The one hover's font: one size above the game's own tooltips (Font_Size1_Normal), so the text holds against
+# the box's translucent background. Every width the box is sized by is measured in it.
+TOOLTIP_FONT = "<font=2>"
 
 
 class PythonToolTip:
