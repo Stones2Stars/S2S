@@ -118,6 +118,7 @@ class CvMainInterface:
 		self.iOffsetTT = []
 		self.szHelpText = ""
 		self.szPlotHelp = ""
+		pyTT.noteSilentArea(self)
 
 		self.iField_View_Prev = -1
 		self.iWaitingCounter = 0
@@ -1228,12 +1229,7 @@ class CvMainInterface:
 				# You hit the Esc key in the demolition screen.
 				ACEM.exitCityDemolish(screen)
 
-		if self.bTooltip:
-			POINT = Win32.getCursorPos()
-			# The bottom bar's widgets never report the mouse leaving, so a box drawn there goes when the cursor
-			# leaves the bar; otherwise it would hide the map's own help (the combat odds) under it.
-			if self.yMouseTT > self.yBotBar and POINT.y <= self.yBotBar:
-				self.hideTooltip(screen)
+		pyTT.pollSilentArea()
 
 		if self.bTooltip:
 			# Tooltip sometimes get stuck...
@@ -2151,13 +2147,10 @@ class CvMainInterface:
 
 		elif AtUnit:
 			# Unit action list
-			y = self.yBotBar + 60
-			h = self.yRes - y - 2
-
-			w = self.xMidR - self.xMidL - 4
+			x, y, w, h = self.actionBarRect()
 			iSize = MainOpt.getUnitIconSize()
 			MuLi = "UnitButtons"
-			screen.addMultiListControlGFC(MuLi, "", self.xMidL, y, w, h, 1, iSize, iSize, TableStyles.TABLE_STYLE_STANDARD)
+			screen.addMultiListControlGFC(MuLi, "", x, y, w, h, 1, iSize, iSize, TableStyles.TABLE_STYLE_STANDARD)
 
 			actions = CyIF.getActionsToShow()
 			for i, iType in enumerate(actions):
@@ -2175,6 +2168,18 @@ class CvMainInterface:
 			if CyIF.canDeleteGroup():
 				screen.appendMultiListButton(MuLi, self.artPathButtonGroupSplit, 0, WidgetTypes.WIDGET_DELETE_GROUP, 0, 1, False)
 
+
+	def actionBarRect(self):
+		y = self.yBotBar + 60
+		return self.xMidL, y, self.xMidR - self.xMidL - 4, self.yRes - y - 2
+
+	def isCursorOverSilentArea(self):
+		# The action bar's buttons report neither arrive nor leave (PythonToolTip.showWidgetHover).
+		if not self.AtUnit or self.InCity or self.iInterfaceType in (InterfaceVisibility.INTERFACE_HIDE_ALL, InterfaceVisibility.INTERFACE_MINIMAP_ONLY):
+			return False
+		x, y, w, h = self.actionBarRect()
+		POINT = Win32.getCursorPos()
+		return x <= POINT.x < x + w and y <= POINT.y < y + h
 
 	# Will update the research buttons
 	def updateResearchButtons(self, screen):

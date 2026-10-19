@@ -61,14 +61,22 @@ nothing and derives nothing.
   fill side-by-side columns sized to the player's screen. A composer that hands over runs of sources
   (`CityBreakdownTextRun`) lets `PythonToolTip.fitLines` show a run as its one summary line on a screen too
   small even for columns, largest runs first, closing with a line that the full list is one click away.
-- **Widget hovers.** The game asks `CvDLLWidgetData::parseHelp` for a widget's text when the mouse is over it.
-  At its end the text goes to `CvScreensInterface.showWidgetHover`, and the game's own box is left empty.
+- **Widget hovers.** At the end of `CvDLLWidgetData::parseHelp` the text goes to
+  `CvScreensInterface.showWidgetHover`, and the game's own box is left empty when a screen draws it.
   `CvScreensInterface.handleInput` passes every screen's input to `PythonToolTip.noteHoverInput`, so the box
-  draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen that closes
-  under the cursor sends no leave, so `CvScreensInterface.onClose` hands the hover back to the main interface
-  (`PythonToolTip.noteScreenClosed`) before the screen tears down what its `getScreen()` reads; some main
-  interface widgets never report the mouse arriving, so the hover cannot wait for one. A screen answers
+  draws on the screen whose widget the mouse entered and goes when the mouse leaves it. A screen answers
   `getScreen()`; a screen with its own tooltip handling answers `showHover(szText)` / `hideHover()`.
+- ⛔ **Hover state comes ONLY from the mouse.** A screen owns the hover because the mouse arrived on one of its
+  widgets, and nothing else ever grants it. A help REQUEST is not a hover: the game asks `parseHelp` for every
+  action button whenever the action bar is rebuilt, with the mouse anywhere, so a request that set or implied the
+  owner painted the bar's last button into the box. Closing a screen (`CvScreensInterface.onClose` →
+  `PythonToolTip.noteScreenClosed`) and ending the active player's turn, which freezes the screen so no arrive or
+  leave survives it (`CvEventManager.onEndPlayerTurn` → `PythonToolTip.leaveAll`), only ever CLEAR it.
+  ⇒ A widget that reports neither arrive nor leave — the action bar — is hovered while the CURSOR is over its
+  area, asked live when the text arrives (`CvMainInterface.isCursorOverSilentArea`, laid out by the same
+  `actionBarRect` that places the bar), and its box goes when an update finds the cursor off the area
+  (`PythonToolTip.pollSilentArea`). Its known ceiling: a rebuild while the cursor is ON the bar can show the
+  bar's last button until the cursor reaches another one, since the game asks only on arrival.
 - **What the game does not report.** For a general widget the game passes Python no data, only the trailing
   number of the widget's name (the ID), so a screen names such a widget `TYPE|Case<index>`. A stacked bar reports
   neither arrive nor leave, so a bar is a general widget and its text carries the bar's hover. A label
