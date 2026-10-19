@@ -1229,6 +1229,13 @@ class CvMainInterface:
 				ACEM.exitCityDemolish(screen)
 
 		if self.bTooltip:
+			POINT = Win32.getCursorPos()
+			# The bottom bar's widgets never report the mouse leaving, so a box drawn there goes when the cursor
+			# leaves the bar; otherwise it would hide the map's own help (the combat odds) under it.
+			if self.yMouseTT > self.yBotBar and POINT.y <= self.yBotBar:
+				self.hideTooltip(screen)
+
+		if self.bTooltip:
 			# Tooltip sometimes get stuck...
 			POINT = Win32.getCursorPos()
 			xDiff = POINT.x - self.xMouseTT
