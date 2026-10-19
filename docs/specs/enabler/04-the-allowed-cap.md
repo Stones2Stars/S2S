@@ -28,6 +28,9 @@ sitting further down a queue, or one with production already sunk into it but no
 built. The active scope is the owner's TEAM for a world or team cap and the owner alone for an empire cap, so a
 rival still races for a world wonder. This is what keeps one empire's cities from building the same wonder at
 once — the AI's cities coordinate nothing else.
+⚖ **An `identity.empireLevel` building takes part with NO authored cap:** the empire holds it once
+([the empire-level building](02-pass-1-generate-the-frontier-the.md)), so it is one per empire from its identity alone — the holding, or another of the owner's
+cities actively building it, fills it. Its active scope is the owner.
 
 - **The fresh OFFER withholds it** while the existing copies plus the OTHER cities actively building it reach
   the cap: the ACTIVE-ELSEWHERE overlay, a sibling of the QUEUED one

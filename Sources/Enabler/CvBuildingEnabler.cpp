@@ -321,10 +321,17 @@ static int bd_activeBuilders(int iB, const CvCity& kCity, bool bTeamScope, bool 
 // Do the existing copies plus the cities actively building iB reach one of its self-caps ([enabler.md] par.4)?
 static bool bd_activeBuildsReachCap(int iB, const CvCity& kCity, bool bRankedAheadOnly)
 {
+	const PlayerTypes eOwner = kCity.getOwner();
+	// An empire-level building is held once by the empire ([enabler.md] par.2), so it is one per empire with no
+	// authored cap: the holding, or another of the owner's cities actively building it, fills it.
+	if (GC.getBuildingInfo((BuildingTypes)iB).isEmpireLevel()
+	&& (GET_PLAYER(eOwner).hasEmpireBuilding((BuildingTypes)iB) || bd_activeBuilders(iB, kCity, false, bRankedAheadOnly) > 0))
+	{
+		return true;
+	}
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
 	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
 	if (a == NULL) return false;
-	const PlayerTypes eOwner = kCity.getOwner();
 	for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 	{
 		const int iCap = a->cap((EnAllowedCap)iKind);
@@ -913,14 +920,14 @@ void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)
 }
 
 // Re-gate iB in every city of its cap's ACTIVE scope: the owner's team for a world or team cap, the owner alone
-// for an empire cap ([enabler.md] par.4). An uncapped building moves no verdict anywhere.
+// for an empire cap or an empire-level building ([enabler.md] par.4). Anything else moves no verdict anywhere.
 static void bd_gateActiveScope(int iB, PlayerTypes eOwner)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
 	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
-	if (a == NULL) return;
-	const bool bTeamScope = a->cap(ALLOWEDCAP_WORLD) >= 0 || a->cap(ALLOWEDCAP_TEAM) >= 0;
-	if (!bTeamScope && a->cap(ALLOWEDCAP_EMPIRE) < 0) return;
+	const bool bTeamScope = a != NULL && (a->cap(ALLOWEDCAP_WORLD) >= 0 || a->cap(ALLOWEDCAP_TEAM) >= 0);
+	const bool bOwnerScope = GC.getBuildingInfo((BuildingTypes)iB).isEmpireLevel() || (a != NULL && a->cap(ALLOWEDCAP_EMPIRE) >= 0);
+	if (!bTeamScope && !bOwnerScope) return;
 	std::set<int> one;
 	one.insert(iB);
 	const TeamTypes eOwnerTeam = GET_PLAYER(eOwner).getTeam();
