@@ -22,8 +22,6 @@ CvSizeMattersSection::CvSizeMattersSection()
 	, cargoSmSpace(0)
 	, cargoVolume(0)
 	, cargoVolumeModifier(0)
-	, groupSize(0)
-	, baseCargoVolume(0)
 {
 }
 
@@ -43,8 +41,6 @@ void CvSizeMattersSection::clearParsed()
 	cargoSmSpace = 0;
 	cargoVolume = 0;
 	cargoVolumeModifier = 0;
-	groupSize = 0;
-	baseCargoVolume = 0;
 }
 
 void CvSizeMattersSection::parse(const picojson::value& entity)
@@ -68,8 +64,6 @@ void CvSizeMattersSection::parse(const picojson::value& entity)
 	group = jsonIdInt(*pBlock, "group");
 	sizeModifier = jsonIdInt(*pBlock, "sizeModifier");
 	maxHP = jsonIdInt(*pBlock, "maxHP");
-	groupSize = jsonIdInt(*pBlock, "groupSize");
-	baseCargoVolume = jsonIdInt(*pBlock, "baseCargoVolume");
 	const picojson::object* pCombatModifier = jsonChildObj(*pBlock, "combatModifier");
 	if (pCombatModifier != NULL)
 	{

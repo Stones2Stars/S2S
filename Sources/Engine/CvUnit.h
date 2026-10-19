@@ -317,6 +317,8 @@ public:
 
 	DllExport void NotifyEntity(MissionTypes eMission);
 	DllExport DomainTypes getDomainType() const;
+	///<summary>The domain this unit would move in as kType: land while it is a commodore, else kType's.</summary>
+	DomainTypes domainAsType(const CvUnitInfo& kType) const;
 	DllExport bool canMove() const;
 	DllExport bool hasMoved() const;
 	DllExport BuildTypes getBuildType() const;
@@ -901,6 +903,11 @@ public:
 	int domainModifier(DomainTypes eDomain) const;
 
 	int cargoSpace() const;
+	///<summary>The cargo space this unit would have as kType, in the units cargoSpace answers in: the hold (the
+	/// Size Matters capacity under that option) plus the empire's naval and missile allowances.</summary>
+	int cargoSpaceAsType(const CvUnitInfo& kType) const;
+	///<summary>cargoSpace's calculation for kType, with iSMCapacity as the Size Matters hold.</summary>
+	int cargoSpaceWith(const CvUnitInfo& kType, int iSMCapacity) const;
 	void changeCargoSpace(int iChange);
 	bool isFull() const;
 	///<summary>Free room in this carrier's hold FOR THAT CANDIDATE -- 0 when the carrier's authored `cargo.space`
@@ -1338,7 +1345,8 @@ public:
 	UnitCombatTypes getBestHealingType();
 	UnitCombatTypes getBestHealingTypeConst() const;
 
-	int getSubUnitCount() const;
+	///<summary>The figures of this unit still standing at iDamage: getGroupSize counted down with the damage, at
+	/// least one while the unit lives.</summary>
 	int getSubUnitsAlive(int iDamage) const;
 
 	bool isTargetOf(const CvUnit& attacker) const;
@@ -1866,14 +1874,29 @@ public:
 	DomainTypes getDomainCargo() const;
 	void setNewDomainCargo(DomainTypes eDomain);
 	SpecialUnitTypes getSpecialCargo() const;
+	///<summary>The special cargo this unit's hold would take as kType: its promotion-set override, else kType's.</summary>
+	SpecialUnitTypes specialCargoAsType(const CvUnitInfo& kType) const;
 	void setNewSpecialCargo(SpecialUnitTypes eSpecialUnit);
 	SpecialUnitTypes getSMNotSpecialCargo() const;
+	///<summary>The special cargo this unit's hold would refuse as kType: its promotion-set override, else kType's.</summary>
+	SpecialUnitTypes smNotSpecialCargoAsType(const CvUnitInfo& kType) const;
 	void setNewSMNotSpecialCargo(SpecialUnitTypes eSpecialUnit);
 
 	void changeSMCargoSpace(int iChange);
 	int SMcargoSpaceFilter() const;
-	int SMcargoCapacityPreCheck() const;
+	///<summary>The Size Matters hold volume this unit would have as kType, before its rank offset: kType's
+	/// whole-unit hold plus this unit's extra hold, as volume, scaled for the special cargo it takes; 0 when it
+	/// would not be a carrier.</summary>
+	int SMcargoVolumeAsType(const CvUnitInfo& kType) const;
+	///<summary>The Size Matters cargo capacity this unit would have as kType: SMcargoVolumeAsType scaled by this
+	/// unit's rank offset from its type, plus the space its promotions and combat classes add
+	/// (SMcargoSpaceFromHeldSources); the value setSMCargoCapacity seats.</summary>
+	int SMcargoCapacityAsType(const CvUnitInfo& kType) const;
+	///<summary>The Size Matters cargo space the unit's held promotions and combat classes add
+	/// (`sizeMatters.cargo.smSpace`).</summary>
+	int SMcargoSpaceFromHeldSources() const;
 	int getSMCargoCapacity() const;
+	///<summary>Seats the unit's Size Matters cargo capacity: SMcargoCapacityAsType of its own type.</summary>
 	void setSMCargoCapacity();
 
 	int getExtraMaxHP() const;
@@ -1908,8 +1931,13 @@ public:
 
 	int getSizeMattersOffsetValue() const;
 	int getSizeMattersSpacialOffsetValue() const;
-	int getCargoCapacitybyType(int iValue) const;
+	///<summary>A hold volume iValue scaled for the special cargo the hold takes: a hold for people or missiles sits
+	/// three size ranks down, a hold for fighters or seaplanes, or for anything but missiles, one rank down.</summary>
+	static int cargoCapacityForSpecialCargo(int iValue, SpecialUnitTypes eSpecialUnitDefined, SpecialUnitTypes eSpecialUnitDefinedNot);
 	bool isCarrier() const;
+	///<summary>Whether this unit would be a carrier as kType: a hold of kType's plus its own extra hold, a special
+	/// cargo, or a promotion-set domain cargo.</summary>
+	bool isCarrierAsType(const CvUnitInfo& kType) const;
 	bool isUnitAtBaseGroup() const;
 
 	//int getExtraGeneric() const;

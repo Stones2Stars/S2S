@@ -112,8 +112,9 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   - **UnitCombat** (the intrinsic **base ranks** + SM combat data): carries `qualityBase`/`groupBase`/`sizeBase` plus
     `maxHP`/`combatModifier`/`cargo`. A base equal to the legacy `−10` "unset" sentinel is emitted **absent** (never
     `0` — `0` is a real rank).
-  - **Unit** (its own SM fields): `combatModifier` (its per-rank combat mods), plus `groupSize`/`baseCargoVolume`
-    where authored. ⚖ **`smSpace` is DERIVED, not authored: under Size Matters a carrier's space follows
+  - **Unit** (its own SM fields): `combatModifier` (its per-rank combat mods). Its cargo volume is DERIVED at
+    load from its combat classes' size and group base ranks (`CvUnitInfo::getBaseCargoVolume`), and its authored
+    figure count is art, not Size Matters data: `world.art.meshGroups.groupSize` ([§7 intrinsic](08-intrinsic.md)). ⚖ **`smSpace` is DERIVED, not authored: under Size Matters a carrier's space follows
     from how many units it can carry** — so it derives from the `cargo` family's capacity, the same
     derived-at-load class as the ranks below. The data agrees: **no unit authors it** (legacy `iSMCargo` appears
     in no unit record); the only authorings are the 23 PROMOTION deltas, which are the delta plane working as
