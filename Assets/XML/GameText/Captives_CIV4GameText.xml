@@ -470,10 +470,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP</Tag>
-		<English>[ICON_BULLET]May join your cities (of less than size 7) or be sacrificed for Culture or Production. If you are running Slavery can be sold into slavery.</English>
-		<French>[ICON_BULLET]Peut rejoindre vos villes (de moins de 7 de population) ou être sacrifiés pour de la culture ou de la production. Si vous acceptez l'esclavage, peux être vendus en tant qu'esclave.</French>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]unirsi alle città[COLOR_REVERT] con popolazione inferiore a [COLOR_HIGHLIGHT_TEXT]7[COLOR_REVERT], essere [COLOR_HIGHLIGHT_TEXT]sacrificata[COLOR_REVERT] per [COLOR_HIGHLIGHT_TEXT]cultura[COLOR_REVERT] o [COLOR_HIGHLIGHT_TEXT]produzione[COLOR_REVERT] o essere [COLOR_HIGHLIGHT_TEXT]venduta come schiavo[COLOR_REVERT] (se la [COLOR_HIGHLIGHT_TEXT]visione del mondo schiavitù[COLOR_REVERT] è attiva)</Italian> <!-- unit Captive - Civilian -->
-		<Russian>[ICON_BULLET] Можно поселить в ваших городах (только где менее 7 жителей) или принести в жертву для очков культуры или производства. А также продать в рабство, если задействовано соответствующее мировоззрение.</Russian>
+		<English>[ICON_BULLET]May join your cities or be sacrificed for Culture or Production. If you are running Slavery can be sold into slavery.</English>
+		<French>[ICON_BULLET]Peut rejoindre vos villes ou être sacrifiés pour de la culture ou de la production. Si vous acceptez l'esclavage, peux être vendus en tant qu'esclave.</French>
+		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]unirsi alle città[COLOR_REVERT], essere [COLOR_HIGHLIGHT_TEXT]sacrificata[COLOR_REVERT] per [COLOR_HIGHLIGHT_TEXT]cultura[COLOR_REVERT] o [COLOR_HIGHLIGHT_TEXT]produzione[COLOR_REVERT] o essere [COLOR_HIGHLIGHT_TEXT]venduta come schiavo[COLOR_REVERT] (se la [COLOR_HIGHLIGHT_TEXT]visione del mondo schiavitù[COLOR_REVERT] è attiva)</Italian> <!-- unit Captive - Civilian -->
+		<Russian>[ICON_BULLET] Можно поселить в ваших городах или принести в жертву для очков культуры или производства. А также продать в рабство, если задействовано соответствующее мировоззрение.</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA</Tag>
