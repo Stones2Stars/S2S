@@ -36,6 +36,7 @@
 
 class CvArea;
 class CvCityBreakdown;
+struct DemographicStanding;
 class CvDiploParameters;
 class CvEventTriggerInfo;
 class CvPlot;
@@ -47,7 +48,6 @@ class CvPlayerAI;
 #define	UNIT_BIRTHMARK_TEMP_UNIT	20000
 
 #define MAX_RESEARCH_RATE_VALUE 1999999999
-#define MAX_COMMERCE_VALUE 900000000
 #define MAX_COMMERCE_RATE_MODIFIER_VALUE 1999999999
 #define MAX_GOLD_VALUE 9999999999999999
 #define MAX_GOLD_PER_TURN_VALUE 1999999999
@@ -343,9 +343,12 @@ public:
 
 	int getImprovementUpgradeProgressRate(const ImprovementTypes eImprovement) const;
 
-	int calculateTotalYield(YieldTypes eYield) const;
-	int calculateTotalExports(YieldTypes eYield) const;
-	int calculateTotalImports(YieldTypes eYield) const;
+	///<summary>The empire's yield eYield: the sum of its cities' realized rates.</summary>
+	int64_t calculateTotalYield(YieldTypes eYield) const;
+	///<summary>The yield eYield the empire's trade routes carry to other players' cities.</summary>
+	int64_t calculateTotalExports(YieldTypes eYield) const;
+	///<summary>The yield eYield other players' trade routes carry to the empire's cities.</summary>
+	int64_t calculateTotalImports(YieldTypes eYield) const;
 
 	// The empire's summed realized city wellbeing -- ONE group read over the four channels (×100), replacing
 	// the four one-channel aggregate functions ([patterns.md] § THE TWO READ ROLES: the getter IS the group).
@@ -377,7 +380,8 @@ public:
 	int calculateResearchModifier(TechTypes eTech) const;
 	int calculateGoldRate() const;
 	int calculateResearchRate(TechTypes eTech = NO_TECH) const;
-	int calculateTotalCommerce() const;
+	///<summary>The empire's whole commerce: its net gold, its net research and its other commerces.</summary>
+	int64_t calculateTotalCommerce() const;
 
 	bool canEverResearch(TechTypes eTech) const;
 	TechTypes getCurrentResearch() const;
@@ -684,12 +688,40 @@ public:
 
 	///<summary>The empire's worth: its units', techs' and operating buildings' worth, and 10 per citizen and per
 	/// scored land plot.</summary>
-	int getAssets() const;
+	int64_t getAssets() const;
 	///<summary>The empire's military might: its units', techs' and operating buildings' military worth, and 1 per
 	/// citizen.</summary>
-	int getPower() const;
-	int getTechPower() const;
-	int getUnitPower() const;
+	int64_t getPower() const;
+	///<summary>The military worth of the empire's held techs.</summary>
+	int64_t getTechPower() const;
+	///<summary>This player's power against eObserver's: stronger at or above iStrongerPercent of it, weaker at or
+	/// below iWeakerPercent, even between.</summary>
+	PowerStanding getPowerStanding(PlayerTypes eObserver, int iStrongerPercent, int iWeakerPercent) const;
+
+	///<summary>Whether eObserver may see this player's demographics: its power, its statistics.</summary>
+	bool isDemographicsVisibleTo(PlayerTypes eObserver) const;
+	///<summary>Whether eObserver may see what this player is researching.</summary>
+	bool isResearchVisibleTo(PlayerTypes eObserver) const;
+	///<summary>How many of this player's cities eObserver knows of: all of them when the count is exact for it,
+	/// else the cities revealed to its team, and the capital.</summary>
+	int getCitiesKnownTo(PlayerTypes eObserver) const;
+	///<summary>Whether eObserver knows this player's city count exactly: its own team, open borders from this
+	/// player's team, an embassy with a player willing to talk, or debug mode.</summary>
+	bool isCityCountExactFor(PlayerTypes eObserver) const;
+	///<summary>Whether this AI would refuse eAsker a war against some third team because it has its hands full
+	/// with war already.</summary>
+	bool isTooBusyForWarRequestFrom(PlayerTypes eAsker) const;
+
+	///<summary>Whether this player's turn of the current game turn has begun.</summary>
+	bool hasBegunTurn() const;
+	///<summary>How much this player's score moved: since its latest turn began when bIncludeCurrentTurn, else
+	/// over its last finished turn.</summary>
+	int64_t getScoreChange(bool bIncludeCurrentTurn) const;
+
+	///<summary>One measure of the empire for the demographics table, in its unit (demographicUnitOf).</summary>
+	int64_t getDemographic(DemographicKind eKind) const;
+	///<summary>This player's measure eKind beside its rivals': every other living civ, met or not.</summary>
+	void getDemographicStanding(DemographicKind eKind, DemographicStanding& standing) const;
 
 	int getPopScore(bool bCheckVassal = true) const;
 	void changePopScore(int iChange);
@@ -2017,6 +2049,11 @@ public:
 	CvBuildLists* m_pBuildLists;
 
 private:
+	///<summary>The one rule behind every view of a rival's intel: eObserver itself, its team, this player's team
+	/// being its team's vassal, debug mode, a game past its victory, or enough espionage points for eMission against
+	/// this player.</summary>
+	bool isIntelVisibleTo(PlayerTypes eObserver, EspionageMissionTypes eMission) const;
+
 	int m_iNumAnimalsSubdued;
 	std::map<BuildingTypes, int> m_unitConstructionCounts;
 	std::map<short, uint32_t> m_unitCount;

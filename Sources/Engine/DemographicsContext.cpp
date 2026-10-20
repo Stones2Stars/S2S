@@ -43,7 +43,8 @@ namespace
 		return GC.getMap().plotByIndex(iPlot)->area();
 	}
 
-	void dc_changeAreaWorth(CvArea* pArea, int iPlayer, int iChange)
+	///<summary>Moves a player's military worth standing in an area, when there is an area and a change.</summary>
+	void dc_changeAreaWorth(CvArea* pArea, int iPlayer, int64_t iChange)
 	{
 		if (pArea != NULL && iPlayer >= 0 && iPlayer < MAX_PLAYERS && iChange != 0)
 		{

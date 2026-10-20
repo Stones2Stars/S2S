@@ -79,6 +79,9 @@ protect a binding, and do not build a resolver to prove one safe first.
   truncating: the two decimals survive the boundary instead of being thrown away at it.
   ⛔ **A FLOAT IS RENDERED WITH TWO DECIMALS, NEVER MORE.** Two is the precision the model carries, so a third
   digit shows arithmetic noise rather than data.
+  ⚖ **The ceiling is an AMOUNT's.** A RATIO of two amounts (`ratioText`) is divided from both full values in
+  whole-number math, so its digits are data to any depth, and how many it shows is a display choice
+  ([rival-intel.md § Power](../../reference/rival-intel.md#power)).
   ⛔ **A float is safe for the MATH and not for the EXE's `getText`.** `CyTranslator().getText()` is the same
   varargs call the C++ side guards ([AGENTS.md § Validation](../../../AGENTS.md#validation), varargs text widths):
   a Python float is an 8-byte double, so it takes TWO argument slots, every later placeholder reads one slot

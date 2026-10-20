@@ -3851,6 +3851,9 @@ so its help is asked without the city.
 - We have not yet met this Civilization!!!  <!-- TXT_KEY_MISC_HAVENT_MET_CIV -->
 - Has fixed borders!  <!-- TXT_KEY_PLAYER_HAS_FIXED_BORDERS -->
 - Doesn't have fixed borders!  <!-- TXT_KEY_PLAYER_HAS_NOT_FIXED_BORDERS -->
+- Power: %s1 (yours: %s2)  <!-- TXT_KEY_MISC_CONTACT_POWER -->
+- Their power against yours: %s1  <!-- TXT_KEY_MISC_CONTACT_POWER_THEIRS_AGAINST_YOURS -->
+- Your power against theirs: %s1  <!-- TXT_KEY_MISC_CONTACT_POWER_YOURS_AGAINST_THEIRS -->
 - → `getActiveDealsString`
 - → `getAllRelationsString`
 - (&lt;CTRL&gt; for Trade Table)  <!-- TXT_KEY_MISC_CTRL_TRADE -->

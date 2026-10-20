@@ -19934,9 +19934,9 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bBarbarian)
 						bool bCityDanger = pLoopCity->AI_isDanger();
 						if ((bCity && pLoopCity->area() != area()) || bCityDanger || ((GC.getGame().getGameTurn() - pLoopCity->getGameTurnAcquired()) < 10 && pLoopCity->getPreviousOwner() != NO_PLAYER))
 						{
-							int iOurPower = std::max(1, pLoopCity->area()->getPower(getOwner()));
+							const int64_t iOurPower = std::max<int64_t>(1, pLoopCity->area()->getPower(getOwner()));
 							// Enemy power includes barb power
-							int iEnemyPower = GET_TEAM(getTeam()).countEnemyPowerByArea(pLoopCity->area());
+							const int64_t iEnemyPower = GET_TEAM(getTeam()).countEnemyPowerByArea(pLoopCity->area());
 
 							// Don't send troops to areas we are dominating already
 							// Don't require presence of enemy cities, just a dangerous force
@@ -20022,10 +20022,10 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bBarbarian)
 									{
 										if (bCanMoveAllTerrain || (pWaterArea != NULL && (pLoopCity->waterArea(true) == pWaterArea || pLoopCity->secondWaterArea() == pWaterArea)))
 										{
-											int iOurPower = std::max(1, pLoopCity->area()->getPower(getOwner()));
+											int64_t iOurPower = std::max<int64_t>(1, pLoopCity->area()->getPower(getOwner()));
 											iOurPower += GET_TEAM(eMasterTeam).countPowerByArea(pLoopCity->area());
 											// Enemy power includes barb power
-											int iEnemyPower = GET_TEAM(eMasterTeam).countEnemyPowerByArea(pLoopCity->area());
+											const int64_t iEnemyPower = GET_TEAM(eMasterTeam).countEnemyPowerByArea(pLoopCity->area());
 
 											// Don't send troops to areas we are dominating already
 											// Don't require presence of enemy cities, just a dangerous force

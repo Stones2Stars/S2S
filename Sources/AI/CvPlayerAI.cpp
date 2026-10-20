@@ -1943,10 +1943,10 @@ void CvPlayerAI::AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConq
 				// More inclined to raze if we're unlikely to hold it
 				if (GET_TEAM(getTeam()).getPower(false) * 10 < GET_TEAM(GET_PLAYER(eOldOwner).getTeam()).getPower(true) * 8)
 				{
-					const int iTempValue = std::min(75,
+					const int iTempValue = static_cast<int>(std::min<int64_t>(75,
 						(GET_TEAM(GET_PLAYER(eOldOwner).getTeam()).getPower(true) - GET_TEAM(getTeam()).getPower(false)) / 100
-						* 20 / std::max(100, GET_TEAM(getTeam()).getPower(false) / 100)
-					);
+						* 20 / std::max<int64_t>(100, GET_TEAM(getTeam()).getPower(false) / 100)
+					));
 					iRazeValue += iTempValue;
 				}
 			}
@@ -5766,7 +5766,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	int aiEmpireTotalYield[NUM_YIELD_TYPES];
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 	{
-		aiEmpireTotalYield[iYield] = calculateTotalYield((YieldTypes)iYield);
+		aiEmpireTotalYield[iYield] = static_cast<int>(calculateTotalYield((YieldTypes)iYield) / 100);
 	}
 
 	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
@@ -7321,7 +7321,7 @@ int CvPlayerAI::AI_getRivalVassalAttitude(PlayerTypes ePlayer) const
 
 	if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getVassalCount(getTeam()) > 0)
 	{
-		iAttitude -= (6 * GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getPower(true)) / std::max(1, GC.getGame().countTotalCivPower());
+		iAttitude -= static_cast<int>(6 * GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getPower(true) / std::max<int64_t>(1, GC.getGame().countTotalCivPower()));
 	}
 
 	return iAttitude;
@@ -8334,8 +8334,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			{
 				return true;
 			}
-			iOurValue *= 10 + myTeam.getPower(false) / 100;
-			iOurValue /= 10 + dealerTeam.getPower(false) / 100;
+			iOurValue = static_cast<int>(iOurValue * (10 + myTeam.getPower(false) / 100) / (10 + dealerTeam.getPower(false) / 100));
 		}
 		else if (AI_getMemoryCount(ePlayer, MEMORY_MADE_DEMAND_RECENT) > 0
 		|| AI_getAttitude(ePlayer) < ATTITUDE_PLEASED && myTeam.getPower(false) > dealerTeam.getPower(false) * 4 / 3)
@@ -8350,8 +8349,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			iThreshold *= 3;
 		}
 
-		iThreshold *= 100 + dealerTeam.getPower(false) / 100;
-		iThreshold /= 100 + myTeam.getPower(false) / 100;
+		iThreshold = static_cast<int>(iThreshold * (100 + dealerTeam.getPower(false) / 100) / (100 + myTeam.getPower(false) / 100));
 
 		iThreshold -= dealer.AI_getPeacetimeGrantValue(getID());
 
@@ -13960,8 +13958,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	CivicTypes eCurrentCivic = getCivics((CivicOptionTypes)kCivic.getCivicOption());
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
-		int iOurPower = std::max(1, pTeam.getPower(true));
-		int iTheirPower = std::max(1, GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower());
+		const int64_t iOurPower = std::max<int64_t>(1, pTeam.getPower(true));
+		const int64_t iTheirPower = std::max<int64_t>(1, GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower());
 
 		if (!GET_PLAYER((PlayerTypes)iI).isHumanPlayer() && GET_PLAYER((PlayerTypes)iI).isAlive() && GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam())
 		{
@@ -17377,11 +17375,11 @@ void CvPlayerAI::AI_doCivics()
 						//	Factor in lost production/GNP due to anarchy
 						int aiOwnCommerces[NUM_COMMERCE_TYPES];
 						getCommerces(aiOwnCommerces);
-						int iTotalEconomyTurnValue = (aiOwnCommerces[COMMERCE_GOLD] / 100 +
-													  aiOwnCommerces[COMMERCE_RESEARCH] / 100 +
-													  aiOwnCommerces[COMMERCE_CULTURE] / 100 +
-													  aiOwnCommerces[COMMERCE_ESPIONAGE] / 100 +
-													  2 * calculateTotalYield(YIELD_PRODUCTION));
+						const int iTotalEconomyTurnValue = static_cast<int>((aiOwnCommerces[COMMERCE_GOLD] +
+													  aiOwnCommerces[COMMERCE_RESEARCH] +
+													  aiOwnCommerces[COMMERCE_CULTURE] +
+													  aiOwnCommerces[COMMERCE_ESPIONAGE] +
+													  2 * calculateTotalYield(YIELD_PRODUCTION)) / 100);
 						int	iPerTurnEstimatedIncrease = (iBestCivicsValue - iCurCivicsValue);
 						int iAnarchyCost = getCivicAnarchyLength(paeBestCivic) * iTotalEconomyTurnValue;
 						int iBenfitInTurns = std::min(50, m_turnsSinceLastRevolution) * CvGameSpeedScale::hammerCostPercent() / 100;
@@ -20842,7 +20840,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 		int iDiploValue = 0;
 		//if we like this player then value positive attitude, if however we really hate them then
 		//actually value negative attitude.
-		iDiploValue += static_cast<int>((int64_t)(iOtherPlayerAttitudeWeight + 50) * kEvent.getAttitudeModifier() * GET_PLAYER(kTriggeredData.m_eOtherPlayer).getPower() / std::max(1, getPower()));
+		iDiploValue += static_cast<int>((int64_t)(iOtherPlayerAttitudeWeight + 50) * kEvent.getAttitudeModifier() * GET_PLAYER(kTriggeredData.m_eOtherPlayer).getPower() / std::max<int64_t>(1, getPower()));
 
 		if (kEvent.getTheirEnemyAttitudeModifier() != 0)
 		{
@@ -20904,7 +20902,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 		if (kEvent.isDeclareWar())
 		{
-			int iWarValue = (GET_TEAM(getTeam()).getDefensivePower() - GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true)) / 100;
+			int iWarValue = static_cast<int>((GET_TEAM(getTeam()).getDefensivePower() - GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true)) / 100);
 			iWarValue -= 30 * AI_getAttitudeVal(kTriggeredData.m_eOtherPlayer);
 			iValue += iWarValue;
 		}
@@ -21780,9 +21778,9 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 	}
 
 	// Check for whether we are very powerful, looking good for conquest
-	int iOurPower = GET_TEAM(getTeam()).getPower(true);
+	const int64_t iOurPower = GET_TEAM(getTeam()).getPower(true);
 	int iOurPowerRank = 1;
-	int iTotalPower = 0;
+	int64_t iTotalPower = 0;
 	int iNumNonVassals = 0;
 	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
 	{
@@ -21798,7 +21796,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 
 					if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iI))
 					{
-						if ((int64_t)95 * kTeam.getPower(false) > (int64_t)100 * iOurPower)
+						if (95 * kTeam.getPower(false) > 100 * iOurPower)
 						{
 							iOurPowerRank++;
 						}
@@ -21807,7 +21805,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 			}
 		}
 	}
-	int iAverageOtherPower = iTotalPower / std::max(1, iNumNonVassals);
+	const int64_t iAverageOtherPower = iTotalPower / std::max(1, iNumNonVassals);
 
 	if (3 * iOurPower > 4 * iAverageOtherPower)
 	{
@@ -22447,7 +22445,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 					// Attack units are scaled down to roughly reflect their limitations.
 					// (eg. Knights (10) vs Macemen (8). Cavalry (15) vs Rifles (14). Tank (28) vs Infantry (20) / Marine (24) )
 					int iValue = std::max(100 * kPlayer.getTypicalUnitValue(UNITAI_ATTACK) / 110, kPlayer.getTypicalUnitValue(UNITAI_CITY_DEFENSE));
-					iTotalWeightedValue += (int64_t)kPlayer.getPower() * iValue;
+					iTotalWeightedValue += kPlayer.getPower() * iValue;
 					iTotalPower += kPlayer.getPower();
 				}
 			}
@@ -22623,7 +22621,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 	int iCurrentEra = getCurrentEra();
 	int iParanoia = 0;
 	int iCloseTargets = 0;
-	int iOurDefensivePower = team.getDefensivePower();
+	const int64_t iOurDefensivePower = team.getDefensivePower();
 
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
@@ -22642,7 +22640,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 						// Are they a threat?
 						int iTempParanoia = 0;
 
-						const int iTheirPower = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getPower(true);
+						const int64_t iTheirPower = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getPower(true);
 
 						if (4 * iTheirPower > 3 * iOurDefensivePower)
 						{
@@ -22689,7 +22687,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 						if (iTempParanoia > 0)
 						{
-							iTempParanoia = static_cast<int>((int64_t)iTempParanoia * iTheirPower / std::max(1, iOurDefensivePower));
+							iTempParanoia = static_cast<int>(iTempParanoia * iTheirPower / std::max<int64_t>(1, iOurDefensivePower));
 						}
 
 						// Do they look like they're going for militaristic victory?
@@ -26862,7 +26860,7 @@ TeamTypes CvPlayerAI::AI_bestMakePeaceTeam(PlayerTypes ePlayer) const
 	PROFILE_EXTRA_FUNC();
 	//kWarTeam is the team that is at war with the player we want them to make peace with
 	const CvTeamAI& kWarTeam = GET_TEAM(GET_PLAYER(ePlayer).getTeam());
-	const int iTheirPower = kWarTeam.getPower(true);
+	const int64_t iTheirPower = kWarTeam.getPower(true);
 	int iBestValue = 250; //set a small threshold
 	TeamTypes eBestTeam = NO_TEAM;
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)

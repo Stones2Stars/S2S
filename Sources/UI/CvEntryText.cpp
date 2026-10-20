@@ -885,6 +885,27 @@ CvWString amountText(int64_t iAmount)
 	return CvWString::format(L"%s%I64d.%02I64d", szSign, iWhole, iFraction);
 }
 
+CvWString ratioText(int64_t iNumerator, int64_t iDenominator, int iDecimals)
+{
+	if (iDenominator <= 0)
+	{
+		return CvWString();
+	}
+	int64_t iScale = 1;
+	for (int iDigit = 0; iDigit < iDecimals; iDigit++)
+	{
+		iScale *= 10;
+	}
+	const int64_t iMagnitude = (iNumerator < 0) ? -iNumerator : iNumerator;
+	const int64_t iScaled = (2 * iMagnitude * iScale + iDenominator) / (2 * iDenominator);
+	const wchar_t* szSign = (iNumerator < 0 && iScaled > 0) ? L"-" : L"";
+	if (iDecimals <= 0)
+	{
+		return CvWString::format(L"%s%I64d", szSign, iScaled);
+	}
+	return CvWString::format(L"%s%I64d.%0*I64d", szSign, iScaled / iScale, iDecimals, iScaled % iScale);
+}
+
 CvWString unitStrengthText(int iCurrentStrength, int iFullStrength, bool bCurrentUnknown)
 {
 	const CvWString szGlyph = CvWString::format(L"%c", gDLL->getSymbolID(STRENGTH_CHAR));

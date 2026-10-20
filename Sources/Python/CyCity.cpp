@@ -1801,6 +1801,12 @@ bool CyCity::isRevealedTo(int iTeam) const
 	return m_pCity->isRevealed((TeamTypes)iTeam, false);
 }
 
+bool CyCity::isOpenTo(int /*PlayerTypes*/ iObserver) const
+{
+	if (m_pCity == NULL || iObserver < 0 || iObserver >= MAX_PLAYERS) return false;
+	return m_pCity->isOpenTo((PlayerTypes)iObserver);
+}
+
 bool CyCity::isCoastalTo(int iMinWaterSize) const
 {
 	//	Through the CONTEXT, which holds the largest adjacent water body as a maintained int, so every threshold
@@ -2343,6 +2349,7 @@ void CyCity::pythonPublish()
 		.def("getProjectProductionFor", &CyCity::getProjectProductionFor)
 		.def("getHandicapLevel",      &CyCity::getHandicapLevel)
 		.def("isRevealedTo",          &CyCity::isRevealedTo)
+		.def("isOpenTo",              &CyCity::isOpenTo)
 		.def("isCoastalTo",           &CyCity::isCoastalTo)
 		.def("isEmphasizing",         &CyCity::isEmphasizing)
 

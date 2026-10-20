@@ -15,6 +15,7 @@
 #include "CvDiplomacyClasses.h"
 #include "CvUnitCombatInfo.h"
 #include "CvTechInfo.h"           // the TECH_GAME_START root every player holds (its start civics)
+#include "CvEspionageMissionInfo.h"
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -173,6 +174,9 @@ cvInternalGlobals::cvInternalGlobals()
 	, m_iNumCitySizeTypes(0)
 	, m_iNumFootstepAudioTypes(0)
 	, m_bSignsCleared(false)
+	, m_eSeeDemographicsMission(NO_ESPIONAGEMISSION)
+	, m_eSeeResearchMission(NO_ESPIONAGEMISSION)
+	, m_eInvestigateCityMission(NO_ESPIONAGEMISSION)
 
 #define ADD_TO_CONSTRUCTOR(dataType, VAR) \
 	, m_##VAR((dataType)0)
@@ -3420,6 +3424,32 @@ void cvInternalGlobals::buildLoadTimeIndexes()
 		if (getBuildingInfo(static_cast<BuildingTypes>(iI)).getPropertyManipulatorsAllCities()->getNumSources() > 0)
 		{
 			m_allCitiesManipBuildings.push_back(static_cast<BuildingTypes>(iI));
+		}
+	}
+
+	// The missions that reveal a rival's demographics, research and cities: the first passive mission carrying each
+	// flag.
+	m_eSeeDemographicsMission = NO_ESPIONAGEMISSION;
+	m_eSeeResearchMission = NO_ESPIONAGEMISSION;
+	m_eInvestigateCityMission = NO_ESPIONAGEMISSION;
+	for (int iMission = getNumEspionageMissionInfos() - 1; iMission >= 0; iMission--)
+	{
+		const CvEspionageMissionInfo& kMission = getEspionageMissionInfo(static_cast<EspionageMissionTypes>(iMission));
+		if (!kMission.isPassive())
+		{
+			continue;
+		}
+		if (kMission.isSeeDemographics())
+		{
+			m_eSeeDemographicsMission = static_cast<EspionageMissionTypes>(iMission);
+		}
+		if (kMission.isSeeResearch())
+		{
+			m_eSeeResearchMission = static_cast<EspionageMissionTypes>(iMission);
+		}
+		if (kMission.isInvestigateCity())
+		{
+			m_eInvestigateCityMission = static_cast<EspionageMissionTypes>(iMission);
 		}
 	}
 

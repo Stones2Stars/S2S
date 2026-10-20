@@ -151,7 +151,8 @@ public:
 	int countCivTeamsEverAlive() const;
 	int countHumanPlayersAlive() const;
 
-	int countTotalCivPower() const;
+	///<summary>The power of every living civilization together (CvPlayer::getPower).</summary>
+	int64_t countTotalCivPower() const;
 	int countTotalNukeUnits() const;
 	int countKnownTechNumTeams(TechTypes eTech) const;
 

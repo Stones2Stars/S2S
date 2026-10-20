@@ -22,6 +22,7 @@
 #include "Infos/CvInfoKinds.h"   // the NUM_<FAMILY>_KINDS the empire group reads are sized by
 #include "Engine/CvCityBreakdown.h"   // getFinanceRows -- the finance advisor's panels are engine breakdowns
 #include "UI/CvGameTextMgr.h"         // getFinanceRows -- the breakdown rendered as rows
+#include "Engine/DemographicStanding.h"   // getDemographicsRows -- one row per measure
 
 //
 // Python wrapper class for CvPlayer
@@ -233,11 +234,6 @@ std::wstring CyPlayer::getStateReligionKey() const
 	return m_pPlayer->getStateReligionKey();
 }
 
-std::wstring CyPlayer::getWorstEnemyName() const
-{
-	return m_pPlayer->getWorstEnemyName();
-}
-
 int /*ArtStyleTypes*/ CyPlayer::getArtStyleType() const
 {
 	return (int) m_pPlayer->getArtStyleType();
@@ -356,22 +352,12 @@ int /*RouteTypes*/ CyPlayer::getBestRoute(const CyPlot* pPlot) const
 	return (int) m_pPlayer->getBestRoute(NULL != pPlot ? pPlot->getPlot() : NULL);
 }
 
-int CyPlayer::calculateTotalYield(int /*YieldTypes*/ eYield) const
+int64_t CyPlayer::calculateTotalYield(int /*YieldTypes*/ eYield) const
 {
-	return m_pPlayer->calculateTotalYield((YieldTypes)eYield);
+	return m_pPlayer->calculateTotalYield((YieldTypes)eYield) / 100;
 }
 
-int CyPlayer::calculateTotalExports(int /*YieldTypes*/ eYield) const
-{
-	return m_pPlayer->calculateTotalExports((YieldTypes)eYield);
-}
-
-int CyPlayer::calculateTotalImports(int /*YieldTypes*/ eYield) const
-{
-	return m_pPlayer->calculateTotalImports((YieldTypes)eYield);
-}
-
-// The four Python reads index the ONE group read; ÷100 here because this is the reader boundary.
+// The Python reads index the ONE group read; ÷100 here because this is the reader boundary.
 int CyPlayer::calculateTotalCityHappiness() const
 {
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
@@ -384,20 +370,6 @@ int CyPlayer::calculateTotalCityUnhappiness() const
 	int aWellbeing[NUM_WELLBEING_CHANNELS];
 	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
 	return aWellbeing[WELLBEING_ANGER] / 100;
-}
-
-int CyPlayer::calculateTotalCityHealthiness() const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
-	return aWellbeing[WELLBEING_HEALTH] / 100;
-}
-
-int CyPlayer::calculateTotalCityUnhealthiness() const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pPlayer->getRealizedCityWellbeing(aWellbeing);
-	return aWellbeing[WELLBEING_UNHEALTH] / 100;
 }
 
 int64_t CyPlayer::getFinalUnitUpkeep() const
@@ -423,11 +395,6 @@ int64_t CyPlayer::getFinalExpense() const
 int CyPlayer::calculateGoldRate() const
 {
 	return m_pPlayer->calculateGoldRate();
-}
-
-int CyPlayer::calculateTotalCommerce() const
-{
-	return m_pPlayer->calculateTotalCommerce();
 }
 
 int CyPlayer::calculateResearchRate(int /*TechTypes*/ eTech) const
@@ -829,19 +796,91 @@ int CyPlayer::getCitiesLost() const
 	return m_pPlayer->getCitiesLost();
 }
 
-int CyPlayer::getAssets() const
+int64_t CyPlayer::getAssets() const
 {
 	return m_pPlayer->getAssets() / 100;
 }
 
-int CyPlayer::getPower() const
+int64_t CyPlayer::getPower() const
 {
 	return m_pPlayer->getPower() / 100;
 }
 
-int CyPlayer::getUnitPower() const
+std::wstring CyPlayer::getPowerRatioText(int /*PlayerTypes*/ iOther, int iDecimals) const
 {
-	return m_pPlayer->getUnitPower() / 100;
+	return std::wstring(ratioText(m_pPlayer->getPower(), GET_PLAYER((PlayerTypes)iOther).getPower(), iDecimals).GetCString());
+}
+
+int CyPlayer::getPowerStanding(int /*PlayerTypes*/ iObserver, float fStrongerRatio, float fWeakerRatio) const
+{
+	const int iStrongerPercent = static_cast<int>(fStrongerRatio * 100 + 0.5f);
+	const int iWeakerPercent = static_cast<int>(fWeakerRatio * 100 + 0.5f);
+	return m_pPlayer->getPowerStanding((PlayerTypes)iObserver, iStrongerPercent, iWeakerPercent);
+}
+
+bool CyPlayer::isDemographicsVisibleTo(int /*PlayerTypes*/ iObserver) const
+{
+	return m_pPlayer->isDemographicsVisibleTo((PlayerTypes)iObserver);
+}
+
+bool CyPlayer::isResearchVisibleTo(int /*PlayerTypes*/ iObserver) const
+{
+	return m_pPlayer->isResearchVisibleTo((PlayerTypes)iObserver);
+}
+
+int CyPlayer::getCitiesKnownTo(int /*PlayerTypes*/ iObserver) const
+{
+	return m_pPlayer->getCitiesKnownTo((PlayerTypes)iObserver);
+}
+
+bool CyPlayer::isCityCountExactFor(int /*PlayerTypes*/ iObserver) const
+{
+	return m_pPlayer->isCityCountExactFor((PlayerTypes)iObserver);
+}
+
+bool CyPlayer::isTooBusyForWarRequestFrom(int /*PlayerTypes*/ iAsker) const
+{
+	return m_pPlayer->isTooBusyForWarRequestFrom((PlayerTypes)iAsker);
+}
+
+int64_t CyPlayer::getScoreChange(bool bIncludeCurrentTurn) const
+{
+	return m_pPlayer->getScoreChange(bIncludeCurrentTurn);
+}
+
+namespace
+{
+	///<summary>One demographics measure as the table shows it, by its unit: "12.5", "3412", "87%".</summary>
+	std::wstring cyp_demographicText(int64_t iValue, DemographicUnit eUnit)
+	{
+		switch (eUnit)
+		{
+		case DEMOGRAPHIC_UNIT_COUNT:
+			return std::wstring(CvWString::format(L"%I64d", iValue).GetCString());
+		case DEMOGRAPHIC_UNIT_PERCENT:
+			return std::wstring(CvWString::format(L"%I64d%%", iValue).GetCString());
+		default:
+			return std::wstring(amountText(iValue).GetCString());
+		}
+	}
+}
+
+python::list CyPlayer::getDemographicsRows() const
+{
+	python::list rows = python::list();
+	for (int iKind = 0; iKind < NUM_DEMOGRAPHIC_KINDS; iKind++)
+	{
+		const DemographicKind eKind = static_cast<DemographicKind>(iKind);
+		DemographicStanding standing;
+		m_pPlayer->getDemographicStanding(eKind, standing);
+		rows.append(python::make_tuple(iKind,
+			cyp_demographicText(standing.value, standing.unit),
+			cyp_demographicText(standing.bestRival, standing.unit),
+			cyp_demographicText(standing.rivalAverage, standing.unit),
+			cyp_demographicText(standing.worstRival, standing.unit),
+			standing.rank));
+	}
+	return rows;
 }
 
 int CyPlayer::getPopScore() const

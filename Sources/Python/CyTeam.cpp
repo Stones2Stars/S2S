@@ -3,6 +3,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "AI/CvPlayerAI.h"
+#include "AI/CvTeamAI.h"          // getWorstEnemy -- the AI keeps the team's worst enemy
 #include "Engine/CvTeam.h"
 #include "CyArea.h"
 #include "CyTeam.h"
@@ -76,14 +77,24 @@ void CyTeam::signDefensivePact(int /*TeamTypes*/ eTeam)
 	m_pTeam->signDefensivePact((TeamTypes)eTeam);
 }
 
-int CyTeam::getAssets() const
+int64_t CyTeam::getAssets() const
 {
 	return m_pTeam->getAssets() / 100;
 }
 
-int CyTeam::getPower(bool bIncludeVassals) const
+int64_t CyTeam::getPower(bool bIncludeVassals) const
 {
 	return m_pTeam->getPower(bIncludeVassals) / 100;
+}
+
+int /*TeamTypes*/ CyTeam::getWorstEnemy() const
+{
+	return GET_TEAM(m_pTeam->getID()).AI_getWorstEnemy();
+}
+
+bool CyTeam::isEspionageAheadOf(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam->isEspionageAheadOf((TeamTypes)eTeam);
 }
 
 int64_t CyTeam::getTotalVictoryScore() const
@@ -660,6 +671,8 @@ void CyTeam::pythonPublish()
 
 		.def("getAssets", &CyTeam::getAssets)
 		.def("getPower", &CyTeam::getPower)
+		.def("getWorstEnemy", &CyTeam::getWorstEnemy)
+		.def("isEspionageAheadOf", &CyTeam::isEspionageAheadOf)
 
 		.def("getTotalVictoryScore", &CyTeam::getTotalVictoryScore)
 

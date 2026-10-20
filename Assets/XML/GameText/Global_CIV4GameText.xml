@@ -5175,108 +5175,28 @@
 		<Spanish>Promedio del rival</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_AGRICULTURE</Tag>
-		<English>Crop Yield (Food)</English>
-		<French>Récolte (Nour.)</French>
-		<German>Getreideertrag (Nahrung)</German>
-		<Italian>Rendimento coltivazioni (cibo)</Italian> <!-- info screen demo table -->
-		<Spanish>Rend.cosechas(Ali)</Spanish>
+		<Tag>TXT_KEY_DEMO_SCREEN_COMMERCE</Tag>
+		<English>Commerce</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_AGRICULTURE_MEASURE</Tag>
-		<English> Million Bushels</English>
-		<French> Millions de boisseaux</French>
-		<German> Mio. Scheffel</German>
-		<Italian>(milioni di staia)</Italian> <!-- info screen demo table -->
-		<Spanish> Mill. de fanegas</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_ECONOMY</Tag>
-		<English>GNP (Gold)</English>
-		<French>PNB (Or)</French>
-		<German>BSP (Gold)</German>
-		<Italian>Prodotto interno lordo (oro)</Italian> <!-- info screen demo table -->
-		<Spanish>PNB (oro)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_ECONOMY_MEASURE</Tag>
-		<English> Million Gold</English>
-		<French> Millions en or</French>
-		<German> Mio. Gold</German>
-		<Italian>(milioni d'oro)</Italian> <!-- info screen demo table -->
-		<Spanish> Mill. de oro</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_EXPORTS</Tag>
-		<English>Exports</English>
-		<French>Exportations</French>
-		<German>Exporte</German>
-		<Italian>Esportazioni</Italian> <!-- info screen demo table -->
-		<Spanish>Exportaciones</Spanish>
+		<Tag>TXT_KEY_DEMO_SCREEN_FOOD</Tag>
+		<English>Food</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DEMO_SCREEN_HAPPINESS</Tag>
-		<English>Approval Rate</English>
-		<French>Taux d'approbation</French>
-		<German>Billigungsrate</German>
-		<Italian>Grado di approvazione</Italian> <!-- info screen demo table -->
-		<Spanish>Ritmo aprobación</Spanish>
+		<English>Happiness</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DEMO_SCREEN_HEALTH</Tag>
-		<English>Life Expectancy</English>
-		<French>Espérance de vie</French>
-		<German>Lebenserwartung</German>
-		<Italian>Aspettativa di vita</Italian> <!-- info screen demo table -->
-		<Spanish>Esperanza de vida</Spanish>
+		<English>Health</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_IMPORTS</Tag>
-		<English>Imports</English>
-		<French>Importations</French>
-		<German>Importe</German>
-		<Italian>Importazioni</Italian> <!-- info screen demo table -->
-		<Spanish>Importaciones</Spanish>
+		<Tag>TXT_KEY_DEMO_SCREEN_LAND_PLOTS</Tag>
+		<English>Land plots</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_INDUSTRY</Tag>
-		<English>Mfg. Goods (Prod.)</English>
-		<French>March. (Prod.)</French>
-		<German>Ind. (Prod.)</German>
-		<Italian>Beni prodotti (produzione)</Italian>  <!-- info screen demo table -->
-		<Spanish>Merc.fabric.(Prod)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_INDUSTRY_MEASURE</Tag>
-		<English> Million Tons</English>
-		<French> Millions de tonnes</French>
-		<German> Mio. Tonnen</German>
-		<Italian>(milioni di tonnellate)</Italian> <!-- info screen demo table -->
-		<Spanish> Mill. de toneladas</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_LAND_AREA</Tag>
-		<English>Land Area</English>
-		<French>Territoire</French>
-		<German>Landgebiet</German>
-		<Italian>Superficie territorio</Italian> <!-- info screen demo table -->
-		<Spanish>Área terrestre</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_LAND_AREA_MEASURE</Tag>
-		<English> Square km</English>
-		<French> Km²</French>
-		<German> Quadratkilometer</German>
-		<Italian>(chilometri quadrati)</Italian> <!-- info screen demo table -->
-		<Spanish> Km cuad.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_MILITARY</Tag>
-		<English>Soldiers</English>
-		<French>Soldats</French>
-		<German>Soldaten</German>
-		<Italian>Potenza militare</Italian> <!-- info screen demo table -->
-		<Spanish>Soldados</Spanish>
+		<Tag>TXT_KEY_DEMO_SCREEN_NET_TRADE</Tag>
+		<English>Net trade</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DEMO_SCREEN_POPULATION</Tag>
@@ -5287,12 +5207,12 @@
 		<Spanish>Población</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_DEMO_SCREEN_POPULATION_MEASURE</Tag>
-		<English> Years</English>
-		<French> Personnes</French>
-		<German> Jahre</German>
-		<Italian>Numero d'anni</Italian> <!-- info screen demo table -->
-		<Spanish> Años</Spanish>
+		<Tag>TXT_KEY_DEMO_SCREEN_POWER</Tag>
+		<English>Power</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEMO_SCREEN_PRODUCTION</Tag>
+		<English>Production</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DEMO_SCREEN_RANK</Tag>
@@ -19970,6 +19890,18 @@
 		<Spanish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 por Maravillas y principios[COLOR_REVERT]</Spanish>
 		<Polish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 z cud&#243;w oraz doktryn[COLOR_REVERT]</Polish>
 		<Russian>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 XP îò ÷óäåñ è ïàðàäèãì[COLOR_REVERT]</Russian>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CONTACT_POWER</Tag>
+		<English>Power: %s1 (yours: %s2)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CONTACT_POWER_THEIRS_AGAINST_YOURS</Tag>
+		<English>Their power against yours: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CONTACT_POWER_YOURS_AGAINST_THEIRS</Tag>
+		<English>Your power against theirs: %s1</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PLAYER_HAS_FIXED_BORDERS</Tag>

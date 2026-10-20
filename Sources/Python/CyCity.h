@@ -160,6 +160,8 @@ public:
 	int getProjectProductionFor(int iProject) const;
 	int getHandicapLevel() const;
 	bool isRevealedTo(int iTeam) const;
+	///<summary>Whether iObserver may see inside this city (CvCity::isOpenTo).</summary>
+	bool isOpenTo(int /*PlayerTypes*/ iObserver) const;
 	bool isCoastalTo(int iMinWaterSize) const;
 	bool isEmphasizing(int iEmphasize) const;
 

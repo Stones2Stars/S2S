@@ -14,7 +14,6 @@ import PythonToolTip
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 GAME = GC.getGame()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -122,9 +121,9 @@ class CvInfoScreen:
 
 		sTemp1 = [
 			TRNSLTR.getText("TXT_KEY_GAME_SCORE", ()),
-			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_ECONOMY", ()),
-			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_INDUSTRY", ()),
-			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_AGRICULTURE", ()),
+			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_COMMERCE", ()),
+			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_PRODUCTION", ()),
+			TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_FOOD", ()),
 			TRNSLTR.getText("TXT_KEY_POWER", ()),
 			TRNSLTR.getText("TXT_WORD_CULTURE", ()),
 			TRNSLTR.getText("TXT_WORD_ESPIONAGE", ()),
@@ -163,14 +162,6 @@ class CvInfoScreen:
 		self.pathNullBtn = AFM.getInterfaceArtInfo("INTERFACE_BUTTON_NULL").getPath()
 		self.zoomArt = AFM.getInterfaceArtInfo("INTERFACE_BUTTONS_CITYSELECTION").getPath()
 
-		# Cache some espionage mission indexes
-		self.iDemographicsMission = -1
-		self.iInvestigateCityMission = -1
-		for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-			if ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
-				self.iDemographicsMission = iMissionLoop
-			if ESPIONAGEMISSION.isInvestigateCity(iMissionLoop):
-				self.iInvestigateCityMission = iMissionLoop
 		# Cache player specifics
 		self.iPlayer = iPlayer = GAME.getActivePlayer()
 		self.determineKnownPlayers(iEndGame)
@@ -649,140 +640,6 @@ class CvInfoScreen:
 		if self.demographicsTable:
 			screen.show(self.demographicsTable)
 			return
-		iPlayer = self.iPlayer
-
-		iEconomy = 0
-		iIndustry = 0
-		iAgriculture = 0
-		iMilitary = 0
-		iLandArea = 0
-		iPopulation = 0
-		iHappiness = 0
-		iHealth = 0
-		iNetTrade = 0
-
-		iNumRivals = 0
-		iEconomyAverage = 0
-		iIndustryAverage = 0
-		iAgricultureAverage = 0
-		iMilitaryAverage = 0
-		iLandAreaAverage = 0
-		iPopulationAverage = 0
-		iHappinessAverage = 0
-		iHealthAverage = 0
-		iNetTradeAverage = 0
-
-		# Lists of Player values - will be used to determine rank, strength and average per city
-		aiGroupEconomy = []
-		aiGroupIndustry = []
-		aiGroupAgriculture = []
-		aiGroupMilitary = []
-		aiGroupLandArea = []
-		aiGroupPopulation = []
-		aiGroupHappiness = []
-		aiGroupHealth = []
-		aiGroupNetTrade = []
-
-		# Loop through all players to determine Rank and relative Strength
-		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-			playerX = GC.getPlayer(iPlayerX)
-			if not playerX.isAlive():
-				continue
-
-			iEconomyX = playerX.calculateTotalCommerce()
-			aiGroupEconomy.append((iEconomyX, iPlayerX))
-
-			iIndustryX = playerX.calculateTotalYield(YieldTypes.YIELD_PRODUCTION)
-			aiGroupIndustry.append((iIndustryX, iPlayerX))
-
-			iAgricultureX = playerX.calculateTotalYield(YieldTypes.YIELD_FOOD)
-			aiGroupAgriculture.append((iAgricultureX, iPlayerX))
-
-			iMilitaryX = playerX.getUnitPower() * 50
-			aiGroupMilitary.append((iMilitaryX, iPlayerX))
-
-			iLandAreaX = playerX.getTotalLand() * 1000
-			aiGroupLandArea.append((iLandAreaX, iPlayerX))
-
-			iPopulationX = playerX.getRealPopulation()
-			aiGroupPopulation.append((iPopulationX, iPlayerX))
-
-			iHappinessX = playerX.calculateTotalCityHappiness()
-			iHappinessX = iHappinessX * 100 / max(1, iHappinessX + playerX.calculateTotalCityUnhappiness())
-			aiGroupHappiness.append((iHappinessX, iPlayerX))
-
-			iHealthX = playerX.calculateTotalCityHealthiness()
-			iHealthX = iHealthX * 100 / max(1, iHealthX + playerX.calculateTotalCityUnhealthiness())
-			aiGroupHealth.append((iHealthX, iPlayerX))
-
-			iNetTradeX = playerX.calculateTotalExports(YieldTypes.YIELD_COMMERCE) - playerX.calculateTotalImports(YieldTypes.YIELD_COMMERCE)
-			aiGroupNetTrade.append((iNetTradeX, iPlayerX))
-
-			if iPlayer == iPlayerX:
-				iEconomy = iEconomyX
-				iIndustry = iIndustryX
-				iAgriculture = iAgricultureX
-				iMilitary = iMilitaryX
-				iLandArea = iLandAreaX
-				iPopulation = iPopulationX
-				iHappiness = iHappinessX
-				iHealth = iHealthX
-				iNetTrade = iNetTradeX
-			else:
-				iNumRivals += 1
-				iEconomyAverage += iEconomyX
-				iIndustryAverage += iIndustryX
-				iAgricultureAverage += iAgricultureX
-				iMilitaryAverage += iMilitaryX
-				iLandAreaAverage += iLandAreaX
-				iPopulationAverage += iPopulationX
-				iHappinessAverage += iHappinessX
-				iHealthAverage += iHealthX
-				iNetTradeAverage += iNetTradeX
-
-		if iNumRivals:
-			iEconomyAverage /= iNumRivals
-			iIndustryAverage /= iNumRivals
-			iAgricultureAverage /= iNumRivals
-			iMilitaryAverage /= iNumRivals
-			iLandAreaAverage /= iNumRivals
-			iPopulationAverage /= iNumRivals
-			iHappinessAverage /= iNumRivals
-			iHealthAverage /= iNumRivals
-			iNetTradeAverage /= iNumRivals
-
-		# getWorstRival sorts the list from low to high
-		iEconomyWorst		= self.getWorstRival(aiGroupEconomy)
-		iIndustryWorst		= self.getWorstRival(aiGroupIndustry)
-		iAgricultureWorst	= self.getWorstRival(aiGroupAgriculture)
-		iMilitaryWorst		= self.getWorstRival(aiGroupMilitary)
-		iLandAreaWorst		= self.getWorstRival(aiGroupLandArea)
-		iPopulationWorst	= self.getWorstRival(aiGroupPopulation)
-		iHappinessWorst		= self.getWorstRival(aiGroupHappiness)
-		iHealthWorst		= self.getWorstRival(aiGroupHealth)
-		iNetTradeWorst		= self.getWorstRival(aiGroupNetTrade)
-
-		# getBestRival reverse the list so that it is from high to low
-		iEconomyBest		= self.getBestRival(aiGroupEconomy)
-		iIndustryBest		= self.getBestRival(aiGroupIndustry)
-		iAgricultureBest	= self.getBestRival(aiGroupAgriculture)
-		iMilitaryBest		= self.getBestRival(aiGroupMilitary)
-		iLandAreaBest		= self.getBestRival(aiGroupLandArea)
-		iPopulationBest		= self.getBestRival(aiGroupPopulation)
-		iHappinessBest		= self.getBestRival(aiGroupHappiness)
-		iHealthBest			= self.getBestRival(aiGroupHealth)
-		iNetTradeBest		= self.getBestRival(aiGroupNetTrade)
-
-		iEconomyRank		= self.getRank(iPlayer, aiGroupEconomy)
-		iIndustryRank		= self.getRank(iPlayer, aiGroupIndustry)
-		iAgricultureRank	= self.getRank(iPlayer, aiGroupAgriculture)
-		iMilitaryRank		= self.getRank(iPlayer, aiGroupMilitary)
-		iLandAreaRank		= self.getRank(iPlayer, aiGroupLandArea)
-		iPopulationRank		= self.getRank(iPlayer, aiGroupPopulation)
-		iHappinessRank		= self.getRank(iPlayer, aiGroupHappiness)
-		iHealthRank			= self.getRank(iPlayer, aiGroupHealth)
-		iNetTradeRank		= self.getRank(iPlayer, aiGroupNetTrade)
-
 		eWidGen = WidgetTypes.WIDGET_GENERAL
 
 		# Create Table
@@ -795,98 +652,29 @@ class CvInfoScreen:
 		screen.setTableColumnHeader(table, 4, TRNSLTR.getText("TXT_KEY_INFO_RIVAL_WORST", ()), 155)
 		screen.setTableColumnHeader(table, 5, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_RANK", ()), 90)
 
-		for i in xrange(23): # 18 normal items + 5 lines for spacing
+		# Each measure's label; a blank row separates one measure from the next.
+		labelOfKind = {
+			DemographicKind.DEMOGRAPHIC_ECONOMY:		"TXT_KEY_DEMO_SCREEN_COMMERCE",
+			DemographicKind.DEMOGRAPHIC_INDUSTRY:		"TXT_KEY_DEMO_SCREEN_PRODUCTION",
+			DemographicKind.DEMOGRAPHIC_AGRICULTURE:	"TXT_KEY_DEMO_SCREEN_FOOD",
+			DemographicKind.DEMOGRAPHIC_MILITARY:		"TXT_KEY_DEMO_SCREEN_POWER",
+			DemographicKind.DEMOGRAPHIC_LAND_AREA:		"TXT_KEY_DEMO_SCREEN_LAND_PLOTS",
+			DemographicKind.DEMOGRAPHIC_POPULATION:		"TXT_KEY_DEMO_SCREEN_POPULATION",
+			DemographicKind.DEMOGRAPHIC_HAPPINESS:		"TXT_KEY_DEMO_SCREEN_HAPPINESS",
+			DemographicKind.DEMOGRAPHIC_HEALTH:			"TXT_KEY_DEMO_SCREEN_HEALTH",
+			DemographicKind.DEMOGRAPHIC_NET_TRADE:		"TXT_KEY_DEMO_SCREEN_NET_TRADE"
+		}
+		for i in xrange(2 * DemographicKind.NUM_DEMOGRAPHIC_KINDS - 1):
 			screen.appendTableRow(table)
 
-		charBullet = u"  %c" % GAME.getSymbolID(FontSymbols.BULLET_CHAR)
-		screen.setTableText(table, 0, 0, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_ECONOMY", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 1, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_ECONOMY_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 3, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_INDUSTRY", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 4, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_INDUSTRY_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 6, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_AGRICULTURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 7, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_AGRICULTURE_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 9, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_MILITARY", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 11, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_LAND_AREA", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 12, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_LAND_AREA_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 14, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_POPULATION", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 16, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_HAPPINESS", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 18, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_HEALTH", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 19, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_POPULATION_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 21, TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_EXPORTS", ()) + " - " + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_IMPORTS", ()), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 0, 22, charBullet + TRNSLTR.getText("TXT_KEY_DEMO_SCREEN_ECONOMY_MEASURE", ()), "", eWidGen, 1, 2, 1<<0)
-
-		screen.setTableText(table, 1, 0, str(iEconomy), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 3, str(iIndustry), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 6, str(iAgriculture), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 9, str(iMilitary), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 11, str(iLandArea), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 14, str(iPopulation), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 16, str(iHappiness) + "%", "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 18, str(iHealth), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 1, 21, str(iNetTrade), "", eWidGen, 1, 2, 1<<0)
-
-		screen.setTableText(table, 2, 0, str(iEconomyBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 3, str(iIndustryBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 6, str(iAgricultureBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 9, str(iMilitaryBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 11, str(iLandAreaBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 14, str(iPopulationBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 16, str(iHappinessBest) + "%", "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 18, str(iHealthBest), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 2, 21, str(iNetTradeBest), "", eWidGen, 1, 2, 1<<0)
-
-		screen.setTableText(table, 3, 0, str(iEconomyAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 3, str(iIndustryAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 6, str(iAgricultureAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 9, str(iMilitaryAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 11, str(iLandAreaAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 14, str(iPopulationAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 16, str(iHappinessAverage) + "%", "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 18, str(iHealthAverage), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 3, 21, str(iNetTradeAverage), "", eWidGen, 1, 2, 1<<0)
-
-		screen.setTableText(table, 4, 0, str(iEconomyWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 3, str(iIndustryWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 6, str(iAgricultureWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 9, str(iMilitaryWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 11, str(iLandAreaWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 14, str(iPopulationWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 16, str(iHappinessWorst) + "%", "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 18, str(iHealthWorst), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 4, 21, str(iNetTradeWorst), "", eWidGen, 1, 2, 1<<0)
-
-		screen.setTableText(table, 5, 0, str(iEconomyRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 3, str(iIndustryRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 6, str(iAgricultureRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 9, str(iMilitaryRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 11, str(iLandAreaRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 14, str(iPopulationRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 16, str(iHappinessRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 18, str(iHealthRank), "", eWidGen, 1, 2, 1<<0)
-		screen.setTableText(table, 5, 21, str(iNetTradeRank), "", eWidGen, 1, 2, 1<<0)
-
-
-	def getRank(self, iPlayer, aiGroup):
-		iRank = 1
-		for _, iPlayerX in aiGroup:
-			if iPlayerX == iPlayer:
-				return iRank
-			iRank += 1
-		return 0
-
-	def getBestRival(self, aiGroup):
-		aiGroup.reverse()
-		for (iValue, iPlayerX) in aiGroup[:2]:
-			if iPlayerX != self.iPlayer:
-				return iValue
-		return 0
-
-	def getWorstRival(self, aiGroup):
-		aiGroup.sort()
-		for (iValue, iPlayerX) in aiGroup[:2]:
-			if iPlayerX != self.iPlayer:
-				return iValue
-		return 0
+		for iKind, szValue, szBestRival, szRivalAverage, szWorstRival, iRank in GC.getPlayer(self.iPlayer).getDemographicsRows():
+			iRow = 2 * iKind
+			screen.setTableText(table, 0, iRow, TRNSLTR.getText(labelOfKind[iKind], ()), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(table, 1, iRow, szValue, "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(table, 2, iRow, szBestRival, "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(table, 3, iRow, szRivalAverage, "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(table, 4, iRow, szWorstRival, "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(table, 5, iRow, str(iRank), "", eWidGen, 1, 2, 1<<0)
 
 
 #############################################################################################################
@@ -1084,9 +872,9 @@ class CvInfoScreen:
 				#	Everything below asks about the SAME city, so the per-city facts are fetched once here
 				#	rather than re-crossed inside the registry loops that follow.
 				aCityX = [iPlayerX, iCityX]
-				aPosX = GC.getPlayer(iPlayerX).getCity(iCityX).getPosition()
-				pCityPlotX = CyMap().plot(aPosX[0], aPosX[1])
 				bRevealedX = GC.getPlayer(iPlayerX).getCity(iCityX).isRevealedTo(self.iTeam)
+				#	A rival's production shows when its city is open to this player and revealed to the team.
+				bRivalOpenX = iTeamX != self.iTeam and bRevealedX and GC.getPlayer(iPlayerX).getCity(iCityX).isOpenTo(self.iPlayer)
 				#	The head order names WHICH registry it indexes, so the project / building under
 				#	construction is one read rather than a getter per kind.
 				aOrderX = GC.getPlayer(iPlayerX).getCity(iCityX).getOrder()
@@ -1107,10 +895,7 @@ class CvInfoScreen:
 							if iTeamX == self.iTeam:
 								aaWondersBeingBuilt.append([iProjectLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
-							if (self.team.isHasMet(iTeamX)
-							and self.player.canDoEspionageMission(self.iInvestigateCityMission, iPlayerX, pCityPlotX, -1)
-							and bRevealedX
-							):
+							if bRivalOpenX:
 								aaWondersBeingBuilt.append([iProjectLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
 				# Loop through buildings
@@ -1122,11 +907,9 @@ class CvInfoScreen:
 							# Is this city building a wonder?
 							if (iBuildingProd == iBuildingLoop):
 								if (iTeamX == self.iTeam):
-									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), cityX, iPlayerX])
+									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
-								if (self.team.isHasMet(iTeamX)
-								and self.player.canDoEspionageMission(self.iInvestigateCityMission, iPlayerX, pCityPlotX, -1)
-								and bRevealedX):
+								if bRivalOpenX:
 									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
 							if GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingReads(iBuildingLoop)[CityBuildingRead.CITY_BUILDING_HAS]:
@@ -1145,11 +928,9 @@ class CvInfoScreen:
 							if (iBuildingProd == iBuildingLoop):
 								# Only show our wonders under construction
 								if iTeamX == self.iTeam:
-									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), cityX, iPlayerX])
+									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
-								if (self.team.isHasMet(iTeamX)
-								and self.player.canDoEspionageMission(self.iInvestigateCityMission, iPlayerX, pCityPlotX, -1)
-								and bRevealedX):
+								if bRivalOpenX:
 									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
 							# Has this city built a wonder?
@@ -1515,7 +1296,7 @@ class CvInfoScreen:
 			iTeamX = playerX.getTeam()
 			if playerX.isEverAlive() and (team.isHasMet(iTeamX) or self.bDebug or iEndGame):
 
-				if iEndGame or iTeamX == iTeam or player.canDoEspionageMission(self.iDemographicsMission, iPlayerX, None, -1):
+				if playerX.isDemographicsVisibleTo(self.iPlayer):
 					self.aiPlayersMet.append(iPlayerX)
 					self.iNumPlayersMet += 1
 				else:

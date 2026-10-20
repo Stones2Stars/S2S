@@ -3266,10 +3266,10 @@ int CvGame::countHumanPlayersAlive() const
 }
 
 
-int CvGame::countTotalCivPower() const
+int64_t CvGame::countTotalCivPower() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())

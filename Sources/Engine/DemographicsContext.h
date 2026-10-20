@@ -21,23 +21,21 @@
 struct CvSpineEvent;
 
 ///<summary>The power a number of citizens adds: 1 each.</summary>
-inline int citizenPower(int iCitizens) { return 100 * iCitizens; }
+inline int64_t citizenPower(int iCitizens) { return 100 * (int64_t)iCitizens; }
 ///<summary>The assets a number of citizens or scored land plots adds: 10 each.</summary>
-inline int countAssets(int iCount) { return 1000 * iCount; }
+inline int64_t countAssets(int iCount) { return 1000 * (int64_t)iCount; }
 
 ///<summary>The empire's power and assets over what it holds -- its units, its held techs and its operating
 /// buildings. Population and scored land are forwarded by CvPlayer::getPower / getAssets.</summary>
 class DemographicsContext
 {
 public:
-	///<summary>The military worth of the empire's counted units.</summary>
-	int unitPower() const { return m_units.militaryWorth; }
 	///<summary>The military worth of the empire's held techs.</summary>
-	int techPower() const { return m_techs.militaryWorth; }
+	int64_t techPower() const { return m_techs.militaryWorth; }
 	///<summary>The military worth of everything the empire holds.</summary>
-	int heldPower() const { return m_units.militaryWorth + m_techs.militaryWorth + m_buildings.militaryWorth; }
+	int64_t heldPower() const { return m_units.militaryWorth + m_techs.militaryWorth + m_buildings.militaryWorth; }
 	///<summary>The worth of everything the empire holds.</summary>
-	int heldAssets() const { return m_units.worth + m_techs.worth + m_buildings.worth; }
+	int64_t heldAssets() const { return m_units.worth + m_techs.worth + m_buildings.worth; }
 
 	///<summary>The facts that maintain the ledgers -- the declared interest set, stated at the store.</summary>
 	static bool wantsEvent(int iEventId);

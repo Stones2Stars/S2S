@@ -48,7 +48,8 @@ public:
 
 	int getUnitsPerPlayer(PlayerTypes eIndex) const;
 	int getCitiesPerPlayer(PlayerTypes eIndex) const;
-	int getPower(PlayerTypes eIndex) const;
+	///<summary>A player's military might on this landmass (CvArea::getPower).</summary>
+	int64_t getPower(PlayerTypes eIndex) const;
 	int getBestFoundValue(PlayerTypes eIndex) const;
 
 	bool isBorderObstacle(TeamTypes eIndex) const;

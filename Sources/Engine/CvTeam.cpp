@@ -1837,10 +1837,10 @@ bool CvTeam::canSignDefensivePact(TeamTypes eTeamB) const
 	return true;
 }
 
-int CvTeam::getAssets() const
+int64_t CvTeam::getAssets() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
@@ -1851,10 +1851,10 @@ int CvTeam::getAssets() const
 	return iCount;
 }
 
-int CvTeam::getPower(bool bIncludeVassals) const
+int64_t CvTeam::getPower(bool bIncludeVassals) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -1873,10 +1873,10 @@ int CvTeam::getPower(bool bIncludeVassals) const
 	return iCount;
 }
 
-int CvTeam::getDefensivePower(TeamTypes eExcludeTeam) const
+int64_t CvTeam::getDefensivePower(TeamTypes eExcludeTeam) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 
 	FAssert(eExcludeTeam != getID());
 
@@ -1896,10 +1896,10 @@ int CvTeam::getDefensivePower(TeamTypes eExcludeTeam) const
 	return iCount;
 }
 
-int CvTeam::getEnemyPower() const
+int64_t CvTeam::getEnemyPower() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 
 	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
 	{
@@ -2212,7 +2212,7 @@ bool CvTeam::canVassalRevolt(TeamTypes eMaster) const
 }
 
 
-int CvTeam::getCurrentMasterPower(bool bIncludeVassals) const
+int64_t CvTeam::getCurrentMasterPower(bool bIncludeVassals) const
 {
 	PROFILE_EXTRA_FUNC();
 	if (isAVassal())
@@ -2450,10 +2450,10 @@ int CvTeam::countTotalPopulationByArea(const CvArea* pArea) const
 }
 
 
-int CvTeam::countPowerByArea(const CvArea* pArea) const
+int64_t CvTeam::countPowerByArea(const CvArea* pArea) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
@@ -2465,10 +2465,10 @@ int CvTeam::countPowerByArea(const CvArea* pArea) const
 }
 
 
-int CvTeam::countEnemyPowerByArea(const CvArea* pArea) const
+int64_t CvTeam::countEnemyPowerByArea(const CvArea* pArea) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
+	int64_t iCount = 0;
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID(), false)
@@ -5604,6 +5604,11 @@ int CvTeam::getEspionagePointsAgainstTeam(TeamTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
 	return m_aiEspionagePointsAgainstTeam[eIndex];
+}
+
+bool CvTeam::isEspionageAheadOf(TeamTypes eTeam) const
+{
+	return getEspionagePointsAgainstTeam(eTeam) > GET_TEAM(eTeam).getEspionagePointsAgainstTeam(getID());
 }
 
 void CvTeam::setEspionagePointsAgainstTeam(TeamTypes eIndex, int iValue)

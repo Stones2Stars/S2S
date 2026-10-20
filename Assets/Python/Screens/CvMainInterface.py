@@ -15,7 +15,6 @@ import RevInstances
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 
 # The yield/commerce ICON tokens, in ENGINE ENUM ORDER. A font glyph is text-plane rather than info data
 # ([patterns.md] THE PYTHON READ BOUNDARY), so the icon is asked of the translator, which expands each of these
@@ -66,9 +65,6 @@ class CvMainInterface:
 	def __init__(self):
 		global g_mainInterface
 		g_mainInterface = self
-
-		# Resolved on first use and kept: which espionage mission reveals demographics. None = not yet asked.
-		self.iDemographicsMission = None
 
 		global MainOpt, CityOpt, ClockOpt, ScoreOpt, RoMOpt
 		import BugCore
@@ -4558,7 +4554,6 @@ class CvMainInterface:
 				bNetworkMP = self.bNetworkMP
 				bMultiPlayer = self.bMultiPlayer
 				bDebug = self.bDebugMode
-				iTurn = GAME.getGameTurn()
 				bScoresMinimized = CyIF.isScoresMinimized()
 				bOutOfSync = CyIF.isOOSVisible()
 				# This is you, the player who will look at the score-board.
@@ -4587,26 +4582,12 @@ class CvMainInterface:
 					bShowCityCount	= ScoreOpt.isShowCountCities()
 				bShowPower			= ScoreOpt.isShowPower()
 				if bShowPower:
-					# Which espionage mission reveals demographics is STATIC info data, so it is resolved once
-					# and remembered -- this sits on the per-frame redraw path, where re-scanning the whole
-					# registry every frame answered the same question hundreds of times a second.
-					if self.iDemographicsMission is None:
-						self.iDemographicsMission = -1
-						for iMissionLoop in xrange(len(INFO.getIndex("ESPIONAGEMISSION_"))):
-							if ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
-								self.iDemographicsMission = iMissionLoop
-								break
-					iDemographicsMission = self.iDemographicsMission
-					if iDemographicsMission == -1:
-						bShowPower = False
-				if bShowPower:
-					iPlayerPower = CyPlayerAct.getPower()
 					iPowerColor		= ScoreOpt.getPowerColor()
 					iPowerColorHigh	= ScoreOpt.getHighPowerColor()
 					iPowerColorLow	= ScoreOpt.getLowPowerColor()
 					iPowerDecimals	= ScoreOpt.getPowerDecimals()
-					iPowerRatioHigh	= ScoreOpt.getHighPowerRatio()
-					iPowerRatioLow	= ScoreOpt.getLowPowerRatio()
+					fPowerRatioHigh	= ScoreOpt.getHighPowerRatio()
+					fPowerRatioLow	= ScoreOpt.getLowPowerRatio()
 					bPowerThemVsYou	= ScoreOpt.isPowerThemVersusYou()
 					iconStrength = self.iconStrength
 				# Misc
@@ -4674,18 +4655,7 @@ class CvMainInterface:
 								iScore = GAME.getPlayerScore(iPlayer)
 								scores.setScore(str(iScore))
 								if bShowScoreDelta:
-									iGameTurn = iTurn
-									if iPlayer >= iPlayerAct:
-										iGameTurn -= 1
-									if bScoreInclCurrTurn:
-										iScoreDelta = iScore
-									elif iGameTurn >= 0:
-										iScoreDelta = CyPlayer.getScoreHistory(iGameTurn)
-									else:
-										iScoreDelta = 0
-									iPrevGameTurn = iGameTurn - 1
-									if iPrevGameTurn >= 0:
-										iScoreDelta -= CyPlayer.getScoreHistory(iPrevGameTurn)
+									iScoreDelta = CyPlayer.getScoreChange(bScoreInclCurrTurn)
 									if iScoreDelta:
 										if iScoreDelta > 0:
 											iColor = cCoGreen
@@ -4799,10 +4769,7 @@ class CvMainInterface:
 										bTeamForcedPeaceYou	= CyTeamAct.isForcePeace(iTeam)
 										bTeamOpenBorderToYou = CyTeam.isOpenBorders(iTeamAct)
 										bTeamHasYourEmbassy = CyTeam.isHasEmbassy(iTeamAct)
-										bTeamOpenBorder2U	= CyTeam.isOpenBorders(iTeamAct)
 										bTeamDefPactWithYou = CyTeam.isDefensivePact(iTeamAct)
-										iTeamSpyPointAgainstYou = CyTeam.getEspionagePointsAgainstTeam(iTeamAct)
-										iYouSpyPointAgainstTeam = CyTeamAct.getEspionagePointsAgainstTeam(iTeam)
 										bTeamAliveDoOnce = False
 									if not bHaveMetTeam:
 										scores.setNotMet()
@@ -4832,74 +4799,45 @@ class CvMainInterface:
 										scores.setReligion(szTxt)
 
 								if not bSelf:
-									bEspionageCanSeeResearch = False
-									if iTeamSpyPointAgainstYou < iYouSpyPointAgainstTeam:
+									if CyTeamAct.isEspionageAheadOf(iTeam):
 										scores.setEspionage()
-									for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-										if ESPIONAGEMISSION.isSeeResearch(iMissionLoop):
-											bEspionageCanSeeResearch = CyPlayerAct.canDoEspionageMission(iMissionLoop, iPlayer, None, -1)
-											break
-									if bSameTeam or bEspionageCanSeeResearch or GC.getTeam(iPlayerTeam).isVassal(iTeamAct) or bDebug:
+									if CyPlayer.isResearchVisibleTo(iPlayerAct):
 										iTech = CyPlayer.getCurrentResearch()
 										if iTech != -1:
 											techIconSB.append([iPlayer, iTech])
 											scores.setResearch(iTech, CyPlayer.getResearchTurnsLeft(iTech, True))
-									# Power Rating - if on, show according to espionage "see demographics" mission.
-									if bShowPower and CyPlayerAct.canDoEspionageMission(iDemographicsMission, iPlayer, None, -1):
-										iPower = CyPlayer.getPower()
-										if iPower > 0: # avoid divide by zero
-											fPowerRatio = iPlayerPower / float(iPower)
-											if bPowerThemVsYou:
-												if fPowerRatio > 0:
-													fPowerRatio = 1.0 / fPowerRatio
-												else:
-													fPowerRatio = 99.0
-											szTxt = TextUtil.floatToString(fPowerRatio, iPowerDecimals) + iconStrength
-											if iPowerColorHigh >= 0 and fPowerRatio >= iPowerRatioHigh:
-												szTxt = TRNSLTR.changeTextColor(szTxt, iPowerColorHigh)
-											elif iPowerColorLow >= 0 and fPowerRatio <= iPowerRatioLow:
-												szTxt = TRNSLTR.changeTextColor(szTxt, iPowerColorLow)
-											elif iPowerColor >= 0:
-												szTxt = TRNSLTR.changeTextColor(szTxt, iPowerColor)
+									if bShowPower and CyPlayer.isDemographicsVisibleTo(iPlayerAct):
+										if bPowerThemVsYou:
+											szTxt = CyPlayer.getPowerRatioText(iPlayerAct, iPowerDecimals)
+										else:
+											szTxt = CyPlayerAct.getPowerRatioText(iPlayer, iPowerDecimals)
+										if szTxt:
+											szTxt += iconStrength
+											iStanding = CyPlayer.getPowerStanding(iPlayerAct, fPowerRatioHigh, fPowerRatioLow)
+											if iStanding == PowerStanding.POWER_STANDING_STRONGER and iPowerColorHigh >= 0:
+												iColor = iPowerColorHigh
+											elif iStanding == PowerStanding.POWER_STANDING_WEAKER and iPowerColorLow >= 0:
+												iColor = iPowerColorLow
+											else:
+												iColor = iPowerColor
+											if iColor >= 0:
+												szTxt = TRNSLTR.changeTextColor(szTxt, iColor)
 											scores.setPower(szTxt)
 									# AI Specific
 									if not bHumanPlayer:
-										bWillingToTalk = CyPlayer.AI_isWillingToTalk(iPlayerAct)
 										if bShowAttitude:
 											scores.setAttitude(unichr(GAME.getSymbolID(FontSymbols.ANGRY_CIV_CHAR) + CyPlayer.AI_getAttitude(iPlayerAct)))
-										if not bWillingToTalk:
+										if not CyPlayer.AI_isWillingToTalk(iPlayerAct):
 											scores.setWontTalk()
-										if bShowWorstEnemy and CyPlayer.getWorstEnemyName() == CyTeamAct.getName():
+										if bShowWorstEnemy and CyTeam.getWorstEnemy() == iTeamAct:
 											scores.setWorstEnemy()
-										if bShowWHEOOH and not bTeamAtWarWithYou and bWillingToTalk and bHaveMetTeam:
-											TD = TradeData()
-											TD.ItemType = TradeableItems.TRADE_WAR
-											for iTeamX in xrange(MAX_PC_TEAMS):
-												if iTeamX in (iTeamAct, iTeam): continue
-												if CyTeam.isAtWarWith(iTeamX) or not CyTeamAct.isHasMet(iTeamX) or not CyTeam.isHasMet(iTeamX):
-													continue
-												TD.iData = iTeamX
-												if CyPlayer.canTradeItem(iPlayerAct, TD, False):
-													denial = CyPlayer.getTradeDenial(iPlayerAct, TD)
-													if denial == DenialTypes.DENIAL_TOO_MANY_WARS:
-														scores.setWHEOOH()
-														break
-									else:
-										bWillingToTalk = True
+										if bShowWHEOOH and CyPlayer.isTooBusyForWarRequestFrom(iPlayerAct):
+											scores.setWHEOOH()
 
 								if bShowCityCount:
-									if bSameTeam or bTeamOpenBorder2U or self.bDebugMode or (bWillingToTalk and bTeamHasYourEmbassy):
-										szTxt = str(CyPlayer.getNumCities())
-									else:
-										iCount = 0
-										for CyCity in CyPlayer.cities():
-											if CyCity.isRevealedTo(iTeamAct):
-												iCount += 1
-										# (capital==None and iCount > 0) wouldn't think it possible, but it happened...
-										capital = CyPlayer.getCapitalCity()
-										if iCount and capital and not capital.isRevealedTo(iTeamAct):
-											iCount += 1
-										szTxt = u"<color=0,255,255>%d" %iCount
+									szTxt = str(CyPlayer.getCitiesKnownTo(iPlayerAct))
+									if not CyPlayer.isCityCountExactFor(iPlayerAct):
+										szTxt = u"<color=0,255,255>" + szTxt
 									scores.setNumCities(szTxt)
 							if bNetworkMP:
 								scores.setNetStats(CyGTM.getNetStats(iPlayer))

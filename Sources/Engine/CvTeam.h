@@ -108,10 +108,16 @@ public:
 	void signDefensivePact(TeamTypes eTeam);
 	bool canSignDefensivePact(TeamTypes eTeam) const;
 
-	int getAssets() const;
-	int getPower(bool bIncludeVassals) const;
-	int getDefensivePower(TeamTypes eExcludeTeam = NO_TEAM) const;
-	int getEnemyPower() const;
+	///<summary>The worth of the team's members (CvPlayer::getAssets).</summary>
+	int64_t getAssets() const;
+	///<summary>The military might of the team's members, and of its vassals' (less their techs) when
+	/// bIncludeVassals.</summary>
+	int64_t getPower(bool bIncludeVassals) const;
+	///<summary>The power that would defend this team: its own, its master's and its defensive pact partners', each
+	/// with its vassals, leaving out eExcludeTeam.</summary>
+	int64_t getDefensivePower(TeamTypes eExcludeTeam = NO_TEAM) const;
+	///<summary>The power of the teams at war with this one.</summary>
+	int64_t getEnemyPower() const;
 	int getNumNukeUnits() const;
 
 	bool isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorldBonuses=false) const;
@@ -122,7 +128,8 @@ public:
 	bool isVotingMember(VoteSourceTypes eVoteSource) const;
 	bool isFullMember(VoteSourceTypes eVoteSource) const;
 
-	int getCurrentMasterPower(bool bIncludeVassals) const;
+	///<summary>The power of this vassal's master team (CvTeam::getPower).</summary>
+	int64_t getCurrentMasterPower(bool bIncludeVassals) const;
 	bool isMasterPlanningLandWar(const CvArea* pArea) const;
 	bool isMasterPlanningSeaWar(const CvArea* pArea) const;
 	int getAtWarCount(bool bIgnoreMinors, bool bIgnoreVassals = false) const;
@@ -150,8 +157,10 @@ public:
 	int countNumUnitsByArea(const CvArea* pArea) const;
 	int countNumCitiesByArea(const CvArea* pArea) const;
 	int countTotalPopulationByArea(const CvArea* pArea) const;
-	int countPowerByArea(const CvArea* pArea) const;
-	int countEnemyPowerByArea(const CvArea* pArea) const;
+	///<summary>The team members' power on the landmass pArea (CvArea::getPower).</summary>
+	int64_t countPowerByArea(const CvArea* pArea) const;
+	///<summary>The power on the landmass pArea of the players this team plans or wages war on.</summary>
+	int64_t countEnemyPowerByArea(const CvArea* pArea) const;
 
 	int countEnemyPopulationByArea(const CvArea* pArea) const;
 	int countNumAIUnitsByArea(const CvArea* pArea, UnitAITypes eUnitAI) const;
@@ -407,6 +416,8 @@ public:
 	bool isParent(TeamTypes eTeam) const;
 
 	int getEspionagePointsAgainstTeam(TeamTypes eIndex) const;
+	///<summary>Whether this team has more espionage points against eTeam than eTeam has against it.</summary>
+	bool isEspionageAheadOf(TeamTypes eTeam) const;
 	void setEspionagePointsAgainstTeam(TeamTypes eIndex, int iValue);
 	void changeEspionagePointsAgainstTeam(TeamTypes eIndex, int iChange);
 

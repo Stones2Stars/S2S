@@ -36,8 +36,14 @@ public:
 	void signOpenBorders(int /*TeamTypes*/ eTeam);
 	void signDefensivePact(int /*TeamTypes*/ eTeam);
 
-	int getAssets() const;
-	int getPower(bool bIncludeVassals) const;
+	///<summary>The team's worth (CvTeam::getAssets).</summary>
+	int64_t getAssets() const;
+	///<summary>The team's military might (CvTeam::getPower).</summary>
+	int64_t getPower(bool bIncludeVassals) const;
+	///<summary>The team this team counts as its worst enemy, or NO_TEAM.</summary>
+	int /*TeamTypes*/ getWorstEnemy() const;
+	///<summary>Whether this team has more espionage points against eTeam than eTeam has against it.</summary>
+	bool isEspionageAheadOf(int /*TeamTypes*/ eTeam) const;
 	int64_t getTotalVictoryScore() const;
 
 	bool isAtWar(bool bCountMinors) const;

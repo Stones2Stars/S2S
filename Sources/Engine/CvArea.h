@@ -94,10 +94,10 @@ public:
 
 	///<summary>A player's military might on this landmass: the military worth of its units standing here and of
 	/// its cities' operating buildings here, and 1 per citizen of its cities here.</summary>
-	int getPower(PlayerTypes eIndex) const;
+	int64_t getPower(PlayerTypes eIndex) const;
 	///<summary>Moves a player's military worth standing in this area -- its units' and its cities' operating
 	/// buildings'. ⛔ Called by the demographics consumer (Engine/DemographicsContext.h) and nothing else.</summary>
-	void changeMilitaryWorth(PlayerTypes eIndex, int iChange);
+	void changeMilitaryWorth(PlayerTypes eIndex, int64_t iChange);
 
 	bool hasBestFoundValue(PlayerTypes eIndex) const;
 	int getBestFoundValue(PlayerTypes eIndex) const;
@@ -177,7 +177,7 @@ protected:
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
-	int* m_aiMilitaryWorth;
+	int64_t* m_aiMilitaryWorth;
 	int* m_aiBestFoundValue;
 	int* m_aiNumRevealedTiles;
 	int* m_aiBorderObstacleCount;
