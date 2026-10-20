@@ -43,7 +43,7 @@ public:
 
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getSpreadFactor() const { return m_iSpreadFactor; }                              // identity.spreadFactor
-	const CvWString& getAdjectiveKey() const { return m_szAdjectiveKey; }                // identity.adjective TXT_KEY
+	const wchar_t* getAdjectiveKey() const { return m_szAdjectiveKey.GetCString(); }     // identity.adjective TXT_KEY
 	int getFlavorValue(int iFlavor) const;                                               // ai.flavours [{FLAVOR_X: n}]
 	const char* getSound() const { return m_szSound.c_str(); }                           // sound.sound
 	const char* getTechButton() const { return m_szTechButton.c_str(); }                 // ui.art.techButton

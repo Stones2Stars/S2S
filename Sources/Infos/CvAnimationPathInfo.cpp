@@ -140,7 +140,7 @@ bool CvAnimationPathInfo::read(CvXMLLoadUtility* pXML)
 	}
 	else
 	{
-		FErrorMsg(CvString::format("Animation path %s XML structure is invalid", animPathName).c_str());
+		FErrorMsg(CvString::format("Animation path %s XML structure is invalid", animPathName.GetCString()).c_str());
 		return false;
 	}
 	pXML->MoveToXmlParent();

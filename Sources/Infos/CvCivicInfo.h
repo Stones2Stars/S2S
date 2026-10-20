@@ -104,7 +104,7 @@ public:
 	// hard-cap sites read (a limit WITHOUT the anger deposit is a HARD cap; with it, exceeding is allowed and
 	// the cascade's deposit carries the anger).
 	bool hasCityOverLimitAnger() const { return m_bCityOverLimitAnger; }
-	const CvWString& getWeLoveTheKingKey() const { return m_szWeLoveTheKingKey; }   // TXT_KEY (celebration text)
+	const wchar_t* getWeLoveTheKingKey() const { return m_szWeLoveTheKingKey.GetCString(); }   // TXT_KEY (celebration text)
 
 	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
