@@ -1037,7 +1037,7 @@ void CvInitCore::refreshCustomMapOptions()
 			{
 				if (!Cy::call_optional(CvString(getMapScriptName()).GetCString(), "getCustomMapOptionDefault", Cy::Args() << i, aeMapOptions[i]))
 				{
-					FErrorMsg(CvString::format("Python function getCustomMapOptionDefault in mapscript %s failed to return correctly for option index %d", getMapScriptName(), i).c_str());
+					FErrorMsg(CvString::format("Python function getCustomMapOptionDefault in mapscript %s failed to return correctly for option index %d", CvString(getMapScriptName()).GetCString(), i).c_str());
 				}
 			}
 			setCustomMapOptions(aeMapOptions.size(), &aeMapOptions[0]);

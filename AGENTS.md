@@ -324,6 +324,20 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   for months.)* ⚖ Names are matched with their ARITY, since a receiver decides which overload a call means
   (`CvCity::getCulture(PlayerTypes)` is 64-bit, `CvEventInfo::getCulture()` is not); a same-arity pair declared at
   both widths is REPORTED for a human and does not fail.
+  ⛔ **And a string OBJECT must NEVER reach a varargs formatter either** — `getText`, `Cv(W)String::format` and
+  `Format`, the log helpers, the CRT `printf` family: any function declared with `...`. A `%s` takes a pointer;
+  a `CvWString`, `CvString` or `std::(w)string` is copied in whole, 28 bytes or 7 slots, so the `%s` reads
+  allocator padding as its pointer and every later placeholder reads six slots late — the 64-bit fault class
+  above, six times over. ⚠ A conditional with one object branch makes BOTH branches objects:
+  `c ? info.getAdjectiveKey() : L""` passes a `CvWString` even when `c` is false.
+  *(Worked: `CvCivicInfo::getWeLoveTheKingKey()` returned a `const CvWString&` and went straight into
+  `TXT_KEY_CITY_CELEBRATE`, so the event log read "Madrid celebrates !!!".)* ⛔ The fix is the getter's TYPE
+  first: a getter whose text is passed as a format ARGUMENT returns `const wchar_t*`, so no caller can pass the
+  object ([hard typing beats a check](#design)). At a call site, pass a pointer of the format's width:
+  `x.GetCString()` on a `CvWString`, `CvWString(x).GetCString()` on a narrow string for the wide formatters,
+  the narrow forms for the narrow ones. ⚖ The check types each value from the tree's own declarations, the
+  receiver's class deciding a call (`getDescription` is a pointer on an info and an object on a `CvUnit`); the
+  tool's docstring lists what it resolves, and a name whose declarations disagree is REPORTED for a human.
 - **Doc references: `python Tools/verify-docs.py`** — two silent decay modes the corpus cannot see in a diff.
   **LINKS + ANCHORS (fails the run):** every intra-repo link and `#anchor`, by GitHub's own slug algorithm. The
   cross-reference IS the design — the ledger is *"an INDEX, not a re-statement"*, so a doc LINKS a ruling instead

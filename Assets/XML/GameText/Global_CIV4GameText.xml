@@ -3198,11 +3198,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_CELEBRATE</Tag>
-		<English>%s1 celebrates %s2!!!</English>
-		<French>%s1 célèbre : %s2 !</French>
-		<German>%s1 feiert den %s2!!!</German>
-		<Italian>%s1 celebra %s2!</Italian>
-		<Spanish>¡%s1 está celebrando el día de %s2!</Spanish>
+		<English>%s1 celebrates: "%s2"</English>
+		<French>%s1 célèbre : « %s2 »</French>
+		<German>%s1 feiert: "%s2"</German>
+		<Italian>%s1 celebra: "%s2"</Italian>
+		<Spanish>%s1 celebra: «%s2»</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_DEFENSE_RECOVERY_SPEED_MODIFIER_NEGATIVE</Tag>
