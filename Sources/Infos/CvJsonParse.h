@@ -77,6 +77,8 @@ const picojson::object* jsonWorldArt(const picojson::object& o);
 // (the archived .add(member, tag, default) third argument), so a non-zero legacy default MUST be passed here
 // by the poco read -- absent-reads-0 was the no-attacks combatLimit bug class.
 int jsonIdInt(const picojson::object& io, const char* key, int iDefault = 0);
+///<summary>An identity AMOUNT, authored human and returned ×100 through jsonX100; 0 if absent.</summary>
+int jsonIdX100(const picojson::object& io, const char* key);
 // An ART value, taken as authored. Art is not a cascade amount, so it carries no fixed-point scale
 // (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) governs AMOUNTS); the animation numbers are handed to the EXE in its own units.
 float jsonIdFloat(const picojson::object& io, const char* key, float fDefault = 0.0f);

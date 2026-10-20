@@ -24,6 +24,11 @@ that is what frees the object.
 `CvPlayer::initUnit` → `CvUnit::init`, which emits `SEVT_UNIT_CREATED`. A LOADED unit never runs `init`, so
 `CvUnit::read` emits the same fact from inside the save read (the reseed, [the load reseed](../spine/05-the-load-reseed.md#5-the-load-reseed)).
 
+The unit's worth toward its owner's power and assets starts counting at the end of `init`, and for a loaded unit
+at the end of `CvUnitAI::read`; it stops on the first line of `die`, beside the death fact
+(`CvUnit::setWorthValues`, [the named fact families](../spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md)).
+The scratch unit never counts.
+
 ### The unique name — drawn once, and the unit keeps the KEY
 
 A unit whose info authors `identity.uniqueNames` (the great-person types) draws one entry at birth, while

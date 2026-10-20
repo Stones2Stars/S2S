@@ -78,12 +78,12 @@ void CyTeam::signDefensivePact(int /*TeamTypes*/ eTeam)
 
 int CyTeam::getAssets() const
 {
-	return m_pTeam->getAssets();
+	return m_pTeam->getAssets() / 100;
 }
 
 int CyTeam::getPower(bool bIncludeVassals) const
 {
-	return m_pTeam->getPower(bIncludeVassals);
+	return m_pTeam->getPower(bIncludeVassals) / 100;
 }
 
 int64_t CyTeam::getTotalVictoryScore() const

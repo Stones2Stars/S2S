@@ -1007,6 +1007,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	// (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). Bound here too -- the pointer IS this city.
 	m_amenity.bind(this);
 	m_amenity.clear();
+	// The operating-building worth, ZEROED for the same reason -- a delta store fed by the operate crossings.
+	m_buildingWorth.clear();
 
 	//--------------------------------
 	// Uninit class

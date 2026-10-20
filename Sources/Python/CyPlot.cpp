@@ -111,11 +111,6 @@ int CyPlot::getFeatureProduction(int /*BuildTypes*/ eBuild, int /*TeamTypes*/ eT
 	return m_pPlot ? m_pPlot->getFeatureProduction((BuildTypes)eBuild, (TeamTypes)eTeam, &tempCity) : -1;
 }
 
-int CyPlot::getUnitPower(int /*PlayerTypes*/ eOwner) const
-{
-	return m_pPlot ? m_pPlot->getUnitPower((PlayerTypes)eOwner) : -1;
-}
-
 int CyPlot::defenseModifier(int iDefendTeam, bool bIgnoreBuilding, bool bHelp) const
 {
 	return m_pPlot ? m_pPlot->defenseModifier((TeamTypes)iDefendTeam, bIgnoreBuilding, bHelp) : -1;

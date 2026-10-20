@@ -55,7 +55,8 @@ public:
 	// An AREA carries NO cascade package and is NOT a scope: a scope must be unambiguously OWNABLE, and a
 	// landmass is shared by several empires at once (CvCondition.h). Area-shaped effects author at EMPIRE.
 	int getNumTiles() const;
-	void changeNumTiles(int iChange);
+	///<summary>The tile count moves as plot iPlot joins (iChange > 0) or leaves (iChange < 0) this area.</summary>
+	void changeNumTiles(int iChange, int iPlot);
 
 	int getNumOwnedTiles() const;
 	int getNumUnownedTiles() const;
@@ -91,8 +92,12 @@ public:
 
 
 
+	///<summary>A player's military might on this landmass: the military worth of its units standing here and of
+	/// its cities' operating buildings here, and 1 per citizen of its cities here.</summary>
 	int getPower(PlayerTypes eIndex) const;
-	void changePower(PlayerTypes eIndex, int iChange);
+	///<summary>Moves a player's military worth standing in this area -- its units' and its cities' operating
+	/// buildings'. ⛔ Called by the demographics consumer (Engine/DemographicsContext.h) and nothing else.</summary>
+	void changeMilitaryWorth(PlayerTypes eIndex, int iChange);
 
 	bool hasBestFoundValue(PlayerTypes eIndex) const;
 	int getBestFoundValue(PlayerTypes eIndex) const;
@@ -172,7 +177,7 @@ protected:
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
-	int* m_aiPower;
+	int* m_aiMilitaryWorth;
 	int* m_aiBestFoundValue;
 	int* m_aiNumRevealedTiles;
 	int* m_aiBorderObstacleCount;

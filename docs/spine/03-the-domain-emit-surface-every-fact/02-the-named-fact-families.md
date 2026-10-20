@@ -109,7 +109,8 @@ in-read half in `CvPlayer::read` once the list has landed, carrying the whole co
 per-city `SEVT_CITY_OWNER_*`, whose removal half fires while the city still resolves and is still counted),
 **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`**
 and **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
-AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
+AREA_SIZE + max-adjacent-water read; the area pair also names the PLOT that moved, in `iB`, because that plot's
+units and city move between the two areas' power ledgers with it), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
 cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and
 from `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
 
@@ -117,7 +118,9 @@ from `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none dup
 per player: `CvTeam::setHasTech` once for each member whose lifecycle has started, in both directions;
 `CvPlayer::read` once for each player the save carries, per held tech of its team; and
 `CvPlayer::announceLifecycleStart` replays the team's held techs for a player created mid-game, for that player
-only. A repeat tech announces once per held count everywhere. `SEVT_EMPIRE_PROJECT_ADDED / _REMOVED` follows the same
+only; `CvPlayer::setTeam` announces, for a player moving to another team (a team merge), the difference between
+what the old team and the new team hold. A repeat tech announces once per held count everywhere
+(`CvTeam::getHeldTechCount`). `SEVT_EMPIRE_PROJECT_ADDED / _REMOVED` follows the same
 rule. ⇒ **A consumer applies the fact to the player it names.** A consumer that fans it over the team (the enabler's
 team-held domains) guards each player with its held flag; an unguarded fan counts the tech once per member.
 ⚖ **"Lifecycle started", never "alive", decides who receives a team fact (`CvPlayer::receivesTeamFacts`).** A
@@ -160,6 +163,16 @@ save taken mid-schedule. **`SEVT_UNIT_LEFT_CITY`** is the leave twin of `SEVT_UN
 announced for EVERY city plot a unit vacates while the ENTRY's conquest branch resolves into an acquisition
 instead of an entry, so the two do NOT net to occupancy — a consumer needing occupancy reads the unit's live
 plot.
+
+**A UNIT'S WORTH announces itself**, because the empire's power and assets ledgers are built from it
+(`Engine/DemographicsContext.h`): **`SEVT_UNIT_MILITARY_WORTH_ADDED / _REMOVED`** and **`SEVT_UNIT_WORTH_ADDED /
+_REMOVED`**, carrying HOW MUCH the value the unit counts with moved (`CvUnit::setWorthValues` — it starts counting
+at birth, is re-ranked under Size Matters and re-derived when that option flips, stops at death), and **`SEVT_UNIT_AREA_ADDED / _REMOVED`**, a unit
+starting or stopping to stand in an area (`CvUnit::setXY`, only when the area changes), carrying the military
+worth it moves with. ⚑ The facts carry the amount so the consumer never looks a unit up: a save-carried unit is not
+in its owner's list while it streams. ⚠ The in-read half is the worth fact itself, announced at the end of
+`CvUnitAI::read`, once the unit's whole read has streamed — its coordinates and its birthmark (what `isTempUnit`
+tests) among it. The scratch unit never counts, nor does a unit off the map grid toward any area.
 
 **GAME OPTIONS and DIFFICULTY announce** — the two facts every maintained verdict is built on but nothing used to
 announce. **`SEVT_GAME_OPTION_ADDED / _REMOVED`** (`CvGame::setOption` / `setModderGameOption`, both unguarded so

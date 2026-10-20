@@ -71,10 +71,8 @@ public:
 	int getAdvisor() const      { return m_iAdvisor; }        // ui.art.advisor (ADVISOR_* FK)
 	int getGridX() const        { return m_iGridX; }          // identity.gridX (tech-tree layout)
 	int getGridY() const        { return m_iGridY; }
-	// The two AI valuation magnitudes are ×100 (identity.worth/militaryWorth author fractional human values;
-	// docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the name says the VALUE, the scale is always ×100).
-	int getWorth() const         { return m_iWorth; }
-	int getMilitaryWorth() const { return m_iMilitaryWorth; }
+	int getWorth() const         { return m_iWorth; }           // identity.worth (the empire ASSETS demographic)
+	int getMilitaryWorth() const { return m_iMilitaryWorth; }   // identity.militaryWorth (the empire POWER demographic)
 	bool isRepeat() const    { return m_bRepeat; }     // identity.repeat (repeatable research)
 	bool isTradeable() const { return m_bTradeable; }  // identity.tradeable (may appear in tech trades)
 	bool isDisable() const   { return m_bDisable; }    // identity.disable

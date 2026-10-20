@@ -1030,6 +1030,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	// reused player slot must not inherit a count the previous occupant's traits left behind.
 	m_traits.bind(this);
 	m_traits.clear();
+	// The power and assets ledgers, ZEROED for the same reason -- delta stores fed by the unit, tech and
+	// building facts.
+	m_demographics.clear();
 	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts (docs/cascade.md §THE MAINTAINED SUM).
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, (int)eID, -1);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
@@ -1088,10 +1091,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iCapitalCityID = FFreeList::INVALID_INDEX;
 	m_iCitiesLost = 0;
 	m_iWinsVsBarbs = 0;
-	m_iAssets = 0;
-	m_iPower = 0;
-	m_iTechPower = 0;
-	m_iUnitPower = 0;
 	m_iPopulationScore = 0;
 	m_iLandScore = 0;
 	m_iTechScore = 0;
@@ -1870,15 +1869,10 @@ void CvPlayer::announceLifecycleStart()
 		const CvTeam& kMyTeam = GET_TEAM(getTeam());
 		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 		{
-			if (kMyTeam.isHasTech((TechTypes)iTech))
+			const int iHeldCount = kMyTeam.getHeldTechCount((TechTypes)iTech);
+			for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
 			{
-				const int iHeldCount =
-					GC.getTechInfo((TechTypes)iTech).isRepeat()
-					? std::max(1, kMyTeam.getTechCount((TechTypes)iTech)) : 1;
-				for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
-				{
-					emitEmpireTechAdded((int)getID(), iTech);
-				}
+				emitEmpireTechAdded((int)getID(), iTech);
 			}
 		}
 		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
@@ -4017,7 +4011,7 @@ void CvPlayer::doMultiMapTurn()
 void CvPlayer::recordHistory()
 {
 	m_mapEconomyHistory[GC.getGame().getGameTurn()] = calculateTotalCommerce();
-	m_mapPowerHistory[GC.getGame().getGameTurn()] = getPower();
+	m_mapPowerHistory[GC.getGame().getGameTurn()] = getPower() / 100;
 	m_mapIndustryHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_PRODUCTION);
 	m_mapAgricultureHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_FOOD);
 	m_mapCultureHistory[GC.getGame().getGameTurn()] = getCulture();
@@ -8751,8 +8745,6 @@ void CvPlayer::changeTotalPopulation(int iChange)
 	m_iTotalPopulation += iChange;
 	FAssertMsg(m_iTotalPopulation >= 0, "This shouldn't go negative!");
 
-	changeAssets(iChange*10);
-	changePower(iChange); // Should sync up with the total power value for this player from all CvArea.
 	changePopScore(iChange);
 }
 
@@ -8783,7 +8775,6 @@ void CvPlayer::changeTotalLandScored(int iChange)
 {
 	if (iChange != 0)
 	{
-		changeAssets(iChange*10);
 		changeLandScore(iChange);
 
 		m_iTotalLandScored += iChange;
@@ -10292,49 +10283,23 @@ void CvPlayer::changeWinsVsBarbs(int iChange)
 
 int CvPlayer::getAssets() const
 {
-	return m_iAssets / 100;
-}
-
-
-void CvPlayer::changeAssets(int iChange)
-{
-	m_iAssets += iChange;
-	FAssertRecalcMsg(m_iAssets >= 0, "Player assets value fell below 0");
+	return m_demographics.heldAssets() + countAssets(getTotalPopulation() + getTotalLandScored());
 }
 
 
 int CvPlayer::getPower() const
 {
-	return (m_iPower + m_iTechPower + m_iUnitPower) / 100;
+	return m_demographics.heldPower() + citizenPower(getTotalPopulation());
 }
 
 int CvPlayer::getTechPower() const
 {
-	return m_iTechPower / 100;
+	return m_demographics.techPower();
 }
 
 int CvPlayer::getUnitPower() const
 {
-	return m_iUnitPower / 100;
-}
-
-
-void CvPlayer::changePower(int iChange)
-{
-	m_iPower += iChange;
-	FASSERT_NOT_NEGATIVE(m_iPower);
-}
-
-void CvPlayer::changeTechPower(int iChange)
-{
-	m_iTechPower += iChange;
-	FASSERT_NOT_NEGATIVE(m_iTechPower);
-}
-
-void CvPlayer::changeUnitPower(int iChange)
-{
-	m_iUnitPower += iChange;
-	FASSERT_NOT_NEGATIVE(m_iUnitPower);
+	return m_demographics.unitPower();
 }
 
 
@@ -11467,6 +11432,39 @@ void CvPlayer::setTeam(TeamTypes eTeam)
 	GET_TEAM(eOldTeam).changeTotalLand(-(getTotalLand()));
 
 	GC.getInitCore().setTeam(getID(), eTeam);
+
+	//	The player now holds the new team's techs and projects: what it gains or loses against the old team is
+	//	announced, per held count. A merge shares the two teams' holdings both ways first, so this is where a
+	//	repeatable tech's or a project's count settles to the team's.
+	if (isLifecycleStarted())
+	{
+		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+		{
+			const int iOldCount = GET_TEAM(eOldTeam).getHeldTechCount((TechTypes)iTech);
+			const int iNewCount = GET_TEAM(eTeam).getHeldTechCount((TechTypes)iTech);
+			for (int iHeld = iOldCount; iHeld < iNewCount; ++iHeld)
+			{
+				emitEmpireTechAdded((int)getID(), iTech);
+			}
+			for (int iHeld = iNewCount; iHeld < iOldCount; ++iHeld)
+			{
+				emitEmpireTechRemoved((int)getID(), iTech);
+			}
+		}
+		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
+		{
+			const int iOldCount = GET_TEAM(eOldTeam).getProjectCount((ProjectTypes)iProject);
+			const int iNewCount = GET_TEAM(eTeam).getProjectCount((ProjectTypes)iProject);
+			if (iNewCount > iOldCount)
+			{
+				emitEmpireProjectAdded((int)getID(), iProject, iNewCount - iOldCount);
+			}
+			else if (iNewCount < iOldCount)
+			{
+				emitEmpireProjectRemoved((int)getID(), iProject, iOldCount - iNewCount);
+			}
+		}
+	}
 
 	if (isAlive())
 	{
@@ -16616,10 +16614,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCapitalCityID);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesLost);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWinsVsBarbs);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iAssets);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iPower);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTechPower);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitPower);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iPopulationScore);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLandScore);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWondersScore);
@@ -16733,15 +16727,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			// save/load round-trip than play built.
 			for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 			{
-				if (kMyTeam.isHasTech((TechTypes)iTech))
+				const int iHeldCount = kMyTeam.getHeldTechCount((TechTypes)iTech);
+				for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
 				{
-					const int iHeldCount =
-						GC.getTechInfo((TechTypes)iTech).isRepeat()
-						? std::max(1, kMyTeam.getTechCount((TechTypes)iTech)) : 1;
-					for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
-					{
-						emitEmpireTechAdded(getID(), iTech);
-					}
+					emitEmpireTechAdded(getID(), iTech);
 				}
 			}
 			// The team's completed projects, per-self (the tech-emit precedent). The count IS the delta (old = 0
@@ -17912,10 +17901,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCapitalCityID);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesLost);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWinsVsBarbs);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAssets);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iPower);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTechPower);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitPower);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iPopulationScore);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLandScore);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWondersScore);
@@ -26265,10 +26250,6 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	updateTradeRoutes();
 	changeExtraHealth(tech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * iChange);
 	changeExtraHappiness(tech.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 * iChange);
-	//	The two demographics a tech feeds: `worth` is the empire's ASSETS total, and the domain-specific
-	//	`militaryWorth` is its POWER (the engine.py worth convention).
-	changeAssets(tech.getWorth() / 100 * iChange);
-	changeTechPower(tech.getMilitaryWorth() / 100 * iChange);
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
 }
 

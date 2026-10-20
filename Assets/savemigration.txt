@@ -2395,3 +2395,20 @@ CvUnit::m_iExtraMoves                     (int)
 CvPlayer::numUnitCosts                    (uint)
 CvPlayer::eUnit                           (class enum, per element)
 CvPlayer::iCost                           (int, per element)
+
+========================
+| The empire's POWER and ASSETS totals, the per-area power ledger and each unit's counted worth are removed.
+| They are sums over what the empire holds -- its units, its held techs, its operating buildings, its
+| population and scored land -- so they are derived data and serialize nothing (save.md §5).
+| REPLACEMENT: the demographics consumer (Engine/DemographicsContext.h) builds CvPlayer's and CvCity's ledgers
+| and CvArea's per-player military worth from the unit worth, area, tech and building-operate facts, which the
+| load reseed announces like play; CvPlayer::getPower / getAssets add the forwarded population and land, and
+| CvArea::getPower the forwarded population. CvUnit::setWorthValues sets the unit's counted worth at birth, on a
+| Size Matters re-rank, at death and at the end of CvUnitAI::read.
+CvPlayer::m_iAssets                       (int)
+CvPlayer::m_iPower                        (int)
+CvPlayer::m_iTechPower                    (int)
+CvPlayer::m_iUnitPower                    (int)
+CvArea::m_aiPower                         (int array, per player)
+CvUnit::m_iSMAssetValue                   (int)
+CvUnit::m_iSMPowerValue                   (int)

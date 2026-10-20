@@ -93,6 +93,12 @@ int jsonIdInt(const picojson::object& io, const char* key, int iDefault)
 	return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : iDefault;
 }
 
+int jsonIdX100(const picojson::object& io, const char* key)
+{
+	picojson::object::const_iterator it = io.find(key);
+	return (it != io.end() && it->second.is<double>()) ? jsonX100(it->second.get<double>()) : 0;
+}
+
 float jsonIdFloat(const picojson::object& io, const char* key, float fDefault)
 {
 	picojson::object::const_iterator it = io.find(key);

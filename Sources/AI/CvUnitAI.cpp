@@ -19949,8 +19949,7 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bBarbarian)
 
 									iValue += 20 * GET_PLAYER(getOwner()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_ASSAULT, getGroup());
 
-									iValue *= std::min(iEnemyPower, 3 * iOurPower);
-									iValue /= iOurPower;
+									iValue = static_cast<int>((int64_t)iValue * std::min(iEnemyPower, 3 * iOurPower) / iOurPower);
 
 									iValue *= 100;
 
@@ -20039,8 +20038,7 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bBarbarian)
 
 													iValue += 10 * GET_PLAYER(getOwner()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_ASSAULT, getGroup());
 
-													iValue *= std::min(iEnemyPower, 3 * iOurPower);
-													iValue /= iOurPower;
+													iValue = static_cast<int>((int64_t)iValue * std::min(iEnemyPower, 3 * iOurPower) / iOurPower);
 
 													iValue *= 100;
 
@@ -26007,6 +26005,11 @@ void CvUnitAI::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnitAI", &m_iTargetImproveCity);	// which city this worker is committed to improving (if any)
 	WRAPPER_READ(wrapper, "CvUnitAI", &m_iGroupLeadOverride);
 	WRAPPER_READ(wrapper, "CvUnitAI", &m_bWaitingOnUnitAIAny);
+
+	//	THE RESEED of the unit's counted worth (docs/spine.md §5), announced once the unit's whole read has
+	//	streamed -- its coordinates and its birthmark (isTempUnit) among it. A unit whose death is scheduled above
+	//	counts until die() withdraws it, as in play.
+	setWorthValues(!isTempUnit());
 
 	//m_aiWaitingOnUnitAITypes.clear();
 	//uint iSize;

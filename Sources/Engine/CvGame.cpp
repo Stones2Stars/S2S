@@ -5202,6 +5202,15 @@ void CvGame::setOption(GameOptionTypes eIndex, bool bEnabled)
 	{
 		emitGameOptionRemoved((int)eIndex, 1, GAMEOPTSPACE_GAME);
 	}
+		//	Every unit's Size Matters values -- the worth it counts with among them -- are derived under the option,
+		//	so a flip re-derives them.
+		if (eIndex == GAMEOPTION_COMBAT_SIZE_MATTERS)
+		{
+			for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+			{
+				GET_PLAYER((PlayerTypes)iPlayer).setSMValues();
+			}
+		}
 	}
 }
 

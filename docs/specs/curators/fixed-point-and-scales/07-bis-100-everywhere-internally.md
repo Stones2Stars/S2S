@@ -30,6 +30,12 @@ CONSUMED, and check its scale there.
 disagreeing by an amount that scales with how many things were added up. That is not a missing deposit; it is a
 reduction in the wrong place.
 
+⚑ **The second worked case: the empire POWER and ASSETS demographics**, sums of `identity.militaryWorth` and
+`identity.worth` over units, techs and buildings. Every kind's worth loads ×100, the ledgers sum it as it is, and
+`CvPlayer::getPower` / `getAssets` return the sum. The readers reduce: the display and the Python wrappers once,
+an AI formula where it meets a human constant, and a ratio of two worths not at all. No term is reduced before it
+is summed or divided: each such reduce truncates its own term.
+
 > **⛔ AN ALWAYS-DEFINED COMPILE GUARD IS WHERE THIS CLASS HIDES, AND IT HID FOR FIFTEEN YEARS.** The reduce sat
 > inside `#ifdef _MOD_FRACTRADE`, a guard defined unconditionally in `fbuild.bff` since the mod inherited it — so
 > the `#else` half had never once compiled, and the live half read as *one arm of a fractional-vs-whole switch*

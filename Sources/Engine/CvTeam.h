@@ -373,6 +373,9 @@ public:
 	int changeResearchProgressPercent(TechTypes eIndex, int iPercent, PlayerTypes ePlayer);
 
 	int getTechCount(TechTypes eIndex) const;
+	///<summary>How many times the team holds the tech, as the tech facts announce it: 0 if it does not hold it,
+	/// its research count for a repeatable tech, 1 otherwise.</summary>
+	int getHeldTechCount(TechTypes eIndex) const;
 	int getBestKnownTechScorePercent() const;
 
 	bool isTerrainTrade(TerrainTypes eIndex) const;

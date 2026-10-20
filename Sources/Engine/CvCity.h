@@ -20,6 +20,7 @@
 #include "Enabler/CvEnabler.h"              // CityEnabler -- the per-city buildings/units tri-state domains
 #include "Enabler/CvOperatingBuildings.h"   // the ACTIVE-building set the modifier reads (enabler.md §3.2)
 #include "AmenityContext.h"                 // the city's amenity state: storage + maintenance, one place responsible
+#include "WorthLedger.h"                    // the city's operating-building worth
 
 class CvArea;
 class CvArtInfoBuilding;
@@ -840,6 +841,10 @@ public:
 	// never through the city context, which owns none of this state.
 	mutable AmenityContext m_amenity;
 	AmenityContext& amenity() const { return m_amenity; }
+	mutable WorthLedger m_buildingWorth;
+	///<summary>The military worth and worth of the city's operating buildings, which the demographics consumer
+	/// (Engine/DemographicsContext.h) maintains and moves with the city's plot between areas.</summary>
+	WorthLedger& buildingWorth() const { return m_buildingWorth; }
 
 	// ---- THE AVAILABILITY READ SURFACE -- the ENABLER's "can I, right now?" half of the GAME-OBJECT read role
 	// (patterns.md § THE TWO READ ROLES). Distinct from the INFO role's authored what-do-I-CARRY answer and from
