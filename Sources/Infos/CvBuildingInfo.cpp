@@ -177,7 +177,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	static const picojson::object kEmptyIdentity;
 	const picojson::object* pIdentity = jsonChildObj(entityObj, "identity");
 	const picojson::object& identity = (pIdentity != NULL) ? *pIdentity : kEmptyIdentity;
-	m_iWorth = jsonIdInt(identity, "worth");
+	m_iWorth = jsonIdX100(identity, "worth");
 	// The `cost` section (json §7) -- fully redefined every (re-)map like every other materialized member, so
 	// an entity that LOSES its cost block on a re-curate reads 0 rather than keeping the previous pass's value.
 	{
@@ -211,7 +211,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		m_iFreeTechs              = grantPulse(iKeyFreeTechs) / 100;
 	}
 
-	m_iMilitaryWorth = jsonIdInt(identity, "militaryWorth");
+	m_iMilitaryWorth = jsonIdX100(identity, "militaryWorth");
 	m_iConquestProbability = jsonIdInt(identity, "conquestProbability");
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");
 	m_iAirlift = jsonIdInt(identity, "airlift");

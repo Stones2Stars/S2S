@@ -674,8 +674,10 @@ enum SpineDomainEvent
 	SEVT_PLOTGROUP_BONUS_ADDED      = 140,
 	SEVT_PLOTGROUP_BONUS_REMOVED    = 141,
 	// An AREA GAINED / LOST tiles (CvArea::changeNumTiles) -- feeds CityContext's AREA_SIZE and its
-	// max-adjacent-water store. An area has no owning player, so iC stays -1.
-	// iA = HOW MANY, unsigned. iSrcLoc = areaId. DOMAIN.
+	// max-adjacent-water store, and moves the PLOT's units and city between the two areas' power ledgers. An area
+	// has no owning player, so iC stays -1. REMOVED fires while the plot still stands in the old area, ADDED once
+	// it stands in the new one.
+	// iA = HOW MANY, unsigned. iB = the plot that moved. iSrcLoc = areaId. DOMAIN.
 	SEVT_AREA_TILE_ADDED            = 142,
 	SEVT_AREA_TILE_REMOVED          = 143,
 
@@ -753,6 +755,22 @@ enum SpineDomainEvent
 	// iType = winner unit TYPE, iA = winner unit id, iB = loser unit id, iC = winner owner, iSrcLoc = the plot.
 	// The loser's TYPE and OWNER do not fit the five DOMAIN ints and ride as render fields. DOMAIN.
 	SEVT_COMBAT_RESULT              = 160,
+	/// <summary>A unit started / stopped STANDING IN AN AREA (CvUnit::setXY, when the area it stands in differs
+	/// from the one it left -- a landing, an embarkation, a placement on the map, a removal from it). It carries
+	/// the military worth the unit counts with, which moves with it. A plot moving to another area with its units
+	/// on it is the AREA_TILE pair's, never this one's. iType = unit TYPE, iA = HOW MUCH military worth
+	/// (unsigned), iB = area id, iC = owner, iSrcLoc = plotId; the unit id is a render field. DOMAIN.</summary>
+	SEVT_UNIT_AREA_ADDED            = 161,
+	SEVT_UNIT_AREA_REMOVED          = 162,
+	/// <summary>The MILITARY WORTH / WORTH a unit counts with toward its owner's power / assets grew or shrank by
+	/// the magnitude in iA (CvUnit::setWorthValues): it starts counting at birth, is re-ranked under Size
+	/// Matters, stops at death, and a save-carried unit starts counting at the end of its read (the reseed --
+	/// nothing about it is saved). iType = unit TYPE, iA = HOW MUCH (unsigned), iB = unit id, iC = owner,
+	/// iSrcLoc = plotId (-1 off the map). DOMAIN.</summary>
+	SEVT_UNIT_MILITARY_WORTH_ADDED   = 163,
+	SEVT_UNIT_MILITARY_WORTH_REMOVED = 164,
+	SEVT_UNIT_WORTH_ADDED           = 165,
+	SEVT_UNIT_WORTH_REMOVED         = 166,
 
 	// ===== PROPERTY (any owner scope) =====
 	// A game object's PROPERTY VALUE moved (CvProperties -- the generic (PropertyTypes,int) bag on
@@ -1048,8 +1066,10 @@ void emitEmpireCityCountRemoved(int iPlayer, int iCount);
 // ===== PLOT GROUP / AREA =====
 void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount);
 void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount);
-void emitAreaTileAdded(int iArea, int iCount);
-void emitAreaTileRemoved(int iArea, int iCount);
+///<summary>Plot iPlot joined area iArea.</summary>
+void emitAreaTileAdded(int iArea, int iCount, int iPlot);
+///<summary>Plot iPlot left area iArea; fired while the plot still stands in it.</summary>
+void emitAreaTileRemoved(int iArea, int iCount, int iPlot);
 // ===== TEAM =====
 void emitTeamMemberAdded(int iTeam, int iCount);
 void emitTeamMemberRemoved(int iTeam, int iCount);
@@ -1058,6 +1078,18 @@ void emitTeamMemberRemoved(int iTeam, int iCount);
 // unconditional end of a unit's life. iPlot = -1 where the unit held none.
 void emitUnitCreated(int iUnitType, int iUnitId, int iOwner, int iPlot);
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
+///<summary>A unit carried iCount military worth into area iArea.</summary>
+void emitUnitAreaAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iArea, int iPlot);
+///<summary>A unit carried iCount military worth out of area iArea.</summary>
+void emitUnitAreaRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iArea, int iPlot);
+///<summary>The military worth a unit counts with rose by iCount.</summary>
+void emitUnitMilitaryWorthAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot);
+///<summary>The military worth a unit counts with fell by iCount.</summary>
+void emitUnitMilitaryWorthRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot);
+///<summary>The worth a unit counts with rose by iCount.</summary>
+void emitUnitWorthAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot);
+///<summary>The worth a unit counts with fell by iCount.</summary>
+void emitUnitWorthRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot);
 // A resolved combat. Called from CvEventReporter::combatResult, BESIDE its Python callback -- the reporter's
 // arguments verbatim, so the spine sees exactly what Python sees and a later migration is a swap.
 // The three winner-health arguments are RENDER-ONLY diagnostics -- BEFORE is the pre-combat snapshot, AFTER the

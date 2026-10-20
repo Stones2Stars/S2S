@@ -4469,6 +4469,16 @@ int CvTeam::getTechCount(TechTypes eIndex) const
 }
 
 
+int CvTeam::getHeldTechCount(TechTypes eIndex) const
+{
+	if (!isHasTech(eIndex))
+	{
+		return 0;
+	}
+	return GC.getTechInfo(eIndex).isRepeat() ? std::max(1, getTechCount(eIndex)) : 1;
+}
+
+
 int CvTeam::getBestKnownTechScorePercent() const
 {
 	PROFILE_EXTRA_FUNC();

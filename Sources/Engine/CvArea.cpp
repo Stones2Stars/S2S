@@ -10,6 +10,7 @@
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvMap.h"
+#include "DemographicsContext.h"
 #include "CvInfos.h"
 #include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
@@ -27,7 +28,7 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
-	m_aiPower = new int[MAX_PLAYERS];
+	m_aiMilitaryWorth = new int[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
 	m_abHomeArea = new bool[MAX_PLAYERS];
 
@@ -75,7 +76,7 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiAnimalsPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiCitiesPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
-	SAFE_DELETE_ARRAY(m_aiPower);
+	SAFE_DELETE_ARRAY(m_aiMilitaryWorth);
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
 	SAFE_DELETE_ARRAY(m_abHomeArea);
 	SAFE_DELETE_ARRAY(m_aiNumRevealedTiles);
@@ -101,7 +102,7 @@ void CvArea::uninit()
 	SAFE_DELETE_ARRAY(m_aiSpawnValidPlotCount);
 }
 
-// Initializes data members that are serialized.
+// Initializes the data members.
 void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
@@ -124,7 +125,7 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
 		m_aiPopulationPerPlayer[iI] = 0;
-		m_aiPower[iI] = 0;
+		m_aiMilitaryWorth[iI] = 0;
 		m_aiBestFoundValue[iI] = 0;
 		m_abHomeArea[iI] = 0;
 		m_aTargetCities[iI].reset();
@@ -203,7 +204,6 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
@@ -284,7 +284,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
@@ -453,7 +452,7 @@ bool CvArea::isLake() const
 }
 
 
-void CvArea::changeNumTiles(int iChange)
+void CvArea::changeNumTiles(int iChange, int iPlot)
 {
 	if (iChange != 0)
 	{
@@ -465,11 +464,11 @@ void CvArea::changeNumTiles(int iChange)
 		// area-id holder up after a load, so a second announcement per area would re-derive the same block.
 		if (iChange > 0)
 	{
-		emitAreaTileAdded(getID(), iChange);
+		emitAreaTileAdded(getID(), iChange, iPlot);
 	}
 	else
 	{
-		emitAreaTileRemoved(getID(), -iChange);
+		emitAreaTileRemoved(getID(), -iChange, iPlot);
 	}
 	}
 }
@@ -608,22 +607,21 @@ void CvArea::changePopulationPerPlayer(PlayerTypes eIndex, int iChange)
 	FASSERT_NOT_NEGATIVE(getTotalPopulation());
 	m_aiPopulationPerPlayer[eIndex] += iChange;
 	FASSERT_NOT_NEGATIVE(getPopulationPerPlayer(eIndex));
-	changePower(eIndex, iChange);
 }
 
 
 int CvArea::getPower(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return std::max(0, m_aiPower[eIndex]);
+	return m_aiMilitaryWorth[eIndex] + citizenPower(m_aiPopulationPerPlayer[eIndex]);
 }
 
 
-void CvArea::changePower(PlayerTypes eIndex, int iChange)
+void CvArea::changeMilitaryWorth(PlayerTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	m_aiPower[eIndex] += iChange;
-	FASSERT_NOT_NEGATIVE(m_aiPower[eIndex]);
+	m_aiMilitaryWorth[eIndex] += iChange;
+	FASSERT_NOT_NEGATIVE(m_aiMilitaryWorth[eIndex]);
 }
 
 bool CvArea::hasBestFoundValue(PlayerTypes eIndex) const

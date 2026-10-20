@@ -485,8 +485,8 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
 		m_bSpawnOnly = jsonIdBool(*pIdentity, "spawnOnly");
-		m_iWorth = jsonIdInt(*pIdentity, "worth");
-		m_iMilitaryWorth = jsonIdInt(*pIdentity, "militaryWorth");
+		m_iWorth = jsonIdX100(*pIdentity, "worth");
+		m_iMilitaryWorth = jsonIdX100(*pIdentity, "militaryWorth");
 		m_iXpValueAttack = jsonIdInt(*pIdentity, "xpValueAttack");
 		m_iXpValueDefense = jsonIdInt(*pIdentity, "xpValueDefense");
 		m_iConscription = jsonIdInt(*pIdentity, "conscription");

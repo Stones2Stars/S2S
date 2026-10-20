@@ -292,7 +292,6 @@ public:
 
 	int AI_sumStrength(PlayerTypes eOwner, PlayerTypes eAttackingPlayer = NO_PLAYER, DomainTypes eDomainType = NO_DOMAIN, StrengthFlags::flags flags = StrengthFlags::DefensiveBonuses, int iRange = 0) const;
 	CvUnit* getSelectedUnit() const;
-	int getUnitPower(PlayerTypes eOwner = NO_PLAYER) const;
 
 	// Super Forts *bombard*
 	bool isBombardable(const CvUnit* pUnit) const;

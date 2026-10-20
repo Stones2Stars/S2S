@@ -3774,23 +3774,6 @@ CvUnit* CvPlot::getSelectedUnit() const
 	return NULL;
 }
 
-
-int CvPlot::getUnitPower(PlayerTypes eOwner) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
-
-	foreach_(const CvUnit* pLoopUnit, units())
-	{
-		if (eOwner == NO_PLAYER || pLoopUnit->getOwner() == eOwner)
-		{
-			iCount += pLoopUnit->getUnitInfo().getMilitaryWorth();
-		}
-	}
-
-	return iCount;
-}
-
 // Super Forts begin *bombard*
 bool CvPlot::isBombardable(const CvUnit* pUnit) const
 {
@@ -10756,7 +10739,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 	PROFILE_EXTRA_FUNC();
 	// XXX am not updating getBestFoundValue() or getAreaAIType()...
 
-	pArea->changeNumTiles(iChange);
+	pArea->changeNumTiles(iChange, GC.getMap().plotNum(getX(), getY()));
 
 	if (isOwned())
 	{
@@ -10788,8 +10771,6 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 		{
 			pArea->changeNumStartingPlots(iChange);
 		}
-
-		pArea->changePower((PlayerTypes)iI, getUnitPower((PlayerTypes)iI) * iChange);
 
 		pArea->changeUnitsPerPlayer(((PlayerTypes)iI), (plotCount(PUF_isPlayer, iI) * iChange));
 		pArea->changeAnimalsPerPlayer(((PlayerTypes)iI), (plotCount(PUF_isAnimal, -1, -1, NULL, ((PlayerTypes)iI)) * iChange));
@@ -10833,11 +10814,6 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 				continue;
 			}
 			const CvBuildingInfo& building = GC.getBuildingInfo(eTypeX);
-
-			//	Area carries MILITARY power only. The wellbeing / yield / free-specialist legs are gone with
-			//	the area SCOPE itself: the curator folds iArea* and iGlobal* into the same <family>.empire slot,
-			//	because a landmass is shared by several empires and so is not ownable (state-repositories.md).
-			pArea->changePower(eOwner, building.getMilitaryWorth() * iChange);
 			pArea->changeBorderObstacleCount(pCity->getTeam(), iChange * building.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE));
 		}
 

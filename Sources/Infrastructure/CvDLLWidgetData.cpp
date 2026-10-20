@@ -3652,7 +3652,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 					CvTeam& kLoopTeam = GET_TEAM((TeamTypes) kLoopPlayer.getTeam());
 
 					szBuffer.append(CvWString::format(SETCOLR L"%s (team%d): %d (%d def)" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"),
-						kLoopPlayer.getName(), kLoopPlayer.getTeam(), kLoopPlayer.getPower(), kLoopTeam.getDefensivePower()));
+						kLoopPlayer.getName(), kLoopPlayer.getTeam(), kLoopPlayer.getPower() / 100, kLoopTeam.getDefensivePower() / 100));
 
 					// if in financial trouble, show that
 					if (kLoopPlayer.AI_isFinancialTrouble())
@@ -3667,7 +3667,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		// only should this one power if not active player
 		else
 		{
-			szBuffer.append(CvWString::format(SETCOLR L"%d (%d) power" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kPlayer.getPower(), kTeam.getPower(true)));
+			szBuffer.append(CvWString::format(SETCOLR L"%d (%d) power" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kPlayer.getPower() / 100, kTeam.getPower(true) / 100));
 
 			// if in financial trouble, show that
 			if (kPlayer.AI_isFinancialTrouble())
@@ -4042,8 +4042,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			iTeamPower /= 3;
 		}
 
-		iTeamPower *= (100 - kTeam.AI_getEnemyPowerPercent());
-		iTeamPower /= 100;
+		iTeamPower = static_cast<int>((int64_t)iTeamPower * (100 - kTeam.AI_getEnemyPowerPercent()) / 100);
 
 		// we will put the values into an array, then sort it for display
 		int iBestPossibleMaxWarPass = MAX_INT;
@@ -4103,8 +4102,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 							int iNoWarChance = range(iNoWarAttitudeProb - (bAggressive ? 10 : 0) - (bFinancesProTotalWar ? 10 : 0) + (20*iGetBetterUnitsCount)/iNumMembers, 0, 100);
 							if (iNoWarChance < 100)
 							{
-								bool bIsMaxWarNearbyPowerRatio = (iLoopTeamPower < ((iTeamPower * kTeam.AI_maxWarNearbyPowerRatio()) / 100));
-								bool bIsMaxWarDistantPowerRatio = (iLoopTeamPower < ((iTeamPower * kTeam.AI_maxWarDistantPowerRatio()) / 100));
+								bool bIsMaxWarNearbyPowerRatio = (iLoopTeamPower < ((int64_t)iTeamPower * kTeam.AI_maxWarNearbyPowerRatio()) / 100);
+								bool bIsMaxWarDistantPowerRatio = (iLoopTeamPower < ((int64_t)iTeamPower * kTeam.AI_maxWarDistantPowerRatio()) / 100);
 								aStartWarInfo[iTeamIndex].bIsMaxWarNearbyPowerRatio = bIsMaxWarNearbyPowerRatio;
 								aStartWarInfo[iTeamIndex].bIsMaxWarDistantPowerRatio = bIsMaxWarDistantPowerRatio;
 
@@ -4151,7 +4150,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 						{
 							const int iNoWarChance = std::max(0, iNoWarAttitudeProb + 10 - (bAggressive ? 10 : 0) - (bFinancesProLimitedWar ? 10 : 0));
 							if (iNoWarChance < 100
-							&& iLoopTeamPower < iTeamPower * kTeam.AI_limitedWarPowerRatio() / 100
+							&& iLoopTeamPower < (int64_t)iTeamPower * kTeam.AI_limitedWarPowerRatio() / 100
 							&& (bIsLandTarget || bIsAnyCapitalAreaAlone && kLoopTeam.AI_isAnyCapitalAreaAlone()))
 							{
 								aStartWarInfo[iTeamIndex].bPossibleLimitedWar = true;

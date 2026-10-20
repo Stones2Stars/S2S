@@ -34,24 +34,6 @@ std::wstring CvTechInfo::getQuote() const
 	return gDLL->getText(m_szQuoteKey);
 }
 
-namespace
-{
-	// identity double (the ×100 worth fields author fractional human values).
-	double ti_identityDouble(const picojson::object& identity, const char* szKey)
-	{
-		picojson::object::const_iterator valueIter = identity.find(szKey);
-		if (valueIter == identity.end())
-		{
-			return 0.0;
-		}
-		if (!valueIter->second.is<double>())
-		{
-			return 0.0;
-		}
-		return valueIter->second.get<double>();
-	}
-}
-
 void CvTechInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every accumulating
@@ -109,8 +91,8 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 		m_iEra = jsonIdFk(*pIdentity, "era");
 		m_iGridX = jsonIdInt(*pIdentity, "gridX");
 		m_iGridY = jsonIdInt(*pIdentity, "gridY");
-		m_iWorth = jsonX100(ti_identityDouble(*pIdentity, "worth"));
-		m_iMilitaryWorth = jsonX100(ti_identityDouble(*pIdentity, "militaryWorth"));
+		m_iWorth = jsonIdX100(*pIdentity, "worth");
+		m_iMilitaryWorth = jsonIdX100(*pIdentity, "militaryWorth");
 		m_bRepeat = jsonIdBool(*pIdentity, "repeat");
 		m_bTradeable = jsonIdBool(*pIdentity, "tradeable");
 		m_bDisable = jsonIdBool(*pIdentity, "disable");

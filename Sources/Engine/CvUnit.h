@@ -1591,8 +1591,8 @@ protected:
 	int m_iExtraMaxHP;
 
 
-	int m_iSMAssetValue;
-	int m_iSMPowerValue;
+	int m_iAssetValue;
+	int m_iPowerValue;
 	int m_iSMHPValue;
 	//TB Combat Mods End
 	int m_iExtraBombardRate;
@@ -1907,11 +1907,13 @@ public:
 	int getSMHPValue() const;
 	void setSMHPValue();
 
+	///<summary>The military worth this unit adds to its owner's power: 0 before it is counted and after it dies.</summary>
 	int getPowerValueTotal() const;
-	void setSMPowerValue(bool bForLoad = false);
-
+	///<summary>The worth this unit adds to its owner's assets: 0 before it is counted and after it dies.</summary>
 	int assetValueTotal() const;
-	void setSMAssetValue(bool bForLoad = false);
+	///<summary>Sets the two values the unit counts with -- its type's, ranked under Size Matters, or 0 when it does
+	/// not count -- and announces how much each moved (SEVT_UNIT_MILITARY_WORTH_* / SEVT_UNIT_WORTH_*).</summary>
+	void setWorthValues(bool bCounted);
 
 	int getCargoVolumeModifier() const;
 	void setCargoVolumeModifier(int iNewValue);

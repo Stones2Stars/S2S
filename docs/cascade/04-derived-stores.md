@@ -13,6 +13,7 @@ structure over different payloads, and the only things that vary are the key spa
 | `EmpireContext.policies` | `id → count` | a civic / trait / project / wonder |
 | the enabler's membership planes | `id → (enable, remove)` | a HAVE-change |
 | `OperatingBuildings::providedCount` | `id → count` | an active flip |
+| the demographics ledgers (player / city / area) | `scope → (military worth, worth)` | a unit's counted worth moving, a held tech, a building's operate crossing, a unit or a plot changing area |
 | **the cascade packages** | `channel → Σvalue` | a source's compiled deposits |
 
 ⇒ **`ContextDict` and `CvCascadePackage` share a MAINTENANCE RULE**, so

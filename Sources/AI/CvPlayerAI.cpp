@@ -1944,8 +1944,8 @@ void CvPlayerAI::AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConq
 				if (GET_TEAM(getTeam()).getPower(false) * 10 < GET_TEAM(GET_PLAYER(eOldOwner).getTeam()).getPower(true) * 8)
 				{
 					const int iTempValue = std::min(75,
-						(GET_TEAM(GET_PLAYER(eOldOwner).getTeam()).getPower(true) - GET_TEAM(getTeam()).getPower(false))
-						* 20 / std::max(100, GET_TEAM(getTeam()).getPower(false))
+						(GET_TEAM(GET_PLAYER(eOldOwner).getTeam()).getPower(true) - GET_TEAM(getTeam()).getPower(false)) / 100
+						* 20 / std::max(100, GET_TEAM(getTeam()).getPower(false) / 100)
 					);
 					iRazeValue += iTempValue;
 				}
@@ -8334,8 +8334,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			{
 				return true;
 			}
-			iOurValue *= 10 + myTeam.getPower(false);
-			iOurValue /= 10 + dealerTeam.getPower(false);
+			iOurValue *= 10 + myTeam.getPower(false) / 100;
+			iOurValue /= 10 + dealerTeam.getPower(false) / 100;
 		}
 		else if (AI_getMemoryCount(ePlayer, MEMORY_MADE_DEMAND_RECENT) > 0
 		|| AI_getAttitude(ePlayer) < ATTITUDE_PLEASED && myTeam.getPower(false) > dealerTeam.getPower(false) * 4 / 3)
@@ -8350,8 +8350,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			iThreshold *= 3;
 		}
 
-		iThreshold *= 100 + dealerTeam.getPower(false);
-		iThreshold /= 100 + myTeam.getPower(false);
+		iThreshold *= 100 + dealerTeam.getPower(false) / 100;
+		iThreshold /= 100 + myTeam.getPower(false) / 100;
 
 		iThreshold -= dealer.AI_getPeacetimeGrantValue(getID());
 
@@ -11346,7 +11346,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				{
 					int iTempValue = kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 
-					iTempValue *= 25 + std::min(175, GET_TEAM(getTeam()).AI_getRivalAirPower());
+					iTempValue *= 25 + std::min(175, GET_TEAM(getTeam()).AI_getRivalAirPower() / 100);
 					iTempValue /= 100;
 
 					iValue += iTempValue;
@@ -11471,7 +11471,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				{
 					int iTempValue = kUnitInfo.getAir(AIR_INTERCEPT, CASC_SCOPE_UNIT);
 
-					iTempValue *= 25 + std::min(125, GET_TEAM(getTeam()).AI_getRivalAirPower());
+					iTempValue *= 25 + std::min(125, GET_TEAM(getTeam()).AI_getRivalAirPower() / 100);
 					iTempValue /= 50;
 
 					iValue += iTempValue;
@@ -20842,7 +20842,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 		int iDiploValue = 0;
 		//if we like this player then value positive attitude, if however we really hate them then
 		//actually value negative attitude.
-		iDiploValue += ((iOtherPlayerAttitudeWeight + 50) * kEvent.getAttitudeModifier() * GET_PLAYER(kTriggeredData.m_eOtherPlayer).getPower()) / std::max(1, getPower());
+		iDiploValue += static_cast<int>((int64_t)(iOtherPlayerAttitudeWeight + 50) * kEvent.getAttitudeModifier() * GET_PLAYER(kTriggeredData.m_eOtherPlayer).getPower() / std::max(1, getPower()));
 
 		if (kEvent.getTheirEnemyAttitudeModifier() != 0)
 		{
@@ -20904,7 +20904,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 		if (kEvent.isDeclareWar())
 		{
-			int iWarValue = (GET_TEAM(getTeam()).getDefensivePower() - GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true));// / std::max(1, GET_TEAM(getTeam()).getDefensivePower());
+			int iWarValue = (GET_TEAM(getTeam()).getDefensivePower() - GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true)) / 100;
 			iWarValue -= 30 * AI_getAttitudeVal(kTriggeredData.m_eOtherPlayer);
 			iValue += iWarValue;
 		}
@@ -21798,7 +21798,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 
 					if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iI))
 					{
-						if (95 * kTeam.getPower(false) > 100 * iOurPower)
+						if ((int64_t)95 * kTeam.getPower(false) > (int64_t)100 * iOurPower)
 						{
 							iOurPowerRank++;
 						}
@@ -21825,7 +21825,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 		{
 			if (iOurPowerRank <= 1 + (GET_TEAM(getTeam()).getHasMetCivCount(true) / 10))
 			{
-				if ((iOurPower > 2 * iAverageOtherPower) && (iOurPower - iAverageOtherPower > 100))
+				if ((iOurPower > 2 * iAverageOtherPower) && ((iOurPower - iAverageOtherPower) / 100 > 100))
 				{
 					if (iOthersWarMemoryOfUs > 0)
 					{
@@ -22435,8 +22435,8 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	// K-Mod
 	{
-		int iTotalPower = 0;
-		int iTotalWeightedValue = 0;
+		int64_t iTotalPower = 0;
+		int64_t iTotalWeightedValue = 0;
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 		{
 			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
@@ -22447,7 +22447,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 					// Attack units are scaled down to roughly reflect their limitations.
 					// (eg. Knights (10) vs Macemen (8). Cavalry (15) vs Rifles (14). Tank (28) vs Infantry (20) / Marine (24) )
 					int iValue = std::max(100 * kPlayer.getTypicalUnitValue(UNITAI_ATTACK) / 110, kPlayer.getTypicalUnitValue(UNITAI_CITY_DEFENSE));
-					iTotalWeightedValue += kPlayer.getPower() * iValue;
+					iTotalWeightedValue += (int64_t)kPlayer.getPower() * iValue;
 					iTotalPower += kPlayer.getPower();
 				}
 			}
@@ -22455,7 +22455,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		if (iTotalPower == 0)
 			iAverageEnemyUnit = 0;
 		else
-			iAverageEnemyUnit = iTotalWeightedValue / iTotalPower;
+			iAverageEnemyUnit = static_cast<int>(iTotalWeightedValue / iTotalPower);
 
 		// A bit of random variation...
 		iAverageEnemyUnit *= (91 + AI_getStrategyRand(1) % 20);
@@ -22689,8 +22689,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 						if (iTempParanoia > 0)
 						{
-							iTempParanoia *= iTheirPower;
-							iTempParanoia /= std::max(1, iOurDefensivePower);
+							iTempParanoia = static_cast<int>((int64_t)iTempParanoia * iTheirPower / std::max(1, iOurDefensivePower));
 						}
 
 						// Do they look like they're going for militaristic victory?

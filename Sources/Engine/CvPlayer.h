@@ -20,6 +20,7 @@
 #include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
 #include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
 #include "TraitContext.h"    // the empire's held-trait set: storage + maintenance, one place
+#include "DemographicsContext.h"   // the empire's power and assets ledgers
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "CvCityBreakdown.h"    // CityBreakdownSubject -- the subject sumCityBreakdowns sums
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
@@ -681,16 +682,14 @@ public:
 	int getWinsVsBarbs() const;
 	void changeWinsVsBarbs(int iChange);
 
+	///<summary>The empire's worth: its units', techs' and operating buildings' worth, and 10 per citizen and per
+	/// scored land plot.</summary>
 	int getAssets() const;
-	void changeAssets(int iChange);
-
+	///<summary>The empire's military might: its units', techs' and operating buildings' military worth, and 1 per
+	/// citizen.</summary>
 	int getPower() const;
-	void changePower(int iChange);
-
 	int getTechPower() const;
-	void changeTechPower(int iChange);
 	int getUnitPower() const;
-	void changeUnitPower(int iChange);
 
 	int getPopScore(bool bCheckVassal = true) const;
 	void changePopScore(int iChange);
@@ -778,6 +777,9 @@ public:
 	// The empire's HELD-TRAIT set. A store rather than a forward because ENUMERATING the held traits off the
 	// has-array walks the whole trait registry, while TESTING one is a pointer hop (Engine/TraitContext.h).
 	TraitContext& traits() const { return m_traits; }
+	///<summary>The empire's power and assets ledgers over what it holds -- units, techs, operating buildings
+	/// (Engine/DemographicsContext.h).</summary>
+	DemographicsContext& demographics() const { return m_demographics; }
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
@@ -1677,10 +1679,6 @@ protected:
 	int m_iCapitalCityID;
 	int m_iCitiesLost;
 	int m_iWinsVsBarbs;
-	int m_iAssets;
-	int m_iPower;
-	int m_iTechPower;
-	int	m_iUnitPower;
 	int m_iPopulationScore;
 	int m_iLandScore;
 	int m_iTechScore;
@@ -1740,6 +1738,7 @@ protected:
 	mutable PolicyContext m_policies;
 	mutable CapabilityContext m_capabilities;
 	mutable TraitContext m_traits;   // the empire's held-trait set (see traits()); a delta store, never serialized
+	mutable DemographicsContext m_demographics;   // the power and assets ledgers (see demographics()); never serialized
 	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
 	CvCascadePackage<CvPlayer> m_cascadePackage;
 	PlayerTypes m_eParent;

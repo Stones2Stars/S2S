@@ -831,17 +831,17 @@ int CyPlayer::getCitiesLost() const
 
 int CyPlayer::getAssets() const
 {
-	return m_pPlayer->getAssets();
+	return m_pPlayer->getAssets() / 100;
 }
 
 int CyPlayer::getPower() const
 {
-	return m_pPlayer->getPower();
+	return m_pPlayer->getPower() / 100;
 }
 
 int CyPlayer::getUnitPower() const
 {
-	return m_pPlayer->getUnitPower();
+	return m_pPlayer->getUnitPower() / 100;
 }
 
 int CyPlayer::getPopScore() const

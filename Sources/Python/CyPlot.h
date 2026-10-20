@@ -52,8 +52,6 @@ public:
 	int getBuildTurnsLeft(int /*BuildTypes*/ eBuild, int iNowExtra, int iThenExtra) const;
 	int getFeatureProduction(int /*BuildTypes*/ eBuild, int /*TeamTypes*/ eTeam, const CyCity* ppCity) const;
 
-	int getUnitPower(int /*PlayerTypes*/ eOwner) const;
-
 	int defenseModifier(int /*TeamTypes*/ iDefendTeam, bool bIgnoreBuilding, bool bHelp) const;
 
 	bool isAdjacentPlayer(int /*PlayerTypes*/ ePlayer, bool bLandOnly) const;

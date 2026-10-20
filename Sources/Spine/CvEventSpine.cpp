@@ -14,6 +14,7 @@
 #include "Engine/PolicyContext.h"          // the enacted-policy dictionary's own consumer
 #include "Engine/CapabilityContext.h"      // the empire-ability union's own consumer
 #include "Engine/TraitContext.h"           // the held-trait set's own consumer
+#include "Engine/DemographicsContext.h"    // the power and assets ledgers' own consumer
 #include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
@@ -560,6 +561,12 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_AREA_TILE_REMOVED:                return "[SPINE/WORLD] areaTileRemoved";
 	case SEVT_UNIT_CREATED:                     return "[SPINE/UNIT] unitCreated";
 	case SEVT_UNIT_KILLED:                      return "[SPINE/UNIT] unitKilled";
+	case SEVT_UNIT_AREA_ADDED:                  return "[SPINE/UNIT] unitAreaAdded";
+	case SEVT_UNIT_AREA_REMOVED:                return "[SPINE/UNIT] unitAreaRemoved";
+	case SEVT_UNIT_MILITARY_WORTH_ADDED:        return "[SPINE/UNIT] unitMilitaryWorthAdded";
+	case SEVT_UNIT_MILITARY_WORTH_REMOVED:      return "[SPINE/UNIT] unitMilitaryWorthRemoved";
+	case SEVT_UNIT_WORTH_ADDED:                 return "[SPINE/UNIT] unitWorthAdded";
+	case SEVT_UNIT_WORTH_REMOVED:               return "[SPINE/UNIT] unitWorthRemoved";
 	case SEVT_UNIT_DEATH_SCHEDULE_ADDED:        return "[SPINE/UNIT] unitDeathScheduleAdded";
 	case SEVT_UNIT_DEATH_SCHEDULE_REMOVED:      return "[SPINE/UNIT] unitDeathScheduleRemoved";
 	case SEVT_UNIT_ENTERED_CITY:                return "[SPINE/UNIT] unitEnteredCity";
@@ -760,6 +767,7 @@ void spineRegisterConsumers()
 	policyContextRegisterConsumer();
 	capabilityContextRegisterConsumer();
 	traitContextRegisterConsumer();
+	demographicsContextRegisterConsumer();
 	enablerRegisterConsumer();
 	modifierRegisterConsumer();
 	// The TRIGGER machine (json.md §5: a grant is a trigger with a null condition) registers LAST, and that is the
@@ -1743,19 +1751,19 @@ void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCo
 	eventSpine().emit(e);
 }
 
-void emitAreaTileAdded(int iArea, int iCount)
+void emitAreaTileAdded(int iArea, int iCount, int iPlot)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_ADDED, -1, iCount, 0, -1, iArea);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_ADDED, -1, iCount, iPlot, -1, iArea);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount);
+	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
 
-void emitAreaTileRemoved(int iArea, int iCount)
+void emitAreaTileRemoved(int iArea, int iCount, int iPlot)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_REMOVED, -1, iCount, 0, -1, iArea);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_REMOVED, -1, iCount, iPlot, -1, iArea);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount);
+	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
 
@@ -2074,6 +2082,57 @@ void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
+}
+
+namespace
+{
+	void es_emitUnitArea(int iEvent, int iUnitType, int iUnitId, int iOwner, int iCount, int iArea, int iPlot)
+	{
+		CvSpineEvent kEvent(EVENTKIND_DOMAIN, iEvent, iUnitType, iCount, iArea, iOwner, iPlot);
+		kEvent.iDomainTag = SD_SPINE;
+		kEvent.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_COUNT, iCount)
+			.addI(SPF_AREA, iArea).addI(SPF_PLOT, iPlot);
+		eventSpine().emit(kEvent);
+	}
+
+	void es_emitUnitValue(int iEvent, int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot)
+	{
+		CvSpineEvent kEvent(EVENTKIND_DOMAIN, iEvent, iUnitType, iCount, iUnitId, iOwner, iPlot);
+		kEvent.iDomainTag = SD_SPINE;
+		kEvent.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_COUNT, iCount)
+			.addI(SPF_PLOT, iPlot);
+		eventSpine().emit(kEvent);
+	}
+}
+
+void emitUnitAreaAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iArea, int iPlot)
+{
+	es_emitUnitArea(SEVT_UNIT_AREA_ADDED, iUnitType, iUnitId, iOwner, iCount, iArea, iPlot);
+}
+
+void emitUnitAreaRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iArea, int iPlot)
+{
+	es_emitUnitArea(SEVT_UNIT_AREA_REMOVED, iUnitType, iUnitId, iOwner, iCount, iArea, iPlot);
+}
+
+void emitUnitMilitaryWorthAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot)
+{
+	es_emitUnitValue(SEVT_UNIT_MILITARY_WORTH_ADDED, iUnitType, iUnitId, iOwner, iCount, iPlot);
+}
+
+void emitUnitMilitaryWorthRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot)
+{
+	es_emitUnitValue(SEVT_UNIT_MILITARY_WORTH_REMOVED, iUnitType, iUnitId, iOwner, iCount, iPlot);
+}
+
+void emitUnitWorthAdded(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot)
+{
+	es_emitUnitValue(SEVT_UNIT_WORTH_ADDED, iUnitType, iUnitId, iOwner, iCount, iPlot);
+}
+
+void emitUnitWorthRemoved(int iUnitType, int iUnitId, int iOwner, int iCount, int iPlot)
+{
+	es_emitUnitValue(SEVT_UNIT_WORTH_REMOVED, iUnitType, iUnitId, iOwner, iCount, iPlot);
 }
 
 // A resolved combat, emitted beside CvEventReporter's Python callback. The payload is the reporter's own

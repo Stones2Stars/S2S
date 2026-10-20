@@ -32,8 +32,6 @@ void CvPythonPlotLoader::CyPlotPythonInterface1(boost::python::class_<CyPlot>& i
 		.def("getBuildTurnsLeft", &CyPlot::getBuildTurnsLeft, "int (int (BuildTypes) eBuild, int iNowExtra, int iThenExtra)")
 		.def("getFeatureProduction", &CyPlot::getFeatureProduction, "int (int (BuildTypes) eBuild, int (TeamTypes) eTeam, CvCity** ppCity)")
 
-		.def("getUnitPower", &CyPlot::getUnitPower, "int (int /*PlayerTypes*/ eOwner)")
-
 		.def("defenseModifier", &CyPlot::defenseModifier, "int (int /*TeamTypes*/, bool bIgnoreBuilding, bool bHelp)")
 
 		.def("isAdjacentPlayer", &CyPlot::isAdjacentPlayer, "bool (int /*PlayerTypes*/ ePlayer, bool bLandOnly)")

@@ -116,7 +116,7 @@ int CyArea::getCitiesPerPlayer(PlayerTypes eIndex) const
 int CyArea::getPower(PlayerTypes eIndex) const
 {
 	const CvArea* pArea = getArea();
-	return (pArea != NULL) ? pArea->getPower(eIndex) : 0;
+	return (pArea != NULL) ? pArea->getPower(eIndex) / 100 : 0;
 }
 
 int CyArea::getBestFoundValue(PlayerTypes eIndex) const

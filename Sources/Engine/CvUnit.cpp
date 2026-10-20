@@ -614,11 +614,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 				GET_PLAYER(eOwner).changeUnitCountSM(eUnit, smGroupMultiplier(groupRank()));
 			}
 		}
-		else
-		{
-			GET_PLAYER(eOwner).changeAssets(m_pUnitInfo->getWorth());
-			GET_PLAYER(eOwner).changeUnitPower(m_pUnitInfo->getMilitaryWorth());
-		}
+		//	The scratch unit is no army member, so it adds nothing to its owner's power or assets either.
+		setWorthValues(!isTempUnit());
 		//--------------------------------
 		// Init non-saved data
 		ensureGraphicalPlacement();
@@ -778,8 +775,8 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeMore = 0;
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
-	m_iSMAssetValue = 0;
-	m_iSMPowerValue = 0;
+	m_iAssetValue = 0;
+	m_iPowerValue = 0;
 	m_iSMHPValue = 0;
 	//TB Combat Mods End
 	m_iExtraBombardRate = 0;
@@ -1014,8 +1011,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
-	m_iSMAssetValue = other.m_iSMAssetValue;
-	m_iSMPowerValue = other.m_iSMPowerValue;
 	m_iSMHPValue = other.m_iSMHPValue;
 	m_iExtraBombardRate = other.m_iExtraBombardRate;
 	m_iSMBombardRate = other.m_iSMBombardRate;
@@ -1631,6 +1626,7 @@ void CvUnit::die()
 
 	emitUnitKilled((int)getUnitType(), getID(), (int)eOwner,
 		(pDeathPlot != NULL) ? GC.getMap().plotNum(pDeathPlot->getX(), pDeathPlot->getY()) : -1);
+	setWorthValues(false);
 
 	if (pDeathPlot != NULL)
 	{
@@ -1694,9 +1690,6 @@ void CvUnit::die()
 	{
 		owner.changeNumMilitaryUnits(-1);
 	}
-
-	owner.changeAssets(-assetValueTotal());
-	owner.changeUnitPower(-getPowerValueTotal());
 
 	if (pDeathPlot != NULL)
 	{
@@ -4014,15 +4007,15 @@ int CvUnit::defenderValue(const CvUnit* pAttacker) const
 	}
 
 	{
-		const int iAssetValue = std::max(1, assetValueTotal()/100);
+		const int iAssetValue = std::max(1, assetValueTotal());
 		int iCargoAssetValue = 0;
 		std::vector<CvUnit*> aCargoUnits;
 		getCargoUnits(aCargoUnits);
 		foreach_(const CvUnit* pCargo, aCargoUnits)
 		{
-			iCargoAssetValue += std::max(1, pCargo->assetValueTotal()/100);
+			iCargoAssetValue += std::max(1, pCargo->assetValueTotal());
 		}
-		iValue = iValue * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue);
+		iValue = static_cast<int>((int64_t)iValue * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue));
 	}
 
 	if (NO_UNIT == getLeaderUnitType())
@@ -4116,15 +4109,15 @@ bool CvUnit::isBetterDefenderThan(const CvUnit* pDefender, const CvUnit* pAttack
 	}
 
 	{
-		const int iAssetValue = assetValueTotal() / 100;
+		const int iAssetValue = assetValueTotal();
 		int iCargoAssetValue = 0;
 		std::vector<CvUnit*> aCargoUnits;
 		getCargoUnits(aCargoUnits);
 		foreach_(const CvUnit* pCargoUnit, aCargoUnits)
 		{
-			iCargoAssetValue += pCargoUnit->assetValueTotal() / 100;
+			iCargoAssetValue += pCargoUnit->assetValueTotal();
 		}
-		iOurDefense = iOurDefense * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue);
+		iOurDefense = static_cast<int>((int64_t)iOurDefense * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue));
 	}
 
 	int iTheirDefense = pDefender->currCombatStr(plot(), pAttacker);
@@ -4163,15 +4156,15 @@ bool CvUnit::isBetterDefenderThan(const CvUnit* pDefender, const CvUnit* pAttack
 	}
 
 	{
-		const int iAssetValue = pDefender->assetValueTotal() / 100;
+		const int iAssetValue = pDefender->assetValueTotal();
 		int iCargoAssetValue = 0;
 		std::vector<CvUnit*> aCargoUnits;
 		pDefender->getCargoUnits(aCargoUnits);
 		foreach_(const CvUnit* pCargoUnit, aCargoUnits)
 		{
-			iCargoAssetValue += pCargoUnit->assetValueTotal() / 100;
+			iCargoAssetValue += pCargoUnit->assetValueTotal();
 		}
-		iTheirDefense = iTheirDefense * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue);
+		iTheirDefense = static_cast<int>((int64_t)iTheirDefense * iAssetValue / std::max(1, iAssetValue + iCargoAssetValue));
 	}
 
 	if (iOurDefense == iTheirDefense)
@@ -13843,7 +13836,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		}
 
 		pNewPlot->area()->changeUnitsPerPlayer(eMyPlayer, 1);
-		pNewPlot->area()->changePower(eMyPlayer, getPowerValueTotal());
 
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
@@ -13874,7 +13866,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		changeDebugCount(-1);
 
 		pOldPlot->area()->changeUnitsPerPlayer(eMyPlayer, -1);
-		pOldPlot->area()->changePower(eMyPlayer, -getPowerValueTotal());
 
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
@@ -13941,6 +13932,25 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			gDLL->getInterfaceIFace()->verifyPlotListColumn();
 
 			gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+		}
+	}
+
+	//	The unit leaving one AREA for another is its own happening; a move inside an area announces nothing.
+	{
+		const CvArea* pOldArea = (pOldPlot != NULL) ? pOldPlot->area() : NULL;
+		const CvArea* pNewArea = (pNewPlot != NULL) ? pNewPlot->area() : NULL;
+		if (pOldArea != pNewArea)
+		{
+			if (pOldArea != NULL)
+			{
+				emitUnitAreaRemoved((int)getUnitType(), getID(), (int)eMyPlayer, getPowerValueTotal(), pOldArea->getID(),
+					GC.getMap().plotNum(pOldPlot->getX(), pOldPlot->getY()));
+			}
+			if (pNewArea != NULL)
+			{
+				emitUnitAreaAdded((int)getUnitType(), getID(), (int)eMyPlayer, getPowerValueTotal(), pNewArea->getID(),
+					GC.getMap().plotNum(pNewPlot->getX(), pNewPlot->getY()));
+			}
 		}
 	}
 
@@ -18811,8 +18821,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraGroup);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraSize);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMStrength);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iSMAssetValue);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iSMPowerValue);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMHPValue);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMExtraCargoVolume);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMBombardRate);
@@ -19281,8 +19289,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraGroup);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraSize);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMStrength);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMAssetValue);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMPowerValue);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMHPValue);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMExtraCargoVolume);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMBombardRate);
@@ -24340,39 +24346,59 @@ void CvUnit::setSMHPValue()
 
 int CvUnit::getPowerValueTotal() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMPowerValue : m_pUnitInfo->getMilitaryWorth();
-}
-
-void CvUnit::setSMPowerValue(bool bForLoad)
-{
-	const int oldSMPowerValue = m_iSMPowerValue;
-	m_iSMPowerValue = applySMRank(m_pUnitInfo->getMilitaryWorth(), getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
-	FASSERT_NOT_NEGATIVE(m_iSMPowerValue);
-	if (!bForLoad)
-	{
-		const int iChange = m_iSMPowerValue - oldSMPowerValue;
-		GET_PLAYER(getOwner()).changeUnitPower(iChange);
-	}
+	return m_iPowerValue;
 }
 
 int CvUnit::assetValueTotal() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iSMAssetValue : m_pUnitInfo->getWorth();
+	return m_iAssetValue;
 }
 
-void CvUnit::setSMAssetValue(bool bForLoad)
+void CvUnit::setWorthValues(bool bCounted)
 {
-	const int offsetValue = getSizeMattersOffsetValue();
-	if (offsetValue != -15) // Special Case for size cat undefined units
+	int iPowerValue = 0;
+	int iAssetValue = 0;
+	if (bCounted)
 	{
-		const int oldSMAssetValue = m_iSMAssetValue;
-		m_iSMAssetValue = applySMRank(m_pUnitInfo->getWorth(), offsetValue, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
-		if (!bForLoad)
+		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 		{
-			const int iChange = m_iSMAssetValue - oldSMAssetValue;
-			GET_PLAYER(getOwner()).changeAssets(iChange);
+			const int iOffset = getSizeMattersOffsetValue();
+			iPowerValue = applySMRank(m_pUnitInfo->getMilitaryWorth(), iOffset, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+			// A unit of undefined size category carries no worth under Size Matters.
+			if (iOffset != -15)
+			{
+				iAssetValue = applySMRank(m_pUnitInfo->getWorth(), iOffset, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+			}
 		}
-		FAssertOptionRecalcMsg(GAMEOPTION_COMBAT_SIZE_MATTERS, m_iSMAssetValue >= 0, "Asset value fell below 0");
+		else
+		{
+			iPowerValue = m_pUnitInfo->getMilitaryWorth();
+			iAssetValue = m_pUnitInfo->getWorth();
+		}
+	}
+	FASSERT_NOT_NEGATIVE(iPowerValue);
+	FASSERT_NOT_NEGATIVE(iAssetValue);
+	const int iOldPowerValue = m_iPowerValue;
+	const int iOldAssetValue = m_iAssetValue;
+	m_iPowerValue = iPowerValue;
+	m_iAssetValue = iAssetValue;
+
+	const int iPlot = GC.getMap().isPlot(getX(), getY()) ? GC.getMap().plotNum(getX(), getY()) : -1;
+	if (iPowerValue > iOldPowerValue)
+	{
+		emitUnitMilitaryWorthAdded((int)getUnitType(), getID(), (int)getOwner(), iPowerValue - iOldPowerValue, iPlot);
+	}
+	else if (iPowerValue < iOldPowerValue)
+	{
+		emitUnitMilitaryWorthRemoved((int)getUnitType(), getID(), (int)getOwner(), iOldPowerValue - iPowerValue, iPlot);
+	}
+	if (iAssetValue > iOldAssetValue)
+	{
+		emitUnitWorthAdded((int)getUnitType(), getID(), (int)getOwner(), iAssetValue - iOldAssetValue, iPlot);
+	}
+	else if (iAssetValue < iOldAssetValue)
+	{
+		emitUnitWorthRemoved((int)getUnitType(), getID(), (int)getOwner(), iOldAssetValue - iAssetValue, iPlot);
 	}
 }
 
@@ -24777,8 +24803,11 @@ void CvUnit::setSMValues(bool bForLoad)
 	}
 	setSMStrength();
 	setSMHPValue();
-	setSMAssetValue(bForLoad);
-	setSMPowerValue(bForLoad);
+	//	A save-carried unit is counted by CvUnitAI::read, once its birthmark -- what isTempUnit tests -- has streamed.
+	if (!bForLoad)
+	{
+		setWorthValues(!isTempUnit());
+	}
 	setSMCargoCapacity();
 	setSMCargoVolume();
 	setSMBombardRate();
