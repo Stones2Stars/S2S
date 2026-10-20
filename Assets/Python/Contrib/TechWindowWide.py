@@ -33,7 +33,6 @@ class CvTechSplashScreen:
 		# widget names
 		self.WIDGET_ID = "TechSplashScreenWidget"
 		self.SCREEN_NAME = "TechSplashScreen"
-		self.EXIT_ID = "TechSplashExit"
 
 		self.X_SCREEN = 17  #   117                                                                                     # Spocko 205
 		self.Y_SCREEN = 27
@@ -141,7 +140,7 @@ class CvTechSplashScreen:
 		iScreenX = screen.centerX(0)
 		iScreenY = screen.centerY(0)
 		screen.setDimensions(iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
-		PythonToolTip.setScreenOrigin(self, iScreenX, iScreenY)
+		PythonToolTip.setScreenArea(self, iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
 
 		# Create panels
 
@@ -250,7 +249,7 @@ class CvTechSplashScreen:
 			       self.X_ALLOWS_PANELSIR+self.iMarginSpace, self.Y_ALLOWS_PANELSIR - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_TECHS):
-			screen.attachImageButton(panelNameSIR, "", INFO.getButton("TECH_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
+			screen.attachImageButton(panelNameSIR, self.getNextWidgetName(), INFO.getButton("TECH_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
 
 #---Eingefgt ENDE ------------------------------------------------
 
@@ -261,7 +260,7 @@ class CvTechSplashScreen:
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		for iUnit in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_UNITS):
-			screen.attachImageButton( panelName, "", INFO.getButton("UNIT_", iUnit), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
+			screen.attachImageButton( panelName, self.getNextWidgetName(), INFO.getButton("UNIT_", iUnit), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
 
 		# Buildings Enabled
 		szBuildingsTitleDesc = u"<font=3b>" + TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ()) + ":" + u"</font>"
@@ -270,7 +269,7 @@ class CvTechSplashScreen:
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL2 - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		for eLoopBuilding in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BUILDINGS):
-				screen.attachImageButton( panelName2, "", INFO.getButton("BUILDING_", eLoopBuilding), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName2, self.getNextWidgetName(), INFO.getButton("BUILDING_", eLoopBuilding), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 						WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, eLoopBuilding, 1, False )
 
 		# Improvements
@@ -280,11 +279,11 @@ class CvTechSplashScreen:
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL3 - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROJECTS):
-				screen.attachImageButton( panelName3, "", INFO.getButton("PROJECT_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("PROJECT_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, j, 1, False )
 
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROMOTIONS):
-				screen.attachImageButton( panelName3, "", INFO.getButton("PROMOTION_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("PROMOTION_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, j, 1, False )
 
 #---Eingefgt START - kann komplett gelscht werden --------------
@@ -293,18 +292,18 @@ class CvTechSplashScreen:
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BUILDS):
 				iImprovement = BUILD.getImprovement(j)
 				if (iImprovement == -1):
-					screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
+					screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
 				else:
-					screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, iImprovement, 1, False )
+					screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, iImprovement, 1, False )
 
 		# Bonuses
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BONUSES):
-				screen.attachImageButton( panelName3, "", INFO.getButton("BONUS_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("BONUS_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, j, 1, False )
 
 		# Civic
 		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_CIVICS):
-				screen.attachImageButton( panelName3, "", INFO.getButton("CIVIC_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+				screen.attachImageButton( panelName3, self.getNextWidgetName(), INFO.getButton("CIVIC_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, j, 1, False )
 
 #---Eingefgt ENDE ------------------------------------------------
@@ -323,10 +322,6 @@ class CvTechSplashScreen:
 	def handleInput( self, inputClass ):
 		if ( inputClass.getData() == int(InputTypes.KB_RETURN) ):
 			self.getScreen().hideScreen()
-			return 1
-		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED):
-			if (inputClass.getFunctionName() == self.EXIT_ID):
-				self.getScreen().hideScreen()
 			return 1
 		return 0
 

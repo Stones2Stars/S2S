@@ -5,6 +5,7 @@
 #
 from CvPythonExtensions import *
 import math
+import PythonToolTip
 
 # globals
 # The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
@@ -25,6 +26,8 @@ class CvInfoScreen:
 	def __init__(self, screenId):
 
 		self.screenId = screenId
+		# The wonders table's hover columns, silent areas (§ THE ONE HOVER, Hover state).
+		self.wondersRects = []
 
 		self.szWonderDisplayMode = "WorldWonders"
 
@@ -45,6 +48,7 @@ class CvInfoScreen:
 
 	# Screen construction function
 	def interfaceScreen(self, iTabID, iEndGame):
+		PythonToolTip.noteSilentArea(self)
 
 		if GAME.getReplayMessageTurn(GAME.getNumReplayMessages() - 1) < -1:
 			return
@@ -239,8 +243,13 @@ class CvInfoScreen:
 
 
 	def redrawContents(self):
+		# The wonders table is a silent area (§ THE ONE HOVER, Button lists).
+		PythonToolTip.buildButtonLists(self.drawContents)
+
+	def drawContents(self):
 		screen = CyGInterfaceScreen("InfoScreen", self.screenId)
 		self.deleteAllWidgets(screen)
+		self.wondersRects = []
 		# Specific widgets
 		for widget in self.aWidgetBucket:
 			screen.deleteWidget(widget)
@@ -1021,7 +1030,7 @@ class CvInfoScreen:
 			for iWonderLoop in xrange(aiTopCitiesNumWonders[i]):
 
 				iBuildingID = aaiTopCitiesWonders[i][iWonderLoop]
-				screen.attachImageButton(szIconPanel, "", INFO.getButton("BUILDING_", iBuildingID), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuildingID, -1, False)
+				screen.attachImageButton(szIconPanel, self.getNextWidgetName(), INFO.getButton("BUILDING_", iBuildingID), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuildingID, -1, False)
 
 
 		xDD = 540
@@ -1190,10 +1199,18 @@ class CvInfoScreen:
 		# Draw Wonders List
 		self.szWondersTable = self.getNextWidgetName()
 
-		screen.addTableControlGFC(self.szWondersTable, 5, 540, 130, 420, 540, True, True, 24,24, TableStyles.TABLE_STYLE_STANDARD)
+		x = 540
+		y = 130
+		h = 540
+		iRow = 24
+		wZoom = 30
+		wWonder = 115
+		screen.addTableControlGFC(self.szWondersTable, 5, x, y, 420, h, True, True, iRow, iRow, TableStyles.TABLE_STYLE_STANDARD)
 		screen.enableSort(self.szWondersTable)
-		screen.setTableColumnHeader(self.szWondersTable, 0, "", 30)
-		screen.setTableColumnHeader(self.szWondersTable, 1, self.szName, 115)
+		screen.setTableColumnHeader(self.szWondersTable, 0, "", wZoom)
+		screen.setTableColumnHeader(self.szWondersTable, 1, self.szName, wWonder)
+		# The zoom column and the wonder column carry hovers.
+		self.wondersRects = [(x, y, wZoom, h, wZoom, iRow), (x + wZoom, y, wWonder, h, wWonder, iRow)]
 		screen.setTableColumnHeader(self.szWondersTable, 2, self.szWonderDate, 70)
 		screen.setTableColumnHeader(self.szWondersTable, 3, self.szWonderOwner, 100)
 		screen.setTableColumnHeader(self.szWondersTable, 4, self.szWonderCity, 100)
@@ -1655,7 +1672,13 @@ class CvInfoScreen:
 		return 0
 
 
-	def update(self, fDelta): return
+	def update(self, fDelta):
+		PythonToolTip.pollSilentArea()
+
+	def silentAreaRects(self):
+		if not self.getScreen().isActive():
+			return []
+		return self.wondersRects
 
 	def onClose(self):
 		CyGInterfaceScreen("InfoScreen", self.screenId).setDying(True)

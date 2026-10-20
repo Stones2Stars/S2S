@@ -1,5 +1,6 @@
 from CvPythonExtensions import *
 import HandleInputUtil
+import PythonToolTip
 import cPickle
 import sys
 
@@ -22,6 +23,8 @@ class CvDomesticAdvisor:
 
 	def __init__(self, screenId):
 		self.screenId = screenId
+		# The city table's zoom column, a silent area (§ THE ONE HOVER, Hover state); None while it is not drawn.
+		self.zoomColumnRect = None
 		self.bInitialize = True
 		self.bCustomizing = False
 		self.iPage = 0
@@ -77,6 +80,7 @@ class CvDomesticAdvisor:
 		return CyGInterfaceScreen("DomesticAdvisor", self.screenId)
 
 	def interfaceScreen(self):
+		PythonToolTip.noteSilentArea(self)
 		screen = self.getScreen()
 		if screen.isActive():
 			return
@@ -344,7 +348,6 @@ class CvDomesticAdvisor:
 		import InputData
 		self.InputData = InputData.instance
 
-		import PythonToolTip
 		self.tooltip = PythonToolTip.PythonToolTip()
 
 		self.TXT_NAME = TRNSLTR.getText("TXT_WORD_NAME", ())
@@ -454,8 +457,8 @@ class CvDomesticAdvisor:
 					break
 
 		if bCanLiberate:
-			screen.setImageButton("DomesticSplit", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_FREE_COLONY, IntrinsicSlot.PYINT_ACTION_INFO_INDEX).getActionInfoIndex(), -1)
-			screen.setStyle("DomesticSplit", "Button_HUDAdvisorVictory_Style")
+			screen.setImageButton("DomesticSplit0", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_FREE_COLONY, IntrinsicSlot.PYINT_ACTION_INFO_INDEX).getActionInfoIndex(), -1)
+			screen.setStyle("DomesticSplit0", "Button_HUDAdvisorVictory_Style")
 
 		# Draw the table and the rest based on the mode
 		self.drawScreen()
@@ -497,7 +500,7 @@ class CvDomesticAdvisor:
 		CyInterface().setDirty(InterfaceDirtyBits.MiscButtons_DIRTY_BIT, True)
 
 		# Draw the city list...
-		self.drawContents(screen)
+		PythonToolTip.buildButtonLists(self.drawContents, screen)
 
 	def calculateFounded(self, CyCity, szKey, arg):
 		iTurn = CyCity.getGameDateFounded()
@@ -1168,6 +1171,7 @@ class CvDomesticAdvisor:
 		return nValue
 
 	def drawContents(self, screen):
+		self.zoomColumnRect = None
 		PAGE = self.currentPage
 		iPage = self.iPage
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2 = self.aFontList
@@ -1257,7 +1261,8 @@ class CvDomesticAdvisor:
 			dDict = self.columnDict
 
 			# Build the table
-			screen.addTableControlGFC(PAGE, len(dDict) + 2, -1, self.yTable, self.xRes + 2, self.hTable1, True, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+			iRowHeight = 24
+			screen.addTableControlGFC(PAGE, len(dDict) + 2, -1, self.yTable, self.xRes + 2, self.hTable1, True, False, iRowHeight, iRowHeight, TableStyles.TABLE_STYLE_STANDARD)
 			screen.enableSort(PAGE)
 			screen.setStyle(PAGE, "Table_StandardCiv_Style")
 
@@ -1267,7 +1272,9 @@ class CvDomesticAdvisor:
 
 			# Add a blank header for the "zoom" column
 			wName = self.PAGES[iPage]["cityName"]
-			screen.setTableColumnHeader(PAGE, 0, "", 30)
+			wZoom = 30
+			screen.setTableColumnHeader(PAGE, 0, "", wZoom)
+			self.zoomColumnRect = (-1, self.yTable, wZoom, self.hTable1, wZoom, iRowHeight)
 			screen.setTableColumnHeader(PAGE, 1, self.TXT_NAME, wName)
 
 			# Add blank rows to the table
@@ -1565,6 +1572,12 @@ class CvDomesticAdvisor:
 	def update(self, fDelta):
 		if self.tooltip.bLockedTT:
 			self.tooltip.handle(self.getScreen())
+		PythonToolTip.pollSilentArea()
+
+	def silentAreaRects(self):
+		if self.zoomColumnRect is None or not self.getScreen().isActive():
+			return []
+		return [self.zoomColumnRect]
 
 	def handleInput(self, inputClass):
 		screen = self.getScreen()

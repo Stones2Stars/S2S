@@ -2,6 +2,7 @@
 
 from CvPythonExtensions import *
 import HandleInputUtil
+import PythonToolTip
 import UnitUpgradesGraph
 
 # The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
@@ -22,11 +23,15 @@ class Pedia:
 		self.screenId = screenId
 		self.bNotPedia = True
 		self.pediaHistory = [(-1, "", 0)]
+		# The item list while it lists concepts, and the page's tables with hover text: silent areas
+		# (§ THE ONE HOVER, Hover state).
+		self.itemListRect = None
+		self.pageSilentRects = []
 
 	def screen(self):
 		return CyGInterfaceScreen("PediaMainScreen", self.screenId)
 
-	def getScreen(self): # Legacy, will remove it.
+	def getScreen(self):
 		return CyGInterfaceScreen("PediaMainScreen", self.screenId)
 
 	# Called when you open the pedia directly.
@@ -39,12 +44,12 @@ class Pedia:
 	# Prepare pedia.
 	def startPedia(self):
 		print "Start Pedia"
+		PythonToolTip.noteSilentArea(self)
 		self.bKeyPress = False
 
 		import InputData
 		self.InputData = InputData.instance
 
-		import PythonToolTip
 		self.tooltip = PythonToolTip.PythonToolTip()
 
 		self.fKeyTimer = 99999
@@ -434,8 +439,7 @@ class Pedia:
 				if not szSubCat:
 					self.welcomeMessage(screen)
 				print "Category link %d" % iObjectType
-				screen.deleteWidget("PediaMainItemList")
-				screen.deleteWidget("PediaMainItemListCount")
+				self.deleteItemList(screen)
 				iCategory = iObjectType
 				aSubCatList = self.mapSubCat.get(iCategory)
 				szSubCat = "NONE"
@@ -622,14 +626,17 @@ class Pedia:
 			else:
 				szText = INFO.getCivilopedia("CONCEPT_", iObjectType)
 			screen.attachMultilineText(panelName, "", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
-		elif bFuncByGroupCat:
-			self.mapScreenFunctions[iGroupCategory].interfaceScreen(iObjectType)
-		elif bFuncByCat:
-			self.mapScreenFunctions[iCategory].interfaceScreen(iObjectType)
-		elif bFuncBySubCatSimple:
-			self.mapScreenFunctions[szSubCatSimple].interfaceScreen(iObjectType)
 		else:
-			self.mapScreenFunctions[szSubCat].interfaceScreen(iObjectType)
+			if bFuncByGroupCat:
+				page = self.mapScreenFunctions[iGroupCategory]
+			elif bFuncByCat:
+				page = self.mapScreenFunctions[iCategory]
+			elif bFuncBySubCatSimple:
+				page = self.mapScreenFunctions[szSubCatSimple]
+			else:
+				page = self.mapScreenFunctions[szSubCat]
+			# A page's tables are silent areas (§ THE ONE HOVER, Button lists).
+			PythonToolTip.buildButtonLists(page.interfaceScreen, iObjectType)
 
 
 	def showContents(self, screen, iCategory, aSubCatList, szSubCat):
@@ -910,8 +917,7 @@ class Pedia:
 	def placeUnitTree(self):
 		print "Category: Unit Tree"
 		screen = self.screen()
-		screen.deleteWidget("PediaMainItemList")
-		screen.deleteWidget("PediaMainItemListCount")
+		self.deleteItemList(screen)
 		UPGRADES_GRAPH_ID = self.getNextWidgetName()
 		screen.addScrollPanel(UPGRADES_GRAPH_ID, u"", self.W_CATEGORIES, self.Y_PEDIA_PAGE - 13, self.xRes - self.W_CATEGORIES, self.H_MID_SECTION, PanelStyles.PANEL_STYLE_STANDARD)
 		screen.setActivation(UPGRADES_GRAPH_ID, ActivationTypes.ACTIVATE_NORMAL)
@@ -922,8 +928,7 @@ class Pedia:
 	def placePromotionTree(self):
 		print "Category: Promotion Tree"
 		screen = self.screen()
-		screen.deleteWidget("PediaMainItemList")
-		screen.deleteWidget("PediaMainItemListCount")
+		self.deleteItemList(screen)
 		UPGRADES_GRAPH_ID = self.getNextWidgetName()
 		screen.addScrollPanel(UPGRADES_GRAPH_ID, u"", self.W_CATEGORIES, self.Y_PEDIA_PAGE - 13, self.xRes - self.W_CATEGORIES, self.H_MID_SECTION, PanelStyles.PANEL_STYLE_STANDARD)
 		screen.setActivation(UPGRADES_GRAPH_ID, ActivationTypes.ACTIVATE_NORMAL)
@@ -934,8 +939,7 @@ class Pedia:
 	def placeBuildingTree(self):
 		print "Category: Building Tree"
 		screen = self.screen()
-		screen.deleteWidget("PediaMainItemList")
-		screen.deleteWidget("PediaMainItemListCount")
+		self.deleteItemList(screen)
 		UPGRADES_GRAPH_ID = self.getNextWidgetName()
 		screen.addScrollPanel(UPGRADES_GRAPH_ID, u"", self.W_CATEGORIES, self.Y_PEDIA_PAGE - 13, self.xRes - self.W_CATEGORIES, self.H_MID_SECTION, PanelStyles.PANEL_STYLE_STANDARD)
 		screen.setActivation(UPGRADES_GRAPH_ID, ActivationTypes.ACTIVATE_NORMAL)
@@ -1129,8 +1133,7 @@ class Pedia:
 		self.iListIndex = -1
 		print "Category: Hints"
 		screen = self.screen()
-		screen.deleteWidget("PediaMainItemList")
-		screen.deleteWidget("PediaMainItemListCount")
+		self.deleteItemList(screen)
 		szHintBox = self.getNextWidgetName()
 		screen.addListBoxGFC(szHintBox, "", self.W_CATEGORIES, self.Y_PEDIA_PAGE, self.W_ITEMS + self.W_PEDIA_PAGE, self.H_PEDIA_PAGE, TableStyles.TABLE_STYLE_STANDARD)
 		screen.enableSelect(szHintBox, False)
@@ -1147,6 +1150,7 @@ class Pedia:
 		self.iListIndex = -1
 		szItemList = "PediaMainItemList"
 		screen.clearListBoxGFC(szItemList)
+		self.itemListRect = None
 		screen.addListBoxGFC(szItemList, "", self.W_CATEGORIES, self.Y_PEDIA_PAGE, self.W_ITEMS, self.H_MID_SECTION, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setStyle(szItemList, "Table_StandardCiv_Style")
 		screen.enableSelect(szItemList, False)
@@ -1175,6 +1179,10 @@ class Pedia:
 	#	szPrefix names the registry the rows came from -- it supplies the art in ONE crossing, and it is what
 	#	tells the two CONCEPT registries apart (they share an authored prefix, so nothing else can).
 	def placeItems(self, widget, szPrefix):
+		# The item list is a button list (§ THE ONE HOVER, Button lists).
+		PythonToolTip.buildButtonLists(self.buildItemList, widget, szPrefix)
+
+	def buildItemList(self, widget, szPrefix):
 		screen = self.screen()
 		szItemList = "PediaMainItemList"
 		screen.clearListBoxGFC(szItemList)
@@ -1196,6 +1204,11 @@ class Pedia:
 			widget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT
 		else:
 			bOffset = False
+		# Only the concepts' rows carry hover text: the others' data2 is 0.
+		if szPrefix == "CONCEPT_" or widget == iWidDescrip:
+			self.itemListRect = (self.W_CATEGORIES, self.Y_PEDIA_PAGE, self.W_ITEMS, self.H_MID_SECTION, self.W_ITEMS, sIcon)
+		else:
+			self.itemListRect = None
 		#	The registry's art, fetched ONCE for the whole list rather than per row: a boost::python call costs
 		#	far more than the lookup inside it, and this redraws on every category click.
 		mapButton = {}
@@ -1226,7 +1239,13 @@ class Pedia:
 		screen.setLabel("PediaMainItemListCount", "", self.aFontList[0] + "# " + str(i), 1<<0, self.W_CATEGORIES, 2, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 
 	# Support Functions
+	def deleteItemList(self, screen):
+		screen.deleteWidget("PediaMainItemList")
+		screen.deleteWidget("PediaMainItemListCount")
+		self.itemListRect = None
+
 	def deleteAllWidgets(self):
+		self.pageSilentRects = []
 		screen = self.screen()
 		# Generic widgets
 		iNumWidgets = self.nWidgetCount
@@ -1497,6 +1516,8 @@ class Pedia:
 					self.tooltip.handle(screen, CyGameTextMgr().parseTraits(ID, False, False))
 				elif "LEADER" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseLeaderTraits(ID, False, False))
+				elif "CIV" in szSplit:
+					self.tooltip.handle(screen, CyGameTextMgr().parseCivInfos(ID, False))
 				elif "BUILD" in szSplit:
 					self.tooltip.handle(screen, INFO.getDescription("BUILD_", ID))
 				elif "RELIGION" in szSplit:
@@ -1627,6 +1648,8 @@ class Pedia:
 				self.pediaJump(self.PEDIA_LEADERSHIP, "Trait", ID)
 			elif "LEADER" in szSplit:
 				self.pediaJump(self.PEDIA_LEADERSHIP, "Leader", ID)
+			elif "CIV" in szSplit:
+				self.pediaJump(self.PEDIA_LEADERSHIP, "Civ", ID)
 			elif "BUILD" in szSplit:
 				self.pediaJump(self.PEDIA_SPECIAL, "Build", ID)
 			elif "RELIGION" in szSplit:
@@ -1676,9 +1699,18 @@ class Pedia:
 			screen.setSelectedListBoxStringGFC(LIST, inputClass.iData2)
 			screen.enableSelect(LIST, False)
 
+	def silentAreaRects(self):
+		if self.bNotPedia or not self.screen().isActive():
+			return []
+		# The index hides the item list and shows it again as it was.
+		if self.itemListRect is None or self.bIndex:
+			return self.pageSilentRects
+		return self.pageSilentRects + [self.itemListRect]
+
 	def update(self, fDelta):
 		if self.tooltip.bLockedTT:
 			self.tooltip.handle(self.screen())
+		PythonToolTip.pollSilentArea()
 		if self.bKeyPress:
 			self.fKeyTimer += fDelta
 			if self.fKeyTimer > 2:

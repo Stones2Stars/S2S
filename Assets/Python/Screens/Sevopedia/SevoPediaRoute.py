@@ -148,7 +148,7 @@ class SevoPediaRoute:
 				if not iTech in aTechList:
 					aTechList.append(iTech)
 		for i in aTechList:
-			screen.attachImageButton( panelName, "", INFO.getButton("TECH_", i), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, i, 2, False )
+			screen.attachImageButton( panelName, "ToolTip|JumpTo|TECH" + str(i), INFO.getButton("TECH_", i), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_GENERAL, 1, 1, False )
 
 		# The route's bonus prereqs, read PER CLAUSE so the mandatory one and the one-of group stay apart --
 		# which is exactly the AND/OR this panel draws. REQCLAUSE_NONE is never asked for: a `noneOf` names
@@ -158,7 +158,7 @@ class SevoPediaRoute:
 		bFirst = True
 		for iPrereq in aReqAll:
 			bFirst = False
-			screen.attachImageButton(panelName, "", INFO.getButton("BONUS_", iPrereq), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, 2, False)
+			screen.attachImageButton(panelName, "ToolTip|JumpTo|BONUS|All" + str(iPrereq), INFO.getButton("BONUS_", iPrereq), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_GENERAL, 1, 1, False)
 		nOr = len(aReqAny)
 		szLeftDelimeter = ""
 		szRightDelimeter = ""
@@ -176,7 +176,7 @@ class SevoPediaRoute:
 				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
 			else:
 				bFirst = False
-			screen.attachImageButton(panelName, "", INFO.getButton("BONUS_", eBonus), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
+			screen.attachImageButton(panelName, "ToolTip|JumpTo|BONUS|Any" + str(eBonus), INFO.getButton("BONUS_", eBonus), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_GENERAL, 1, 1, False)
 		if len(szRightDelimeter) > 0:
 			screen.attachLabel(panelName, "", szRightDelimeter)
 
@@ -202,35 +202,6 @@ class SevoPediaRoute:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT", ()), "", True, False, self.X_HISTORY_PANE, self.Y_HISTORY_PANE, self.W_HISTORY_PANE, self.H_HISTORY_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
 		screen.addMultilineText(panelName, CyTranslator().getText("TXT_KEY_CONCEPT_MOVEMENT_PEDIA", ()), self.X_HISTORY_PANE+10, self.Y_HISTORY_PANE + 30, self.W_HISTORY_PANE -20, self.H_HISTORY_PANE- 55, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
-
-	def placeLinks(self, bRedraw):
-
-		screen = self.top.getScreen()
-
-		if bRedraw:
-			screen.clearListBoxGFC(self.top.LIST_ID)
-
-		# The whole route registry in ONE crossing -- the per-type INDEX read carries the description and the
-		# art-only marker together, so the list no longer pays a boundary call per entity to ask each one.
-		# ⚑ Enumerating a registry to LIST every entity is the pedia's own job and is the sanctioned full scan
-		# (patterns.md); what changed is the cost of the crossing, not the shape.
-		rowListName = []
-		for kRoute in INFO.getIndex("ROUTE_"):
-			if not kRoute["graphicalOnly"]:
-				rowListName.append((kRoute["description"], kRoute["id"]))
-		rowListName.sort()
-
-		iSelected = 0
-		i = 0
-		for szName, iRouteId in rowListName:
-			if bRedraw:
-				screen.appendListBoxString(self.top.LIST_ID, szName, WidgetTypes.WIDGET_HELP_MOVE_BONUS, iRouteId, 0, 1<<0)
-			if iRouteId == self.iRoute:
-				iSelected = i
-			i += 1
-
-		screen.setSelectedListBoxStringGFC(self.top.LIST_ID, iSelected)
-
 
 	# Will handle the input for this screen...
 	def handleInput (self, inputClass):

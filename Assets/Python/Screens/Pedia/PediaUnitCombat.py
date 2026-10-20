@@ -111,14 +111,17 @@ class PediaUnitCombat:
 			screen.addPanel(Pnl, "", "", True, True, X_COL_2 + 5, Y_TOP_ROW_1 + 6, W_COL_2 - 16, H_PEDIA_PAGE - 12, ePnlBlue50)
 			screen.setStyle(Pnl, "Panel_Black50_Style")
 			Tbl = aName()
-			# FOUR columns: the tech-grid one is GONE with the condition walker it read through. Its helper took
-			# an info OBJECT and recursed the retired BoolExpr tree; that display returns with the `requires`
-			# renderer, never by restoring a Python-side tree walk (DEC-no-legacy-masking).
-			screen.addTableControlGFC(Tbl, 4, X_COL_2 + 6, Y_TOP_ROW_1 + 13, W_COL_2 - 6, H_PEDIA_PAGE - 26, True, False, 32, 32, TableStyles.TABLE_STYLE_EMPTY)
+			x = X_COL_2 + 6
+			y = Y_TOP_ROW_1 + 13
+			h = H_PEDIA_PAGE - 26
+			iRowHeight = 32
+			screen.addTableControlGFC(Tbl, 4, x, y, W_COL_2 - 6, h, True, False, iRowHeight, iRowHeight, TableStyles.TABLE_STYLE_EMPTY)
 			screen.enableSort(Tbl)
 			iTableWidth = W_COL_2 - 16
 			iColWidth = iTableWidth / 2
 			screen.setTableColumnHeader(Tbl, 0, "", iColWidth)
+			# The unit column carries the units' hovers, a silent area (§ THE ONE HOVER, Hover state).
+			self.main.pageSilentRects.append((x, y, iColWidth, h, iColWidth, iRowHeight))
 			iColWidth = iTableWidth - iColWidth
 			screen.setTableColumnHeader(Tbl, 1, u"%c" % CyGame().getSymbolID(FontSymbols.STRENGTH_CHAR), iColWidth * 3 / 10)
 			screen.setTableColumnHeader(Tbl, 2, u"%c" % CyGame().getSymbolID(FontSymbols.MOVES_CHAR), iColWidth * 3 / 10)

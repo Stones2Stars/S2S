@@ -1,6 +1,7 @@
 # CvVictoryScreen
 from CvPythonExtensions import *
 import AttitudeUtil
+import PythonToolTip
 
 # globals
 # The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
@@ -22,6 +23,8 @@ class CvVictoryScreen:
 
 	def __init__(self, screenId):
 		self.screenId = screenId
+		# The members table's attitude columns, a silent area (§ THE ONE HOVER, Hover state).
+		self.membersRects = []
 
 		self.VoteType = 1  # 1 = Pope or GenSec, 2 = Diplomatic Victory
 		self.VoteBody = 1  # 1 = AP, 2 = UN
@@ -55,6 +58,7 @@ class CvVictoryScreen:
 		return CyGInterfaceScreen("VictoryScreen", self.screenId)
 
 	def interfaceScreen(self):
+		PythonToolTip.noteSilentArea(self)
 
 		# Create a new screen
 		screen = self.getScreen()
@@ -1117,6 +1121,10 @@ class CvVictoryScreen:
 
 # BUG Additions Start
 	def showMembersScreen(self, screen):
+		# The members table is a silent area (§ THE ONE HOVER, Button lists).
+		PythonToolTip.buildButtonLists(self.buildMembersScreen, screen)
+
+	def buildMembersScreen(self, screen):
 		self.deleteAllWidgets()
 
 		iRelVote = -1
@@ -1206,13 +1214,21 @@ class CvVictoryScreen:
 
 		# set up the member table
 		szTable = self.getNextWidgetName()
-		screen.addTableControlGFC(szTable, 6, 10, 90, 1010, 600, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
+		x = 10
+		y = 90
+		h = 600
+		iRowHeight = 32
+		wName = 450
+		wColumn = 90
+		screen.addTableControlGFC(szTable, 6, x, y, 1010, h, False, False, iRowHeight, iRowHeight, TableStyles.TABLE_STYLE_STANDARD)
 		screen.enableSelect(szTable, False)
-		screen.setTableColumnHeader(szTable, 0, "", 450)
-		screen.setTableColumnHeader(szTable, 1, "", 90)
-		screen.setTableColumnHeader(szTable, 2, "", 90)
-		screen.setTableColumnHeader(szTable, 3, "", 90)
-		screen.setTableColumnHeader(szTable, 4, "", 90)
+		screen.setTableColumnHeader(szTable, 0, "", wName)
+		screen.setTableColumnHeader(szTable, 1, "", wColumn)
+		screen.setTableColumnHeader(szTable, 2, "", wColumn)
+		screen.setTableColumnHeader(szTable, 3, "", wColumn)
+		# The attitude columns (1 and 3) carry the leaders' hovers.
+		self.membersRects = [(x + wName, y, wColumn, h, wColumn, iRowHeight), (x + wName + 2 * wColumn, y, wColumn, h, wColumn, iRowHeight)]
+		screen.setTableColumnHeader(szTable, 4, "", wColumn)
 		screen.setTableColumnHeader(szTable, 5, "", 200)
 		iRow = screen.appendTableRow(szTable)
 
@@ -1669,6 +1685,7 @@ class CvVictoryScreen:
 		return szName
 
 	def deleteAllWidgets(self):
+		self.membersRects = []
 		screen = self.getScreen()
 		i = self.nWidgetCount - 1
 		while (i >= 0):
@@ -1746,4 +1763,10 @@ class CvVictoryScreen:
 				popupInfo.setText(u"showSpaceShip")
 				popupInfo.addPopup(self.iActivePlayer)
 
-	def update(self, fDelta): return
+	def update(self, fDelta):
+		PythonToolTip.pollSilentArea()
+
+	def silentAreaRects(self):
+		if not self.getScreen().isActive():
+			return []
+		return self.membersRects

@@ -38,9 +38,7 @@ class PediaCorporation:
 		screen = self.main.screen()
 
 		iWidGeneral		= WidgetTypes.WIDGET_GENERAL
-		iWidJuToBonus	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS
-		iWidJuToBuild	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING
-		iWidJuToUnit	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT
+		PF = "ToolTip|JumpTo|"
 		iPanelBlue50	= PanelStyles.PANEL_STYLE_BLUE50
 		iPanelEmpty		= PanelStyles.PANEL_STYLE_EMPTY
 
@@ -103,11 +101,11 @@ class PediaCorporation:
 				screen.attachPanel(childMainCont, childMainContList, "", "", False, True, iPanelEmpty)
 				if aTechs:
 					for iTech in aTechs:
-						screen.attachImageButton(childMainContList, "", INFO.getButton("TECH_", iTech), enumBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
+						screen.attachImageButton(childMainContList, PF + "TECH" + str(iTech), INFO.getButton("TECH_", iTech), enumBS, iWidGeneral, 1, 1, False)
 					if aReqBuildList:
 						screen.attachLabel(childMainContList, "", "<font=3> &#38 ")
 				for i, entry in enumerate(aReqBuildList):
-					screen.attachImageButton(childMainContList, "", entry[0], enumBS, iWidJuToBuild, entry[1], 1, False)
+					screen.attachImageButton(childMainContList, PF + "BUILDING|Req" + str(entry[1]), entry[0], enumBS, iWidGeneral, 1, 1, False)
 			if aConsumesList:
 				childMainCont = self.main.getNextWidgetName()
 				childMainContList = self.main.getNextWidgetName()
@@ -117,7 +115,7 @@ class PediaCorporation:
 				if aReqBonusListLength > 1:
 					screen.attachLabel(childMainContList, "", "<font=4b>{ ")
 				for i, entry in enumerate(aConsumesList):
-					screen.attachImageButton(childMainContList, "", entry[0], enumBS, iWidJuToBonus, entry[1], 1, False)
+					screen.attachImageButton(childMainContList, PF + "BONUS" + str(entry[1]), entry[0], enumBS, iWidGeneral, 1, 1, False)
 				if aReqBonusListLength > 1:
 					screen.attachLabel(childMainContList, "", "<font=4b> }")
 		# Effect
@@ -159,9 +157,9 @@ class PediaCorporation:
 				unitPanel = self.main.getNextWidgetName()
 				screen.addPanel(unitPanel, TRNSLTR.getText("TXT_KEY_FREE_UNITS", ()), "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, iPanelBlue50)
 			for i, entry in enumerate(aList1):
-				screen.attachImageButton(buildingPanel, "", entry[0], enumGBS, iWidJuToBuild, entry[1], 1, False)
+				screen.attachImageButton(buildingPanel, PF + "BUILDING|Unique" + str(entry[1]), entry[0], enumGBS, iWidGeneral, 1, 1, False)
 			for i, entry in enumerate(aList2):
-				screen.attachImageButton(unitPanel, "", entry[0], enumGBS, iWidJuToUnit, entry[1], 1, False)
+				screen.attachImageButton(unitPanel, PF + "UNIT" + str(entry[1]), entry[0], enumGBS, iWidGeneral, 1, 1, False)
 		else:
 			H_HIST += H_BOT_ROW
 		# History

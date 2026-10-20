@@ -98,9 +98,6 @@ class PediaImprovement:
 		aName = self.main.getNextWidgetName
 
 		eWidGen			= WidgetTypes.WIDGET_GENERAL
-		eWidJuToBonus	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS
-		eWidJuToCivic	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC
-		eWidJuToTech	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH
 		ePnlBlue50		= PanelStyles.PANEL_STYLE_BLUE50
 		ePnlEmpty		= PanelStyles.PANEL_STYLE_EMPTY
 		eTblEmpty		= TableStyles.TABLE_STYLE_EMPTY
@@ -202,7 +199,7 @@ class PediaImprovement:
 				for i, szYield in aList1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", i), enumGBS, eWidJuToTech, i, 2, False)
+					screen.attachImageButton(childPanelName, PF + "TECH|Synergy" + str(i), INFO.getButton("TECH_", i), enumGBS, eWidGen, 1, 1, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList2:
@@ -213,7 +210,7 @@ class PediaImprovement:
 				for i, szYield in aList2:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", INFO.getButton("CIVIC_", i), enumGBS, eWidJuToCivic, i, 2, False)
+					screen.attachImageButton(childPanelName, PF + "CIVIC|Synergy" + str(i), INFO.getButton("CIVIC_", i), enumGBS, eWidGen, 1, 1, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList3:
@@ -224,7 +221,7 @@ class PediaImprovement:
 				for i, szYield in aList3:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", INFO.getButton("BONUS_", i), enumGBS, eWidJuToBonus, i, 2, False)
+					screen.attachImageButton(childPanelName, PF + "BONUS|Synergy" + str(i), INFO.getButton("BONUS_", i), enumGBS, eWidGen, 1, 1, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 		else:

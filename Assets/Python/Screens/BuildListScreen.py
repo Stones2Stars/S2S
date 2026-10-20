@@ -20,7 +20,12 @@ buildListScreen = None
 
 class BuildListScreen:
   "Build List Screen"
+  def __init__(self):
+    # The button lists, dropdowns, queue table and list of build lists, silent areas (§ THE ONE HOVER, Hover state).
+    self.silentRects = []
+
   def interfaceScreen (self):
+    PythonToolTip.noteSilentArea(self)
 
     self.X_SCREEN = 0
     self.Y_SCREEN = 0
@@ -85,17 +90,27 @@ class BuildListScreen:
     # set the text button to add a list
     screen.setText("BuildListSaveButton", "Background", u"<font=4>" + localText.getText("TXT_KEY_LISTSCREEN_BUTTON_SAVE", ()).upper() + u"</font>", 1<<0, iSaveButtonPosition, self.H_SCREEN - 40, -0.3, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)
 
+    self.silentRects = []
     # draw the lists
-    self.drawLists()
+    PythonToolTip.buildButtonLists(self.drawLists)
 
     # draw the queue
-    self.drawQueue()
+    PythonToolTip.buildButtonLists(self.drawQueue)
 
     # draw the builds
     PythonToolTip.buildButtonLists(self.drawBuilds)
 
     # Show the screen
     screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
+
+  def addButtonList(self, screen, szName, x, y, w, h, iRows, iSize):
+    self.silentRects.append((x, y, w, h, iSize, iSize))
+    screen.addMultiListControlGFC(szName, u"", x, y, w, h, iRows, iSize, iSize, TableStyles.TABLE_STYLE_STANDARD)
+
+  def addDropDown(self, screen, szName, x, y, w, eWidget):
+    h = PythonToolTip.DROPDOWN_HEIGHT
+    self.silentRects.append((x, y, w, h, w, h))
+    screen.addDropDownBoxGFC(szName, x, y, w, eWidget, -1, -1, FontTypes.SMALL_FONT)
 
   def drawBuilds(self):
     # AIAndy: Filter buttons
@@ -127,7 +142,7 @@ class BuildListScreen:
     if (iFilterContainerLength > iNumFilterButtons * 27):
       iFilterContainerLength = iNumFilterButtons * 27
 
-    screen.addMultiListControlGFC( "UnitFilterButtonContainer", u"", iMultiListXL, 10, iFilterContainerLength, 28, 1, 25, 25, TableStyles.TABLE_STYLE_STANDARD )
+    self.addButtonList(screen, "UnitFilterButtonContainer", iMultiListXL, 10, iFilterContainerLength, 28, 1, 25)
     screen.appendMultiListButton( "UnitFilterButtonContainer", ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_NOPRODUCTION").getPath(), 0, WidgetTypes.WIDGET_UNIT_FILTER, UnitFilterTypes.UNIT_FILTER_HIDE_UNBUILDABLE, 1, False )
     screen.enableMultiListPulse( "UnitFilterButtonContainer", pPlayer.getUnitListFilterActive(UnitFilterTypes.UNIT_FILTER_HIDE_UNBUILDABLE), 0, 0)
     screen.appendMultiListButton( "UnitFilterButtonContainer", ArtFileMgr.getInterfaceArtInfo("BUG_WORLDWONDER_ON").getPath(), 0, WidgetTypes.WIDGET_UNIT_FILTER, UnitFilterTypes.UNIT_FILTER_HIDE_LIMITED, 1, False )
@@ -157,7 +172,7 @@ class BuildListScreen:
     screen.show( "UnitFilterButtonContainer" )
 
     iSelectedGrouping = pPlayer.getUnitListGrouping()
-    screen.addDropDownBoxGFC( "UnitGrouping", iMultiListXL + iFilterContainerLength + 10, 8, iGroupButtonWidth, WidgetTypes.WIDGET_UNIT_GROUPING, -1, -1, FontTypes.SMALL_FONT)
+    self.addDropDown(screen, "UnitGrouping", iMultiListXL + iFilterContainerLength + 10, 8, iGroupButtonWidth, WidgetTypes.WIDGET_UNIT_GROUPING)
     screen.addPullDownString( "UnitGrouping", localText.getText("TXT_KEY_UNITHELP_GROUPING_SINGLE", ()), UnitGroupingTypes.UNIT_GROUPING_SINGLE, UnitGroupingTypes.UNIT_GROUPING_SINGLE, iSelectedGrouping == UnitGroupingTypes.UNIT_GROUPING_SINGLE)
     screen.addPullDownString( "UnitGrouping", localText.getText("TXT_KEY_UNITHELP_GROUPING_COMBAT", ()), UnitGroupingTypes.UNIT_GROUPING_COMBAT, UnitGroupingTypes.UNIT_GROUPING_COMBAT, iSelectedGrouping == UnitGroupingTypes.UNIT_GROUPING_COMBAT)
     screen.addPullDownString( "UnitGrouping", localText.getText("TXT_KEY_DOMAIN", ()), UnitGroupingTypes.UNIT_GROUPING_DOMAIN, UnitGroupingTypes.UNIT_GROUPING_DOMAIN, iSelectedGrouping == UnitGroupingTypes.UNIT_GROUPING_DOMAIN)
@@ -165,7 +180,7 @@ class BuildListScreen:
     screen.show( "UnitGrouping" )
 
     iSelectedSorting = pPlayer.getUnitListSorting()
-    screen.addDropDownBoxGFC( "UnitSorting", iMultiListXL + iFilterContainerLength + iSortPosition, 8, iSortButtonWidth, WidgetTypes.WIDGET_UNIT_SORT, -1, -1, FontTypes.SMALL_FONT)
+    self.addDropDown(screen, "UnitSorting", iMultiListXL + iFilterContainerLength + iSortPosition, 8, iSortButtonWidth, WidgetTypes.WIDGET_UNIT_SORT)
     screen.addPullDownString( "UnitSorting", localText.getText("TXT_WORD_NAME", ()), UnitSortTypes.UNIT_SORT_NAME, UnitSortTypes.UNIT_SORT_NAME, iSelectedSorting == UnitSortTypes.UNIT_SORT_NAME)
     screen.addPullDownString( "UnitSorting", localText.getText("TXT_WORD_COST", ()), UnitSortTypes.UNIT_SORT_COST, UnitSortTypes.UNIT_SORT_COST, iSelectedSorting == UnitSortTypes.UNIT_SORT_COST)
     screen.addPullDownString( "UnitSorting", localText.getText("TXT_KEY_UNITHELP_SORT_STRENGTH", ()), UnitSortTypes.UNIT_SORT_STRENGTH, UnitSortTypes.UNIT_SORT_STRENGTH, iSelectedSorting == UnitSortTypes.UNIT_SORT_STRENGTH)
@@ -183,7 +198,7 @@ class BuildListScreen:
     if (iFilterContainerLength > iNumFilterButtons * 27):
       iFilterContainerLength = iNumFilterButtons * 27
 
-    screen.addMultiListControlGFC( "BuildingFilterButtonContainer", u"", iMultiListXL, 40, iFilterContainerLength, 28, 1, 25, 25, TableStyles.TABLE_STYLE_STANDARD )
+    self.addButtonList(screen, "BuildingFilterButtonContainer", iMultiListXL, 40, iFilterContainerLength, 28, 1, 25)
     screen.appendMultiListButton( "BuildingFilterButtonContainer", ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_NOPRODUCTION").getPath(), 0, WidgetTypes.WIDGET_BUILDING_FILTER, BuildingFilterTypes.BUILDING_FILTER_HIDE_UNBUILDABLE, 1, False )
     screen.enableMultiListPulse( "BuildingFilterButtonContainer", pPlayer.getBuildingListFilterActive(BuildingFilterTypes.BUILDING_FILTER_HIDE_UNBUILDABLE), 0, 0)
     screen.appendMultiListButton( "BuildingFilterButtonContainer", ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_GOLDTRADING").getPath(), 0, WidgetTypes.WIDGET_BUILDING_FILTER, BuildingFilterTypes.BUILDING_FILTER_SHOW_SCIENCE, 1, False )
@@ -223,14 +238,14 @@ class BuildListScreen:
     screen.show( "BuildingFilterButtonContainer" )
 
     iSelectedGrouping = pPlayer.getBuildingListGrouping()
-    screen.addDropDownBoxGFC("BuildingGrouping", iMultiListXL + iFilterContainerLength + 10, 38, iGroupButtonWidth, WidgetTypes.WIDGET_BUILDING_GROUPING, -1, -1, FontTypes.SMALL_FONT)
+    self.addDropDown(screen, "BuildingGrouping", iMultiListXL + iFilterContainerLength + 10, 38, iGroupButtonWidth, WidgetTypes.WIDGET_BUILDING_GROUPING)
     screen.addPullDownString("BuildingGrouping", localText.getText("TXT_KEY_BUILDINGHELP_GROUPING_SINGLE", ()), BuildingGroupingTypes.BUILDING_GROUPING_SINGLE, BuildingGroupingTypes.BUILDING_GROUPING_SINGLE, iSelectedGrouping == BuildingGroupingTypes.BUILDING_GROUPING_SINGLE)
     screen.addPullDownString("BuildingGrouping", localText.getText("TXT_KEY_BUILDINGHELP_GROUPING_WONDER_TYPE", ()), BuildingGroupingTypes.BUILDING_GROUPING_WONDER_TYPE, BuildingGroupingTypes.BUILDING_GROUPING_WONDER_TYPE, iSelectedGrouping == BuildingGroupingTypes.BUILDING_GROUPING_WONDER_TYPE)
     screen.addPullDownString("BuildingGrouping", localText.getText("TXT_KEY_DOMAIN", ()), BuildingGroupingTypes.BUILDING_GROUPING_DOMAIN, BuildingGroupingTypes.BUILDING_GROUPING_DOMAIN, iSelectedGrouping == BuildingGroupingTypes.BUILDING_GROUPING_DOMAIN)
     screen.show( "BuildingGrouping" )
 
     iSelectedSorting = pPlayer.getBuildingListSorting()
-    screen.addDropDownBoxGFC("BuildingSorting", iMultiListXL + iFilterContainerLength + iSortPosition, 38, iSortButtonWidth, WidgetTypes.WIDGET_BUILDING_SORT, -1, -1, FontTypes.SMALL_FONT)
+    self.addDropDown(screen, "BuildingSorting", iMultiListXL + iFilterContainerLength + iSortPosition, 38, iSortButtonWidth, WidgetTypes.WIDGET_BUILDING_SORT)
     screen.addPullDownString("BuildingSorting", localText.getText("TXT_WORD_NAME", ()), BuildingSortTypes.BUILDING_SORT_NAME, BuildingSortTypes.BUILDING_SORT_NAME, iSelectedSorting == BuildingSortTypes.BUILDING_SORT_NAME)
     screen.addPullDownString("BuildingSorting", localText.getText("TXT_WORD_COST", ()), BuildingSortTypes.BUILDING_SORT_COST, BuildingSortTypes.BUILDING_SORT_COST, iSelectedSorting == BuildingSortTypes.BUILDING_SORT_COST)
     screen.addPullDownString("BuildingSorting", localText.getText("TXT_KEY_BUILDINGHELP_SORT_SCIENCE", ()), BuildingSortTypes.BUILDING_SORT_SCIENCE, BuildingSortTypes.BUILDING_SORT_SCIENCE, iSelectedSorting == BuildingSortTypes.BUILDING_SORT_SCIENCE)
@@ -246,7 +261,7 @@ class BuildListScreen:
     screen.show("BuildingSorting")
 
 
-    screen.addMultiListControlGFC( "ButtonContainer", u"", iMultiListXL, self.PANEL_HEIGHT + 10, self.W_SCREEN - (iMultiListXL+iMultiListXR), self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT, 4, 48, 48, TableStyles.TABLE_STYLE_STANDARD )
+    self.addButtonList(screen, "ButtonContainer", iMultiListXL, self.PANEL_HEIGHT + 10, self.W_SCREEN - (iMultiListXL+iMultiListXR), self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT, 4, 48)
 
     iCurrentList = pPlayer.getBLCurrentList()
 
@@ -297,7 +312,12 @@ class BuildListScreen:
 
     screen = CyGInterfaceScreen( "BuildListScreen", CvScreenEnums.BUILD_LIST_SCREEN )
 
-    screen.addTableControlGFC( "BuildQueueTable", 1, self.LISTS_WIDTH + 20, self.PANEL_HEIGHT + 10, self.QUEUE_WIDTH - 30, self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+    x = self.LISTS_WIDTH + 20
+    y = self.PANEL_HEIGHT + 10
+    w = self.QUEUE_WIDTH - 30
+    h = self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT
+    self.silentRects.append((x, y, w, h, w, 32))
+    screen.addTableControlGFC( "BuildQueueTable", 1, x, y, w, h, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
     screen.setStyle( "BuildQueueTable", "Table_EmptyScroll_Style" )
 
 
@@ -345,7 +365,11 @@ class BuildListScreen:
 
     screen = CyGInterfaceScreen( "BuildListScreen", CvScreenEnums.BUILD_LIST_SCREEN )
 
-    screen.addListBoxGFC("BuildListTable", "", 20, self.PANEL_HEIGHT + 10, self.LISTS_WIDTH - 30, self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT, TableStyles.TABLE_STYLE_STANDARD)
+    y = self.PANEL_HEIGHT + 10
+    w = self.LISTS_WIDTH - 30
+    h = self.H_SCREEN - 20 - 2*self.PANEL_HEIGHT
+    self.silentRects.append((20, y, w, h, w, 24))
+    screen.addListBoxGFC("BuildListTable", "", 20, y, w, h, TableStyles.TABLE_STYLE_STANDARD)
     screen.setStyle("BuildListTable", "Table_StandardCiv_Style")
     screen.enableSelect("BuildListTable", True)
 
@@ -415,4 +439,9 @@ class BuildListScreen:
     return 0
 
   def update(self, fDelta):
-    return
+    PythonToolTip.pollSilentArea()
+
+  def silentAreaRects(self):
+    if not self.getScreen().isActive():
+      return []
+    return self.silentRects

@@ -54,10 +54,7 @@ class PediaTech:
 		aName = self.main.getNextWidgetName
 
 		eWidGen				= WidgetTypes.WIDGET_GENERAL
-		eWidJuToBuilding	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING
-		eWidJuToDerTech		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH
-		eWidJuToProject		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT
-		eWidJuToUnit		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT
+		PF = "ToolTip|JumpTo|"
 		ePnlBlue50	= PanelStyles.PANEL_STYLE_BLUE50
 		eFontTitle	= FontTypes.TITLE_FONT
 		enumGBS = self.main.enumGBS
@@ -171,9 +168,9 @@ class PediaTech:
 			szBuildingsEnabled = TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ())
 			screen.addPanel(Pnl, szBuildingsEnabled, "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
 			for iBuilding in aBuildings:
-				screen.attachImageButton(Pnl, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+				screen.attachImageButton(Pnl, PF + "BUILDING" + str(iBuilding), INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidGen, 1, 1, False)
 			for iProject in aProjects:
-				screen.attachImageButton(Pnl, "", INFO.getButton("PROJECT_", iProject), enumGBS, eWidJuToProject, iProject, 1, False)
+				screen.attachImageButton(Pnl, PF + "PROJECT" + str(iProject), INFO.getButton("PROJECT_", iProject), enumGBS, eWidGen, 1, 1, False)
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
 			Y_BOT_ROW_2 += H_BOT_ROW
@@ -185,7 +182,7 @@ class PediaTech:
 			Pnl = aName()
 			screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_UNITS_ENABLED", ()), "", False, True, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
 			for iUnit in aUnits:
-				screen.attachImageButton(Pnl, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
+				screen.attachImageButton(Pnl, PF + "UNIT" + str(iUnit), INFO.getButton("UNIT_", iUnit), enumGBS, eWidGen, 1, 1, False)
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
 			Y_STRATEGY += H_BOT_ROW
@@ -205,7 +202,7 @@ class PediaTech:
 		OR = ["TXT", "<font=4b>||", 1<<2, 6, 10]
 		braL = ["TXT", "<font=4b> {", 1<<0, 0, 14]
 		braR = ["TXT", "<font=4b>} ", 1<<0, 0, 14]
-		szChild = "ToolTip|JumpTo|TECH"
+		szChild = PF + "TECH"
 		aList1 = []
 		n = 0
 		for iType in INFO.getIdList("TECH_", iTheTech, IdListSlot.PYLIST_PREREQ_AND_TECHS):
@@ -245,7 +242,7 @@ class PediaTech:
 		Pnl = aName()
 		screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, self.X_COL_3, Y_BOT_ROW_3, W_COL_3, H_BOT_ROW, ePnlBlue50)
 		for iTechX in aLeadsTo:
-			screen.attachImageButton(Pnl, "", INFO.getButton("TECH_", iTechX), enumGBS, eWidJuToDerTech, iTechX, 1, False)
+			screen.attachImageButton(Pnl, PF + "TECH" + str(iTechX), INFO.getButton("TECH_", iTechX), enumGBS, eWidGen, 1, 1, False)
 
 		# Quote
 		szTxt = INFO.getQuote("TECH_", iTheTech)

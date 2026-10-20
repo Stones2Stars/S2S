@@ -79,7 +79,7 @@ class Page:
 			screen.addPanel(panelName, szRequires, "", False, True, X_COL_1 + W_3RD_PP - 108, Y_STATS - 8, 100, H_BOT_ROW, PanelStyles.PANEL_STYLE_EMPTY)
 			screen.attachLabel(panelName, "", "<font=4b>| ")
 			for iTech in aTechs:
-				screen.attachImageButton(panelName, "", INFO.getButton("TECH_", iTech), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
+				screen.attachImageButton(panelName, "ToolTip|JumpTo|TECH" + str(iTech), INFO.getButton("TECH_", iTech), enumGBS, WidgetTypes.WIDGET_GENERAL, 1, 1, False)
 			screen.attachLabel(panelName, "", "<font=4b> |")
 		# Strategy
 		szStrategy = TRNSLTR.getText("TXT_KEY_PEDIA_STRATEGY", ())
