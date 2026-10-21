@@ -1299,7 +1299,7 @@ public:
 	///<summary>The measure eKind recorded for each turn from iFirstTurn to iLastTurn, in turn order, 0 for a turn
 	/// with no record.</summary>
 	void getHistory(PlayerHistoryKind eKind, int iFirstTurn, int iLastTurn, std::vector<int64_t>& values) const;
-	///<summary>Whether the measure eKind is an amount (economy, industry, agriculture, power), which a reader
+	///<summary>Whether the measure eKind is an amount (economy, industry, agriculture, power, culture), which a reader
 	/// reduces; the others are recorded as the counts and scores they are.</summary>
 	static bool isAmountHistory(PlayerHistoryKind eKind);
 
@@ -1954,7 +1954,9 @@ public:
 	void setLeaderHeadLevel(int iValue);
 	void changeLeaderHeadLevel(int iChange);
 
+	///<summary>The national culture at which the leader gains its next level (the Leader Developing option).</summary>
 	uint64_t getLeaderLevelupNextCultureTotal() const;
+	///<summary>The national culture still to earn before the leader's next level; 0 once it is reached.</summary>
 	uint64_t getLeaderLevelupCultureToEarn() const;
 
 	bool canLeaderPromote() const;

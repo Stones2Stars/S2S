@@ -137,8 +137,6 @@ public:
 	int getPausePlayer() const;
 	bool isPaused() const;
 
-	bool getStarshipLaunched(int ID) const;
-
 	VictoryTypes getVictory() const;
 	GameStateTypes getGameState() const;
 	HandicapTypes getHandicapType() const;

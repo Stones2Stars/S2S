@@ -9,6 +9,7 @@
 #include "CvProperties.h"
 #include "CvEventGrants.h"
 #include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
+#include "VictoryScorePart.h"      // getVictoryScoreParts -- one part per measure
 class CapabilityContext;   // the PLAYER-held ability union these relays read (docs/cascade.md §The contexts (plot/city/player own one live-state context))
 
 class CvArea;
@@ -122,7 +123,25 @@ public:
 
 	bool isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorldBonuses=false) const;
 
+	///<summary>The team's victory score: the sum of its parts' points (getVictoryScoreParts).</summary>
 	int64_t getTotalVictoryScore() const;
+	///<summary>One part per VictoryScorePartKind: the team's measure, the world's and the points it earns
+	/// (docs/reference/special-systems.md § Victory).</summary>
+	void getVictoryScoreParts(VictoryScorePart (&parts)[NUM_VICTORY_SCORE_PARTS]) const;
+	///<summary>The religions whose holy city the team holds, each with the percent of the world that follows it
+	/// (CvGame::calculateReligionPercent), in religion order.</summary>
+	void getHolyCityReligions(std::vector<std::pair<ReligionTypes, int> >& religions) const;
+	///<summary>The holy-city religion the victory score counts: the one with the highest percent, the first in
+	/// religion order between equals; NO_RELIGION when the team holds no holy city.</summary>
+	ReligionTypes getScoringReligion() const;
+	///<summary>The civilization team other than this one with the highest victory score; NO_TEAM when there is
+	/// none.</summary>
+	TeamTypes getBestVictoryScoreRival() const;
+	///<summary>The team's iCount cities with the most of their owner's culture, the most first.</summary>
+	void getCitiesByCulture(int iCount, std::vector<const CvCity*>& cities) const;
+	///<summary>Whether eObserver knows of this team: its team has met it, or intel is open to all
+	/// (CvGame::isIntelOpenToAll).</summary>
+	bool isKnownTo(PlayerTypes eObserver) const;
 
 	int getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 	bool isVotingMember(VoteSourceTypes eVoteSource) const;

@@ -13125,7 +13125,6 @@ bool CvUnitAI::AI_guardSpy(int iRandomPercent)
 	int iBestValue = 0;
 	const CvPlot* pBestPlot = NULL;
 	const CvPlot* pBestGuardPlot = NULL;
-	const bool bCultureVictoryValid = GC.getGame().culturalVictoryValid();
 
 	foreach_(const CvCity * pLoopCity, GET_PLAYER(getOwner()).cities())
 	{
@@ -13148,9 +13147,8 @@ bool CvUnitAI::AI_guardSpy(int iRandomPercent)
 			}
 		}
 
-		if (bCultureVictoryValid
-		&& GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3)
-		&& pLoopCity->getCultureLevel() >= GC.getGame().culturalVictoryCultureLevel())
+		if (pLoopCity->isMonumental()
+		&& GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3))
 		{
 			iValue += 10;
 		}

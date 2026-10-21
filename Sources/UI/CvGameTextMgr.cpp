@@ -6050,16 +6050,16 @@ void CvGameTextMgr::parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePl
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL", iLevel));
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_1", CvWString::format(L"%I64d", kPlayer.getCulture()).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_1", CvWString::format(L"%I64d", kPlayer.getCulture() / 100).GetCString()));
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_2", CvWString::format(L"%I64u", kPlayer.getLeaderLevelupNextCultureTotal()).GetCString(), iLevel+1));
+		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_2", CvWString::format(L"%I64u", kPlayer.getLeaderLevelupNextCultureTotal() / 100).GetCString(), iLevel+1));
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_3", CvWString::format(L"%I64u", kPlayer.getLeaderLevelupCultureToEarn()).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_3", CvWString::format(L"%I64u", kPlayer.getLeaderLevelupCultureToEarn() / 100).GetCString()));
 	}
 	else
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_1", CvWString::format(L"%I64d", kPlayer.getCulture()).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_LEADER_LEVEL_PROGRESS_1", CvWString::format(L"%I64d", kPlayer.getCulture() / 100).GetCString()));
 	}
 }
 

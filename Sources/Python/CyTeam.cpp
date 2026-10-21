@@ -5,6 +5,7 @@
 #include "AI/CvPlayerAI.h"
 #include "AI/CvTeamAI.h"          // getWorstEnemy -- the AI keeps the team's worst enemy
 #include "Engine/CvTeam.h"
+#include "Engine/CvCity.h"         // getCitiesByCulture -- each city's culture and monumental state
 #include "CyArea.h"
 #include "CyTeam.h"
 
@@ -102,6 +103,60 @@ int64_t CyTeam::getTotalVictoryScore() const
 	return m_pTeam->getTotalVictoryScore();
 }
 
+python::list CyTeam::getVictoryScoreParts() const
+{
+	python::list rows = python::list();
+	VictoryScorePart parts[NUM_VICTORY_SCORE_PARTS];
+	m_pTeam->getVictoryScoreParts(parts);
+	for (int iPart = 0; iPart < NUM_VICTORY_SCORE_PARTS; iPart++)
+	{
+		const int64_t iDivisor = isVictoryScoreAmount((VictoryScorePartKind)iPart) ? 100 : 1;
+		rows.append(python::make_tuple(iPart, parts[iPart].team / iDivisor, parts[iPart].world / iDivisor, parts[iPart].points));
+	}
+	return rows;
+}
+
+python::list CyTeam::getHolyCityReligions() const
+{
+	python::list rows = python::list();
+	std::vector<std::pair<ReligionTypes, int> > religions;
+	m_pTeam->getHolyCityReligions(religions);
+	const ReligionTypes eScoringReligion = m_pTeam->getScoringReligion();
+	for (uint iReligion = 0; iReligion < religions.size(); iReligion++)
+	{
+		rows.append(python::make_tuple((int)religions[iReligion].first, religions[iReligion].second,
+			religions[iReligion].first == eScoringReligion));
+	}
+	return rows;
+}
+
+int CyTeam::getBestVictoryScoreRival() const
+{
+	return m_pTeam->getBestVictoryScoreRival();
+}
+
+python::list CyTeam::getCitiesByCulture(int iCount) const
+{
+	python::list rows = python::list();
+	std::vector<const CvCity*> cities;
+	m_pTeam->getCitiesByCulture(iCount, cities);
+	foreach_(const CvCity* pCity, cities)
+	{
+		rows.append(python::make_tuple((int)pCity->getOwner(), pCity->getID(),
+			pCity->getCultureTimes100(pCity->getOwner()) / 100, pCity->isMonumental()));
+	}
+	return rows;
+}
+
+bool CyTeam::isKnownTo(int /*PlayerTypes*/ iObserver) const
+{
+	if (iObserver < 0 || iObserver >= MAX_PLAYERS)
+	{
+		return false;
+	}
+	return m_pTeam->isKnownTo((PlayerTypes)iObserver);
+}
+
 int CyTeam::getAtWarCount(bool bIgnoreMinors) const
 {
 	return m_pTeam->getAtWarCount(bIgnoreMinors);
@@ -145,11 +200,6 @@ int CyTeam::getHasReligionCount(int /*ReligionTypes*/ eReligion) const
 int CyTeam::getHasCorporationCount(int /*CorporationTypes*/ eReligion) const
 {
 	return m_pTeam->getHasCorporationCount((CorporationTypes)eReligion);
-}
-
-int64_t CyTeam::countTotalCulture() const
-{
-	return m_pTeam->countTotalCulture();
 }
 
 int CyTeam::countNumCitiesByArea(const CyArea* pArea) const
@@ -675,6 +725,11 @@ void CyTeam::pythonPublish()
 		.def("isEspionageAheadOf", &CyTeam::isEspionageAheadOf)
 
 		.def("getTotalVictoryScore", &CyTeam::getTotalVictoryScore)
+		.def("getVictoryScoreParts", &CyTeam::getVictoryScoreParts)
+		.def("getHolyCityReligions", &CyTeam::getHolyCityReligions)
+		.def("getBestVictoryScoreRival", &CyTeam::getBestVictoryScoreRival)
+		.def("getCitiesByCulture", &CyTeam::getCitiesByCulture)
+		.def("isKnownTo", &CyTeam::isKnownTo)
 
 		.def("isAtWar", &CyTeam::isAtWar)
 		.def("getAtWarCount", &CyTeam::getAtWarCount)
@@ -687,7 +742,6 @@ void CyTeam::pythonPublish()
 		.def("getHasReligionCount", &CyTeam::getHasReligionCount)
 		.def("getHasCorporationCount", &CyTeam::getHasCorporationCount)
 
-		.def("countTotalCulture", &CyTeam::countTotalCulture)
 
 		.def("countNumCitiesByArea", &CyTeam::countNumCitiesByArea)
 

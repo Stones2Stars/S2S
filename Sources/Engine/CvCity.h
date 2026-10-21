@@ -1087,6 +1087,9 @@ public:
 	void setOriginalOwner(PlayerTypes eNewValue);
 
 	CultureLevelTypes getCultureLevel() const;
+	///<summary>Whether the city is monumental for the victory score: cultural victory is valid and the city has
+	/// reached its culture level (CvGame::culturalVictoryCultureLevel).</summary>
+	bool isMonumental() const;
 	int getCultureThreshold() const;
 	void setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups);
 	void updateCultureLevel(bool bUpdatePlotGroups);

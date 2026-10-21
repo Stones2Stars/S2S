@@ -3333,7 +3333,7 @@ int CvPlayerAI::AI_targetCityValue(const CvCity* pCity, bool bRandomize, bool bI
 		{
 			iSpecial += 25;
 
-			if (pCity->getCultureLevel() >= (GC.getGame().culturalVictoryCultureLevel()))
+			if (pCity->isMonumental())
 			{
 				iSpecial += 10;
 			}

@@ -1854,7 +1854,7 @@ void CyPlayer::setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue)
 
 int64_t CyPlayer::getCulture() const
 {
-	return m_pPlayer->getCulture();
+	return m_pPlayer->getCulture() / 100;
 }
 
 bool CyPlayer::getBuildingListFilterActive(int eFilter)

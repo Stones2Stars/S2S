@@ -5,29 +5,7 @@
 #include "Engine/CvGameCoreUtils.h"
 #include "Tools/CvRandom.h"
 #include "CyGameCoreUtils.h"
-#include "CyCity.h"
 #include "CyPlot.h"
-#include "CyUnit.h"
-
-int cyIntRange(int iNum, int iLow, int iHigh)
-{
-	return range(iNum, iLow, iHigh);
-}
-
-float cyFloatRange(float fNum, float fLow, float fHigh)
-{
-	return range(fNum, fLow, fHigh);
-}
-
-int cyDxWrap(int iDX)
-{
-	return dxWrap(iDX);
-}
-
-int cyDyWrap(int iDY)
-{
-	return dyWrap(iDY);
-}
 
 int cyPlotDistance(int iX, int iY, int iX2, int iY2)
 {
@@ -57,13 +35,6 @@ CyPlot* cyPlotCardinalDirection(int iX, int iY, CardinalDirectionTypes eCardDire
 	return NULL;
 }
 
-CyPlot* cysPlotCardinalDirection(int iX, int iY, CardinalDirectionTypes eCardDirection)
-{
-	static CyPlot plot;
-	plot.setPlot(plotCardinalDirection(iX, iY, eCardDirection));
-	return &plot;
-}
-
 CyPlot* cyPlotXY(int iX, int iY, int iDX, int iDY)
 {
 	if (plotXY(iX, iY, iDX, iDY))
@@ -73,27 +44,6 @@ CyPlot* cyPlotXY(int iX, int iY, int iDX, int iDY)
 	return NULL;
 }
 
-CyPlot* cysPlotXY(int iX, int iY, int iDX, int iDY)
-{
-	if (plotXY(iX, iY, iDX, iDY))
-	{
-		static CyPlot plot;
-		plot.setPlot(plotXY(iX, iY, iDX, iDY));
-		return &plot;
-	}
-	return NULL;
-}
-
-DirectionTypes cyDirectionXYFromInt(int iDX, int iDY)
-{
-	return directionXY(iDX, iDY);
-}
-
-DirectionTypes cyDirectionXYFromPlot(const CyPlot& kFromPlot, const CyPlot& kToPlot)
-{
-	return directionXY(kFromPlot.getPlot(), kToPlot.getPlot());
-}
-
 CyPlot* cyPlotCity(int iX, int iY, int iIndex)
 {
 	if (plotCity(iX, iY, iIndex))
@@ -101,121 +51,6 @@ CyPlot* cyPlotCity(int iX, int iY, int iIndex)
 		return new CyPlot(plotCity(iX, iY, iIndex));
 	}
 	return NULL;
-}
-
-int cyPlotCityXYFromInt(int iDX, int iDY)
-{
-	return plotCityXY(iDX, iDY);
-}
-
-int cyPlotCityXYFromCity(const CyCity& kCity, const CyPlot& kPlot)
-{
-	return plotCityXY(kCity.getCity(), kPlot.getPlot());
-}
-
-DirectionTypes cyEstimateDirection(int iDX, int iDY)
-{
-	return estimateDirection(iDX, iDY);
-}
-
-bool cyAtWar(int /*TeamTypes*/ eTeamA, int /*TeamTypes*/ eTeamB)
-{
-	return atWar((TeamTypes)eTeamA, (TeamTypes)eTeamB);
-}
-
-bool cyIsPotentialEnemy(int /*TeamTypes*/ eOurTeam, int /*TeamTypes*/ eTheirTeam)
-{
-	return isPotentialEnemy((TeamTypes)eOurTeam, (TeamTypes)eTheirTeam);
-}
-
-CyCity* cyGetCity(const IDInfo city)
-{
-	return new CyCity(getCity(city));
-}
-
-CyUnit* cyGetUnit(const IDInfo unit)
-{
-	return new CyUnit(getUnit(unit));
-}
-
-int cyGetWonderScore(int /*BuildingTypes*/ eWonder)
-{
-	return getWonderScore((BuildingTypes)eWonder);
-}
-
-int /*ImprovementTypes*/ cyFinalImprovementUpgrade(int /*ImprovementTypes*/ eImprovement, int iCount)
-{
-	return finalImprovementUpgrade((ImprovementTypes) eImprovement, iCount);
-}
-
-int cyGetWorldSizeMaxConscript(int /*CivicTypes*/ eCivic)
-{
-	return getWorldSizeMaxConscript((CivicTypes) eCivic);
-}
-
-bool cyIsReligionTech(int /*TechTypes*/ eTech)
-{
-	return isReligionTech((TechTypes) eTech);
-}
-
-bool cyIsTechRequiredForProject(int /*TechTypes*/ eTech, int /*ProjectTypes*/ eProject)
-{
-	return isTechRequiredForProject((TechTypes)eTech, (ProjectTypes)eProject);
-}
-
-bool cyIsWorldUnit(int /*UnitTypes*/ eUnit)
-{
-	return isWorldUnit((UnitTypes)eUnit);
-}
-
-bool cyIsNationalUnit(int /*UnitTypes*/ eUnit)
-{
-	return isNationalUnit((UnitTypes)eUnit);
-}
-
-bool cyIsLimitedUnit(int /*UnitTypes*/ eUnit)
-{
-	return isLimitedUnit((UnitTypes)eUnit);
-}
-
-bool cyIsWorldWonder(int /*BuildingTypes*/ eBuilding)
-{
-	return isWorldWonder((BuildingTypes)eBuilding);
-}
-
-bool cyIsTeamWonder(int /*BuildingTypes*/ eBuilding)
-{
-	return isTeamWonder((BuildingTypes)eBuilding);
-}
-
-bool cyIsNationalWonder(int /*BuildingTypes*/ eBuilding)
-{
-	return isNationalWonder((BuildingTypes)eBuilding);
-}
-
-bool cyIsLimitedWonder(int /*BuildingTypes*/ eBuilding)
-{
-	return isLimitedWonder((BuildingTypes)eBuilding);
-}
-
-bool cyIsWorldProject(int /*ProjectTypes*/ eProject)
-{
-	return isWorldProject((ProjectTypes)eProject);
-}
-
-bool cyIsTeamProject(int /*ProjectTypes*/ eProject)
-{
-	return isTeamProject((ProjectTypes)eProject);
-}
-
-bool cyIsLimitedProject(int /*ProjectTypes*/ eProject)
-{
-	return isLimitedProject((ProjectTypes)eProject);
-}
-
-int cyGetCombatOdds(const CyUnit& kAttacker, const CyUnit& kDefender)
-{
-	return getCombatOdds(kAttacker.getUnit(), kDefender.getUnit());
 }
 
 int cyGetEspionageModifier(int iOurTeam, int iTargetTeam)
@@ -229,11 +64,6 @@ int64_t cyIntSqrt64(int64_t iValue)
 	// reachable one), and the engine's unsigned signature would read that as an enormous positive rather than
 	// rejecting it. A root below zero has no answer, so the edge floors it instead of inventing one.
 	return iValue > 0 ? intSqrt64((uint64_t)iValue) : 0;
-}
-
-int64_t cyGetModifiedIntValue64(uint64_t iValue, const int iMod)
-{
-	return getModifiedIntValue64(iValue, iMod);
 }
 
 
