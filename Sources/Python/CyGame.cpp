@@ -838,6 +838,18 @@ python::list CyGame::getHeadSelectedCityId() const
 	return cyToList(values);
 }
 
+python::list CyGame::getTopCities(int iCount) const
+{
+	python::list list = python::list();
+	std::vector<const CvCity*> cities;
+	m_pGame.getTopCities(iCount, cities);
+	foreach_(const CvCity* pCity, cities)
+	{
+		list.append(python::make_tuple((int)pCity->getOwner(), pCity->getID()));
+	}
+	return list;
+}
+
 python::list CyGame::getHeadSelectedUnitId() const
 {
 	int values[2] = { -1, -1 };
@@ -881,6 +893,7 @@ void CyGame::pythonPublish()
 	python::class_<CyGame>("CyGame")
 
 		.def("getHeadSelectedCityId", &CyGame::getHeadSelectedCityId)
+		.def("getTopCities", &CyGame::getTopCities)
 		.def("getHeadSelectedUnitId", &CyGame::getHeadSelectedUnitId)
 		.def("getSelectedUnitIds", &CyGame::getSelectedUnitIds)
 		.def("setBuildDisabled", &CyGame::setBuildDisabled)

@@ -238,6 +238,12 @@ public:
 	int getNumCities() const;
 	int getNumCivCities() const;
 	void changeNumCities(int iChange);
+	///<summary>The iCount most valuable cities of the civilizations, the most valuable first: 6 per citizen, 2 per
+	/// food, 3 per production and per commerce, and 1 per 30 of the owner's culture there.</summary>
+	void getTopCities(int iCount, std::vector<const CvCity*>& cities) const;
+	///<summary>Whether every player may see all of every other: debug mode, or the game is past
+	/// GAMESTATE_ON.</summary>
+	bool isIntelOpenToAll() const;
 
 	int getTotalPopulation() const;
 	void changeTotalPopulation(int iChange);

@@ -247,6 +247,19 @@ public:
 	///<summary>The demographics table as rows of (DemographicKind, value, best rival, rival average, worst rival,
 	/// rank), the measures as display text.</summary>
 	python::list getDemographicsRows() const;
+	///<summary>Whether iObserver knows of this player (CvPlayer::isKnownTo).</summary>
+	bool isKnownTo(int /*PlayerTypes*/ iObserver) const;
+	///<summary>The wonders list iKind (WonderListKind) as this player may see it (getWonderRows), as rows of (type,
+	/// under construction, has a year, year, builder or -1, city owner, city id or -1, can zoom to the city).</summary>
+	python::list getWonderRows(int /*WonderListKind*/ iKind) const;
+	///<summary>The Statistics tab's unit rows (getUnitStatistics), as (unit, current, built, killed, lost).</summary>
+	python::list getUnitStatistics() const;
+	///<summary>The Statistics tab's building rows (getBuildingStatistics), as (building, times built).</summary>
+	python::list getBuildingStatistics() const;
+	///<summary>The Statistics tab's improvement rows (getImprovementCounts), as (improvement, count).</summary>
+	python::list getImprovementCounts() const;
+	///<summary>How many religions this player founded.</summary>
+	int getNumReligionsFounded() const;
 	int getPopScore() const;
 	int getLandScore() const;
 
@@ -424,14 +437,9 @@ public:
 
 	bool AI_isWillingToTalk(int /*PlayerTypes*/ ePlayer) const;
 
-	int64_t getScoreHistory(int iTurn) const;
-	int64_t getEconomyHistory(int iTurn) const;
-	int64_t getIndustryHistory(int iTurn) const;
-	int64_t getAgricultureHistory(int iTurn) const;
-	int64_t getPowerHistory(int iTurn) const;
-	int64_t getCultureHistory(int iTurn) const;
-	int64_t getEspionageHistory(int iTurn) const;
-	int64_t getRevolutionStabilityHistory(int iTurn) const;
+	///<summary>The measure iKind (PlayerHistoryKind) recorded for each turn from iFirstTurn to iLastTurn, in turn
+	/// order (CvPlayer::getHistory); empty for an unknown kind.</summary>
+	python::list getHistory(int /*PlayerHistoryKind*/ iKind, int iFirstTurn, int iLastTurn) const;
 
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);

@@ -1615,6 +1615,33 @@ enum DemographicKind
 	NUM_DEMOGRAPHIC_KINDS
 };
 
+///<summary>The measures a player's history records turn by turn (CvPlayer::recordHistory, the score in
+/// CvGame::updateScore; read by CvPlayer::getHistory).</summary>
+enum PlayerHistoryKind
+{
+	PLAYER_HISTORY_SCORE = 0,
+	PLAYER_HISTORY_ECONOMY,
+	PLAYER_HISTORY_INDUSTRY,
+	PLAYER_HISTORY_AGRICULTURE,
+	PLAYER_HISTORY_POWER,
+	PLAYER_HISTORY_CULTURE,
+	PLAYER_HISTORY_ESPIONAGE,
+	PLAYER_HISTORY_REVOLUTION_STABILITY,
+
+	NUM_PLAYER_HISTORY_KINDS
+};
+
+///<summary>The lists of the Info screen's wonders table (getWonderRows): the world wonders, the national and team
+/// wonders, and the projects.</summary>
+enum WonderListKind
+{
+	WONDER_LIST_WORLD = 0,
+	WONDER_LIST_NATIONAL,
+	WONDER_LIST_PROJECTS,
+
+	NUM_WONDER_LIST_KINDS
+};
+
 //	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, which level it
 //	currently sits at and the turns to the next one (CvCity::getCultureTurnsLeft). One group -- the threshold is
 //	meaningless without the amount beside it.

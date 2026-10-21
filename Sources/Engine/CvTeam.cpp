@@ -6516,7 +6516,7 @@ int64_t CvTeam::getTotalVictoryScore() const
 			int64_t tempPower = 0;
 			for (int iL = GC.getGame().getGameTurn(); iL > -1; iL--)
 			{
-				tempPower += GET_PLAYER((PlayerTypes)iI).getPowerHistory(iL);
+				tempPower += GET_PLAYER((PlayerTypes)iI).getHistory(PLAYER_HISTORY_POWER, iL);
 			}
 
 			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())

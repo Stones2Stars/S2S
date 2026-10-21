@@ -192,6 +192,19 @@ bool CvPlayerRecord::getReligionFounded( ReligionTypes eReligion ) const
 	return m_pbReligionFounded[(int)eReligion];
 }
 
+int CvPlayerRecord::getNumReligionsFounded() const
+{
+	int iCount = 0;
+	for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
+	{
+		if (m_pbReligionFounded[iReligion])
+		{
+			iCount++;
+		}
+	}
+	return iCount;
+}
+
 void CvPlayerRecord::setPlayerID( int iID )
 {
 	m_iID = iID;
@@ -474,7 +487,10 @@ CvPlayerRecord *CvStatistics::getPlayerRecord(int iIndex)
 
 		pRecord->init();
 		pRecord->setPlayerID( iIndex );
-		m_PlayerRecords.resize(iIndex + 1, NULL);
+		if (iIndex >= (int)m_PlayerRecords.size())
+		{
+			m_PlayerRecords.resize(iIndex + 1, NULL);
+		}
 		m_PlayerRecords[iIndex] = pRecord;
 	}
 

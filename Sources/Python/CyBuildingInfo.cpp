@@ -1,8 +1,6 @@
 #include "CvGameCoreDLL.h"
 #include "CyBuildingInfo.h"
 #include "Infos/CvBuildingInfo.h"
-#include "Infos/CvSpecialBuildingInfo.h"
-#include "Infos/CvAllowed.h"
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -19,38 +17,6 @@ namespace
 		}
 		return &GC.getBuildingInfo((BuildingTypes)iBuilding);
 	}
-
-	//	WHICH scope an `allowed` block caps at, highest-binding first -- the wonder CATEGORY, derived from the
-	//	authored cap rather than from a mirror flag ([json.md] §4.4).
-	int cyb_selfCapScope(const CvAllowed* pAllowed)
-	{
-		if (pAllowed == NULL) return -1;
-		if (pAllowed->cap(ALLOWEDCAP_WORLD)  >= 0) return ALLOWEDCAP_WORLD;
-		if (pAllowed->cap(ALLOWEDCAP_TEAM)   >= 0) return ALLOWEDCAP_TEAM;
-		if (pAllowed->cap(ALLOWEDCAP_EMPIRE) >= 0) return ALLOWEDCAP_EMPIRE;
-		return -1;
-	}
-
-	//	⛔ TWO WAYS TO BE CAPPED, and reading only the first is wrong. A building may carry its own self-cap, OR
-	//	belong to a SPECIALBUILDING GROUP that holds the cap for all its members (json.md §4.4: the member authors
-	//	identity.specialBuildingType, the GROUP entity holds `allowed`). A grouped wonder authors no cap of its
-	//	own, so a self-cap-only test calls it unlimited -- silently, and only for the grouped ones. This mirrors
-	//	the enabler's own gate (CvBuildingEnabler bd_groupCapOk), so there is ONE meaning of "capped".
-	//
-	//	⚠ The CATEGORY count-caps (worldWonders/teamWonders/nationalWonders) are a DIFFERENT axis -- a per-city
-	//	bound set by CultureLevel -- and deliberately do not make a building "limited".
-	int cyb_capScope(const CvBuildingInfo& kBuilding)
-	{
-		const int iOwn = cyb_selfCapScope(kBuilding.getAllowed());
-		if (iOwn >= 0) return iOwn;
-
-		const int iSpecialBuilding = kBuilding.getSpecialBuildingType();
-		if (iSpecialBuilding != NO_SPECIALBUILDING)
-		{
-			return cyb_selfCapScope(GC.getSpecialBuildingInfo((SpecialBuildingTypes)iSpecialBuilding).getAllowed());
-		}
-		return -1;
-	}
 }
 
 int CyBuildingInfo::getSpecialBuilding(int iBuilding) const
@@ -61,14 +27,12 @@ int CyBuildingInfo::getSpecialBuilding(int iBuilding) const
 
 int CyBuildingInfo::getWonderScope(int iBuilding) const
 {
-	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
-	return pBuilding ? cyb_capScope(*pBuilding) : -1;
+	return cyb_building(iBuilding) ? wonderScope((BuildingTypes)iBuilding) : -1;
 }
 
 bool CyBuildingInfo::isLimitedWonder(int iBuilding) const
 {
-	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
-	return pBuilding ? cyb_capScope(*pBuilding) >= 0 : false;
+	return cyb_building(iBuilding) ? wonderScope((BuildingTypes)iBuilding) >= 0 : false;
 }
 
 bool CyBuildingInfo::isRelocatable(int iBuilding) const

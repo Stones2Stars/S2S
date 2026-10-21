@@ -248,6 +248,9 @@ public:
 	python::list getHeadSelectedCityId() const;
 	python::list getHeadSelectedUnitId() const;
 	python::list getSelectedUnitIds() const;
+	///<summary>The iCount most valuable cities (CvGame::getTopCities), the most valuable first, each as its
+	/// (owner, id) pair.</summary>
+	python::list getTopCities(int iCount) const;
 	//	Turn a BUILD off/on globally (a scenario or an option disabling a worker action).
 	bool setBuildDisabled(int iBuild, bool bDisabled) const;
 protected:

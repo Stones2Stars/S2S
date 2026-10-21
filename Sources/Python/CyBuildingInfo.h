@@ -35,13 +35,11 @@ public:
 	//	(json §4.4: the member authors the group, the GROUP entity holds `allowed`).
 	int getSpecialBuilding(int iBuilding) const;
 
-	//	WHICH scope the self-cap sits at -- an ALLOWEDCAP_* value, or -1 when uncapped. That scope IS the wonder
-	//	category: WORLD -> world wonder, TEAM -> team wonder, EMPIRE -> national ([json.md] §4.4, never an
-	//	isWorldWonder mirror).
+	///<summary>The wonder category (wonderScope): ALLOWEDCAP_WORLD, ALLOWEDCAP_TEAM or ALLOWEDCAP_EMPIRE, or -1 when
+	/// the building is not capped.</summary>
 	int getWonderScope(int iBuilding) const;
 
-	//	Is this building capped at all -- by its OWN self-cap or by its specialbuilding GROUP's. Both count, and
-	//	reading only the first calls every grouped wonder unlimited.
+	///<summary>Whether the building is a wonder of any category (wonderScope).</summary>
 	bool isLimitedWonder(int iBuilding) const;
 
 	//	RELOCATABLE: the building waives the EMPIRE (national-wonder) cap, so it can be rebuilt elsewhere. The cap

@@ -24,6 +24,8 @@ class CvEventReporter
 public:
 	DllExport static CvEventReporter& getInstance(); // singleton accessor
 	DllExport void resetStatistics();
+	///<summary>The statistics record of ePlayer: what it built, killed and lost, and the religions it founded.</summary>
+	const CvPlayerRecord& getPlayerRecord(PlayerTypes ePlayer);
 
 	DllExport bool mouseEvent(int evt, int iCursorX, int iCursorY, bool bInterfaceConsumed=false);
 	DllExport bool kbdEvent(int evt, int key, int iCursorX, int iCursorY);

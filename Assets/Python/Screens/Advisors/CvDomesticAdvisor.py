@@ -503,11 +503,10 @@ class CvDomesticAdvisor:
 		PythonToolTip.buildButtonLists(self.drawContents, screen)
 
 	def calculateFounded(self, CyCity, szKey, arg):
-		iTurn = CyCity.getGameDateFounded()
-		if iTurn < 10000:
-			return TRNSLTR.getText("TXT_KEY_TIME_TURN", (iTurn,))
-
-		return str(iTurn)
+		iYear = CyCity.getYearFounded()
+		if iYear < 0:
+			return TRNSLTR.getText("TXT_KEY_TIME_BC", (-iYear,))
+		return TRNSLTR.getText("TXT_KEY_TIME_AD", (iYear,))
 
 	def calculateFeatures(self, CyCity, szKey, arg):
 

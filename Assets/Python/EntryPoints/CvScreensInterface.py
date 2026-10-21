@@ -152,7 +152,7 @@ def showTopCivs():
 
 def showInfoScreen(argsList):
 	if CyGame().getActivePlayer() != -1:
-		getScreen(INFO_SCREEN).interfaceScreen(argsList[0], argsList[1])
+		getScreen(INFO_SCREEN).interfaceScreen(argsList[0])
 
 def showDebugInfoScreen():
 	getScreen(DEBUG_INFO_SCREEN).interfaceScreen()
@@ -647,10 +647,10 @@ def featAccomplishedOnClickedCallback(argsList):
 			showForeignAdvisorScreen([0])
 		elif iData1 == FeatTypes.FEAT_NATIONAL_WONDER:
 			# 2 is for the wonder tab...
-			showInfoScreen([2, 0])
+			showInfoScreen([2])
 		elif (iData1 >= FeatTypes.FEAT_POPULATION_HALF_MILLION) and (iData1 <= FeatTypes.FEAT_POPULATION_2_BILLION):
-			# 1 is for the demographics tab...
-			showInfoScreen([1, 0])
+			# 0 is for the demographics tab...
+			showInfoScreen([0])
 		elif iData1 == FeatTypes.FEAT_CORPORATION_ENABLED:
 			showCorporationScreen()
 

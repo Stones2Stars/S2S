@@ -254,8 +254,8 @@ def onSetPlayerAlive(argsList):
 
 	if not pPlayer.isFoundedFirstCity():
 		# Add +1 for this turn?
-		for turnID in xrange(GAME.getGameTurn()):
-			if pPlayer.getAgricultureHistory(turnID) > 0:
+		for iAgriculture in pPlayer.getHistory(PlayerHistoryKind.PLAYER_HISTORY_AGRICULTURE, 0, GAME.getGameTurn() - 1):
+			if iAgriculture > 0:
 				print '[REV] Setting founded city to True for failed reincarnation of rebel player %d'%(iPlayerID)
 				pPlayer.setFoundedFirstCity(True)
 				break
