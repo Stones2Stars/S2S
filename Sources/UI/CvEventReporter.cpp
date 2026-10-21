@@ -31,6 +31,11 @@ void CvEventReporter::resetStatistics()
 	m_kStatistics.reset();
 }
 
+const CvPlayerRecord& CvEventReporter::getPlayerRecord(PlayerTypes ePlayer)
+{
+	return *m_kStatistics.getPlayerRecord(ePlayer);
+}
+
 //
 // Returns true if the event is consumed by Python
 //

@@ -2074,7 +2074,7 @@ void CvGame::doControl(ControlTypes eControl)
 		}
 		case CONTROL_INFO:
 		{
-			Cy::call(PYScreensModule, "showInfoScreen", Cy::Args() << -1 << (getGameState() == GAMESTATE_ON ? 0 : 1));
+			Cy::call(PYScreensModule, "showInfoScreen", Cy::Args() << -1);
 			break;
 		}
 		case CONTROL_GLOBE_VIEW:

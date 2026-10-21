@@ -114,6 +114,8 @@ public:
 	python::list getBuildingGrantedYields(int iBuilding) const;
 	python::list getBuildingGrantedCommerces(int iBuilding) const;
 	int getBuildingBuiltTime(int iBuilding) const;
+	///<summary>The buildings of the wonders list iKind (WonderListKind) this city has (getCityWonders).</summary>
+	python::list getWonders(int /*WonderListKind*/ iKind) const;
 	int getAddedFreeSpecialists(int iSpecialist) const;
 	int getGreatPeopleUnitProgress(int iUnitType) const;
 
@@ -148,7 +150,8 @@ public:
 	//	than looked up -- nothing authors a route.
 	python::list getTradeRoutes() const;
 	python::list getHurryQuote(int iHurry) const;
-	int getDateFounded(bool bHistoricalCalendar) const;
+	///<summary>The year the city was founded (CvCity::getYearFounded).</summary>
+	int getYearFounded() const;
 	int64_t getCultureForPlayer(int iForPlayer) const;
 	int64_t countTotalCulture() const;
 	int getCulturePercent(int iForPlayer) const;
@@ -259,7 +262,6 @@ public:
 	bool isConnectedToCapital(int /*PlayerTypes*/ ePlayer) const;
 	CyArea* area() const;
 
-	int getGameDateFounded() const;
 	int getPopulation() const;
 	int64_t getRealPopulation() const;
 

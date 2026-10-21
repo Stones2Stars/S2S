@@ -20,6 +20,7 @@
 #include "Engine/CvUnit.h"                           // addUnitProductionExperience -- the unit it credits
 #include "AI/CvPlayerAI.h"                           // GET_PLAYER
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // select -- the engine action this relays
+#include "UI/CvWonderList.h"                         // getWonders -- the city's buildings of a wonders list
 
 //
 // Python wrapper class for CvCity
@@ -407,13 +408,6 @@ bool CyCity::isConnectedToCapital(int /*PlayerTypes*/ ePlayer) const
 CyArea* CyCity::area() const
 {
 	return new CyArea(m_pCity->area());
-}
-
-int CyCity::getGameDateFounded() const
-{
-	CvGame& GAME = GC.getGame();
-	bool bHistoricalCalendar = GAME.isModderGameOption(MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR);
-	return m_pCity->getGameDateFounded(bHistoricalCalendar);
 }
 
 int CyCity::getPopulation() const
@@ -1511,6 +1505,22 @@ int CyCity::getBuildingBuiltTime(int iBuilding) const
 	return m_pCity->getBuildingData((BuildingTypes)iBuilding).iTimeBuilt;
 }
 
+python::list CyCity::getWonders(int /*WonderListKind*/ iKind) const
+{
+	python::list list = python::list();
+	if (m_pCity == NULL || iKind < 0 || iKind >= NUM_WONDER_LIST_KINDS)
+	{
+		return list;
+	}
+	std::vector<BuildingTypes> wonders;
+	getCityWonders(*m_pCity, (WonderListKind)iKind, wonders);
+	foreach_(const BuildingTypes eBuilding, wonders)
+	{
+		list.append((int)eBuilding);
+	}
+	return list;
+}
+
 int CyCity::getAddedFreeSpecialists(int iSpecialist) const
 {
 	if (m_pCity == NULL || iSpecialist < 0 || iSpecialist >= GC.getNumSpecialistInfos()) return 0;
@@ -1743,9 +1753,9 @@ python::list CyCity::getHurryQuote(int iHurry) const
 	return cyToList(values);
 }
 
-int CyCity::getDateFounded(bool bHistoricalCalendar) const
+int CyCity::getYearFounded() const
 {
-	return m_pCity ? m_pCity->getGameDateFounded(bHistoricalCalendar) : 0;
+	return m_pCity ? m_pCity->getYearFounded() : 0;
 }
 
 int64_t CyCity::getCultureForPlayer(int iForPlayer) const
@@ -2260,7 +2270,6 @@ void CyCity::pythonPublish()
 		.def("addProductionExperience", &CyCity::addProductionExperience)
 		.def("getPreviousOwner", &CyCity::getPreviousOwner)
 		.def("getMaxAirlift", &CyCity::getMaxAirlift)
-		.def("getGameDateFounded", &CyCity::getGameDateFounded)
 		.def("getFoodTurnsLeft", &CyCity::getFoodTurnsLeft)
 		.def("getFirstBuildingOrder", &CyCity::getFirstBuildingOrder)
 		.def("canCreate", &CyCity::canCreate)
@@ -2305,6 +2314,7 @@ void CyCity::pythonPublish()
 		.def("getBuildingGrantedYields",    &CyCity::getBuildingGrantedYields)
 		.def("getBuildingGrantedCommerces", &CyCity::getBuildingGrantedCommerces)
 		.def("getBuildingBuiltTime",  &CyCity::getBuildingBuiltTime)
+		.def("getWonders",            &CyCity::getWonders)
 		.def("getAddedFreeSpecialists", &CyCity::getAddedFreeSpecialists)
 		.def("getGreatPeopleUnitProgress", &CyCity::getGreatPeopleUnitProgress)
 
@@ -2336,7 +2346,7 @@ void CyCity::pythonPublish()
 		.def("getTradeRoutes",        &CyCity::getTradeRoutes)
 		.def("getHurryQuote",         &CyCity::getHurryQuote)
 		.def("flatHurryAngerLength",  &CyCity::flatHurryAngerLength)
-		.def("getDateFounded",        &CyCity::getDateFounded)
+		.def("getYearFounded",        &CyCity::getYearFounded)
 		.def("getCultureForPlayer",   &CyCity::getCultureForPlayer)
 		.def("countTotalCulture",     &CyCity::countTotalCulture)
 		.def("getCulturePercent",     &CyCity::getCulturePercent)

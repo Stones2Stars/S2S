@@ -113,6 +113,8 @@ Verify against the tree before acting on any claim that something is built.
   unserved reads drifts the moment the library grows. `python Tools/verify-python-bindings.py` recomputes it and
   cannot go stale; `PythonErr.log` / `PythonDbg.log` name the read that actually fired.
 - **[reference/pedia-read-map.md](reference/pedia-read-map.md)** — the pedia's own slice of that demand.
+- **[reference/info-screen.md](reference/info-screen.md)** — the Info screen's tabs: the civilizations listed, the
+  history graphs, the Top Cities ranking, the wonders lists and who may see what of them, the statistics.
 - **[reference/tooltip-look.md](reference/tooltip-look.md)** — every legacy tooltip written out in free text with
   standardized icon placeholders: the LOOK target (the look is mimicked, the MECHANISM never is), and the surface a
   new tooltip is DESIGNED on before a composer is written. Its companion `Tools/verify-tooltip-composers.py`

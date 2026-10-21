@@ -3876,6 +3876,50 @@ int CvGame::getNumCivCities() const
 	);
 }
 
+namespace
+{
+	///<summary>A city's value for the Top Cities ranking (CvGame::getTopCities): the amounts are summed, then
+	/// reduced where they meet the whole citizen count.</summary>
+	int64_t cg_topCityValue(const CvCity& city)
+	{
+		int yields[NUM_YIELD_TYPES];
+		city.getYields(yields);
+		const int64_t iAmounts = city.getCultureTimes100(city.getOwner()) / 30
+			+ 2 * (int64_t)yields[YIELD_FOOD]
+			+ 3 * (int64_t)yields[YIELD_PRODUCTION]
+			+ 3 * (int64_t)yields[YIELD_COMMERCE];
+		return 6 * (int64_t)city.getPopulation() + iAmounts / 100;
+	}
+
+	///<summary>The higher value first; between equals, the order the cities were gathered in.</summary>
+	bool cg_isMoreValuable(const std::pair<int64_t, const CvCity*>& left, const std::pair<int64_t, const CvCity*>& right)
+	{
+		return left.first > right.first;
+	}
+}
+
+void CvGame::getTopCities(int iCount, std::vector<const CvCity*>& cities) const
+{
+	std::vector<std::pair<int64_t, const CvCity*> > valued;
+	for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
+	{
+		foreach_(const CvCity* pCity, GET_PLAYER((PlayerTypes)iPlayer).cities())
+		{
+			valued.push_back(std::make_pair(cg_topCityValue(*pCity), pCity));
+		}
+	}
+	std::stable_sort(valued.begin(), valued.end(), cg_isMoreValuable);
+	for (int iRank = 0; iRank < iCount && iRank < (int)valued.size(); iRank++)
+	{
+		cities.push_back(valued[iRank].second);
+	}
+}
+
+bool CvGame::isIntelOpenToAll() const
+{
+	return isDebugMode() || getGameState() != GAMESTATE_ON;
+}
+
 
 int CvGame::getTotalPopulation() const
 {
@@ -9029,13 +9073,12 @@ void CvGame::showEndGameSequence()
 				player.addPopup(pInfo);
 			}
 
-			// show top cities / stats
+			// show the Info screen on its Demographics tab
 			pInfo = new CvPopupInfo(BUTTONPOPUP_PYTHON_SCREEN);
 			if (NULL != pInfo)
 			{
 				pInfo->setText(L"showInfoScreen");
 				pInfo->setData1(0);
-				pInfo->setData2(1);
 				player.addPopup(pInfo);
 			}
 

@@ -5679,6 +5679,16 @@ int CvCity::getGameDateFounded(const bool bACalendar) const
 	return m_iGameTurnFounded;
 }
 
+int CvCity::getYearFounded() const
+{
+	CvGame& kGame = GC.getGame();
+	if (kGame.isModderGameOption(MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR))
+	{
+		return getGameDateFounded(true);
+	}
+	return kGame.getTurnYear(getGameDateFounded(false));
+}
+
 
 void CvCity::setGameDateFounded(const int iNewValue, const bool bHistoricalCalendar)
 {

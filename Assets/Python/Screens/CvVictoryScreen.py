@@ -312,13 +312,13 @@ class CvVictoryScreen:
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive():
 				iTeamX = CyPlayerX.getTeam()
-				for i in xrange(GAME.getGameTurn()):
-					iWorldPower += CyPlayerX.getPowerHistory(i)
+				for iPowerX in CyPlayerX.getHistory(PlayerHistoryKind.PLAYER_HISTORY_POWER, 0, GAME.getGameTurn() - 1):
+					iWorldPower += iPowerX
 
 					if iTeamAct == iTeamX:
-						iOurPower += CyPlayerX.getPowerHistory(i)
+						iOurPower += iPowerX
 					elif iBestTeam == iTeamX:
-						bestPower += CyPlayerX.getPowerHistory(i)
+						bestPower += iPowerX
 		if iWorldPower < 1:
 			iWorldPower = 1
 

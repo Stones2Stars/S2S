@@ -4011,10 +4011,10 @@ void CvPlayer::doMultiMapTurn()
 
 void CvPlayer::recordHistory()
 {
-	m_mapEconomyHistory[GC.getGame().getGameTurn()] = calculateTotalCommerce() / 100;
-	m_mapPowerHistory[GC.getGame().getGameTurn()] = getPower() / 100;
-	m_mapIndustryHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_PRODUCTION) / 100;
-	m_mapAgricultureHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_FOOD) / 100;
+	m_mapEconomyHistory[GC.getGame().getGameTurn()] = calculateTotalCommerce();
+	m_mapPowerHistory[GC.getGame().getGameTurn()] = getPower();
+	m_mapIndustryHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_PRODUCTION);
+	m_mapAgricultureHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_FOOD);
 	m_mapCultureHistory[GC.getGame().getGameTurn()] = getCulture();
 	m_mapEspionageHistory[GC.getGame().getGameTurn()] = GET_TEAM(getTeam()).getEspionagePointsEver();
 	m_mapRevolutionStabilityHistory[GC.getGame().getGameTurn()] = getStabilityIndexAverage();
@@ -10316,8 +10316,7 @@ bool CvPlayer::isIntelVisibleTo(PlayerTypes eObserver, EspionageMissionTypes eMi
 	{
 		return true;
 	}
-	const CvGame& kGame = GC.getGame();
-	if (kGame.isDebugMode() || kGame.getGameState() != GAMESTATE_ON)
+	if (GC.getGame().isIntelOpenToAll())
 	{
 		return true;
 	}
@@ -10414,6 +10413,19 @@ bool CvPlayer::isTooBusyForWarRequestFrom(PlayerTypes eAsker) const
 	return false;
 }
 
+bool CvPlayer::isKnownTo(PlayerTypes eObserver) const
+{
+	if (!isEverAlive())
+	{
+		return false;
+	}
+	if (GC.getGame().isIntelOpenToAll())
+	{
+		return true;
+	}
+	return GET_TEAM(GET_PLAYER(eObserver).getTeam()).isHasMet(getTeam());
+}
+
 
 bool CvPlayer::hasBegunTurn() const
 {
@@ -10452,14 +10464,14 @@ int64_t CvPlayer::getScoreChange(bool bIncludeCurrentTurn) const
 		{
 			return 0;
 		}
-		return kGame.getPlayerScore(getID()) - getScoreHistory(iBeforeLatestTurn);
+		return kGame.getPlayerScore(getID()) - getHistory(PLAYER_HISTORY_SCORE, iBeforeLatestTurn);
 	}
 	const int iLastFinishedTurn = (hasBegunTurn() && !isTurnActive()) ? iTurn : iTurn - 1;
 	if (iLastFinishedTurn - 1 < kGame.getStartTurn())
 	{
 		return 0;
 	}
-	return getScoreHistory(iLastFinishedTurn) - getScoreHistory(iLastFinishedTurn - 1);
+	return getHistory(PLAYER_HISTORY_SCORE, iLastFinishedTurn) - getHistory(PLAYER_HISTORY_SCORE, iLastFinishedTurn - 1);
 }
 
 
@@ -14065,10 +14077,77 @@ void CvPlayer::clearSpaceShipPopups()
 	}
 }
 
-int64_t CvPlayer::getScoreHistory(int iTurn) const
+const CvTurnScoreMap& CvPlayer::getHistoryRecord(PlayerHistoryKind eKind) const
 {
-	CvTurnScoreMap::const_iterator it = m_mapScoreHistory.find(iTurn);
-	return it != m_mapScoreHistory.end() ? it->second : 0;
+	switch (eKind)
+	{
+	case PLAYER_HISTORY_SCORE:
+		return m_mapScoreHistory;
+	case PLAYER_HISTORY_ECONOMY:
+		return m_mapEconomyHistory;
+	case PLAYER_HISTORY_INDUSTRY:
+		return m_mapIndustryHistory;
+	case PLAYER_HISTORY_AGRICULTURE:
+		return m_mapAgricultureHistory;
+	case PLAYER_HISTORY_POWER:
+		return m_mapPowerHistory;
+	case PLAYER_HISTORY_CULTURE:
+		return m_mapCultureHistory;
+	case PLAYER_HISTORY_ESPIONAGE:
+		return m_mapEspionageHistory;
+	case PLAYER_HISTORY_REVOLUTION_STABILITY:
+		return m_mapRevolutionStabilityHistory;
+	default:
+		FErrorMsg("unknown PlayerHistoryKind");
+		return m_mapScoreHistory;
+	}
+}
+
+int64_t CvPlayer::getHistory(PlayerHistoryKind eKind, int iTurn) const
+{
+	const CvTurnScoreMap& record = getHistoryRecord(eKind);
+	CvTurnScoreMap::const_iterator entry = record.find(iTurn);
+	return entry != record.end() ? entry->second : 0;
+}
+
+void CvPlayer::getHistory(PlayerHistoryKind eKind, int iFirstTurn, int iLastTurn, std::vector<int64_t>& values) const
+{
+	for (int iTurn = iFirstTurn; iTurn <= iLastTurn; iTurn++)
+	{
+		values.push_back(getHistory(eKind, iTurn));
+	}
+}
+
+bool CvPlayer::isAmountHistory(PlayerHistoryKind eKind)
+{
+	switch (eKind)
+	{
+	case PLAYER_HISTORY_ECONOMY:
+	case PLAYER_HISTORY_INDUSTRY:
+	case PLAYER_HISTORY_AGRICULTURE:
+	case PLAYER_HISTORY_POWER:
+		return true;
+	default:
+		return false;
+	}
+}
+
+void CvPlayer::readAmountHistory(CvTaggedSaveFormatWrapper& wrapper, CvTurnScoreMap& record, const char* szSizeTag, const char* szReducedSizeTag)
+{
+	record.clear();
+	uint iSize = 0;
+	uint iReducedSize = 0;
+	wrapper.Read(szSizeTag, &iSize);
+	wrapper.Read(szReducedSizeTag, &iReducedSize);
+	const int64_t iScale = iReducedSize > 0 ? 100 : 1;
+	for (uint iEntry = 0; iEntry < iSize + iReducedSize; iEntry++)
+	{
+		int iTurn;
+		double fScore = 0;
+		WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
+		WRAPPER_READ(wrapper, "CvPlayer", &fScore);
+		record[iTurn] = static_cast<int64_t>(fScore) * iScale;
+	}
 }
 
 void CvPlayer::updateScoreHistory(int iTurn, int64_t iBestScore)
@@ -14078,51 +14157,6 @@ void CvPlayer::updateScoreHistory(int iTurn, int64_t iBestScore)
 		m_mapScoreHistory[iTurn] = iBestScore;
 	}
 }
-
-int64_t CvPlayer::getEconomyHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapEconomyHistory.find(iTurn);
-	return it != m_mapEconomyHistory.end() ? it->second : 0;
-}
-
-int64_t CvPlayer::getIndustryHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapIndustryHistory.find(iTurn);
-	return it != m_mapIndustryHistory.end() ? it->second : 0;
-}
-
-int64_t CvPlayer::getAgricultureHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapAgricultureHistory.find(iTurn);
-	return it != m_mapAgricultureHistory.end() ? it->second : 0;
-}
-
-int64_t CvPlayer::getPowerHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapPowerHistory.find(iTurn);
-	return it != m_mapPowerHistory.end() ? it->second : 0;
-}
-
-int64_t CvPlayer::getCultureHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapCultureHistory.find(iTurn);
-	return it != m_mapCultureHistory.end() ? it->second : 0;
-}
-
-int64_t CvPlayer::getEspionageHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapEspionageHistory.find(iTurn);
-	return it != m_mapEspionageHistory.end() ? it->second : 0;
-}
-
-// RevolutionDCM - record revolution stability history
-// Data is used for the CvInfo graphs
-int64_t CvPlayer::getRevolutionStabilityHistory(int iTurn) const
-{
-	CvTurnScoreMap::const_iterator it = m_mapRevolutionStabilityHistory.find(iTurn);
-	return it != m_mapRevolutionStabilityHistory.end() ? it->second : 0;
-}
-
 
 std::string CvPlayer::getScriptData() const
 {
@@ -17484,65 +17518,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
-		{
-			m_mapEconomyHistory.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numEconHistEntries");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iTurn;
-				double fScore = 0;
-				WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
-				WRAPPER_READ(wrapper, "CvPlayer", &fScore);
-				m_mapEconomyHistory[iTurn] = static_cast<int64_t>(fScore);
-			}
-		}
-
-		{
-			m_mapIndustryHistory.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numIndHistEntries");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iTurn;
-				double fScore = 0;
-				WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
-				WRAPPER_READ(wrapper, "CvPlayer", &fScore);
-				m_mapIndustryHistory[iTurn] = static_cast<int64_t>(fScore);
-			}
-		}
-
-		{
-			m_mapAgricultureHistory.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numAgriHistEntries");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iTurn;
-				double fScore = 0;
-				WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
-				WRAPPER_READ(wrapper, "CvPlayer", &fScore);
-				m_mapAgricultureHistory[iTurn] = static_cast<int64_t>(fScore);
-			}
-		}
-
-		{
-			m_mapPowerHistory.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numPowerHistEntries");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iTurn;
-				double fScore = 0;
-				WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
-				WRAPPER_READ(wrapper, "CvPlayer", &fScore);
-				m_mapPowerHistory[iTurn] = static_cast<int64_t>(fScore);
-			}
-		}
+		readAmountHistory(wrapper, m_mapEconomyHistory, "CvPlayer::numEconomyHistoryEntries", "CvPlayer::numEconHistEntries");
+		readAmountHistory(wrapper, m_mapIndustryHistory, "CvPlayer::numIndustryHistoryEntries", "CvPlayer::numIndHistEntries");
+		readAmountHistory(wrapper, m_mapAgricultureHistory, "CvPlayer::numAgricultureHistoryEntries", "CvPlayer::numAgriHistEntries");
+		readAmountHistory(wrapper, m_mapPowerHistory, "CvPlayer::numPowerHistoryEntries", "CvPlayer::numPowerHistEntries");
 
 		{
 			m_mapCultureHistory.clear();
@@ -18360,7 +18339,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		{
 			uint iSize = m_mapEconomyHistory.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numEconHistEntries");
+			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numEconomyHistoryEntries");
 			CvTurnScoreMap::iterator it;
 			for (it = m_mapEconomyHistory.begin(); it != m_mapEconomyHistory.end(); ++it)
 			{
@@ -18371,7 +18350,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		{
 			uint iSize = m_mapIndustryHistory.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numIndHistEntries");
+			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numIndustryHistoryEntries");
 			CvTurnScoreMap::iterator it;
 			for (it = m_mapIndustryHistory.begin(); it != m_mapIndustryHistory.end(); ++it)
 			{
@@ -18382,7 +18361,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		{
 			uint iSize = m_mapAgricultureHistory.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numAgriHistEntries");
+			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numAgricultureHistoryEntries");
 			CvTurnScoreMap::iterator it;
 			for (it = m_mapAgricultureHistory.begin(); it != m_mapAgricultureHistory.end(); ++it)
 			{
@@ -18393,7 +18372,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		{
 			uint iSize = m_mapPowerHistory.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numPowerHistEntries");
+			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numPowerHistoryEntries");
 			CvTurnScoreMap::iterator it;
 			for (it = m_mapPowerHistory.begin(); it != m_mapPowerHistory.end(); ++it)
 			{

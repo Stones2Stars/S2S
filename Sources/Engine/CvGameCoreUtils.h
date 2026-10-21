@@ -228,10 +228,11 @@ bool isLimitedUnit(UnitTypes eUnit);
 bool isWorldWonder(BuildingTypes eBuilding);
 bool isTeamWonder(BuildingTypes eBuilding);
 bool isNationalWonder(BuildingTypes eBuilding);
-bool isNationalWonderGroup(BuildingTypes eBuilding);
-bool isNationalWonderGroupSpecialBuilding(SpecialBuildingTypes eSpecialBuilding);
 bool isLimitedWonder(BuildingTypes eBuilding);
 int limitedWonderLimit(BuildingTypes eBuilding);
+///<summary>The wonder category of eBuilding, the widest scope its own cap sets: ALLOWEDCAP_WORLD, ALLOWEDCAP_TEAM or
+/// ALLOWEDCAP_EMPIRE (a world, team or national wonder), or -1 when it is not capped.</summary>
+int wonderScope(BuildingTypes eBuilding);
 
 bool isWorldProject(ProjectTypes eProject);
 bool isTeamProject(ProjectTypes eProject);

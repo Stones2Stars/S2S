@@ -1,5 +1,6 @@
 ﻿#include "CvGameCoreDLL.h"
 #include "CvBuildingInfo.h"
+#include "Infos/CvAllowed.h"    // the self-caps a wonder's category comes from
 #include "CvCity.h"
 #include "AI/CvGameAI.h"
 #include "CvGame.h"
@@ -323,41 +324,48 @@ bool isNationalUnit(UnitTypes eUnit)
 		&& gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE) >= 0;
 }
 
+int wonderScope(BuildingTypes eBuilding)
+{
+	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
+	if (gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) >= 0)
+	{
+		return ALLOWEDCAP_WORLD;
+	}
+	if (gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) >= 0)
+	{
+		return ALLOWEDCAP_TEAM;
+	}
+	if (gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE) >= 0)
+	{
+		return ALLOWEDCAP_EMPIRE;
+	}
+	return -1;
+}
+
 bool isWorldWonder(BuildingTypes eBuilding)
 {
-	return gcu_selfCap(GC.getBuildingInfo(eBuilding).getAllowed(), ALLOWEDCAP_WORLD) >= 0;
+	return wonderScope(eBuilding) == ALLOWEDCAP_WORLD;
 }
 
 bool isTeamWonder(BuildingTypes eBuilding)
 {
-	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
-	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
-		&& gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) >= 0;
+	return wonderScope(eBuilding) == ALLOWEDCAP_TEAM;
 }
 
 bool isNationalWonder(BuildingTypes eBuilding)
 {
-	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
-	return gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD) < 0
-		&& gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM) < 0
-		&& gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE) >= 0;
+	return wonderScope(eBuilding) == ALLOWEDCAP_EMPIRE;
 }
 
 //	How many of it may exist at the scope its category comes from; -1 when it is not capped at all.
 int limitedWonderLimit(BuildingTypes eBuilding)
 {
-	const CvAllowed* pAllowed = GC.getBuildingInfo(eBuilding).getAllowed();
-	const int iWorld = gcu_selfCap(pAllowed, ALLOWEDCAP_WORLD);
-	if (iWorld >= 0)
+	const int iScope = wonderScope(eBuilding);
+	if (iScope < 0)
 	{
-		return iWorld;
+		return -1;
 	}
-	const int iTeam = gcu_selfCap(pAllowed, ALLOWEDCAP_TEAM);
-	if (iTeam >= 0)
-	{
-		return iTeam;
-	}
-	return gcu_selfCap(pAllowed, ALLOWEDCAP_EMPIRE);
+	return gcu_selfCap(GC.getBuildingInfo(eBuilding).getAllowed(), (EnAllowedCap)iScope);
 }
 
 bool isWorldProject(ProjectTypes eProject)
@@ -377,14 +385,9 @@ bool isLimitedUnit(UnitTypes eUnit)
 	return (isWorldUnit(eUnit) || isNationalUnit(eUnit));
 }
 
-bool isNationalWonderGroupSpecialBuilding(SpecialBuildingTypes eSpecialBuilding)
-{
-	return GC.getSpecialBuildingInfo(eSpecialBuilding).getMaxPlayerInstances() != -1;
-}
-
 bool isLimitedWonder(BuildingTypes eBuilding)
 {
-	return isWorldWonder(eBuilding) || isTeamWonder(eBuilding) || isNationalWonder(eBuilding);
+	return wonderScope(eBuilding) >= 0;
 }
 
 bool isLimitedProject(ProjectTypes eProject)

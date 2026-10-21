@@ -147,13 +147,7 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface2(boost::python::class_<CyPlay
 		.def("AI_changeMemoryCount", &CyPlayer::AI_changeMemoryCount, "void (/*PlayerTypes*/ eIndex1, /*MemoryTypes*/ eIndex2, int iChange)")
 		.def("AI_isWillingToTalk", &CyPlayer::AI_isWillingToTalk, "bool (int /*PlayerTypes*/)")
 
-		.def("getScoreHistory", &CyPlayer::getScoreHistory, "int (int iTurn)")
-		.def("getEconomyHistory", &CyPlayer::getEconomyHistory, "int (int iTurn)")
-		.def("getIndustryHistory", &CyPlayer::getIndustryHistory, "int (int iTurn)")
-		.def("getAgricultureHistory", &CyPlayer::getAgricultureHistory, "int (int iTurn)")
-		.def("getPowerHistory", &CyPlayer::getPowerHistory, "int (int iTurn)")
-		.def("getCultureHistory", &CyPlayer::getCultureHistory, "int (int iTurn)")
-		.def("getEspionageHistory", &CyPlayer::getEspionageHistory, "int (int iTurn)")
+		.def("getHistory", &CyPlayer::getHistory, "list (int /*PlayerHistoryKind*/ iKind, int iFirstTurn, int iLastTurn)")
 
 		.def("getScriptData", &CyPlayer::getScriptData, "str () - Get stored custom data (via pickle)")
 		.def("setScriptData", &CyPlayer::setScriptData, "void (str) - Set stored custom data (via pickle)")
@@ -176,7 +170,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface2(boost::python::class_<CyPlay
 		.def("changeStabilityIndex", &CyPlayer::changeStabilityIndex, "void ( int iChange )")
 		.def("getStabilityIndexAverage", &CyPlayer::getStabilityIndexAverage, "int ( )")
 		.def("updateStabilityIndexAverage", &CyPlayer::updateStabilityIndexAverage, "void ( )")
-		.def("getRevolutionStabilityHistory", &CyPlayer::getRevolutionStabilityHistory, "int (int iTurn)")
 
 		.def("isNonStateReligionCommerce", &CyPlayer::isNonStateReligionCommerce, "bool ()")
 
@@ -313,6 +306,12 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("isTooBusyForWarRequestFrom", &CyPlayer::isTooBusyForWarRequestFrom, "bool (int /*PlayerTypes*/ iAsker)")
 		.def("getScoreChange", &CyPlayer::getScoreChange, "int64 (bool bIncludeCurrentTurn)")
 		.def("getDemographicsRows", &CyPlayer::getDemographicsRows, "list ()")
+		.def("isKnownTo", &CyPlayer::isKnownTo, "bool (PlayerTypes iObserver)")
+		.def("getWonderRows", &CyPlayer::getWonderRows, "list (WonderListKind iKind)")
+		.def("getUnitStatistics", &CyPlayer::getUnitStatistics, "list ()")
+		.def("getBuildingStatistics", &CyPlayer::getBuildingStatistics, "list ()")
+		.def("getImprovementCounts", &CyPlayer::getImprovementCounts, "list ()")
+		.def("getNumReligionsFounded", &CyPlayer::getNumReligionsFounded, "int ()")
 		.def("getPopScore", &CyPlayer::getPopScore, "int ()")
 		.def("getLandScore", &CyPlayer::getLandScore, "int ()")
 

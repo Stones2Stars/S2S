@@ -23,6 +23,9 @@
 #include "Engine/CvCityBreakdown.h"   // getFinanceRows -- the finance advisor's panels are engine breakdowns
 #include "UI/CvGameTextMgr.h"         // getFinanceRows -- the breakdown rendered as rows
 #include "Engine/DemographicStanding.h"   // getDemographicsRows -- one row per measure
+#include "UI/CvWonderList.h"              // getWonderRows -- the Info screen's wonders lists
+#include "UI/CvEventReporter.h"           // getNumReligionsFounded -- the player's statistics record
+#include "UI/CvPlayerStatistics.h"        // the Statistics tab's unit, building and improvement rows
 
 //
 // Python wrapper class for CvPlayer
@@ -899,6 +902,73 @@ python::list CyPlayer::getDemographicsRows() const
 	return rows;
 }
 
+bool CyPlayer::isKnownTo(int /*PlayerTypes*/ iObserver) const
+{
+	if (iObserver < 0 || iObserver >= MAX_PLAYERS)
+	{
+		return false;
+	}
+	return m_pPlayer->isKnownTo((PlayerTypes)iObserver);
+}
+
+python::list CyPlayer::getWonderRows(int /*WonderListKind*/ iKind) const
+{
+	python::list rows = python::list();
+	if (iKind < 0 || iKind >= NUM_WONDER_LIST_KINDS)
+	{
+		return rows;
+	}
+	std::vector<WonderRow> wonderRows;
+	::getWonderRows(m_pPlayer->getID(), (WonderListKind)iKind, wonderRows);
+	foreach_(const WonderRow& row, wonderRows)
+	{
+		rows.append(python::make_tuple(row.iType, row.bUnderConstruction, row.bHasYear, row.iYear,
+			(int)row.eBuilder, (int)row.eCityOwner, row.iCityId, row.bZoomable));
+	}
+	return rows;
+}
+
+python::list CyPlayer::getUnitStatistics() const
+{
+	python::list rows = python::list();
+	std::vector<UnitStatisticRow> statisticRows;
+	::getUnitStatistics(m_pPlayer->getID(), statisticRows);
+	foreach_(const UnitStatisticRow& row, statisticRows)
+	{
+		rows.append(python::make_tuple((int)row.eUnit, row.iCurrent, row.iBuilt, row.iKilled, row.iLost));
+	}
+	return rows;
+}
+
+python::list CyPlayer::getBuildingStatistics() const
+{
+	python::list rows = python::list();
+	std::vector<std::pair<BuildingTypes, int> > statisticRows;
+	::getBuildingStatistics(m_pPlayer->getID(), statisticRows);
+	for (uint iRow = 0; iRow < statisticRows.size(); iRow++)
+	{
+		rows.append(python::make_tuple((int)statisticRows[iRow].first, statisticRows[iRow].second));
+	}
+	return rows;
+}
+
+python::list CyPlayer::getImprovementCounts() const
+{
+	python::list rows = python::list();
+	std::vector<std::pair<ImprovementTypes, int> > countRows;
+	::getImprovementCounts(m_pPlayer->getID(), countRows);
+	for (uint iRow = 0; iRow < countRows.size(); iRow++)
+	{
+		rows.append(python::make_tuple((int)countRows[iRow].first, countRows[iRow].second));
+	}
+	return rows;
+}
+
+int CyPlayer::getNumReligionsFounded() const
+{
+	return CvEventReporter::getInstance().getPlayerRecord(m_pPlayer->getID()).getNumReligionsFounded();
+}
+
 int CyPlayer::getPopScore() const
 {
 	return m_pPlayer->getPopScore();
@@ -1688,44 +1758,21 @@ bool CyPlayer::AI_isWillingToTalk(int /*PlayerTypes*/ ePlayer) const
 	return m_pPlayer->AI_isWillingToTalk((PlayerTypes)ePlayer);
 }
 
-int64_t CyPlayer::getScoreHistory(int iTurn) const
+python::list CyPlayer::getHistory(int /*PlayerHistoryKind*/ iKind, int iFirstTurn, int iLastTurn) const
 {
-	return m_pPlayer->getScoreHistory(iTurn);
-}
-
-int64_t CyPlayer::getEconomyHistory(int iTurn) const
-{
-	return m_pPlayer->getEconomyHistory(iTurn);
-}
-
-int64_t CyPlayer::getIndustryHistory(int iTurn) const
-{
-	return m_pPlayer->getIndustryHistory(iTurn);
-}
-
-int64_t CyPlayer::getAgricultureHistory(int iTurn) const
-{
-	return m_pPlayer->getAgricultureHistory(iTurn);
-}
-
-int64_t CyPlayer::getPowerHistory(int iTurn) const
-{
-	return m_pPlayer->getPowerHistory(iTurn);
-}
-
-int64_t CyPlayer::getCultureHistory(int iTurn) const
-{
-	return m_pPlayer->getCultureHistory(iTurn);
-}
-
-int64_t CyPlayer::getEspionageHistory(int iTurn) const
-{
-	return m_pPlayer->getEspionageHistory(iTurn);
-}
-
-int64_t CyPlayer::getRevolutionStabilityHistory(int iTurn) const
-{
-	return m_pPlayer->getRevolutionStabilityHistory(iTurn);
+	python::list list = python::list();
+	if (iKind < 0 || iKind >= NUM_PLAYER_HISTORY_KINDS)
+	{
+		return list;
+	}
+	std::vector<int64_t> values;
+	m_pPlayer->getHistory((PlayerHistoryKind)iKind, iFirstTurn, iLastTurn, values);
+	const int64_t iDivisor = CvPlayer::isAmountHistory((PlayerHistoryKind)iKind) ? 100 : 1;
+	foreach_(const int64_t iValue, values)
+	{
+		list.append(iValue / iDivisor);
+	}
+	return list;
 }
 
 std::string CyPlayer::getScriptData() const

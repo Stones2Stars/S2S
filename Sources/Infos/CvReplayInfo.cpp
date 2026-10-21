@@ -141,10 +141,10 @@ void CvReplayInfo::createInfo(PlayerTypes ePlayer)
 			for (int iTurn = m_iInitialTurn; iTurn <= m_iFinalTurn; iTurn++)
 			{
 				TurnData score;
-				score.m_iScore = player.getScoreHistory(iTurn);
-				score.m_iAgriculture = player.getAgricultureHistory(iTurn);
-				score.m_iIndustry = player.getIndustryHistory(iTurn);
-				score.m_iEconomy = player.getEconomyHistory(iTurn);
+				score.m_iScore = player.getHistory(PLAYER_HISTORY_SCORE, iTurn);
+				score.m_iAgriculture = player.getHistory(PLAYER_HISTORY_AGRICULTURE, iTurn) / 100;
+				score.m_iIndustry = player.getHistory(PLAYER_HISTORY_INDUSTRY, iTurn) / 100;
+				score.m_iEconomy = player.getHistory(PLAYER_HISTORY_ECONOMY, iTurn) / 100;
 
 				playerInfo.m_listScore.push_back(score);
 			}

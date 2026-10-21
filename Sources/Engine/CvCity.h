@@ -559,6 +559,9 @@ public:
 
 	int getGameDateFounded(const bool bACalendar = false) const;
 	void setGameDateFounded(const int iNewValue, const bool bACalendar = false);
+	///<summary>The year the city was founded, in the game's calendar (the historically accurate calendar when that
+	/// option is on).</summary>
+	int getYearFounded() const;
 
 	int getGameTurnAcquired(const bool bHistoricalCalendar = false) const;
 	void setGameTurnAcquired(const int iNewValue, const bool bHistoricalCalendar = false);

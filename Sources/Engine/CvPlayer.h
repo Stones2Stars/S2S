@@ -41,6 +41,7 @@ class CvDiploParameters;
 class CvEventTriggerInfo;
 class CvPlot;
 class CvPopupInfo;
+class CvTaggedSaveFormatWrapper;
 class CvUnitSelectionCriteria;
 class CvUpgradeCache;
 class CvPlayerAI;
@@ -721,6 +722,9 @@ public:
 	///<summary>Whether this AI would refuse eAsker a war against some third team because it has its hands full
 	/// with war already.</summary>
 	bool isTooBusyForWarRequestFrom(PlayerTypes eAsker) const;
+	///<summary>Whether eObserver knows of this player, alive or dead: its team has met this player's team, debug
+	/// mode, or the game is past GAMESTATE_ON.</summary>
+	bool isKnownTo(PlayerTypes eObserver) const;
 
 	///<summary>Whether this player's turn of the current game turn has begun.</summary>
 	bool hasBegunTurn() const;
@@ -1288,16 +1292,16 @@ public:
 	DllExport void showSpaceShip();
 	DllExport void clearSpaceShipPopups();
 
-	int64_t getScoreHistory(int iTurn) const;
 	void updateScoreHistory(int iTurn, int64_t iBestScore);
 
-	int64_t getEconomyHistory(int iTurn) const;
-	int64_t getIndustryHistory(int iTurn) const;
-	int64_t getAgricultureHistory(int iTurn) const;
-	int64_t getPowerHistory(int iTurn) const;
-	int64_t getCultureHistory(int iTurn) const;
-	int64_t getEspionageHistory(int iTurn) const;
-	int64_t getRevolutionStabilityHistory(int iTurn) const;
+	///<summary>The measure eKind recorded for iTurn; 0 for a turn with no record.</summary>
+	int64_t getHistory(PlayerHistoryKind eKind, int iTurn) const;
+	///<summary>The measure eKind recorded for each turn from iFirstTurn to iLastTurn, in turn order, 0 for a turn
+	/// with no record.</summary>
+	void getHistory(PlayerHistoryKind eKind, int iFirstTurn, int iLastTurn, std::vector<int64_t>& values) const;
+	///<summary>Whether the measure eKind is an amount (economy, industry, agriculture, power), which a reader
+	/// reduces; the others are recorded as the counts and scores they are.</summary>
+	static bool isAmountHistory(PlayerHistoryKind eKind);
 
 	// Script data needs to be a narrow string for pickling in Python
 	std::string getScriptData() const;
@@ -1854,6 +1858,13 @@ protected:
 	CvMessageQueue m_listGameMessages;
 	CvPopupQueue m_listPopups;
 	CvDiploQueue m_listDiplomacy;
+
+	///<summary>The record of the measure eKind, turn by turn.</summary>
+	const CvTurnScoreMap& getHistoryRecord(PlayerHistoryKind eKind) const;
+	///<summary>Reads an amount's history, saved under the count tag szSizeTag. A save that holds it under
+	/// szReducedSizeTag stored it reduced to whole numbers, and those turns are scaled to the engine's form as they
+	/// load.</summary>
+	void readAmountHistory(CvTaggedSaveFormatWrapper& wrapper, CvTurnScoreMap& record, const char* szSizeTag, const char* szReducedSizeTag);
 
 	CvTurnScoreMap m_mapScoreHistory;
 	CvTurnScoreMap m_mapEconomyHistory;

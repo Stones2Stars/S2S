@@ -93,6 +93,8 @@ public:
 	// Religion founded
 	void religionFounded( ReligionTypes eReligion );
 	DllExport bool getReligionFounded( ReligionTypes eReligion ) const;
+	///<summary>How many religions this player founded.</summary>
+	int getNumReligionsFounded() const;
 
 	// Num Golden Ages
 	void goldenAge();
