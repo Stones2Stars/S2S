@@ -21,6 +21,7 @@
 #include "Infos/CvModifiers.h"          // the compiled entry list the conditioned read walks
 #include "Infos/CvModEntry.h"
 #include "UI/CvEntryText.h"
+#include "CyPyList.h"                   // cyToIdList -- a project's needed projects
 #include "Conditions/CvConditionQuery.h" // the ONE read over a condition tree (atoms + the negation probe)
 #include "Infos/CvRequires.h"            // the build/operate trees the requires-mention read walks
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
@@ -77,7 +78,7 @@
 #include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
 #include "Infos/CvCorporationInfo.h"
 #include "Infos/CvPropertyInfo.h"   // PROPERTY_ -- the city property list's names
-#include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
+#include "Infos/CvProjectInfo.h"   // isSpaceship, the victory thresholds and the needed projects
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
 #include "Infos/CvVoteInfo.h"
@@ -763,18 +764,19 @@ int CyInfo::getProjectLaunchesVictory(int iProjectId) const
 	return pProject->getLaunchesVictory();
 }
 
-python::list CyInfo::getProjectNeededProjects(int iProjectId) const
+bool CyInfo::isProjectSpaceship(int iProjectId) const
 {
-	python::list lIds;
 	const CvProjectInfo* pProject =
 		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
-	if (pProject == NULL) return lIds;
+	return pProject != NULL && pProject->isSpaceship();
+}
 
-	for (int iOther = 0; iOther < GC.getNumProjectInfos(); ++iOther)
-	{
-		if (pProject->getProjectsNeeded(iOther) > 0) lIds.append(iOther);
-	}
-	return lIds;
+python::list CyInfo::getProjectNeededProjects(int iProjectId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL) return python::list();
+	return cyToIdList(pProject->getNeededProjects());
 }
 
 int CyInfo::getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const
@@ -1388,11 +1390,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getWorldInfo((WorldSizeTypes)iId).getDefaultPlayers();
 		break;
 
-	case PYINT_IS_SPACESHIP:
-		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
-			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;
-		break;
-
 	case PYINT_ERA:
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getEra();
@@ -1747,6 +1744,7 @@ void CyInfo::pythonPublish()
 		.def("getProjectVictoryThreshold", &CyInfo::getProjectVictoryThreshold)
 		.def("getProjectVictoryMinThreshold", &CyInfo::getProjectVictoryMinThreshold)
 		.def("getProjectLaunchesVictory", &CyInfo::getProjectLaunchesVictory)
+		.def("isProjectSpaceship", &CyInfo::isProjectSpaceship)
 		.def("getProjectNeededProjects", &CyInfo::getProjectNeededProjects)
 		.def("getBuildingVictoryThreshold", &CyInfo::getBuildingVictoryThreshold)
 		.def("getVoteSourceSecretaryGeneralText", &CyInfo::getVoteSourceSecretaryGeneralText)

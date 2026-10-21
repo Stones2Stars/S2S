@@ -2466,6 +2466,28 @@ int CvCity::getStarvationTurnsLeft() const
 	return std::max(0, getFood()) / -iFoodDifference + 1;
 }
 
+namespace
+{
+	///<summary>Turns until the owner's culture in the city reaches iCulture at the city's culture rate: 0 when it
+	/// already has, -1 with no culture coming in.</summary>
+	int cty_turnsToCulture(const CvCity& city, int64_t iCulture)
+	{
+		const int64_t iCultureLeft = iCulture - city.getCultureTimes100(city.getOwner());
+		if (iCultureLeft <= 0)
+		{
+			return 0;
+		}
+		int aiCityCommerces[NUM_COMMERCE_TYPES];
+		city.getCommerces(aiCityCommerces);
+		const int64_t iCultureRate = aiCityCommerces[COMMERCE_CULTURE];
+		if (iCultureRate <= 0)
+		{
+			return -1;
+		}
+		return (int)((iCultureLeft + iCultureRate - 1) / iCultureRate);
+	}
+}
+
 int CvCity::getCultureTurnsLeft() const
 {
 	const int iThreshold = getCultureThreshold();
@@ -2473,19 +2495,17 @@ int CvCity::getCultureTurnsLeft() const
 	{
 		return -1;
 	}
-	int aiCityCommerces[NUM_COMMERCE_TYPES];
-	getCommerces(aiCityCommerces);
-	const int64_t iCultureRate = aiCityCommerces[COMMERCE_CULTURE];
-	if (iCultureRate <= 0)
+	const int iTurns = cty_turnsToCulture(*this, 100 * (int64_t)iThreshold);
+	return iTurns == 0 ? 1 : iTurns;
+}
+
+int CvCity::getCultureTurnsTo(CultureLevelTypes eLevel) const
+{
+	if (getOwner() == NO_PLAYER)
 	{
 		return -1;
 	}
-	const int64_t iCultureLeft = 100 * (int64_t)iThreshold - getCultureTimes100(getOwner());
-	if (iCultureLeft <= 0)
-	{
-		return 1;
-	}
-	return (int)std::max<int64_t>(1, (iCultureLeft + iCultureRate - 1) / iCultureRate);
+	return cty_turnsToCulture(*this, 100 * (int64_t)GC.getGame().getCultureThreshold(eLevel));
 }
 
 

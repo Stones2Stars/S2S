@@ -7558,8 +7558,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		{
 			for (int iK = 0; iK < MAX_PC_TEAMS; iK++)
 			{
-				if (iK != eTeam && GET_TEAM((TeamTypes)iK).isAlive() && !GET_TEAM((TeamTypes)iK).isVassal(eTeam)
-				&& GET_TEAM((TeamTypes)iK).getNumCities() > 0)
+				if (GET_TEAM((TeamTypes)iK).blocksConquestBy(eTeam))
 				{
 					bValid = false;
 					break;
@@ -7582,11 +7581,13 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		}
 	}
 	// Domination Victory
-	if (bValid && getAdjustedPopulationPercent(eVictory) > 0 && 100 * GET_TEAM(eTeam).getTotalPopulation() < getTotalPopulation() * getAdjustedPopulationPercent(eVictory))
+	if (bValid && getAdjustedPopulationPercent(eVictory) > 0
+	&& 100 * GET_TEAM(eTeam).getVictoryMeasure(VICTORY_MEASURE_POPULATION, eVictory) < getVictoryMeasureWorld(VICTORY_MEASURE_POPULATION) * getAdjustedPopulationPercent(eVictory))
 	{
 		bValid = false;
 	}
-	if (bValid && getAdjustedLandPercent(eVictory) > 0 && 100 * GET_TEAM(eTeam).getTotalLand() < GC.getMap().getLandPlots() * getAdjustedLandPercent(eVictory))
+	if (bValid && getAdjustedLandPercent(eVictory) > 0
+	&& 100 * GET_TEAM(eTeam).getVictoryMeasure(VICTORY_MEASURE_LAND, eVictory) < getVictoryMeasureWorld(VICTORY_MEASURE_LAND) * getAdjustedLandPercent(eVictory))
 	{
 		bValid = false;
 	}
@@ -7632,12 +7633,9 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 	// Scientific Victory
 	if (bValid)
 	{
-		for (int iK = 0; iK < GC.getNumBuildingInfos(); iK++)
+		foreach_(const BuildingTypes eBuilding, GC.getVictoryBuildings(eVictory))
 		{
-			const std::map<int, int>& victoryThresholds = GC.getBuildingInfo((BuildingTypes)iK).getVictoryThresholds();
-			const std::map<int, int>::const_iterator itVictoryThreshold = victoryThresholds.find((int)eVictory);
-			if (itVictoryThreshold != victoryThresholds.end()
-			&& itVictoryThreshold->second > GET_TEAM(eTeam).getBuildingCount((BuildingTypes)iK))
+			if (GC.getBuildingInfo(eBuilding).getVictoryThresholds().find((int)eVictory)->second > GET_TEAM(eTeam).getBuildingCount(eBuilding))
 			{
 				bValid = false;
 				break;
@@ -7647,9 +7645,9 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 	// Space Race Victory
 	if (bValid && !starshipLaunched[eTeam])
 	{
-		for (int iK = 0; iK < GC.getNumProjectInfos(); iK++)
+		foreach_(const ProjectTypes eProject, GC.getVictoryProjects(eVictory))
 		{
-			if (GC.getProjectInfo((ProjectTypes) iK).getVictoryMinThreshold(eVictory) > GET_TEAM(eTeam).getProjectCount((ProjectTypes)iK))
+			if (GC.getProjectInfo(eProject).getVictoryMinThreshold(eVictory) > GET_TEAM(eTeam).getProjectCount(eProject))
 			{
 				bValid = false;
 				break;
@@ -9997,6 +9995,19 @@ bool CvGame::isStarshipLaunched(TeamTypes eTeam) const
 {
 	FASSERT_BOUNDS(0, MAX_TEAMS, eTeam);
 	return starshipLaunched[eTeam];
+}
+
+int64_t CvGame::getVictoryMeasureWorld(VictoryMeasureKind eMeasure) const
+{
+	switch (eMeasure)
+	{
+	case VICTORY_MEASURE_POPULATION:
+		return getTotalPopulation();
+	case VICTORY_MEASURE_LAND:
+		return GC.getMap().getLandPlots();
+	default:
+		return 0;
+	}
 }
 
 bool CvGame::getDiplomaticVictoryAchieved(int ID) const

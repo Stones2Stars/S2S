@@ -11,10 +11,9 @@
 //	a base that the speed scales (`base x GameSpeed.speedPercent / 100`), so a caller that asked for "the
 //	threshold" without naming a speed would be asking a question the data does not answer.
 //
-//	⚑ EARNED BY A LIVE CALL SITE -- the victory screen's culture-victory projection needs the threshold a city is
-//	counting toward in order to say how many turns away it is. ⛔ It is NOT a mirror of CvCultureLevelInfo's
-//	field set (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)): the level's own `allowed` wonder caps and its modifier families are
-//	read where those planes are read, not here.
+//	⛔ It is NOT a mirror of CvCultureLevelInfo's field set (docs/architecture/patterns.md §THE TWO READ ROLES
+//	(new getter surface, never widen legacy)): the level's own `allowed` wonder caps and its modifier families
+//	are read where those planes are read, not here.
 //
 class CyCultureLevelInfo
 {

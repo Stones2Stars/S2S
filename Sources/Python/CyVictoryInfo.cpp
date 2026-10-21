@@ -2,6 +2,7 @@
 #include "CyVictoryInfo.h"
 #include "Infos/CvVictoryInfo.h"
 #include "Defines/CvGlobals.h"
+#include "CyPyList.h"   // cyToIdList -- the victory's building and project lists
 
 namespace
 {
@@ -46,6 +47,24 @@ std::string CyVictoryInfo::getMovie(int iVictory) const
 	return std::string(pVictory->getMovie());
 }
 
+python::list CyVictoryInfo::getBuildings(int iVictory) const
+{
+	if (cyv_victory(iVictory) == NULL) return python::list();
+	return cyToIdList(GC.getVictoryBuildings((VictoryTypes)iVictory));
+}
+
+python::list CyVictoryInfo::getProjects(int iVictory) const
+{
+	if (cyv_victory(iVictory) == NULL) return python::list();
+	return cyToIdList(GC.getVictoryProjects((VictoryTypes)iVictory));
+}
+
+python::list CyVictoryInfo::getNeededProjects(int iVictory) const
+{
+	if (cyv_victory(iVictory) == NULL) return python::list();
+	return cyToIdList(GC.getVictoryNeededProjects((VictoryTypes)iVictory));
+}
+
 void CyVictoryInfo::pythonPublish()
 {
 	python::class_<CyVictoryInfo>("CyVictoryInfo")
@@ -53,5 +72,8 @@ void CyVictoryInfo::pythonPublish()
 		.def("conditionValue",  &CyVictoryInfo::conditionValue)
 		.def("getCityCulture",  &CyVictoryInfo::getCityCulture)
 		.def("getMovie",        &CyVictoryInfo::getMovie)
+		.def("getBuildings",    &CyVictoryInfo::getBuildings)
+		.def("getProjects",     &CyVictoryInfo::getProjects)
+		.def("getNeededProjects", &CyVictoryInfo::getNeededProjects)
 		;
 }

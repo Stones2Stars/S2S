@@ -32,6 +32,7 @@
 #include "Spine/CvEventSpine.h"   // emitTechChanged / emitTechAcquired / emitProjectChanged -- the DOMAIN emit surface
 #include "AI/CvTeamAI.h"
 #include "CvUnit.h"
+#include "Infos/CvVictoryInfo.h"   // getVictoryMeasure -- the culture victory's level and city count
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
@@ -4274,25 +4275,16 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 			}
 		}
 
-		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
+		// The first one built opens the projects it enables to this team's AI production.
+		const std::vector<int>* pEnabledProjects = kProject.edge(EDGEF_ENABLES, EDGEB_PROJECTS);
+		if (pEnabledProjects != NULL && !pEnabledProjects->empty() && iOldProjectCount < 1 && getProjectCount(eIndex) >= 1)
 		{
-			CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
-			if (player.isAlive())
+			for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 			{
-				if (player.getTeam() == getID())
+				CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
+				if (player.isAliveAndTeam(getID()) && !player.isHumanPlayer())
 				{
-					if (!player.isHumanPlayer())
-					{
-						for (int iJ = 0; iJ < GC.getNumProjectInfos(); iJ++)
-						{
-							if (getProjectCount(eIndex) >= GC.getProjectInfo((ProjectTypes)iJ).getProjectsNeeded(eIndex)
-							&& iOldProjectCount < GC.getProjectInfo((ProjectTypes)iJ).getProjectsNeeded(eIndex))
-							{
-								player.AI_makeProductionDirty();
-								break;
-							}
-						}
-					}
+					player.AI_makeProductionDirty();
 				}
 			}
 		}
@@ -6610,6 +6602,121 @@ void CvTeam::getCitiesByCulture(int iCount, std::vector<const CvCity*>& cities) 
 bool CvTeam::isKnownTo(PlayerTypes eObserver) const
 {
 	return GC.getGame().isIntelOpenToAll() || GET_TEAM(GET_PLAYER(eObserver).getTeam()).isHasMet(getID());
+}
+
+int64_t CvTeam::getVictoryMeasure(VictoryMeasureKind eMeasure, VictoryTypes eVictory) const
+{
+	CvGame& kGame = GC.getGame();
+	switch (eMeasure)
+	{
+	case VICTORY_MEASURE_SCORE:
+		return kGame.getTeamScore(getID());
+	case VICTORY_MEASURE_POPULATION:
+		return getTotalPopulation();
+	case VICTORY_MEASURE_LAND:
+		return getTotalLand();
+	case VICTORY_MEASURE_RELIGION:
+	{
+		const ReligionTypes eScoringReligion = getScoringReligion();
+		return eScoringReligion != NO_RELIGION ? kGame.calculateReligionPercent(eScoringReligion) : 0;
+	}
+	case VICTORY_MEASURE_CULTURE:
+	{
+		const CvVictoryInfo& kVictory = GC.getVictoryInfo(eVictory);
+		const CultureLevelTypes eLevel = (CultureLevelTypes)kVictory.getCityCulture();
+		const int iNumCities = kVictory.conditionValue(VICTORY_CONDITION_NUM_CULTURE_CITIES);
+		if (eLevel == NO_CULTURELEVEL || iNumCities <= 0)
+		{
+			return 0;
+		}
+		const int64_t iLevelCulture = 100 * (int64_t)kGame.getCultureThreshold(eLevel);
+		std::vector<const CvCity*> cities;
+		getCitiesByCulture(iNumCities, cities);
+		int64_t iCulture = 0;
+		foreach_(const CvCity* pCity, cities)
+		{
+			iCulture += std::min(pCity->getCultureTimes100(pCity->getOwner()), iLevelCulture);
+		}
+		return iCulture;
+	}
+	case VICTORY_MEASURE_BUILDINGS:
+	{
+		int64_t iBuildings = 0;
+		foreach_(const BuildingTypes eBuilding, GC.getVictoryBuildings(eVictory))
+		{
+			iBuildings += getBuildingCount(eBuilding);
+		}
+		return iBuildings;
+	}
+	case VICTORY_MEASURE_PROJECTS:
+	{
+		int64_t iProjects = 0;
+		foreach_(const ProjectTypes eProject, GC.getVictoryNeededProjects(eVictory))
+		{
+			iProjects += getProjectCount(eProject);
+		}
+		foreach_(const ProjectTypes eProject, GC.getVictoryProjects(eVictory))
+		{
+			iProjects += getProjectCount(eProject);
+		}
+		return iProjects;
+	}
+	default:
+		FErrorMsg("CvTeam::getVictoryMeasure: unknown measure");
+		return 0;
+	}
+}
+
+TeamTypes CvTeam::getBestKnownVictoryRival(VictoryMeasureKind eMeasure, VictoryTypes eVictory, PlayerTypes eObserver) const
+{
+	TeamTypes eBest = NO_TEAM;
+	int64_t iBestMeasure = 0;
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
+	{
+		const CvTeam& team = GET_TEAM((TeamTypes)iTeam);
+		if (iTeam == getID() || !team.isAlive() || team.isMinorCiv() || !team.isKnownTo(eObserver))
+		{
+			continue;
+		}
+		const int64_t iMeasure = team.getVictoryMeasure(eMeasure, eVictory);
+		if (iMeasure > iBestMeasure)
+		{
+			iBestMeasure = iMeasure;
+			eBest = (TeamTypes)iTeam;
+		}
+	}
+	return eBest;
+}
+
+bool CvTeam::hasVictoryNeededProjects(VictoryTypes eVictory) const
+{
+	foreach_(const ProjectTypes eProject, GC.getVictoryNeededProjects(eVictory))
+	{
+		if (getProjectCount(eProject) < 1)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool CvTeam::blocksConquestBy(TeamTypes eConqueror) const
+{
+	return getID() != eConqueror && isAlive() && !isVassal(eConqueror) && getNumCities() > 0;
+}
+
+int CvTeam::countConquestRivals(PlayerTypes eObserver, bool bKnown) const
+{
+	int iCount = 0;
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
+	{
+		const CvTeam& team = GET_TEAM((TeamTypes)iTeam);
+		if (team.blocksConquestBy(getID()) && team.isKnownTo(eObserver) == bKnown)
+		{
+			iCount++;
+		}
+	}
+	return iCount;
 }
 
 int64_t CvTeam::getTotalVictoryScore() const

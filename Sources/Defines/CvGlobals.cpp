@@ -16,6 +16,7 @@
 #include "CvUnitCombatInfo.h"
 #include "CvTechInfo.h"           // the TECH_GAME_START root every player holds (its start civics)
 #include "CvEspionageMissionInfo.h"
+#include "CvProjectInfo.h"        // the projects each victory needs, and the projects those need
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -2481,6 +2482,24 @@ CvEspionageMissionInfo& cvInternalGlobals::getEspionageMissionInfo(EspionageMiss
 	return infoArrayAt(m_paEspionageMissionInfo, eEspionageMissionNum, "m_paEspionageMissionInfo");
 }
 
+const std::vector<BuildingTypes>& cvInternalGlobals::getVictoryBuildings(VictoryTypes eVictory) const
+{
+	FASSERT_BOUNDS(0, (int)m_victoryBuildings.size(), eVictory);
+	return m_victoryBuildings[eVictory];
+}
+
+const std::vector<ProjectTypes>& cvInternalGlobals::getVictoryProjects(VictoryTypes eVictory) const
+{
+	FASSERT_BOUNDS(0, (int)m_victoryProjects.size(), eVictory);
+	return m_victoryProjects[eVictory];
+}
+
+const std::vector<ProjectTypes>& cvInternalGlobals::getVictoryNeededProjects(VictoryTypes eVictory) const
+{
+	FASSERT_BOUNDS(0, (int)m_victoryNeededProjects.size(), eVictory);
+	return m_victoryNeededProjects[eVictory];
+}
+
 int& cvInternalGlobals::getNumAnimationOperatorTypes()
 {
 	return m_iNumAnimationOperatorTypes;
@@ -3450,6 +3469,46 @@ void cvInternalGlobals::buildLoadTimeIndexes()
 		if (kMission.isInvestigateCity())
 		{
 			m_eInvestigateCityMission = static_cast<EspionageMissionTypes>(iMission);
+		}
+	}
+
+	// The buildings and projects each victory needs a number of, and the projects those projects need.
+	m_victoryBuildings.assign(getNumVictoryInfos(), std::vector<BuildingTypes>());
+	m_victoryProjects.assign(getNumVictoryInfos(), std::vector<ProjectTypes>());
+	m_victoryNeededProjects.assign(getNumVictoryInfos(), std::vector<ProjectTypes>());
+	for (int iBuilding = 0; iBuilding < getNumBuildingInfos(); iBuilding++)
+	{
+		const std::map<int, int>& thresholds = getBuildingInfo(static_cast<BuildingTypes>(iBuilding)).getVictoryThresholds();
+		for (std::map<int, int>::const_iterator threshold = thresholds.begin(); threshold != thresholds.end(); ++threshold)
+		{
+			if (threshold->first >= 0 && threshold->first < getNumVictoryInfos() && threshold->second > 0)
+			{
+				m_victoryBuildings[threshold->first].push_back(static_cast<BuildingTypes>(iBuilding));
+			}
+		}
+	}
+	for (int iProject = 0; iProject < getNumProjectInfos(); iProject++)
+	{
+		const CvProjectInfo& kProject = getProjectInfo(static_cast<ProjectTypes>(iProject));
+		for (int iVictory = 0; iVictory < getNumVictoryInfos(); iVictory++)
+		{
+			if (kProject.getVictoryMinThreshold(iVictory) > 0)
+			{
+				m_victoryProjects[iVictory].push_back(static_cast<ProjectTypes>(iProject));
+			}
+		}
+	}
+	for (int iVictory = 0; iVictory < getNumVictoryInfos(); iVictory++)
+	{
+		std::set<int> neededProjects;
+		foreach_(const ProjectTypes eProject, m_victoryProjects[iVictory])
+		{
+			const std::set<int>& projectNeeds = getProjectInfo(eProject).getNeededProjects();
+			neededProjects.insert(projectNeeds.begin(), projectNeeds.end());
+		}
+		foreach_(const int iNeeded, neededProjects)
+		{
+			m_victoryNeededProjects[iVictory].push_back(static_cast<ProjectTypes>(iNeeded));
 		}
 	}
 

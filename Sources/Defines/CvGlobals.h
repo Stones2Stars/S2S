@@ -694,6 +694,15 @@ public:
 	EspionageMissionTypes getSeeResearchMission() const { return m_eSeeResearchMission; }
 	///<summary>The passive espionage mission that lets its player see inside a rival's city, found at load.</summary>
 	EspionageMissionTypes getInvestigateCityMission() const { return m_eInvestigateCityMission; }
+	///<summary>The buildings eVictory needs a number of (CvBuildingInfo::getVictoryThresholds), in building order,
+	/// found at load.</summary>
+	const std::vector<BuildingTypes>& getVictoryBuildings(VictoryTypes eVictory) const;
+	///<summary>The projects eVictory needs a number of (CvProjectInfo::getVictoryMinThreshold), in project order,
+	/// found at load.</summary>
+	const std::vector<ProjectTypes>& getVictoryProjects(VictoryTypes eVictory) const;
+	///<summary>The projects eVictory's projects need built first (CvProjectInfo::getNeededProjects), in project
+	/// order, found at load.</summary>
+	const std::vector<ProjectTypes>& getVictoryNeededProjects(VictoryTypes eVictory) const;
 
 	int getNumUnitArtStyleTypeInfos() const;
 	CvUnitArtStyleTypeInfo& getUnitArtStyleTypeInfo(UnitArtStyleTypes eUnitArtStyleTypeNum) const;
@@ -1135,6 +1144,9 @@ private:
 	EspionageMissionTypes m_eSeeDemographicsMission;
 	EspionageMissionTypes m_eSeeResearchMission;
 	EspionageMissionTypes m_eInvestigateCityMission;
+	std::vector<std::vector<BuildingTypes> > m_victoryBuildings;
+	std::vector<std::vector<ProjectTypes> > m_victoryProjects;
+	std::vector<std::vector<ProjectTypes> > m_victoryNeededProjects;
 	std::vector<PromotionTypes> m_aiStatusPromotions;
 	std::vector<PromotionTypes> m_starsigns;
 

@@ -6,6 +6,7 @@
 #include "AI/CvTeamAI.h"          // getWorstEnemy -- the AI keeps the team's worst enemy
 #include "Engine/CvTeam.h"
 #include "Engine/CvCity.h"         // getCitiesByCulture -- each city's culture and monumental state
+#include "UI/CvEntryText.h"        // ratioText -- the victory share text
 #include "CyArea.h"
 #include "CyTeam.h"
 
@@ -155,6 +156,54 @@ bool CyTeam::isKnownTo(int /*PlayerTypes*/ iObserver) const
 		return false;
 	}
 	return m_pTeam->isKnownTo((PlayerTypes)iObserver);
+}
+
+int CyTeam::getBestKnownVictoryRival(int /*VictoryMeasureKind*/ iMeasure, int /*VictoryTypes*/ iVictory, int /*PlayerTypes*/ iObserver) const
+{
+	if (iMeasure < 0 || iMeasure >= NUM_VICTORY_MEASURES || iVictory < 0 || iVictory >= GC.getNumVictoryInfos()
+	|| iObserver < 0 || iObserver >= MAX_PLAYERS)
+	{
+		return NO_TEAM;
+	}
+	return m_pTeam->getBestKnownVictoryRival((VictoryMeasureKind)iMeasure, (VictoryTypes)iVictory, (PlayerTypes)iObserver);
+}
+
+std::wstring CyTeam::getVictoryShareText(int /*VictoryMeasureKind*/ iMeasure) const
+{
+	if (iMeasure < 0 || iMeasure >= NUM_VICTORY_MEASURES)
+	{
+		return std::wstring();
+	}
+	const VictoryMeasureKind eMeasure = (VictoryMeasureKind)iMeasure;
+	const int64_t iWorld = GC.getGame().getVictoryMeasureWorld(eMeasure);
+	if (iWorld <= 0)
+	{
+		return std::wstring(ratioText(0, 1, 2).GetCString());
+	}
+	return std::wstring(ratioText(100 * m_pTeam->getVictoryMeasure(eMeasure, NO_VICTORY), iWorld, 2).GetCString());
+}
+
+bool CyTeam::hasVictoryNeededProjects(int /*VictoryTypes*/ iVictory) const
+{
+	if (iVictory < 0 || iVictory >= GC.getNumVictoryInfos())
+	{
+		return false;
+	}
+	return m_pTeam->hasVictoryNeededProjects((VictoryTypes)iVictory);
+}
+
+int CyTeam::countConquestRivals(int /*PlayerTypes*/ iObserver, bool bKnown) const
+{
+	if (iObserver < 0 || iObserver >= MAX_PLAYERS)
+	{
+		return 0;
+	}
+	return m_pTeam->countConquestRivals((PlayerTypes)iObserver, bKnown);
+}
+
+int CyTeam::getVassalCount() const
+{
+	return m_pTeam->getVassalCount();
 }
 
 int CyTeam::getAtWarCount(bool bIgnoreMinors) const
@@ -730,6 +779,11 @@ void CyTeam::pythonPublish()
 		.def("getBestVictoryScoreRival", &CyTeam::getBestVictoryScoreRival)
 		.def("getCitiesByCulture", &CyTeam::getCitiesByCulture)
 		.def("isKnownTo", &CyTeam::isKnownTo)
+		.def("getBestKnownVictoryRival", &CyTeam::getBestKnownVictoryRival)
+		.def("getVictoryShareText", &CyTeam::getVictoryShareText)
+		.def("hasVictoryNeededProjects", &CyTeam::hasVictoryNeededProjects)
+		.def("countConquestRivals", &CyTeam::countConquestRivals)
+		.def("getVassalCount", &CyTeam::getVassalCount)
 
 		.def("isAtWar", &CyTeam::isAtWar)
 		.def("getAtWarCount", &CyTeam::getAtWarCount)

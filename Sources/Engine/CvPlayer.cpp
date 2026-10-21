@@ -6449,9 +6449,9 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 
 		// The world-scope "someone must have built this" prereq is a `requires.build` atom the enabler already
 		// evaluates ([enabler.md §3]); re-testing it here is a second implementation of the gate.
-		for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+		foreach_(const int iNeeded, kProject.getNeededProjects())
 		{
-			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < kProject.getProjectsNeeded(iI))
+			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iNeeded) < 1)
 			{
 				return false;
 			}

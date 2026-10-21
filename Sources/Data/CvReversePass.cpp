@@ -1037,7 +1037,7 @@ namespace
 	// reveal + cityTrade both -> enables.bonuses, deliberately merged/indistinguishable; corp/project/religion/
 	// process/promotion -> enables.<bucket>; bonus/build/corp/promotion obsolete -> obsoletes.<bucket>). The
 	// getXInfo(...) compat getters still ask "which tech do I need?" -- a REVERSE lookup -- so reconstruct each
-	// target's FK here. getProjectsNeeded is the project<-project variant (off the prereq project's
+	// target's FK here. getNeededProjects is the project<-project variant (off the prereq project's
 	// enables.projects). The special-building tech-gate is the same class: the curator stores it as
 	// tech.enables.specialBuildings (store.py:181) and the legacy building-group gate reads
 	// getSpecialBuildingInfo(x).getTechPrereq() (CvPlayer.cpp:6533). (getTechPrereqAnyone is unused across all

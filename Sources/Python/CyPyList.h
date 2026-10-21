@@ -20,6 +20,19 @@ inline python::list cyToList(const int (&values)[N])
 	return list;
 }
 
+///<summary>A container of ids (a vector or set of an id type) as the list Python iterates, in the container's
+/// order.</summary>
+template <typename IdContainer>
+inline python::list cyToIdList(const IdContainer& ids)
+{
+	python::list list = python::list();
+	for (typename IdContainer::const_iterator entry = ids.begin(); entry != ids.end(); ++entry)
+	{
+		list.append((int)*entry);
+	}
+	return list;
+}
+
 ///<summary>A group of AMOUNTS as the list Python indexes, each reduced from the engine's x100 form to a
 /// whole number. The values stay ints because Python hands them to the EXE's varargs getText, where an
 /// 8-byte float takes two argument slots and shifts every later placeholder.</summary>

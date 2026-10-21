@@ -60,7 +60,6 @@ enum PyIntrinsicSlot
 	PYINT_IS_DISABLED,         // TECH_ is this tech switched OFF in the data (identity.disable) -- it exists
 	                           // in the registry and is never offered, so a LISTING must skip it
 	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
-	PYINT_IS_SPACESHIP,        // PROJECT_ -- is this project a spaceship part (the build-progress readout)
 	PYINT_ERA,                  // TECH_ era FK (identity.era) -- the tech tree's era banding
 	PYINT_ADVISOR,              // TECH_ ADVISOR_* FK (ui.art.advisor) -- which advisor the tech is filed under
 	PYINT_TOTAL_TURNS,          // GAMESPEED_ the speed's total game length in turns (the end-turn estimate)
@@ -520,8 +519,9 @@ public:
 	int getProjectVictoryMinThreshold(int iProjectId, int iVictoryId) const;
 	/// <summary>The VICTORY_ this project LAUNCHES when completed (`identity.launchesVictory`), -1 for none.</summary>
 	int getProjectLaunchesVictory(int iProjectId) const;
-	/// <summary>The projects this one requires first -- its OWN list, handed over whole. Sweeping every
-	/// project asking "are you needed by this one" is the own-data inversion, and it is what this replaces.</summary>
+	/// <summary>Is this project a part of the spaceship (`identity.spaceship`)?</summary>
+	bool isProjectSpaceship(int iProjectId) const;
+	/// <summary>The projects this one needs built first (CvProjectInfo::getNeededProjects), in project order.</summary>
 	python::list getProjectNeededProjects(int iProjectId) const;
 	/// <summary>How many of this building a victory requires; 0 when it plays no part in that victory.</summary>
 	int getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const;

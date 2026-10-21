@@ -1640,6 +1640,15 @@ python::list CyCity::getCultureReads() const
 	return cyToList(values);
 }
 
+int CyCity::getCultureTurnsTo(int /*CultureLevelTypes*/ iLevel) const
+{
+	if (m_pCity == NULL || iLevel < 0 || iLevel >= GC.getNumCultureLevelInfos())
+	{
+		return -1;
+	}
+	return m_pCity->getCultureTurnsTo((CultureLevelTypes)iLevel);
+}
+
 python::list CyCity::getWellbeingNets() const
 {
 	int values[NUM_CITY_WELLBEING_NET_READS] = { 0 };
@@ -2339,6 +2348,7 @@ void CyCity::pythonPublish()
 		.def("getReligions",          &CyCity::getReligions)
 		.def("getCorporations",       &CyCity::getCorporations)
 		.def("getCultureReads",       &CyCity::getCultureReads)
+		.def("getCultureTurnsTo",     &CyCity::getCultureTurnsTo)
 		.def("getWellbeingNets",      &CyCity::getWellbeingNets)
 		.def("getTradeReads",         &CyCity::getTradeReads)
 		.def("getHurryOverflow",      &CyCity::getHurryOverflow)

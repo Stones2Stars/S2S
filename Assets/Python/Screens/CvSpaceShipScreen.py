@@ -66,7 +66,7 @@ class CvSpaceShipScreen:
 		self.componentProjects = []
 		self.spaceVictory = -1
 		for i in range(GC.getNumProjectInfos()):
-			if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
+			if INFO.isProjectSpaceship(i):
 				self.spaceVictory = INFO.getProjectLaunchesVictory(i)
 				self.componentProjects.append(i)
 

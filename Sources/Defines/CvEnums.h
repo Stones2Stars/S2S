@@ -1658,6 +1658,28 @@ enum VictoryScorePartKind
 	NUM_VICTORY_SCORE_PARTS
 };
 
+///<summary>The measures a team is compared on for a victory condition (CvTeam::getVictoryMeasure).</summary>
+enum VictoryMeasureKind
+{
+	///<summary>The team's score (CvGame::getTeamScore).</summary>
+	VICTORY_MEASURE_SCORE = 0,
+	///<summary>The team's population with half its vassals' (CvTeam::getTotalPopulation).</summary>
+	VICTORY_MEASURE_POPULATION,
+	///<summary>The team's land plots with half its vassals' (CvTeam::getTotalLand).</summary>
+	VICTORY_MEASURE_LAND,
+	///<summary>The percent of the world following the team's scoring religion (CvTeam::getScoringReligion).</summary>
+	VICTORY_MEASURE_RELIGION,
+	///<summary>The culture of the team's cities with the most, as many as the culture victory needs
+	/// (CvTeam::getCitiesByCulture), each counted up to that victory's level.</summary>
+	VICTORY_MEASURE_CULTURE,
+	///<summary>The buildings the team built of those the victory needs.</summary>
+	VICTORY_MEASURE_BUILDINGS,
+	///<summary>The projects the team built of those the victory needs, and of the projects those need.</summary>
+	VICTORY_MEASURE_PROJECTS,
+
+	NUM_VICTORY_MEASURES
+};
+
 //	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, which level it
 //	currently sits at and the turns to the next one (CvCity::getCultureTurnsLeft). One group -- the threshold is
 //	meaningless without the amount beside it.

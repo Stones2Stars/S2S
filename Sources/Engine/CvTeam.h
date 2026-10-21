@@ -142,6 +142,20 @@ public:
 	///<summary>Whether eObserver knows of this team: its team has met it, or intel is open to all
 	/// (CvGame::isIntelOpenToAll).</summary>
 	bool isKnownTo(PlayerTypes eObserver) const;
+	///<summary>The team's eMeasure for eVictory; eVictory is read only by the culture, buildings and projects
+	/// measures.</summary>
+	int64_t getVictoryMeasure(VictoryMeasureKind eMeasure, VictoryTypes eVictory) const;
+	///<summary>The civilization team other than this one, known to eObserver, with the highest eMeasure for
+	/// eVictory, the first between equals; NO_TEAM when no such team has any.</summary>
+	TeamTypes getBestKnownVictoryRival(VictoryMeasureKind eMeasure, VictoryTypes eVictory, PlayerTypes eObserver) const;
+	///<summary>Whether the team built every project eVictory's projects need (cvInternalGlobals::getVictoryNeededProjects).</summary>
+	bool hasVictoryNeededProjects(VictoryTypes eVictory) const;
+	///<summary>Whether this team stands in the way of eConqueror's conquest victory: another living team, not
+	/// eConqueror's vassal, with cities.</summary>
+	bool blocksConquestBy(TeamTypes eConqueror) const;
+	///<summary>The teams that stand in the way of this team's conquest victory (blocksConquestBy) and that
+	/// eObserver knows of, or, with bKnown false, does not.</summary>
+	int countConquestRivals(PlayerTypes eObserver, bool bKnown) const;
 
 	int getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 	bool isVotingMember(VoteSourceTypes eVoteSource) const;

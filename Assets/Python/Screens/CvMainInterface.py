@@ -4394,7 +4394,7 @@ class CvMainInterface:
 						screen.addBuildingGraphicGFC(graphic, iBuilding, x, y, w, h, eWidGen, 0, 0, -20, 30, 1, False)
 
 					elif iOrderNode == OrderTypes.ORDER_CREATE:
-						if INFO.getIntrinsic("PROJECT_", CyIF.getOrderNodeData1(0), IntrinsicSlot.PYINT_IS_SPACESHIP) > 0:
+						if INFO.isProjectSpaceship(CyIF.getOrderNodeData1(0)):
 							iProject = CyIF.getOrderNodeData1(0)
 							screen.addSpaceShipWidgetGFC(graphic, x, y, w, h, iProject, 0, eWidGen, 0, 0)
 			elif CyUnit:

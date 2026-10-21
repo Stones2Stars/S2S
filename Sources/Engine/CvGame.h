@@ -292,6 +292,9 @@ public:
 
 	///<summary>Whether eTeam has launched its starship (the space victory's launch, kept once set).</summary>
 	bool isStarshipLaunched(TeamTypes eTeam) const;
+	///<summary>The world total the domination conditions take a team's eMeasure as a share of: the population of
+	/// every city, or the map's land plots; 0 for the other measures.</summary>
+	int64_t getVictoryMeasureWorld(VictoryMeasureKind eMeasure) const;
 	bool getDiplomaticVictoryAchieved(int ID) const;
 
 	int getCurrentVoteID() const;

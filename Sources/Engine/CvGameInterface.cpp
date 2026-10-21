@@ -2594,13 +2594,11 @@ void CvGame::cheatSpaceship() const
 		if (kProject.isSpaceship())
 		{
 			//cheat required projects
-			for (int j = 0; j < GC.getNumProjectInfos(); j++)
+			foreach_(const int iNeeded, kProject.getNeededProjects())
 			{
-				ProjectTypes eRequiredProject = (ProjectTypes) j;
-				int iNumReqProjects = kProject.getProjectsNeeded(eRequiredProject);
-				while (kTeam.getProjectCount(eRequiredProject) < iNumReqProjects)
+				if (kTeam.getProjectCount((ProjectTypes)iNeeded) < 1)
 				{
-					kTeam.changeProjectCount(eRequiredProject, 1);
+					kTeam.changeProjectCount((ProjectTypes)iNeeded, 1);
 				}
 			}
 
