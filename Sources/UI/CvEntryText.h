@@ -61,6 +61,11 @@ CvWString yieldAmountSummary(YieldTypes eYield, int64_t iAmount);
 ///<summary>An amount as the entry lines print it: "2", "-0.5", "12.75".</summary>
 CvWString amountText(int64_t iAmount);
 
+///<summary>One amount against another, as a ratio rounded to iDecimals decimals: "0.0784", "12.8"; empty when
+/// iDenominator is not positive. Integer math, so any two amounts of one kind give the same text on every
+/// machine.</summary>
+CvWString ratioText(int64_t iNumerator, int64_t iDenominator, int iDecimals);
+
 ///<summary>A sight, detection or concealment amount in plots of open ground ([vision.md] §1a): "2",
 /// "1.25".</summary>
 CvWString visionPlotsText(int iVisionAmount);

@@ -1587,6 +1587,34 @@ enum ScorePart
 	NUM_SCORE_PARTS
 };
 
+///<summary>A player's power against an observer's, judged by the observer's two thresholds
+/// (CvPlayer::getPowerStanding).</summary>
+enum PowerStanding
+{
+	POWER_STANDING_WEAKER = 0,
+	POWER_STANDING_EVEN,
+	POWER_STANDING_STRONGER,
+
+	NUM_POWER_STANDINGS
+};
+
+///<summary>The rows of the demographics table: one measure of an empire each, compared across every living civ
+/// (CvPlayer::getDemographic, CvPlayer::getDemographicStanding).</summary>
+enum DemographicKind
+{
+	DEMOGRAPHIC_ECONOMY = 0,
+	DEMOGRAPHIC_INDUSTRY,
+	DEMOGRAPHIC_AGRICULTURE,
+	DEMOGRAPHIC_MILITARY,
+	DEMOGRAPHIC_LAND_AREA,
+	DEMOGRAPHIC_POPULATION,
+	DEMOGRAPHIC_HAPPINESS,
+	DEMOGRAPHIC_HEALTH,
+	DEMOGRAPHIC_NET_TRADE,
+
+	NUM_DEMOGRAPHIC_KINDS
+};
+
 //	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, which level it
 //	currently sits at and the turns to the next one (CvCity::getCultureTurnsLeft). One group -- the threshold is
 //	meaningless without the amount beside it.

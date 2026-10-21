@@ -8505,7 +8505,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHCOLOR_HOVER</Tag>
-		<English>Color used for high power ratios.</English>
+		<English>Color used for a rival whose power is at or above the High Ratio Cutoff of yours.</English>
 		<French>Couleur utilisée pour les pro-rata de pouvoir élevés.</French>
 		<German>Bestimmt die Farbe, in der hohe Machtverhältnisse erscheinen</German>
 		<Italian>[BOLD]Imposta il [COLOR_HIGHLIGHT_TEXT]colore[COLOR_REVERT] con il quale un [COLOR_HIGHLIGHT_TEXT]rapporto di forza[COLOR_REVERT] viene visualizzato nel pannello punteggio se è un [COLOR_HIGHLIGHT_TEXT]rapporto alto[COLOR_REVERT][\BOLD]</Italian>
@@ -8525,7 +8525,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHRATIO_HOVER</Tag>
-		<English>Power ratings greater than or equal to this value are shown in the High Color.</English>
+		<English>A rival whose power is this many times yours or more is shown in the High Color, whichever formula is chosen.</English>
 		<French>Seuil de Valeur de Pouvoir, au-delà duquel la Civilisation est affichée avec une couleur particulière.</French>
 		<German>Machtverhältnisse größer oder gleich diesem Wert erscheinen in der definierten Farbe</German>
 		<Italian>[BOLD]Imposta il [COLOR_HIGHLIGHT_TEXT]valore limite[COLOR_REVERT] oltre il quale un [COLOR_HIGHLIGHT_TEXT]rapporto di forza[COLOR_REVERT] viene visualizzato con il [COLOR_HIGHLIGHT_TEXT]colore rapporto alto[COLOR_REVERT][\BOLD]</Italian>
@@ -8545,7 +8545,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWCOLOR_HOVER</Tag>
-		<English>Color used for low power ratios.</English>
+		<English>Color used for a rival whose power is at or below the Low Ratio Cutoff of yours.</English>
 		<French>Couleur utilisée pour les pro-rata de pouvoir faibles.</French>
 		<German>Bestimmt die Farbe, in der niedrige Machtverhältnisse erscheinen</German>
 		<Italian>[BOLD]Imposta il [COLOR_HIGHLIGHT_TEXT]colore[COLOR_REVERT] con il quale un [COLOR_HIGHLIGHT_TEXT]rapporto di forza[COLOR_REVERT] viene visualizzato nel pannello punteggio se è un [COLOR_HIGHLIGHT_TEXT]rapporto basso[COLOR_REVERT][\BOLD]</Italian>
@@ -8573,7 +8573,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWRATIO_HOVER</Tag>
-		<English>Power ratings less than or equal to this value are shown in in the Low Color.</English>
+		<English>A rival whose power is this many times yours or less is shown in the Low Color, whichever formula is chosen.</English>
 		<French>Seuil de Valeur de Pouvoir, en-dessous duquel la Civilisation est affichée avec une couleur particulière.</French>
 		<German>Machtverhältnisse kleiner oder gleich diesem Wert erscheinen in der definierten Farbe</German>
 		<Italian>[BOLD]Imposta il [COLOR_HIGHLIGHT_TEXT]valore limite[COLOR_REVERT] sotto il quale un [COLOR_HIGHLIGHT_TEXT]rapporto di forza[COLOR_REVERT] viene visualizzato con il [COLOR_HIGHLIGHT_TEXT]colore rapporto basso[COLOR_REVERT][\BOLD]</Italian>
@@ -8593,7 +8593,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWER_HOVER</Tag>
-		<English>When checked, shows the ratio of your power rating to those of civilizations against whom you have accumulated enough espionage points.</English>
+		<English>When checked, shows your power against each civilization whose demographics you can see: your teammates and vassals, civilizations you have enough espionage points against, and every civilization once the game has ended.</English>
 		<French>Lorsque activé, affiche le pro-rata de votre pouvoir comparé à ceux des civilisation pour lesquelles vous avez accumulé assez de points d'espionnage.</French>
 		<German>Zeigt die Machtverteilung zwischen der eigenen und den anderen Zivilisationen als Verhältniswert an, falls genug Spionagepunkte investiert wurden</German>
 		<Italian>[BOLD]Nel [COLOR_HIGHLIGHT_TEXT]pannello punteggio[COLOR_REVERT] viene mostrato il [COLOR_HIGHLIGHT_TEXT]rapporto di forza[COLOR_REVERT] fra la civiltà del giocatore le civiltà verso cui ha [COLOR_HIGHLIGHT_TEXT]accumulato abbastanza punti spionaggio[COLOR_REVERT][\BOLD]</Italian>

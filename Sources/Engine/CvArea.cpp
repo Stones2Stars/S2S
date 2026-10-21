@@ -28,7 +28,7 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
-	m_aiMilitaryWorth = new int[MAX_PLAYERS];
+	m_aiMilitaryWorth = new int64_t[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
 	m_abHomeArea = new bool[MAX_PLAYERS];
 
@@ -610,14 +610,14 @@ void CvArea::changePopulationPerPlayer(PlayerTypes eIndex, int iChange)
 }
 
 
-int CvArea::getPower(PlayerTypes eIndex) const
+int64_t CvArea::getPower(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
 	return m_aiMilitaryWorth[eIndex] + citizenPower(m_aiPopulationPerPlayer[eIndex]);
 }
 
 
-void CvArea::changeMilitaryWorth(PlayerTypes eIndex, int iChange)
+void CvArea::changeMilitaryWorth(PlayerTypes eIndex, int64_t iChange)
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
 	m_aiMilitaryWorth[eIndex] += iChange;

@@ -49,7 +49,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("getCivilizationAdjectiveKey", &CyPlayer::getCivilizationAdjectiveKey, "str() - returns the Civilization name in adjective form")
 		.def("getFlagDecal", &CyPlayer::getFlagDecal, "str() - returns the Civilization flag decal")
 		.def("isWhiteFlag", &CyPlayer::isWhiteFlag, "bool () - Whether or not this player is using a custom texture flag (set in WBS)")
-		.def("getWorstEnemyName", &CyPlayer::getWorstEnemyName, "str () - returns the name of the worst enemy")
 		.def("getStateReligionKey", &CyPlayer::getStateReligionKey, "str() - returns the name of the Civilizations State Religion")
 		.def("getArtStyleType", &CyPlayer::getArtStyleType, " int () - Returns the ArtStyleType for this player (e.g. European)")
 
@@ -77,15 +76,10 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("getBuildingProductionNeeded", &CyPlayer::getBuildingProductionNeeded, "int (int /*BuildingTypes*/ iIndex)")
 		.def("getProjectProductionNeeded", &CyPlayer::getProjectProductionNeeded, "bool (int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible)")
 
-		.def("calculateTotalYield", &CyPlayer::calculateTotalYield, "int (int /*YieldTypes*/ eYield) - Returns the total sum of all city yield")
-		.def("calculateTotalExports", &CyPlayer::calculateTotalExports, "int (int /*YieldTypes*/ eYield) - Returns the total sum of all city gold generated for other civs via trade routes")
-		.def("calculateTotalImports", &CyPlayer::calculateTotalImports, "int (int /*YieldTypes*/ eYield) - Returns the total sum of all city gold generated for this civ via trade routes with others")
+		.def("calculateTotalYield", &CyPlayer::calculateTotalYield, "int64 (int /*YieldTypes*/ eYield) - Returns the total sum of all city yield")
 
 		.def("calculateTotalCityHappiness", &CyPlayer::calculateTotalCityHappiness, "int () - Returns the total sum of all city Happiness values")
 		.def("calculateTotalCityUnhappiness", &CyPlayer::calculateTotalCityUnhappiness, "int () - Returns the total sum of all city Unhappiness values")
-
-		.def("calculateTotalCityHealthiness", &CyPlayer::calculateTotalCityHealthiness, "int () - Returns the total sum of all city Healthiness values")
-		.def("calculateTotalCityUnhealthiness", &CyPlayer::calculateTotalCityUnhealthiness, "int () - Returns the total sum of all city Unhealthiness values")
 
 		.def("getFinalUnitUpkeep", &CyPlayer::getFinalUnitUpkeep, "int64 ()")
 		.def("calculateUnitSupply", &CyPlayer::calculateUnitSupply, "int ()")
@@ -93,7 +87,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("getFinalExpense", &CyPlayer::getFinalExpense, "int64 ()")
 
 		.def("calculateGoldRate", &CyPlayer::calculateGoldRate, "int ()")
-		.def("calculateTotalCommerce", &CyPlayer::calculateTotalCommerce, "int ()")
 		.def("calculateResearchRate", &CyPlayer::calculateResearchRate, "int (int /*TechTypes*/ eTech)")
 		.def("calculateBaseNetResearch", &CyPlayer::calculateBaseNetResearch, "int ()")
 		.def("calculateResearchModifier", &CyPlayer::calculateResearchModifier, "int (int /*TechTypes*/ eTech)")
@@ -306,9 +299,17 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getCapitalCity", &CyPlayer::getCapitalCity, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyCity* (int iID)")
 		.def("getCitiesLost", &CyPlayer::getCitiesLost, "int ()")
 
-		.def("getAssets", &CyPlayer::getAssets, "int ()")
-		.def("getPower", &CyPlayer::getPower, "int ()")
-		.def("getUnitPower", &CyPlayer::getUnitPower, "int ()")
+		.def("getAssets", &CyPlayer::getAssets, "int64 ()")
+		.def("getPower", &CyPlayer::getPower, "int64 ()")
+		.def("getPowerRatioText", &CyPlayer::getPowerRatioText, "wstring (int /*PlayerTypes*/ iOther, int iDecimals)")
+		.def("getPowerStanding", &CyPlayer::getPowerStanding, "int /*PowerStanding*/ (int /*PlayerTypes*/ iObserver, float fStrongerRatio, float fWeakerRatio)")
+		.def("isDemographicsVisibleTo", &CyPlayer::isDemographicsVisibleTo, "bool (int /*PlayerTypes*/ iObserver)")
+		.def("isResearchVisibleTo", &CyPlayer::isResearchVisibleTo, "bool (int /*PlayerTypes*/ iObserver)")
+		.def("getCitiesKnownTo", &CyPlayer::getCitiesKnownTo, "int (int /*PlayerTypes*/ iObserver)")
+		.def("isCityCountExactFor", &CyPlayer::isCityCountExactFor, "bool (int /*PlayerTypes*/ iObserver)")
+		.def("isTooBusyForWarRequestFrom", &CyPlayer::isTooBusyForWarRequestFrom, "bool (int /*PlayerTypes*/ iAsker)")
+		.def("getScoreChange", &CyPlayer::getScoreChange, "int64 (bool bIncludeCurrentTurn)")
+		.def("getDemographicsRows", &CyPlayer::getDemographicsRows, "list ()")
 		.def("getPopScore", &CyPlayer::getPopScore, "int ()")
 		.def("getLandScore", &CyPlayer::getLandScore, "int ()")
 

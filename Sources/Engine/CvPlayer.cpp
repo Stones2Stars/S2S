@@ -53,6 +53,7 @@
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
+#include "DemographicStanding.h"
 #include "Conditions/CvConditionEval.h"   // the CvCascadeEvalCtx DEFINITION, not just a forward declaration
 #include "Conditions/CvConditionQuery.h"  // the ONE structural read over a compiled entry's condition tree
 #include "Infos/CvModEntry.h"             // the compiled entry the conditioned walk reads its trees off
@@ -4010,10 +4011,10 @@ void CvPlayer::doMultiMapTurn()
 
 void CvPlayer::recordHistory()
 {
-	m_mapEconomyHistory[GC.getGame().getGameTurn()] = calculateTotalCommerce();
+	m_mapEconomyHistory[GC.getGame().getGameTurn()] = calculateTotalCommerce() / 100;
 	m_mapPowerHistory[GC.getGame().getGameTurn()] = getPower() / 100;
-	m_mapIndustryHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_PRODUCTION);
-	m_mapAgricultureHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_FOOD);
+	m_mapIndustryHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_PRODUCTION) / 100;
+	m_mapAgricultureHistory[GC.getGame().getGameTurn()] = calculateTotalYield(YIELD_FOOD) / 100;
 	m_mapCultureHistory[GC.getGame().getGameTurn()] = getCulture();
 	m_mapEspionageHistory[GC.getGame().getGameTurn()] = GET_TEAM(getTeam()).getEspionagePointsEver();
 	m_mapRevolutionStabilityHistory[GC.getGame().getGameTurn()] = getStabilityIndexAverage();
@@ -7270,17 +7271,17 @@ int CvPlayer::getImprovementUpgradeProgressRate(const ImprovementTypes eImprovem
 }
 
 
-int CvPlayer::calculateTotalYield(YieldTypes eYield) const
+int64_t CvPlayer::calculateTotalYield(YieldTypes eYield) const
 {
-	// Σ over the player's cities of each city's REALIZED rate, off the cascade; ÷100 once at the end.
-	int64_t iTotal100 = 0;
+	// Σ over the player's cities of each city's REALIZED rate, off the cascade.
+	int64_t iTotal = 0;
 	foreach_(const CvCity* pLoopCity, cities())
 	{
 		int aiRealizedYields[NUM_YIELD_TYPES];
 		pLoopCity->getYields(aiRealizedYields);
-		iTotal100 += aiRealizedYields[eYield];
+		iTotal += aiRealizedYields[eYield];
 	}
-	return (int)(iTotal100 / 100);
+	return iTotal;
 }
 
 
@@ -7306,13 +7307,10 @@ void CvPlayer::getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]
 }
 
 
-// The whole empire's outbound route yield, summed ×100 and reduced ONCE on the way out -- the reduce used to sit
-// inside the city loop, so every city threw away its own fraction and the empire total was short by up to one
-// unit per city ([fixed-point-and-scales.md §4c-bis]).
-int CvPlayer::calculateTotalExports(YieldTypes eYield) const
+int64_t CvPlayer::calculateTotalExports(YieldTypes eYield) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iTotalExports = 0;
+	int64_t iTotalExports = 0;
 
 	foreach_(const CvCity* pLoopCity, cities())
 	{
@@ -7329,16 +7327,14 @@ int CvPlayer::calculateTotalExports(YieldTypes eYield) const
 		}
 	}
 
-	return iTotalExports / 100;
+	return iTotalExports;
 }
 
 
-// The mirror of calculateTotalExports, and it reduces the same way: ×100 through every partner and every city,
-// once on the way out.
-int CvPlayer::calculateTotalImports(YieldTypes eYield) const
+int64_t CvPlayer::calculateTotalImports(YieldTypes eYield) const
 {
 	PROFILE_EXTRA_FUNC();
-	int iTotalImports = 0;
+	int64_t iTotalImports = 0;
 
 	// Loop through players
 	for (int iPlayerLoop = 0; iPlayerLoop < MAX_PC_PLAYERS; iPlayerLoop++)
@@ -7361,7 +7357,7 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 			}
 		}
 	}
-	return iTotalImports / 100;
+	return iTotalImports;
 }
 
 
@@ -7783,21 +7779,22 @@ int CvPlayer::calculateResearchRate(TechTypes eTech) const
 
 }
 
-int CvPlayer::calculateTotalCommerce() const
+int64_t CvPlayer::calculateTotalCommerce() const
 {
 	PROFILE_EXTRA_FUNC();
-	int64_t iTotalCommerce = calculateBaseNetGold() + calculateBaseNetResearch();
+	// The treasury and the research a turn adds move in whole points (calculateBaseNetGold, calculateBaseNetResearch).
+	int64_t iTotalCommerce = 100 * (calculateBaseNetGold() + calculateBaseNetResearch());
 
+	int aiOwnCommerces[NUM_COMMERCE_TYPES];
+	getCommerces(aiOwnCommerces);
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
 	{
 		if (COMMERCE_GOLD != i && COMMERCE_RESEARCH != i)
 		{
-			int aiOwnCommerces[NUM_COMMERCE_TYPES];
-			getCommerces(aiOwnCommerces);
-			iTotalCommerce += aiOwnCommerces[(CommerceTypes)i] / 100;
+			iTotalCommerce += aiOwnCommerces[i];
 		}
 	}
-	return static_cast<int>(std::min<int64_t>(MAX_COMMERCE_VALUE,iTotalCommerce));
+	return iTotalCommerce;
 }
 
 bool CvPlayer::canEverResearch(TechTypes eTech) const
@@ -10281,25 +10278,254 @@ void CvPlayer::changeWinsVsBarbs(int iChange)
 }
 
 
-int CvPlayer::getAssets() const
+int64_t CvPlayer::getAssets() const
 {
 	return m_demographics.heldAssets() + countAssets(getTotalPopulation() + getTotalLandScored());
 }
 
 
-int CvPlayer::getPower() const
+int64_t CvPlayer::getPower() const
 {
 	return m_demographics.heldPower() + citizenPower(getTotalPopulation());
 }
 
-int CvPlayer::getTechPower() const
+int64_t CvPlayer::getTechPower() const
 {
 	return m_demographics.techPower();
 }
 
-int CvPlayer::getUnitPower() const
+PowerStanding CvPlayer::getPowerStanding(PlayerTypes eObserver, int iStrongerPercent, int iWeakerPercent) const
 {
-	return m_demographics.unitPower();
+	const int64_t iPower = getPower();
+	const int64_t iObserverPower = GET_PLAYER(eObserver).getPower();
+	if (100 * iPower >= iStrongerPercent * iObserverPower)
+	{
+		return POWER_STANDING_STRONGER;
+	}
+	if (100 * iPower <= iWeakerPercent * iObserverPower)
+	{
+		return POWER_STANDING_WEAKER;
+	}
+	return POWER_STANDING_EVEN;
+}
+
+
+bool CvPlayer::isIntelVisibleTo(PlayerTypes eObserver, EspionageMissionTypes eMission) const
+{
+	if (eObserver == getID())
+	{
+		return true;
+	}
+	const CvGame& kGame = GC.getGame();
+	if (kGame.isDebugMode() || kGame.getGameState() != GAMESTATE_ON)
+	{
+		return true;
+	}
+	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	if (getTeam() == eObserverTeam || GET_TEAM(getTeam()).isVassal(eObserverTeam))
+	{
+		return true;
+	}
+	return eMission != NO_ESPIONAGEMISSION && GET_PLAYER(eObserver).canDoEspionageMission(eMission, getID(), NULL, -1, NULL);
+}
+
+bool CvPlayer::isDemographicsVisibleTo(PlayerTypes eObserver) const
+{
+	return isIntelVisibleTo(eObserver, GC.getSeeDemographicsMission());
+}
+
+bool CvPlayer::isResearchVisibleTo(PlayerTypes eObserver) const
+{
+	return isIntelVisibleTo(eObserver, GC.getSeeResearchMission());
+}
+
+
+bool CvPlayer::isCityCountExactFor(PlayerTypes eObserver) const
+{
+	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	if (getTeam() == eObserverTeam || GC.getGame().isDebugMode() || GET_TEAM(getTeam()).isOpenBorders(eObserverTeam))
+	{
+		return true;
+	}
+	const bool bWillingToTalk = isHumanPlayer() || AI_isWillingToTalk(eObserver);
+	return bWillingToTalk && GET_TEAM(getTeam()).isHasEmbassy(eObserverTeam);
+}
+
+int CvPlayer::getCitiesKnownTo(PlayerTypes eObserver) const
+{
+	if (isCityCountExactFor(eObserver))
+	{
+		return getNumCities();
+	}
+	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	int iCount = 0;
+	foreach_(const CvCity* pLoopCity, cities())
+	{
+		if (pLoopCity->isRevealed(eObserverTeam, false))
+		{
+			iCount++;
+		}
+	}
+	const CvCity* pCapital = getCapitalCity();
+	if (iCount > 0 && pCapital != NULL && !pCapital->isRevealed(eObserverTeam, false))
+	{
+		iCount++;
+	}
+	return iCount;
+}
+
+
+bool CvPlayer::isTooBusyForWarRequestFrom(PlayerTypes eAsker) const
+{
+	if (isHumanPlayer() || !AI_isWillingToTalk(eAsker))
+	{
+		return false;
+	}
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+	const TeamTypes eAskerTeam = GET_PLAYER(eAsker).getTeam();
+	if (!kTeam.isHasMet(eAskerTeam) || kTeam.isAtWar(eAskerTeam))
+	{
+		return false;
+	}
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
+	{
+		const TeamTypes eWarTeam = static_cast<TeamTypes>(iTeam);
+		if (eWarTeam == getTeam() || eWarTeam == eAskerTeam || !GET_TEAM(eWarTeam).isAlive())
+		{
+			continue;
+		}
+		if (kTeam.isAtWar(eWarTeam) || !kTeam.isHasMet(eWarTeam) || !GET_TEAM(eAskerTeam).isHasMet(eWarTeam))
+		{
+			continue;
+		}
+		TradeData item;
+		setTradeItem(&item, TRADE_WAR, iTeam);
+		if (canTradeItem(eAsker, item, false) && getTradeDenial(eAsker, item) == DENIAL_TOO_MANY_WARS)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool CvPlayer::hasBegunTurn() const
+{
+	if (isTurnActive())
+	{
+		return true;
+	}
+	const CvGame& kGame = GC.getGame();
+	if (kGame.isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
+	{
+		return true;
+	}
+	// Turns run in player order (or team order), so the players before the one whose turn it is have had theirs.
+	const bool bTeamTurns = kGame.isSimultaneousTeamTurns();
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER(static_cast<PlayerTypes>(iPlayer));
+		if (kPlayer.isTurnActive())
+		{
+			return bTeamTurns ? getTeam() < kPlayer.getTeam() : getID() < iPlayer;
+		}
+	}
+	return true;
+}
+
+int64_t CvPlayer::getScoreChange(bool bIncludeCurrentTurn) const
+{
+	// The history keeps each player's score per game turn: the score as a finished game turn ended, the running
+	// score for the game turn in play.
+	CvGame& kGame = GC.getGame();
+	const int iTurn = kGame.getGameTurn();
+	if (bIncludeCurrentTurn)
+	{
+		const int iBeforeLatestTurn = (hasBegunTurn() ? iTurn : iTurn - 1) - 1;
+		if (iBeforeLatestTurn < kGame.getStartTurn())
+		{
+			return 0;
+		}
+		return kGame.getPlayerScore(getID()) - getScoreHistory(iBeforeLatestTurn);
+	}
+	const int iLastFinishedTurn = (hasBegunTurn() && !isTurnActive()) ? iTurn : iTurn - 1;
+	if (iLastFinishedTurn - 1 < kGame.getStartTurn())
+	{
+		return 0;
+	}
+	return getScoreHistory(iLastFinishedTurn) - getScoreHistory(iLastFinishedTurn - 1);
+}
+
+
+int64_t CvPlayer::getDemographic(DemographicKind eKind) const
+{
+	switch (eKind)
+	{
+	case DEMOGRAPHIC_ECONOMY:
+		return calculateTotalCommerce();
+	case DEMOGRAPHIC_INDUSTRY:
+		return calculateTotalYield(YIELD_PRODUCTION);
+	case DEMOGRAPHIC_AGRICULTURE:
+		return calculateTotalYield(YIELD_FOOD);
+	case DEMOGRAPHIC_MILITARY:
+		return getPower();
+	case DEMOGRAPHIC_LAND_AREA:
+		return getTotalLand();
+	case DEMOGRAPHIC_POPULATION:
+		return getRealPopulation();
+	case DEMOGRAPHIC_HAPPINESS:
+	case DEMOGRAPHIC_HEALTH:
+	{
+		// The share of the cities' happiness (health) against their anger (unhealth).
+		int aiWellbeing[NUM_WELLBEING_CHANNELS];
+		getRealizedCityWellbeing(aiWellbeing);
+		const bool bHappiness = (eKind == DEMOGRAPHIC_HAPPINESS);
+		const int64_t iGood = aiWellbeing[bHappiness ? WELLBEING_HAPPINESS : WELLBEING_HEALTH];
+		const int64_t iBad = aiWellbeing[bHappiness ? WELLBEING_ANGER : WELLBEING_UNHEALTH];
+		return (iGood + iBad > 0) ? 100 * iGood / (iGood + iBad) : 0;
+	}
+	case DEMOGRAPHIC_NET_TRADE:
+		return calculateTotalExports(YIELD_COMMERCE) - calculateTotalImports(YIELD_COMMERCE);
+	default:
+		FErrorMsg("unknown DemographicKind");
+		return 0;
+	}
+}
+
+void CvPlayer::getDemographicStanding(DemographicKind eKind, DemographicStanding& standing) const
+{
+	standing = DemographicStanding();
+	standing.unit = demographicUnitOf(eKind);
+	standing.value = getDemographic(eKind);
+	int64_t iRivalSum = 0;
+	int iNumRivals = 0;
+	for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
+	{
+		const CvPlayer& kRival = GET_PLAYER(static_cast<PlayerTypes>(iPlayer));
+		if (iPlayer == getID() || !kRival.isAlive())
+		{
+			continue;
+		}
+		const int64_t iRivalValue = kRival.getDemographic(eKind);
+		if (iNumRivals == 0 || iRivalValue > standing.bestRival)
+		{
+			standing.bestRival = iRivalValue;
+		}
+		if (iNumRivals == 0 || iRivalValue < standing.worstRival)
+		{
+			standing.worstRival = iRivalValue;
+		}
+		if (iRivalValue > standing.value)
+		{
+			standing.rank++;
+		}
+		iRivalSum += iRivalValue;
+		iNumRivals++;
+	}
+	if (iNumRivals > 0)
+	{
+		standing.rivalAverage = iRivalSum / iNumRivals;
+	}
 }
 
 

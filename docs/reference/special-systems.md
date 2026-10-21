@@ -129,4 +129,5 @@ REASON is what protects a legitimate off-switch).
 ## See also
 
 - [engine.md](engine.md) (pathfinding/plot-groups, the save latches) · [economy.md](economy.md) (war-weariness/espionage
-  timers) · [../specs/tally.md](../specs/tally.md) (counters/EP are tally domains) · [../specs/enabler.md](../specs/enabler.md) (plot-group dormancy gate).
+  timers) · [../specs/tally.md](../specs/tally.md) (counters/EP are tally domains) · [../specs/enabler.md](../specs/enabler.md) (plot-group dormancy gate) ·
+  [rival-intel.md](rival-intel.md) (what espionage lets a player see of a rival: the one visibility rule).

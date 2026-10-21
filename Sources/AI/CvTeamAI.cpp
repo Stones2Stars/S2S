@@ -1092,7 +1092,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	||  AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST2)
 	&& !AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST3))
 	{
-		const int iMultiplier = static_cast<int>((int64_t)75 * getPower(false) / std::max(1, team.getDefensivePower(getID()))); //k-mod
+		const int iMultiplier = static_cast<int>(75 * getPower(false) / std::max<int64_t>(1, team.getDefensivePower(getID()))); //k-mod
 
 		iValue *= range(iMultiplier, 50, 400);
 		iValue /= 100;
@@ -1160,16 +1160,16 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		GET_TEAM(eTeam).AI_getWarSuccess(getID()) * 20
 	);
 
-	const int iOurPower = std::max(1, getPower(true));
-	const int iTheirPower = std::max(1, GET_TEAM(eTeam).getDefensivePower());
+	const int64_t iOurPower = std::max<int64_t>(1, getPower(true));
+	const int64_t iTheirPower = std::max<int64_t>(1, GET_TEAM(eTeam).getDefensivePower());
 
-	iValue =static_cast<int>((int64_t)iValue * (iTheirPower / 100 + 10) / std::max(1, (iOurPower + iTheirPower) / 100 + 10));
+	iValue =static_cast<int>(iValue * (iTheirPower / 100 + 10) / std::max<int64_t>(1, (iOurPower + iTheirPower) / 100 + 10));
 
 	const WarPlanTypes eWarPlan = AI_getWarPlan(eTeam);
 
 	// if we are not human, do we want to continue war for strategic reasons?
 	// only check if our power is at least 120% of theirs
-	if (!isHuman() && iOurPower > (int64_t)120 * iTheirPower / 100)
+	if (!isHuman() && iOurPower > 120 * iTheirPower / 100)
 	{
 		bool bDagger = false;
 		bool bAnyFinancialTrouble = false;
@@ -1195,7 +1195,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		// if dagger, value peace at 90% power ratio
 		if (bDagger)
 		{
-			iValue = static_cast<int>((int64_t)iValue * 9 * iTheirPower / ((int64_t)10 * iOurPower));
+			iValue = static_cast<int>((int64_t)iValue * 9 * iTheirPower / (10 * iOurPower));
 		}
 
 		// for now, we will always do the land mass check for domination
@@ -1217,7 +1217,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 					// if we total warmonger, value peace at 70% * power ratio factor
 					if (bDagger || AI_maxWarRand() < 100)
 					{
-						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / ((int64_t)10 * (iOurPower + 4 * iTheirPower)));
+						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / (10 * (iOurPower + 4 * iTheirPower)));
 					}
 					break;
 				}
@@ -1226,7 +1226,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 					// if we limited warmonger, value peace at 70% * power ratio factor
 					if (AI_limitedWarRand() < 100)
 					{
-						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / ((int64_t)10 * (iOurPower + 4 * iTheirPower)));
+						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / (10 * (iOurPower + 4 * iTheirPower)));
 					}
 					break;
 				}
@@ -1235,7 +1235,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 					// if we dogpile warmonger, value peace at 70% * power ratio factor
 					if (AI_dogpileWarRand() < 100)
 					{
-						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / ((int64_t)10 * (iOurPower + 4 * iTheirPower)));
+						iValue = static_cast<int>((int64_t)iValue * 35 * iTheirPower / (10 * (iOurPower + 4 * iTheirPower)));
 					}
 					break;
 				}
@@ -1361,7 +1361,7 @@ int CvTeamAI::AI_getBarbarianCivWarVal(TeamTypes eTeam, int iMaxDistance) const
 			case ATTITUDE_CAUTIOUS: iValue *= 2;
 		}
 		iValue = static_cast<int>((int64_t)iValue * getPower(true) * AI_maxWarNearbyPowerRatio() / 100
-			/ std::max(1, GET_TEAM(eTeam).getDefensivePower()));
+			/ std::max<int64_t>(1, GET_TEAM(eTeam).getDefensivePower()));
 	}
 	return iValue;
 }
@@ -1884,7 +1884,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 			}
 		}
 
-		int iTotalPower = 0;
+		int64_t iTotalPower = 0;
 		int iNumNonVassals = 0;
 		for (int i = 0; i < MAX_PC_TEAMS; i++)
 		{
@@ -1903,10 +1903,10 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 				}
 			}
 		}
-		int iAveragePower = iTotalPower / std::max(1, iNumNonVassals);
-		int iMasterPower = kMasterTeam.getPower(false);
-		const int iMyPower = getPower(true);
-		const int iVassalPower = static_cast<int>((int64_t)iMyPower * (iPowerMultiplier + iPersonalityModifier / std::max(1, iMembers)) / 100);
+		int64_t iAveragePower = iTotalPower / std::max(1, iNumNonVassals);
+		int64_t iMasterPower = kMasterTeam.getPower(false);
+		const int64_t iMyPower = getPower(true);
+		const int64_t iVassalPower = iMyPower * (iPowerMultiplier + iPersonalityModifier / std::max(1, iMembers)) / 100;
 
 		if (bCapitulation)
 		{
@@ -1934,7 +1934,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 				iOurSuccess += iOthersBestSuccess - iTheirSuccess;
 			}
 
-			iMasterPower = static_cast<int>((int64_t)2 * iMasterPower * iTheirSuccess / (iTheirSuccess + iOurSuccess));
+			iMasterPower = 2 * iMasterPower * iTheirSuccess / (iTheirSuccess + iOurSuccess);
 
 			if (AI_getWorstEnemy() == eMasterTeam)
 			{
@@ -1957,7 +1957,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 				{
 					if (iTeamX != eMasterTeam && teamX.AI_isLandTarget(eTeam))
 					{
-						const int iPowerX = teamX.getPower(true);
+						const int64_t iPowerX = teamX.getPower(true);
 						if (iPowerX > iMyPower)
 						{
 							if (teamX.isAtWar(eMasterTeam) && !isAtWar((TeamTypes)iTeamX))
@@ -1965,14 +1965,14 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eMasterTeam, int iPowerMultipl
 								return DENIAL_POWER_YOUR_ENEMIES;
 							}
 
-							iAveragePower = static_cast<int>((int64_t)2 * iAveragePower * iPowerX / std::max(1, iPowerX + iMyPower));
+							iAveragePower = 2 * iAveragePower * iPowerX / std::max<int64_t>(1, iPowerX + iMyPower);
 
-							iAttitudeModifier += (3 * iPowerX) / std::max(1, iMyPower) - 2;
+							iAttitudeModifier += static_cast<int>(3 * iPowerX / std::max<int64_t>(1, iMyPower)) - 2;
 						}
 
 						if (!teamX.isAtWar(eMasterTeam) && isAtWar((TeamTypes)iTeamX))
 						{
-							iAveragePower = static_cast<int>((int64_t)iAveragePower * (iMyPower + iMasterPower) / std::max(1, iMyPower));
+							iAveragePower = iAveragePower * (iMyPower + iMasterPower) / std::max<int64_t>(1, iMyPower);
 						}
 					}
 
@@ -2171,7 +2171,7 @@ int CvTeamAI::AI_getEnemyPowerPercent( bool bConsiderOthers ) const
 		{
 			if (isAtWar((TeamTypes)iI))
 			{
-				int64_t iTempPower = (int64_t)220 * GET_TEAM((TeamTypes)iI).getPower(false);
+				int64_t iTempPower = 220 * GET_TEAM((TeamTypes)iI).getPower(false);
 				iTempPower /= (AI_hasCitiesInPrimaryArea((TeamTypes)iI) ? 2 : 3);
 				iTempPower /= (GET_TEAM((TeamTypes)iI).isMinorCiv() ? iMinors : 1);
 				iTempPower /= std::max(1, (bConsiderOthers ? GET_TEAM((TeamTypes)iI).getAtWarCount(true,true) : 1));
@@ -2180,7 +2180,7 @@ int CvTeamAI::AI_getEnemyPowerPercent( bool bConsiderOthers ) const
 			else if (AI_isChosenWar((TeamTypes)iI))
 			{
 				// Intend to declare war
-				int64_t iTempPower = (int64_t)240 * GET_TEAM((TeamTypes)iI).getDefensivePower();
+				int64_t iTempPower = 240 * GET_TEAM((TeamTypes)iI).getDefensivePower();
 				iTempPower /= (AI_hasCitiesInPrimaryArea((TeamTypes)iI) ? 2 : 3);
 				iTempPower /= 1 + (bConsiderOthers ? GET_TEAM((TeamTypes)iI).getAtWarCount(true,true) : 0);
 				iEnemyPower += iTempPower;
@@ -2188,7 +2188,7 @@ int CvTeamAI::AI_getEnemyPowerPercent( bool bConsiderOthers ) const
 		}
 	}
 
-	return static_cast<int>(iEnemyPower / std::max(1, (isAVassal() ? getCurrentMasterPower(true) : getPower(true))));
+	return static_cast<int>(iEnemyPower / std::max<int64_t>(1, (isAVassal() ? getCurrentMasterPower(true) : getPower(true))));
 }
 
 /// \brief Sum up air power of enemies plus average of other civs we've met.
@@ -2735,10 +2735,10 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 	iValue *= std::max(0, (iModifier + 100));
 	iValue /= 100;
 
-	int iTheirPower = GET_TEAM(eTeam).getPower(true);
-	int iWarTeamPower = GET_TEAM(eWarTeam).getPower(true);
+	const int64_t iTheirPower = GET_TEAM(eTeam).getPower(true);
+	const int64_t iWarTeamPower = GET_TEAM(eWarTeam).getPower(true);
 
-	iValue *= 50 + static_cast<int>((int64_t)100 * iWarTeamPower / ((int64_t)iTheirPower + iWarTeamPower + 1));
+	iValue *= 50 + static_cast<int>(100 * iWarTeamPower / (iTheirPower + iWarTeamPower + 1));
 	iValue /= 100;
 
 	if (!(GET_TEAM(eTeam).AI_isAllyLandTarget(eWarTeam)))
@@ -4336,7 +4336,7 @@ void CvTeamAI::AI_doWar()
 				int iDogpileWarThreshold;
 				AI_getWarThresholds( iTotalWarThreshold, iLimitedWarThreshold, iDogpileWarThreshold );
 
-				int iOurPower = getPower(true);
+				int64_t iOurPower = getPower(true);
 
 				if (bAggressive && !hasWarPlan(true))
 				{
@@ -4344,7 +4344,7 @@ void CvTeamAI::AI_doWar()
 					iOurPower /= 3;
 				}
 
-				iOurPower = static_cast<int>((int64_t)iOurPower * (100 - iEnemyPowerPercent) / 100);
+				iOurPower = iOurPower * (100 - iEnemyPowerPercent) / 100;
 
 				TeamTypes eBestTeam = NO_TEAM;
 				int iBestValue = 0;
@@ -4363,7 +4363,7 @@ void CvTeamAI::AI_doWar()
 							&& canEventuallyDeclareWar((TeamTypes)iI)
 							&& (!GET_TEAM((TeamTypes)iI).isAVassal() || AI_isOkayVassalTarget((TeamTypes)iI))
 							&& iNoWarRoll >= AI_noWarAttitudeProb(AI_getAttitude((TeamTypes)iI))
-							&& (int64_t)GET_TEAM((TeamTypes)iI).getDefensivePower() * 2/3 < (int64_t)iOurPower * (iPass > 1 ? AI_maxWarDistantPowerRatio() : AI_maxWarNearbyPowerRatio()) / 100
+							&& GET_TEAM((TeamTypes)iI).getDefensivePower() * 2/3 < iOurPower * (iPass > 1 ? AI_maxWarDistantPowerRatio() : AI_maxWarNearbyPowerRatio()) / 100
 							// XXX make sure they share an area....
 							&& (iPass > 1 || AI_isLandTarget((TeamTypes)iI) || AI_isAnyCapitalAreaAlone() || GET_TEAM((TeamTypes)iI).AI_isAnyMemberDoVictoryStrategyLevel4())
 							&& (iPass > 0 || AI_calculateAdjacentLandPlots((TeamTypes)iI) >= getTotalLand() * AI_maxWarMinAdjacentLandPercent() / 100 || GET_TEAM((TeamTypes)iI).AI_isAnyMemberDoVictoryStrategyLevel4()))
@@ -4411,7 +4411,7 @@ void CvTeamAI::AI_doWar()
 										{
 											if (AI_isLandTarget((TeamTypes)iI) || (AI_isAnyCapitalAreaAlone() && GET_TEAM((TeamTypes)iI).AI_isAnyCapitalAreaAlone()))
 											{
-												if (GET_TEAM((TeamTypes)iI).getDefensivePower() < ((int64_t)iOurPower * AI_limitedWarPowerRatio()) / 100 &&
+												if (GET_TEAM((TeamTypes)iI).getDefensivePower() < (iOurPower * AI_limitedWarPowerRatio()) / 100 &&
 													!AI_shareWar((TeamTypes)iI) )
 												{
 													const int iValue = AI_startWarVal((TeamTypes)iI);
@@ -4452,7 +4452,7 @@ void CvTeamAI::AI_doWar()
 							if (iNoWarRoll >= AI_noWarAttitudeProb(AI_getAttitude((TeamTypes)iI)) && GET_TEAM((TeamTypes)iI).isAtWar()
 							&& (AI_isLandTarget((TeamTypes)iI) || GET_TEAM((TeamTypes)iI).AI_isAnyMemberDoVictoryStrategyLevel4()))
 							{
-								int iDogpilePower = iOurPower;
+								int64_t iDogpilePower = iOurPower;
 
 								for (int iJ = 0; iJ < MAX_PC_TEAMS; iJ++)
 								{
@@ -4899,7 +4899,7 @@ int CvTeamAI::AI_contactTradeVal(TeamTypes eContactTeam, TeamTypes eTeamBuyer) c
 	int iValue = 5;
 	int iAttitude = 0;
 	int iMetCount = 0;
-	int iPower = 0;
+	int64_t iPower = 0;
 	int iCountTeams = 1; // Pre-counting eContactTeam
 
 	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)

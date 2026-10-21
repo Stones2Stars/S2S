@@ -4188,7 +4188,7 @@ bool CvCityAI::AI_chooseExperienceBuilding(const UnitAITypes eUnitAI, const int 
 				/ 10000
 				);
 
-		if (iUnitProductionLossesFactor * perTurnLossesCost > GET_PLAYER(getOwner()).calculateTotalYield(YIELD_PRODUCTION)
+		if (iUnitProductionLossesFactor * perTurnLossesCost > GET_PLAYER(getOwner()).calculateTotalYield(YIELD_PRODUCTION) / 100
 			&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20))
 		{
 			return true;
@@ -11889,7 +11889,7 @@ int	CvCityAI::getPlayerDangerPercentage(PlayerTypes ePlayer, int& iModifier) con
 		// Beef up border security next to powerful rival, (Fuyu) just not too much if our units are weaker on average
 		if (kPlayer.getPower() > GET_PLAYER(getOwner()).getPower())
 		{
-			int iTempMultiplier = static_cast<int>(std::min((int64_t)400, (int64_t)100 * kPlayer.getPower() / std::max(1, GET_PLAYER(getOwner()).getPower())));
+			int iTempMultiplier = static_cast<int>(std::min((int64_t)400, 100 * kPlayer.getPower() / std::max<int64_t>(1, GET_PLAYER(getOwner()).getPower())));
 			iTempMultiplier += range(((100 * kPlayer.getNumMilitaryUnits()) / std::max(1, GET_PLAYER(getOwner()).getNumMilitaryUnits())), 100, iTempMultiplier);
 			iTempMultiplier /= 2;
 			iResult *= iTempMultiplier;

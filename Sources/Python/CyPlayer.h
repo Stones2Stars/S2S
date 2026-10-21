@@ -67,7 +67,6 @@ public:
 	std::wstring getFlagDecal() const;
 	bool isWhiteFlag() const;
 	std::wstring getStateReligionKey() const;
-	std::wstring getWorstEnemyName() const;
 	int /*ArtStyleTypes*/ getArtStyleType() const;
 
 	int countNumCoastalCities() const;
@@ -100,15 +99,11 @@ public:
 
 	int /*RouteTypes*/ getBestRoute(const CyPlot* pPlot) const;
 
-	int calculateTotalYield(int /*YieldTypes*/ eYield) const;
-	int calculateTotalExports(int /*YieldTypes*/ eYield) const;
-	int calculateTotalImports(int /*YieldTypes*/ eYield) const;
+	///<summary>The empire's yield eYield (CvPlayer::calculateTotalYield).</summary>
+	int64_t calculateTotalYield(int /*YieldTypes*/ eYield) const;
 
 	int calculateTotalCityHappiness() const;
 	int calculateTotalCityUnhappiness() const;
-
-	int calculateTotalCityHealthiness() const;
-	int calculateTotalCityUnhealthiness() const;
 
 	int64_t getFinalUnitUpkeep() const;
 	int calculateUnitSupply() const;
@@ -116,7 +111,6 @@ public:
 	int64_t getFinalExpense() const;
 
 	int calculateGoldRate() const;
-	int calculateTotalCommerce() const;
 	int calculateResearchRate(int /*TechTypes*/ eTech) const;
 	int calculateResearchModifier(int /*TechTypes*/ eTech) const;
 	int calculateBaseNetResearch() const;
@@ -223,9 +217,29 @@ public:
 	CyCity* getCapitalCity() const;
 	int getCitiesLost() const;
 
-	int getAssets() const;
-	int getPower() const;
-	int getUnitPower() const;
+	///<summary>The empire's worth (CvPlayer::getAssets).</summary>
+	int64_t getAssets() const;
+	///<summary>The empire's military might (CvPlayer::getPower).</summary>
+	int64_t getPower() const;
+	///<summary>This player's power against iOther's as text with iDecimals decimals; empty when iOther has none.</summary>
+	std::wstring getPowerRatioText(int /*PlayerTypes*/ iOther, int iDecimals) const;
+	///<summary>This player's power against iObserver's (PowerStanding), judged by the observer's two ratios.</summary>
+	int getPowerStanding(int /*PlayerTypes*/ iObserver, float fStrongerRatio, float fWeakerRatio) const;
+	///<summary>Whether iObserver may see this player's demographics (CvPlayer::isDemographicsVisibleTo).</summary>
+	bool isDemographicsVisibleTo(int /*PlayerTypes*/ iObserver) const;
+	///<summary>Whether iObserver may see what this player researches (CvPlayer::isResearchVisibleTo).</summary>
+	bool isResearchVisibleTo(int /*PlayerTypes*/ iObserver) const;
+	///<summary>How many of this player's cities iObserver knows of (CvPlayer::getCitiesKnownTo).</summary>
+	int getCitiesKnownTo(int /*PlayerTypes*/ iObserver) const;
+	///<summary>Whether iObserver knows this player's city count exactly (CvPlayer::isCityCountExactFor).</summary>
+	bool isCityCountExactFor(int /*PlayerTypes*/ iObserver) const;
+	///<summary>Whether this AI would refuse iAsker a war for having its hands full with war already.</summary>
+	bool isTooBusyForWarRequestFrom(int /*PlayerTypes*/ iAsker) const;
+	///<summary>How much this player's score moved (CvPlayer::getScoreChange).</summary>
+	int64_t getScoreChange(bool bIncludeCurrentTurn) const;
+	///<summary>The demographics table as rows of (DemographicKind, value, best rival, rival average, worst rival,
+	/// rank), the measures as display text.</summary>
+	python::list getDemographicsRows() const;
 	int getPopScore() const;
 	int getLandScore() const;
 

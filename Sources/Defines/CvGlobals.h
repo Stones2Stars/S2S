@@ -688,6 +688,12 @@ public:
 
 	int getNumEspionageMissionInfos() const;
 	CvEspionageMissionInfo& getEspionageMissionInfo(EspionageMissionTypes eEspionageMissionNum) const;
+	///<summary>The passive espionage mission that lets its player see a rival's demographics, found at load.</summary>
+	EspionageMissionTypes getSeeDemographicsMission() const { return m_eSeeDemographicsMission; }
+	///<summary>The passive espionage mission that lets its player see a rival's research, found at load.</summary>
+	EspionageMissionTypes getSeeResearchMission() const { return m_eSeeResearchMission; }
+	///<summary>The passive espionage mission that lets its player see inside a rival's city, found at load.</summary>
+	EspionageMissionTypes getInvestigateCityMission() const { return m_eInvestigateCityMission; }
 
 	int getNumUnitArtStyleTypeInfos() const;
 	CvUnitArtStyleTypeInfo& getUnitArtStyleTypeInfo(UnitArtStyleTypes eUnitArtStyleTypeNum) const;
@@ -1126,6 +1132,9 @@ private:
 
 	std::vector<BonusTypes> m_mapBonuses;
 	std::vector<BuildingTypes> m_allCitiesManipBuildings;   // empire-scope property-source buildings (load-built)
+	EspionageMissionTypes m_eSeeDemographicsMission;
+	EspionageMissionTypes m_eSeeResearchMission;
+	EspionageMissionTypes m_eInvestigateCityMission;
 	std::vector<PromotionTypes> m_aiStatusPromotions;
 	std::vector<PromotionTypes> m_starsigns;
 

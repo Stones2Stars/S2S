@@ -1,7 +1,7 @@
 #include "CvGameCoreDLL.h"
 #include "WorthLedger.h"
 
-void WorthLedger::change(int iMilitaryWorth, int iWorth)
+void WorthLedger::change(int64_t iMilitaryWorth, int64_t iWorth)
 {
 	militaryWorth += iMilitaryWorth;
 	worth += iWorth;

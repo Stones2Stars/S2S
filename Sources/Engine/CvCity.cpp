@@ -1898,21 +1898,8 @@ bool CvCity::isOpenTo(PlayerTypes eObserver) const
 		return true;
 	}
 
-	// EspionageEffect
-	for (int iLoop = 0; iLoop < GC.getNumEspionageMissionInfos(); iLoop++)
-	{
-		// Check the XML
-		if (GC.getEspionageMissionInfo((EspionageMissionTypes)iLoop).isPassive() && GC.getEspionageMissionInfo((EspionageMissionTypes)iLoop).isInvestigateCity())
-		{
-			// Is Mission good?
-			if (GET_PLAYER(eObserver).canDoEspionageMission((EspionageMissionTypes)iLoop, getOwner(), plot(), -1, NULL))
-			{
-				return true;
-			}
-		}
-	}
-
-	return false;
+	const EspionageMissionTypes eInvestigateCity = GC.getInvestigateCityMission();
+	return eInvestigateCity != NO_ESPIONAGEMISSION && GET_PLAYER(eObserver).canDoEspionageMission(eInvestigateCity, getOwner(), plot(), -1, NULL);
 }
 
 

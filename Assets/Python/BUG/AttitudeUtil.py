@@ -309,8 +309,7 @@ class Attitude:
 
 
 def isWorstEnemy(player, enemy):
-	worstEnemyName = player.getWorstEnemyName()
-	return worstEnemyName and worstEnemyName == GC.getTeam(enemy.getTeam()).getName()
+	return GC.getTeam(player.getTeam()).getWorstEnemy() == enemy.getTeam()
 
 
 def getWorstEnemyTeams():
@@ -318,26 +317,20 @@ def getWorstEnemyTeams():
 	Returns a dictionary of the team IDs that are each team's worst enemy.
 
 	The key is team ID; the value is the worst enemy team ID.
-	If a team has no worst enemy, -1 is stored as its value.
-	Ignores dead, human, barbarian, and minor teams.
-
-	Loops over players because CyTeam does not have getWorstEnemyName().
+	If a team has no worst enemy, or its worst enemy is dead or minor, -1 is stored as its value.
+	Ignores dead and minor teams.
 	"""
-	namesToID = {}
+	teams = []
 	for iTeam in xrange(GC.getMAX_PC_TEAMS()):
 		CyTeam = GC.getTeam(iTeam)
 		if CyTeam.isAlive() and not CyTeam.isMinorCiv():
-			namesToID[CyTeam.getName()] = iTeam
+			teams.append(iTeam)
 
 	enemies = {}
-	for name, iTeam in namesToID.items():
-		worstEnemyName = GC.getPlayer(GC.getTeam(iTeam).getLeaderID()).getWorstEnemyName()
-		if worstEnemyName:
-			if worstEnemyName in namesToID:
-				enemies[iTeam] = namesToID[worstEnemyName]
-			else:
-				BugUtil.debug("[INFO] Cannot find worst enemy of %s; worst enemy is %s", name, worstEnemyName)
-				enemies[iTeam] = -1
+	for iTeam in teams:
+		iWorstEnemy = GC.getTeam(iTeam).getWorstEnemy()
+		if iWorstEnemy in teams:
+			enemies[iTeam] = iWorstEnemy
 		else:
 			enemies[iTeam] = -1
 	return enemies

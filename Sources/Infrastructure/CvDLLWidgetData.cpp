@@ -3,7 +3,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "UI/CvEntryText.h"         // amountText -- an amount as every hover shows it
+#include "UI/CvEntryText.h"         // amountText, ratioText -- an amount and a ratio as every hover shows them
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the civic's base limit x the world-size scale
 #include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
@@ -3651,7 +3651,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 				{
 					CvTeam& kLoopTeam = GET_TEAM((TeamTypes) kLoopPlayer.getTeam());
 
-					szBuffer.append(CvWString::format(SETCOLR L"%s (team%d): %d (%d def)" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"),
+					szBuffer.append(CvWString::format(SETCOLR L"%s (team%d): %I64d (%I64d def)" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"),
 						kLoopPlayer.getName(), kLoopPlayer.getTeam(), kLoopPlayer.getPower() / 100, kLoopTeam.getDefensivePower() / 100));
 
 					// if in financial trouble, show that
@@ -3667,7 +3667,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		// only should this one power if not active player
 		else
 		{
-			szBuffer.append(CvWString::format(SETCOLR L"%d (%d) power" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kPlayer.getPower() / 100, kTeam.getPower(true) / 100));
+			szBuffer.append(CvWString::format(SETCOLR L"%I64d (%I64d) power" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kPlayer.getPower() / 100, kTeam.getPower(true) / 100));
 
 			// if in financial trouble, show that
 			if (kPlayer.AI_isFinancialTrouble())
@@ -4035,14 +4035,14 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		}
 
 		// team power (if agressive, we use higher value)
-		int iTeamPower = kTeam.getPower(true);
+		int64_t iTeamPower = kTeam.getPower(true);
 		if (bAggressive && !kTeam.hasWarPlan(true))
 		{
 			iTeamPower *= 4;
 			iTeamPower /= 3;
 		}
 
-		iTeamPower = static_cast<int>((int64_t)iTeamPower * (100 - kTeam.AI_getEnemyPowerPercent()) / 100);
+		iTeamPower = iTeamPower * (100 - kTeam.AI_getEnemyPowerPercent()) / 100;
 
 		// we will put the values into an array, then sort it for display
 		int iBestPossibleMaxWarPass = MAX_INT;
@@ -4085,7 +4085,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 
 						aStartWarInfo[iTeamIndex].bValid = true;
 
-						int iLoopTeamPower = kLoopTeam.getDefensivePower();
+						const int64_t iLoopTeamPower = kLoopTeam.getDefensivePower();
 						bool bIsLandTarget = kTeam.AI_isLandTarget(eLoopTeam);
 						aStartWarInfo[iTeamIndex].bIsLandTarget = bIsLandTarget;
 
@@ -4102,8 +4102,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 							int iNoWarChance = range(iNoWarAttitudeProb - (bAggressive ? 10 : 0) - (bFinancesProTotalWar ? 10 : 0) + (20*iGetBetterUnitsCount)/iNumMembers, 0, 100);
 							if (iNoWarChance < 100)
 							{
-								bool bIsMaxWarNearbyPowerRatio = (iLoopTeamPower < ((int64_t)iTeamPower * kTeam.AI_maxWarNearbyPowerRatio()) / 100);
-								bool bIsMaxWarDistantPowerRatio = (iLoopTeamPower < ((int64_t)iTeamPower * kTeam.AI_maxWarDistantPowerRatio()) / 100);
+								bool bIsMaxWarNearbyPowerRatio = (iLoopTeamPower < (iTeamPower * kTeam.AI_maxWarNearbyPowerRatio()) / 100);
+								bool bIsMaxWarDistantPowerRatio = (iLoopTeamPower < (iTeamPower * kTeam.AI_maxWarDistantPowerRatio()) / 100);
 								aStartWarInfo[iTeamIndex].bIsMaxWarNearbyPowerRatio = bIsMaxWarNearbyPowerRatio;
 								aStartWarInfo[iTeamIndex].bIsMaxWarDistantPowerRatio = bIsMaxWarDistantPowerRatio;
 
@@ -4150,7 +4150,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 						{
 							const int iNoWarChance = std::max(0, iNoWarAttitudeProb + 10 - (bAggressive ? 10 : 0) - (bFinancesProLimitedWar ? 10 : 0));
 							if (iNoWarChance < 100
-							&& iLoopTeamPower < (int64_t)iTeamPower * kTeam.AI_limitedWarPowerRatio() / 100
+							&& iLoopTeamPower < iTeamPower * kTeam.AI_limitedWarPowerRatio() / 100
 							&& (bIsLandTarget || bIsAnyCapitalAreaAlone && kLoopTeam.AI_isAnyCapitalAreaAlone()))
 							{
 								aStartWarInfo[iTeamIndex].bPossibleLimitedWar = true;
@@ -4165,7 +4165,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 							const int iNoWarChance = std::max(0, iNoWarAttitudeProb + 20 - (bAggressive ? 10 : 0) - (bFinancesProDogpileWar ? 10 : 0));
 							if (iNoWarChance < 100)
 							{
-								int iDogpilePower = iTeamPower;
+								int64_t iDogpilePower = iTeamPower;
 								for (int iTeamIndex2 = 0; iTeamIndex2 < MAX_PC_TEAMS; iTeamIndex2++)
 								{
 									const TeamTypes eDogpileLoopTeam = (TeamTypes) iTeamIndex2;
@@ -4462,6 +4462,23 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText(kPlayer.hasFixedBorders() ? "TXT_KEY_PLAYER_HAS_FIXED_BORDERS" : "TXT_KEY_PLAYER_HAS_NOT_FIXED_BORDERS"));
+
+	// Their power beside the viewer's, and the ratio the score list shows, in its formula and decimals.
+	if (kPlayer.isDemographicsVisibleTo(eActivePlayer))
+	{
+		const int64_t iTheirPower = kPlayer.getPower();
+		const int64_t iYourPower = GET_PLAYER(eActivePlayer).getPower();
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONTACT_POWER", amountText(iTheirPower).GetCString(), amountText(iYourPower).GetCString()));
+		const bool bTheirsAgainstYours = (getBugOptionINT("Scores__PowerFormula", 0) == 0);
+		const int iDecimals = getBugOptionINT("Scores__PowerDecimals", 1);
+		const CvWString szRatio = bTheirsAgainstYours ? ratioText(iTheirPower, iYourPower, iDecimals) : ratioText(iYourPower, iTheirPower, iDecimals);
+		if (!szRatio.empty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText(bTheirsAgainstYours ? "TXT_KEY_MISC_CONTACT_POWER_THEIRS_AGAINST_YOURS" : "TXT_KEY_MISC_CONTACT_POWER_YOURS_AGAINST_THEIRS", szRatio.GetCString()));
+		}
+	}
 
 	if (kActiveTeam.isHasMet(eTeam) || GC.getGame().isDebugMode())
 	{
