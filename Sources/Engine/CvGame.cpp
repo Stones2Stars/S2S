@@ -3103,20 +3103,17 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	PROFILE_EXTRA_FUNC();
 	if (!canHaveSecretaryGeneral(eVoteSource))
 	{
-		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+		foreach_(const BuildingTypes eBuilding, GC.getVoteSourceBuildings(eVoteSource))
 		{
-			if (GC.getBuildingInfo((BuildingTypes)iBuilding).getDiploVoteType() == eVoteSource)
+			for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
 			{
-				for (int iI = 0; iI < MAX_PC_PLAYERS; ++iI)
+				const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+				if (kLoopPlayer.isAlive() && kLoopPlayer.getBuildingCount(eBuilding) > 0)
 				{
-					const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
-					if (kLoopPlayer.isAlive() && kLoopPlayer.getBuildingCount((BuildingTypes)iBuilding) > 0)
+					const ReligionTypes eReligion = getVoteSourceReligion(eVoteSource);
+					if (NO_RELIGION == eReligion || kLoopPlayer.getStateReligion() == eReligion)
 					{
-						const ReligionTypes eReligion = getVoteSourceReligion(eVoteSource);
-						if (NO_RELIGION == eReligion || kLoopPlayer.getStateReligion() == eReligion)
-						{
-							return kLoopPlayer.getTeam();
-						}
+						return kLoopPlayer.getTeam();
 					}
 				}
 			}
@@ -3124,13 +3121,11 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 	}
 	else
 	{
-		for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
+		foreach_(const VoteTypes eVote, GC.getVoteSourceVotes(eVoteSource))
 		{
-			if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource)
-			&&  GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL
-			&& isVotePassed((VoteTypes)iI))
+			if (GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_SECRETARY_GENERAL && isVotePassed(eVote))
 			{
-				return (TeamTypes)getVoteOutcome((VoteTypes)iI);
+				return (TeamTypes)getVoteOutcome(eVote);
 			}
 		}
 	}
@@ -3139,29 +3134,87 @@ TeamTypes CvGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 
 bool CvGame::canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const
 {
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
+	return GC.getVoteSourceSecretaryGeneralVote(eVoteSource) != NO_VOTE;
+}
+
+TeamTypes CvGame::getBuildingOwnerTeam(BuildingTypes eBuilding) const
+{
+	for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
 	{
-		if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource) && GC.getVoteInfo((VoteTypes)iI).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
+		const CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+		if (player.isAlive() && player.getBuildingCount(eBuilding) > 0)
 		{
-			return true;
+			return player.getTeam();
 		}
 	}
-	return false;
+	return NO_TEAM;
+}
+
+void CvGame::getTeamVoteCandidates(VoteSourceTypes eVoteSource, std::vector<TeamTypes>& candidates) const
+{
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
+	{
+		if (GET_TEAM((TeamTypes)iTeam).isAlive() && isTeamVoteEligible((TeamTypes)iTeam, eVoteSource))
+		{
+			candidates.push_back((TeamTypes)iTeam);
+		}
+	}
+}
+
+int CvGame::countForecastTeamVotes(VoteTypes eVote, VoteSourceTypes eVoteSource, TeamTypes eCandidate) const
+{
+	int iVotes = 0;
+	for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
+	{
+		const CvPlayerAI& player = GET_PLAYER((PlayerTypes)iPlayer);
+		if (player.AI_forecastTeamVote(eVote, eVoteSource) == (PlayerVoteTypes)eCandidate)
+		{
+			iVotes += player.getVotes(eVote, eVoteSource);
+		}
+	}
+	return iVotes;
+}
+
+TeamTypes CvGame::getForecastTeamVoteWinner(VoteTypes eVote, VoteSourceTypes eVoteSource, int& iVotes, int& iMargin) const
+{
+	std::vector<TeamTypes> candidates;
+	getTeamVoteCandidates(eVoteSource, candidates);
+	TeamTypes eWinner = NO_TEAM;
+	iVotes = 0;
+	int iNextVotes = 0;
+	foreach_(const TeamTypes eCandidate, candidates)
+	{
+		const int iCandidateVotes = countForecastTeamVotes(eVote, eVoteSource, eCandidate);
+		if (eWinner == NO_TEAM)
+		{
+			eWinner = eCandidate;
+			iVotes = iCandidateVotes;
+		}
+		else if (iCandidateVotes > iVotes)
+		{
+			iNextVotes = iVotes;
+			eWinner = eCandidate;
+			iVotes = iCandidateVotes;
+		}
+		else if (iCandidateVotes > iNextVotes)
+		{
+			iNextVotes = iCandidateVotes;
+		}
+	}
+	iMargin = iVotes - iNextVotes;
+	return eWinner;
 }
 
 void CvGame::clearSecretaryGeneral(VoteSourceTypes eVoteSource)
 {
 	PROFILE_EXTRA_FUNC();
-	for (int j = 0; j < GC.getNumVoteInfos(); ++j)
+	foreach_(const VoteTypes eVote, GC.getVoteSourceVotes(eVoteSource))
 	{
-		const CvVoteInfo& kVote = GC.getVoteInfo((VoteTypes)j);
-
-		if (kVote.hasVoteSource(eVoteSource) && kVote.getRole() == VOTE_ROLE_SECRETARY_GENERAL)
+		if (GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_SECRETARY_GENERAL)
 		{
 			VoteTriggeredData kData;
 			kData.eVoteSource = eVoteSource;
-			kData.kVoteOption.eVote = (VoteTypes)j;
+			kData.kVoteOption.eVote = eVote;
 			kData.kVoteOption.iCityId = -1;
 			kData.kVoteOption.szText.clear();
 			kData.kVoteOption.ePlayer = NO_PLAYER;
@@ -9356,127 +9409,124 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 	{
 		pData->eVoteSource = eVoteSource;
 
-		for (int iI = 0; iI < GC.getNumVoteInfos(); iI++)
+		foreach_(const VoteTypes eSourceVote, GC.getVoteSourceVotes(eVoteSource))
 		{
-			if (GC.getVoteInfo((VoteTypes)iI).hasVoteSource(eVoteSource))
+			if (isChooseElection(eSourceVote))
 			{
-				if (isChooseElection((VoteTypes)iI))
+				VoteSelectionSubData kData;
+				kData.eVote = eSourceVote;
+				kData.iCityId = -1;
+				kData.ePlayer = NO_PLAYER;
+				kData.eOtherPlayer = NO_PLAYER;
+
+				if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
 				{
-					VoteSelectionSubData kData;
-					kData.eVote = (VoteTypes)iI;
-					kData.iCityId = -1;
-					kData.ePlayer = NO_PLAYER;
-					kData.eOtherPlayer = NO_PLAYER;
-
-					if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_OPEN_BORDERS))
+					if (isValidVoteSelection(eVoteSource, kData))
 					{
-						if (isValidVoteSelection(eVoteSource, kData))
-						{
-							kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPEN_BORDERS", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-							pData->aVoteOptions.push_back(kData);
-						}
+						kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPEN_BORDERS", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+						pData->aVoteOptions.push_back(kData);
 					}
-					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
+				}
+				else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_DEFENSIVE_PACT))
+				{
+					if (isValidVoteSelection(eVoteSource, kData))
 					{
-						if (isValidVoteSelection(eVoteSource, kData))
-						{
-							kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_DEFENSIVE_PACT", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-							pData->aVoteOptions.push_back(kData);
-						}
+						kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_DEFENSIVE_PACT", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+						pData->aVoteOptions.push_back(kData);
 					}
-					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
+				}
+				else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_PEACE))
+				{
+					for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 					{
-						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
-						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+						CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
 
-							if (kTeam1.isAlive())
+						if (kTeam1.isAlive())
+						{
+							kData.ePlayer = kTeam1.getLeaderID();
+
+							if (isValidVoteSelection(eVoteSource, kData))
 							{
-								kData.ePlayer = kTeam1.getLeaderID();
-
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_PEACE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
-								}
+								kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_PEACE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+								pData->aVoteOptions.push_back(kData);
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
+				}
+				else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_NO_TRADE))
+				{
+					for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 					{
-						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
+						CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+
+						if (kTeam1.isAlive())
 						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+							kData.ePlayer = kTeam1.getLeaderID();
 
-							if (kTeam1.isAlive())
+							if (isValidVoteSelection(eVoteSource, kData))
 							{
-								kData.ePlayer = kTeam1.getLeaderID();
-
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_NO_TRADE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
-								}
+								kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_NO_TRADE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+								pData->aVoteOptions.push_back(kData);
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
+				}
+				else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_FORCE_WAR))
+				{
+					for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
 					{
-						for (int iTeam1 = 0; iTeam1 < MAX_PC_TEAMS; ++iTeam1)
+						CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+
+						if (kTeam1.isAlive())
 						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+							kData.ePlayer = kTeam1.getLeaderID();
 
-							if (kTeam1.isAlive())
+							if (isValidVoteSelection(eVoteSource, kData))
 							{
-								kData.ePlayer = kTeam1.getLeaderID();
-
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_WAR", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
-								}
+								kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_WAR", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+								pData->aVoteOptions.push_back(kData);
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
+				}
+				else if (GC.getVoteInfo(kData.eVote).effectApplies(VOTE_EFFECT_ASSIGN_CITY))
+				{
+					for (int iPlayer1 = 0; iPlayer1 < MAX_PC_PLAYERS; ++iPlayer1)
 					{
-						for (int iPlayer1 = 0; iPlayer1 < MAX_PC_PLAYERS; ++iPlayer1)
-						{
-							const CvPlayer& kPlayer1 = GET_PLAYER((PlayerTypes)iPlayer1);
+						const CvPlayer& kPlayer1 = GET_PLAYER((PlayerTypes)iPlayer1);
 
-							if (kPlayer1.isAlive())
+						if (kPlayer1.isAlive())
+						{
+							foreach_(const CvCity* pLoopCity, kPlayer1.cities())
 							{
-								foreach_(const CvCity* pLoopCity, kPlayer1.cities())
+								const PlayerTypes eNewOwner = pLoopCity->plot()->findHighestCulturePlayer();
+								if (NO_PLAYER != eNewOwner)
 								{
-									const PlayerTypes eNewOwner = pLoopCity->plot()->findHighestCulturePlayer();
-									if (NO_PLAYER != eNewOwner)
+									kData.ePlayer = (PlayerTypes)iPlayer1;
+									kData.iCityId =	pLoopCity->getID();
+									kData.eOtherPlayer = eNewOwner;
+
+									if (isValidVoteSelection(eVoteSource, kData))
 									{
-										kData.ePlayer = (PlayerTypes)iPlayer1;
-										kData.iCityId =	pLoopCity->getID();
-										kData.eOtherPlayer = eNewOwner;
-
-										if (isValidVoteSelection(eVoteSource, kData))
-										{
-											kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_ASSIGN_CITY", kPlayer1.getCivilizationAdjectiveKey(), pLoopCity->getNameKey(), GET_PLAYER(eNewOwner).getNameKey(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-											pData->aVoteOptions.push_back(kData);
-										}
+										kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_ASSIGN_CITY", kPlayer1.getCivilizationAdjectiveKey(), pLoopCity->getNameKey(), GET_PLAYER(eNewOwner).getNameKey(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+										pData->aVoteOptions.push_back(kData);
 									}
 								}
 							}
 						}
 					}
-					else
+				}
+				else
+				{
+					kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPTION", GC.getVoteInfo(kData.eVote).getTextKeyWide(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
+					if (isVotePassed(kData.eVote))
 					{
-						kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPTION", GC.getVoteInfo(kData.eVote).getTextKeyWide(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-						if (isVotePassed(kData.eVote))
-						{
-							kData.szText += gDLL->getText("TXT_KEY_POPUP_PASSED");
-						}
+						kData.szText += gDLL->getText("TXT_KEY_POPUP_PASSED");
+					}
 
-						if (canDoResolution(eVoteSource, kData))
-						{
-							pData->aVoteOptions.push_back(kData);
-						}
+					if (canDoResolution(eVoteSource, kData))
+					{
+						pData->aVoteOptions.push_back(kData);
 					}
 				}
 			}
@@ -9805,21 +9855,15 @@ void CvGame::doVoteSelection()
 				{
 					setSecretaryGeneralTimer(eVoteSource, GC.getDefineINT("DIPLO_VOTE_SECRETARY_GENERAL_INTERVAL"));
 
-					for (int iJ = 0; iJ < GC.getNumVoteInfos(); iJ++)
-					{
-						if (GC.getVoteInfo((VoteTypes)iJ).getRole() == VOTE_ROLE_SECRETARY_GENERAL && GC.getVoteInfo((VoteTypes)iJ).hasVoteSource(iI))
-						{
-							VoteSelectionSubData kOptionData;
-							kOptionData.iCityId = -1;
-							kOptionData.ePlayer = NO_PLAYER;
-							kOptionData.eOtherPlayer = NO_PLAYER;
-							kOptionData.eVote = (VoteTypes)iJ;
-							kOptionData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPTION", GC.getVoteInfo((VoteTypes)iJ).getTextKeyWide(), getVoteRequired((VoteTypes)iJ, eVoteSource), countPossibleVote((VoteTypes)iJ, eVoteSource));
-							addVoteTriggered(eVoteSource, kOptionData);
-							bSecretaryGeneralVote = true;
-							break;
-						}
-					}
+					const VoteTypes eElection = GC.getVoteSourceSecretaryGeneralVote(eVoteSource);
+					VoteSelectionSubData kOptionData;
+					kOptionData.iCityId = -1;
+					kOptionData.ePlayer = NO_PLAYER;
+					kOptionData.eOtherPlayer = NO_PLAYER;
+					kOptionData.eVote = eElection;
+					kOptionData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPTION", GC.getVoteInfo(eElection).getTextKeyWide(), getVoteRequired(eElection, eVoteSource), countPossibleVote(eElection, eVoteSource));
+					addVoteTriggered(eVoteSource, kOptionData);
+					bSecretaryGeneralVote = true;
 				}
 				else changeSecretaryGeneralTimer(eVoteSource, -1);
 			}
@@ -9898,12 +9942,10 @@ void CvGame::processBuilding(BuildingTypes eBuilding, int iChange)
 {
 	PROFILE_FUNC();
 
-	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
+	const int iVoteSource = GC.getBuildingInfo(eBuilding).getDiploVoteType();
+	if (NO_VOTESOURCE != iVoteSource)
 	{
-		if (GC.getBuildingInfo(eBuilding).getDiploVoteType() == (VoteSourceTypes)iI)
-		{
-			changeDiploVote((VoteSourceTypes)iI, iChange);
-		}
+		changeDiploVote((VoteSourceTypes)iVoteSource, iChange);
 	}
 }
 

@@ -142,6 +142,17 @@ public:
 	int getVoteRequired(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 	TeamTypes getSecretaryGeneral(VoteSourceTypes eVoteSource) const;
 	bool canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const;
+	///<summary>The team of the first living player with eBuilding; NO_TEAM when no one has it.</summary>
+	TeamTypes getBuildingOwnerTeam(BuildingTypes eBuilding) const;
+	///<summary>The teams standing in eVoteSource's team elections (isTeamVoteEligible), in team order.</summary>
+	void getTeamVoteCandidates(VoteSourceTypes eVoteSource, std::vector<TeamTypes>& candidates) const;
+	///<summary>The votes eCandidate is forecast to receive in eVote at eVoteSource: those of every player whose
+	/// forecast vote is eCandidate (CvPlayerAI::AI_forecastTeamVote).</summary>
+	int countForecastTeamVotes(VoteTypes eVote, VoteSourceTypes eVoteSource, TeamTypes eCandidate) const;
+	///<summary>The candidate forecast to receive the most votes in eVote at eVoteSource, the first in team order
+	/// between equals, with iVotes set to its votes and iMargin to its lead over the next; NO_TEAM when no team
+	/// stands.</summary>
+	TeamTypes getForecastTeamVoteWinner(VoteTypes eVote, VoteSourceTypes eVoteSource, int& iVotes, int& iMargin) const;
 	void clearSecretaryGeneral(VoteSourceTypes eVoteSource);
 	void updateSecretaryGeneral();
 

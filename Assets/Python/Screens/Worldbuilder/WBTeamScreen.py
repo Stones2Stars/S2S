@@ -98,13 +98,9 @@ class WBTeamScreen:
 
 		self.lVoteBuildings = []
 		for i in xrange(GC.getNumVoteSourceInfos()):
-			iVoteBuilding = -1
-			for j in xrange(GC.getNumBuildingInfos()):
-				if BUILDING.getVoteSource(j) == i:
-					iVoteBuilding = j
-					break
-			if iVoteBuilding == -1: continue
-			self.lVoteBuildings.append([INFO.getDescription("BUILDING_", iVoteBuilding), iVoteBuilding])
+			lBuildings = INFO.getVoteSourceBuildings(i)
+			if not lBuildings: continue
+			self.lVoteBuildings.append([INFO.getDescription("BUILDING_", lBuildings[0]), lBuildings[0]])
 		self.lVoteBuildings.sort()
 
 		self.lAbilities = []

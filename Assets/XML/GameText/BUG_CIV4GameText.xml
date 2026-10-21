@@ -9019,16 +9019,6 @@
 		<Polish>Morska</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_VICTORY_BUG_POLL_ERROR</Tag>
-		<English>Source: Recent BUG Poll, statistical margin of error %s1.</English>
-		<French>Source: Sondage BUG récents, marge d'erreur %s1.</French>
-		<German>Quelle: Neueste BUG-Umfrage (statistische Fehlerquote: %s1)</German>
-		<Italian>Fonte: recente sondaggio BUG, margine di errore statistico %s1</Italian>
-		<Spanish>Fuente: encuesta reciente de BUG, margen de error estadístico %s1.</Spanish>
-		<Russian>Èñòî÷íèê: ïîñëåäíåå ãîëîñîâàíèå BUG, ñòàòèñòè÷åñêèé äîïóñê îøèáêè %s1.</Russian>
-		<Polish>&#143;r&#243;d&#179;o: najnowsza ankieta dotycz&#185;ca BUG, statystyczny margines b&#179;&#234;du %s1.</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUG_VICTORY_BUG_POLL_RESULT</Tag>
 		<English>%s1 (%s2) leads by %s3.</English>
 		<French>%s1 (%s2) conduit par %s3.</French>

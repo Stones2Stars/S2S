@@ -9,7 +9,6 @@ import PythonToolTip
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 VICTORY = CyVictoryInfo()   # the per-info accessor: the `condition` block and the buildings and projects needed
 GAME = GC.getGame()
 ENABLER = CyEnabler()
@@ -156,26 +155,6 @@ class CvVictoryScreen:
 		CyPlayer = GC.getPlayer(iActivePlayer)
 		iTeamAct = CyPlayer.getTeam()
 		CyTeam = GC.getTeam(iTeamAct)
-
-		# Vote
-		bDebugModeDLL = GAME.isDebugMode()
-		aiVoteBuilding = []
-		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = BUILDING.getVoteSource(i)
-			for j in xrange(GC.getNumVoteSourceInfos()):
-				if iVoteSource == j:
-					iUNTeam = -1
-					bUnknown = True
-
-					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-						CyPlayerX = GC.getPlayer(iPlayerX)
-						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
-							iUNTeam = CyPlayerX.getTeam()
-							if iUNTeam == iTeamAct or bDebugModeDLL or CyTeam.isHasMet(iUNTeam):
-								bUnknown = False
-							break
-
-					aiVoteBuilding.append((i, iUNTeam, bUnknown))
 
 		self.deleteAllWidgets()
 		eWidGen = WidgetTypes.WIDGET_GENERAL
@@ -595,18 +574,11 @@ class CvVictoryScreen:
 								screen.setTableText(szTable, 3, iRow, ufont2 + szCount, "", eWidGen, 1, 2, 1<<0)
 
 				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_DIPLO_VOTE) and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
-					for (iVoteBuilding, iUNTeam, bUnknown) in aiVoteBuilding:
+					for iVoteBuilding in self.getVoteBuildings():
 						iRow = screen.appendTableRow(szTable)
 						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (INFO.getTextKey("BUILDING_", iVoteBuilding),))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-						if iUNTeam != -1:
-							if bUnknown:
-								szName = TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
-							else:
-								szName = GC.getTeam(iUNTeam).getName()
-							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName, )), "", eWidGen, 1, 2, 1<<2)
-						else:
-							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
+						screen.setTableText(szTable, 1, iRow, ufont2 + self.getBuildingOwnerText(iVoteBuilding), "", eWidGen, 1, 2, 1<<2)
 
 				eVictoryCulture = VICTORY.getCityCulture(iLoopVC)
 				iNumCultureCities = VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_NUM_CULTURE_CITIES)
@@ -770,29 +742,8 @@ class CvVictoryScreen:
 		uFont = self.aFontList[6]
 		self.deleteAllWidgets()
 
-		CyPlayer = GC.getPlayer(self.iActivePlayer)
-		iTeamAct = CyPlayer.getTeam()
-		CyTeam = GC.getTeam(iTeamAct)
-
-		aiVoteBuilding = []
-		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = BUILDING.getVoteSource(i)
-			for j in xrange(GC.getNumVoteSourceInfos()):
-				if iVoteSource == j:
-					iUNTeam = -1
-					bUnknown = True
-
-					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-						CyPlayerX = GC.getPlayer(iPlayerX)
-						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
-							iUNTeam = CyPlayerX.getTeam()
-							if iUNTeam == iTeamAct or GAME.isDebugMode() or CyTeam.isHasMet(iUNTeam):
-								bUnknown = False
-							break
-
-					aiVoteBuilding.append((INFO.getDescription("BUILDING_", i), iUNTeam, bUnknown))
-
-		if not aiVoteBuilding:
+		lVoteBuildings = self.getVoteBuildings()
+		if not lVoteBuildings:
 			return
 
 		eWidGen = WidgetTypes.WIDGET_GENERAL
@@ -803,21 +754,11 @@ class CvVictoryScreen:
 		screen.setTableColumnHeader(szTable, 0, "", xRes/4)
 		screen.setTableColumnHeader(szTable, 1, "", 3*xRes/4)
 
-		szUnknown = TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
-		szTxt = uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ())
-		for szBuilding, iUNTeam, bUnknown in aiVoteBuilding:
+		for iVoteBuilding in lVoteBuildings:
 			iRow = screen.appendTableRow(szTable)
-			if iUNTeam != -1:
-				if bUnknown:
-					szName = szUnknown
-				else:
-					szName = GC.getTeam(iUNTeam).getName()
-				screen.setTableText(szTable, 0, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName, )), "", eWidGen, 1, 2, 1<<2)
-			else:
-				screen.setTableText(szTable, 0, iRow, szTxt, "", eWidGen, 1, 2, 1<<2)
-			screen.setTableText(szTable, 1, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (szBuilding,)), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(szTable, 0, iRow, uFont + self.getBuildingOwnerText(iVoteBuilding), "", eWidGen, 1, 2, 1<<2)
+			screen.setTableText(szTable, 1, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (INFO.getDescription("BUILDING_", iVoteBuilding),)), "", eWidGen, 1, 2, 1<<0)
 
-		iNumVoteInfos = GC.getNumVoteInfos()
 		szPassed = uFont + TRNSLTR.getText("TXT_KEY_POPUP_PASSED", ())
 		for i in xrange(GC.getNumVoteSourceInfos()):
 			screen.appendTableRow(szTable)
@@ -828,7 +769,7 @@ class CvVictoryScreen:
 				screen.setTableText(szTable, 0, iRow, uFont + GC.getTeam(iTeamSG).getName(), "", eWidGen, 1, 2, 1<<2)
 				screen.setTableText(szTable, 1, iRow, uFont + INFO.getVoteSourceSecretaryGeneralText(i), "", eWidGen, 1, 2, 1<<0)
 
-			for iLoop in xrange(iNumVoteInfos):
+			for iLoop in INFO.getVoteSourceVotes(i):
 				if GAME.isChooseElection(iLoop):
 					iCount = GAME.countPossibleVote(iLoop, i)
 					if iCount > 0:
@@ -842,7 +783,6 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 1, iRow, uFont + INFO.getDescription("VOTE_", iLoop), "", eWidGen, 1, 2, 1<<0)
 
 
-# BUG Additions Start
 	def showMembersScreen(self, screen):
 		# The members table is a silent area (§ THE ONE HOVER, Button lists).
 		PythonToolTip.buildButtonLists(self.buildMembersScreen, screen)
@@ -851,17 +791,10 @@ class CvVictoryScreen:
 		self.deleteAllWidgets()
 
 		iRelVote = -1
-		iRelVoteIdx = -1
 		iUNVote = -1
-		iUNVoteIdx = -1
-
-		iNumVoteInfos = GC.getNumVoteInfos()
-		aList = []
 		for i in xrange(GC.getNumVoteSourceInfos()):
-			iVoteSourceReligion = GAME.getVoteSourceReligion(i)
-			aList.append(iVoteSourceReligion)
 			if GAME.isDiploVote(i):
-				if iVoteSourceReligion != -1:
+				if GAME.getVoteSourceReligion(i) != -1:
 					iRelVote = i
 				else:
 					iUNVote = i
@@ -870,30 +803,22 @@ class CvVictoryScreen:
 		if  iRelVote == -1: self.VoteBody = 2 # AP not active
 		elif iUNVote == -1: self.VoteBody = 1 # UN not active
 
-		for i, iVoteSourceReligion in enumerate(aList):
-			if GAME.canHaveSecretaryGeneral(i) and GAME.getSecretaryGeneral(i) != -1:
-				for j in xrange(iNumVoteInfos):
-					if INFO.hasVoteSource(j, i):
-						if INFO.isVoteSecretaryGeneral(j):
-							if iVoteSourceReligion != -1:
-								iRelVoteIdx = j
-							else:
-								iUNVoteIdx = j
-							break
-
-		del iNumVoteInfos, aList
-
 		if self.VoteBody == 1:
 			iVoteBody = iRelVote
-			iVoteIdx = iRelVoteIdx
 		else:
 			iVoteBody = iUNVote
-			iVoteIdx = iUNVoteIdx
+
+		# The election shown: the body's Secretary General election, or its vote for a victory when it holds one
+		iVictoryVote = INFO.getVoteSourceVictoryVote(iVoteBody)
+		if iVictoryVote == -1:
+			self.VoteType = 1
+		if self.VoteType == 1:
+			iVoteIdx = INFO.getVoteSourceSecretaryGeneralVote(iVoteBody)
+		else:
+			iVoteIdx = iVictoryVote
+		if iVoteIdx == -1: return
 
 		iPlayerAct = self.iActivePlayer
-		CyPlayerAct = GC.getPlayer(iPlayerAct)
-		iTeamAct = CyPlayerAct.getTeam()
-		CyTeamAct = GC.getTeam(iTeamAct)
 
 		screen.addPanel(self.getNextWidgetName(), "", "", False, False, 0, 45, 1030, 680, PanelStyles.PANEL_STYLE_BLUE50)
 
@@ -912,21 +837,23 @@ class CvVictoryScreen:
 
 		screen.setTableText(szHeading, 0, iRow, sTableHeader, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
-		# determine the two candidates, add to header
+		# the candidates, with the votes each is forecast to receive
+		aForecast = GAME.getTeamVoteForecast(iVoteIdx, iVoteBody)
 		iCandTeam1 = -1
 		iCandTeam2 = -1
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			CyTeamX = GC.getTeam(iTeamX)
-			if CyTeamX.isAlive() and GAME.isTeamVoteEligible(iTeamX, iVoteBody):
-				if iCandTeam1 == -1:
-					iCandTeam1 = iTeamX
-				else:
-					iCandTeam2 = iTeamX
+		iVoteTotal = [0] * 2
+		if len(aForecast) > 0:
+			iCandTeam1, iVoteTotal[0] = aForecast[0]
+		if len(aForecast) > 1:
+			iCandTeam2, iVoteTotal[1] = aForecast[-1]
 
-		# get the first player for each team
-		# going to use that to calculation attitude - too hard to calc attitude for team
-		iCandPlayer1 = self.getPlayerOnTeam(iCandTeam1)
-		iCandPlayer2 = self.getPlayerOnTeam(iCandTeam2)
+		# each candidate team's leader, whose attitude columns the members' hovers show
+		iCandPlayer1 = -1
+		iCandPlayer2 = -1
+		if iCandTeam1 != -1:
+			iCandPlayer1 = GC.getTeam(iCandTeam1).getLeaderID()
+		if iCandTeam2 != -1:
+			iCandPlayer2 = GC.getTeam(iCandTeam2).getLeaderID()
 
 		# candidate known returns -1 if there is no candidate, 0 if not known or 1 if known
 		iCand1Known, sCand1Name = self.getCandStatusName(iCandTeam1)
@@ -964,12 +891,13 @@ class CvVictoryScreen:
 
 		screen.setText("BUGVotePope_Widget", "", szTxt, 1<<1, iX, 688, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		iX -= 10 + CyInterface().determineWidth(szTxt)
-		szTxt = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_DIPLOMATIC", ())
-		if self.VoteType == 2:
-			szTxt = TRNSLTR.changeTextColor(szTxt, iYellow)
+		if iVictoryVote != -1:
+			iX -= 10 + CyInterface().determineWidth(szTxt)
+			szTxt = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_DIPLOMATIC", ())
+			if self.VoteType == 2:
+				szTxt = TRNSLTR.changeTextColor(szTxt, iYellow)
 
-		screen.setText("BUGVoteDiplomaticVictory_Widget", "", szTxt, 1<<1, iX, 688, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.setText("BUGVoteDiplomaticVictory_Widget", "", szTxt, 1<<1, iX, 688, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		if iRelVote != -1 and iUNVote != -1:  # both AP and UN are active
 			iX = 20
@@ -989,28 +917,27 @@ class CvVictoryScreen:
 			screen.hide("VoteAP")
 			screen.hide("VoteUN")
 
-		# initialize the candidate votes and total vote counter
-		iVoteTotal = [0] * 2
-		iVoteCand = [0] * 2
-		iAPUNTeam = self.getAP_UN_OwnerTeam()
+		# the team holding the body's building, labelled with the leader's title while no leader is elected
+		iBuildingOwnerTeam = -1
+		for iVoteBuilding in INFO.getVoteSourceBuildings(iVoteBody):
+			iBuildingOwnerTeam = GAME.getBuildingOwnerTeam(iVoteBuilding)
+			if iBuildingOwnerTeam != -1:
+				break
 
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-			CyPlayerX = GC.getPlayer(iPlayerX)
-			if CyPlayerX.isAlive():
-				iVotes = CyPlayerX.getVotes(iVoteIdx, iVoteBody) # so that it sorts from most votes to least
-				aList.append([iVotes, CyPlayerX, iPlayerX])
+			if GC.getPlayer(iPlayerX).isAlive():
+				aList.append((GC.getPlayer(iPlayerX).getVotes(iVoteIdx, iVoteBody), iPlayerX))
 		aList.sort(reverse=True)
 
-		for iVotes, CyPlayerX, iPlayerX in aList:
-
+		for iVotes, iPlayerX in aList:
+			CyPlayerX = GC.getPlayer(iPlayerX)
 			iTeamX = CyPlayerX.getTeam()
 			# player name
-			if iTeamAct == iTeamX or CyTeamAct.isHasMet(iTeamX):
-				bKnown = True
+			bKnown = GC.getTeam(iTeamX).isKnownTo(iPlayerAct)
+			if bKnown:
 				szTxt = CyPlayerX.getName()
 			else:
-				bKnown = False
 				szTxt = TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
 
 			if iVotes > 0 and bKnown:
@@ -1030,24 +957,17 @@ class CvVictoryScreen:
 				if szText and iCand2Known == 1:
 					screen.setTableText(szTable, 3, iRow, szText, "", WidgetTypes.WIDGET_LEADERHEAD, iPlayerX, iCandPlayer2, 1<<2)
 
-			iVote = self.getVotesForWhichCandidate(iPlayerX, iCandTeam1, iCandTeam2, self.VoteType)
-			iVote_Column = -1
-
-			if iVote != -1:
-				sVote = str(iVotes)
-				iVoteTotal[iVote - 1] += iVotes
-
-				# number of votes for Candidate #1
-				if iVote == 1 and iVotes > 0 and iCand1Known == 1:
-					screen.setTableText(szTable, 2, iRow, sVote, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
-
-				# number of votes for Candidate #2
-				if iVote == 2 and iVotes > 0 and iCand2Known == 1:
-					screen.setTableText(szTable, 4, iRow, sVote, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
+			# the votes for the candidate this player is forecast to vote for
+			iForecastTeam = CyPlayerX.getForecastTeamVote(iVoteIdx, iVoteBody)
+			if iVotes > 0 and iForecastTeam != -1:
+				if iForecastTeam == iCandTeam1 and iCand1Known == 1:
+					screen.setTableText(szTable, 2, iRow, str(iVotes), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
+				elif iForecastTeam == iCandTeam2 and iCand2Known == 1:
+					screen.setTableText(szTable, 4, iRow, str(iVotes), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
 			# player status
 			if bKnown:
-				if GAME.canHaveSecretaryGeneral(iVoteBody) and iAPUNTeam == iTeamX and GAME.getSecretaryGeneral(iVoteBody) == -1:
+				if GAME.canHaveSecretaryGeneral(iVoteBody) and iBuildingOwnerTeam == iTeamX and GAME.getSecretaryGeneral(iVoteBody) == -1:
 					szLabel = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 
 				elif GAME.canHaveSecretaryGeneral(iVoteBody) and GAME.getSecretaryGeneral(iVoteBody) == iTeamX:
@@ -1063,75 +983,40 @@ class CvVictoryScreen:
 
 				screen.setTableText(szTable, 5, iRow, szLabel, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<1)
 
-			# store the candidates own votes
-			if iCandTeam1 == iTeamX and iCand1Known == 1:
-				iVoteCand[0] = iVotes
-			if iCandTeam2 == iTeamX and iCand2Known == 1:
-				iVoteCand[1] = iVotes
-
-		# calculate the maximum number of votes
-		iMaxVotes = 0
-		for i in xrange(GC.getNumVoteInfos()):
-			if GAME.countPossibleVote(i, iVoteBody) > 0:
-				iMaxVotes = GAME.countPossibleVote(i, iVoteBody)
-				break
-
 		iRow = screen.appendTableRow(szTable)
-		iVoteReq = self.getVoteReq(iVoteBody, self.VoteType)
-		sVoteReq = "%i" % (iVoteReq)
+		iVoteReq = GAME.getVoteRequired(iVoteIdx, iVoteBody)
 		sString = "<font=3b>" + TRNSLTR.getText("TXT_KEY_CONCEPT_TOTAL", ()) + "</font> "
 		if iCand1Known and iCand2Known:
-			sString +=  TRNSLTR.getText("TXT_KEY_BUG_VICTORY_VOTES_REQUIRED", (sVoteReq,))
+			sString +=  TRNSLTR.getText("TXT_KEY_BUG_VICTORY_VOTES_REQUIRED", ("%i" % iVoteReq,))
 		screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, 1, 1, 1<<0)
 
-		if iCand1Known == 1:
-			# color code the totals
-			sVoteTotal = str(iVoteTotal[0])
-			iColor = self.getVoteTotalColor(iVoteReq, iVoteTotal[0], iVoteCand[0], iVoteTotal[0] > iVoteTotal[1], self.VoteType == 2)
-			if iColor != -1:
-				sVoteTotal = TRNSLTR.changeTextColor(sVoteTotal, iColor)
-			screen.setTableText(szTable, 2, iRow, sVoteTotal, "", WidgetTypes.WIDGET_GENERAL, 1, 1, 1<<2)
-
-		if iCand2Known == 1:
-			sVoteTotal = str(iVoteTotal[1])
-			iColor = self.getVoteTotalColor(iVoteReq, iVoteTotal[1], iVoteCand[1], iVoteTotal[1] > iVoteTotal[0], self.VoteType == 2)
-			if iColor != -1:
-				sVoteTotal = TRNSLTR.changeTextColor(sVoteTotal, iColor)
-			screen.setTableText(szTable, 4, iRow, sVoteTotal, "", WidgetTypes.WIDGET_GENERAL, 1, 1, 1<<2)
+		iWinnerTeam, szWinnerShare, szWinnerMargin = GAME.getTeamVoteForecastWinner(iVoteIdx, iVoteBody)
+		aCandidates = [(iCandTeam1, iCand1Known, 0, 2), (iCandTeam2, iCand2Known, 1, 4)]
+		for iCandTeam, iCandKnown, iCand, iColumn in aCandidates:
+			if iCandKnown == 1:
+				# color code the totals
+				sVoteTotal = str(iVoteTotal[iCand])
+				iColor = self.getVoteTotalColor(iVoteReq, iVoteTotal[iCand], GC.getTeam(iCandTeam).getVotes(iVoteIdx, iVoteBody), iWinnerTeam == iCandTeam, self.VoteType == 2)
+				if iColor != -1:
+					sVoteTotal = TRNSLTR.changeTextColor(sVoteTotal, iColor)
+				screen.setTableText(szTable, iColumn, iRow, sVoteTotal, "", WidgetTypes.WIDGET_GENERAL, 1, 1, 1<<2)
 
 		# add a blank row
 		iRow = screen.appendTableRow(szTable)
-
-		# SecGen vote prediction
-		if iVoteTotal[0] > iVoteTotal[1]:
-			iWinner = 0
-			sWin = sCand1Name
-		else:
-			iWinner = 1
-			sWin = sCand2Name
-		iLoser = 1 - iWinner
-
-		fVotePercent = 100.0 * iVoteTotal[iWinner] / iMaxVotes
-		fMargin = 100.0 * (iVoteTotal[iWinner] - iVoteTotal[iLoser]) / iMaxVotes
 
 		if self.VoteType == 1:
 			sSecGen = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 		else:
 			sSecGen = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_DIPLOMATIC", ())
 
-		# display SecGen vote prediction
-		if iCand1Known != 0 and iCand2Known != 0:
+		# display the forecast winner
+		if iCand1Known != 0 and iCand2Known != 0 and iWinnerTeam != -1:
 			sString = sSecGen + ":"
 			iRow = screen.appendTableRow(szTable)
 			screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
-			sString = "     " + TRNSLTR.getText("TXT_KEY_BUG_VICTORY_BUG_POLL_RESULT", (sWin, "%.1f%%" % fVotePercent, "%.1f%%" % fMargin))
-			iRow = screen.appendTableRow(szTable)
-			screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
-
-			# BUG Poll statistical error
-			fRandError = 3.5 + GC.getASyncRand().get(10, "Election Results Statistical Error") / 10.0
-			sString = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_BUG_POLL_ERROR", ("%.1f%%" % fRandError,))
+			sWin = self.getCandStatusName(iWinnerTeam)[1]
+			sString = "     " + TRNSLTR.getText("TXT_KEY_BUG_VICTORY_BUG_POLL_RESULT", (sWin, szWinnerShare + u"%", szWinnerMargin + u"%"))
 			iRow = screen.appendTableRow(szTable)
 			screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
@@ -1149,35 +1034,32 @@ class CvVictoryScreen:
 		screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 
-	def getVoteReq(self, i, iVote):
-		iMaxVotes = 0
-		iMinVotes = 999999
-		for iLoop in xrange(GC.getNumVoteInfos()):
-			iVoteReq = GAME.getVoteRequired(iLoop, i)
-			if iVoteReq > 0:
-				if iVoteReq > iMaxVotes:
-					iMaxVotes = iVoteReq
-				if iVoteReq < iMinVotes:
-					iMinVotes = iVoteReq
-
-		if iVote == 1:
-			return iMinVotes
-		else:
-			return iMaxVotes
-
 	def getCandStatusName(self, iTeam):
 		if iTeam == -1: # there is no candidate
 			return -1, "-"
 
-		iTeamAct = GC.getPlayer(self.iActivePlayer).getTeam()
-
-		if iTeamAct == iTeam:
-			return 1, GC.getTeam(iTeam).getName()
-
-		if GC.getTeam(iTeamAct).isHasMet(iTeam):
+		if GC.getTeam(iTeam).isKnownTo(self.iActivePlayer):
 			return 1, GC.getTeam(iTeam).getName()
 		else:
 			return 0, TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
+
+	def getVoteBuildings(self):
+		"""The buildings that found a vote source, source by source."""
+		lBuildings = []
+		for iVoteSource in xrange(GC.getNumVoteSourceInfos()):
+			lBuildings.extend(INFO.getVoteSourceBuildings(iVoteSource))
+		return lBuildings
+
+	def getBuildingOwnerText(self, iBuilding):
+		"""Who built iBuilding: its owner's team, unknown when the viewer does not know it, or not built."""
+		iTeam = GAME.getBuildingOwnerTeam(iBuilding)
+		if iTeam == -1:
+			return TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ())
+		if GC.getTeam(iTeam).isKnownTo(self.iActivePlayer):
+			szName = GC.getTeam(iTeam).getName()
+		else:
+			szName = TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
+		return TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName,))
 
 
 	def getVoteTotalColor(self, iVoteReq, iVoteTotal, iVoteCand, bWinner, bVictoryVote):
@@ -1218,100 +1100,6 @@ class CvVictoryScreen:
 			if bScoring:
 				return INFO.getDescription("RELIGION_", iReligion) + u": %d%%" % iPercent
 		return TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NO_HOLY", ())
-
-
-# BUG Additions Start
-	def getVotesForWhichCandidate(self, iPlayer, iCand1, iCand2, iVote):
-		# returns are 1 = vote for candidate 1
-		#             2 = vote for candidate 2
-		#            -1 = abstain
-
-		# iVote = 1 means vote for SecGen or Pope
-		# iVote = 2 means vote for diplomatic victory
-
-		# candidates are teams!!!
-
-		# * AI votes for itself if it can
-		# * AI votes for a team member if it can
-		# * AI votes for its master, if it is a vassal
-		# * if the AI attitude to one of the candidates is 'friendly' and the other is 'pleased' or less, AI votes for 'friend'
-		# * if both candidates are at 'friendly' status, votes for one with highest attitude
-		# * if neither candidate is at 'friendly', abstains
-
-		iPTeam = GC.getPlayer(iPlayer).getTeam()
-		iPCand1 = self.getPlayerOnTeam(iCand1)
-		iPCand2 = self.getPlayerOnTeam(iCand2)
-
-		# * player votes for its own team if it can
-		if iPTeam == iCand1: return 1
-		if iPTeam == iCand2: return 2
-
-		# if player is human, votes for self or abstains
-		if iPlayer == self.iActivePlayer: return -1
-
-		# * AI votes for its master, if it is a vassal
-		if GC.getTeam(iPTeam).isVassal(iCand1): return 1
-		if GC.getTeam(iPTeam).isVassal(iCand2): return 2
-
-		# get player category (friendly) to candidates
-		iC1Cat = AttitudeUtil.getAttitudeCategory(iPlayer, iPCand1)
-		iC2Cat = AttitudeUtil.getAttitudeCategory(iPlayer, iPCand2)
-
-		# the cut-off for SecGen votes is pleased (3)
-		# the cut-off for Diplo victory votes is friendly (4)
-		if iVote == 1:  # vote for SecGen or Pope
-			iCutOff = 3
-		else:
-			iCutOff = 4
-
-		# * if neither candidate is at 'friendly', abstains
-		# assumes friendly = 4, pleased = 3, etc
-		if (iC1Cat < iCutOff
-		and iC2Cat < iCutOff):
-			return -1
-
-		# * if the AI attitude to one of the candidates is 'friendly' and the other is 'pleased' or less, AI votes for 'friend'
-		if (iC1Cat >= iCutOff
-		and iC1Cat > iC2Cat):
-			return 1
-
-		if (iC2Cat >= iCutOff
-		and iC2Cat > iC1Cat):
-			return 2
-
-		# if the code gets to here, then both candidates are at or above the cutoff
-		# and they are both at the same category (ie both friendly)
-		# need to decide on straight attitude (visible only)
-
-		# get player attitude to candidates
-		iC1Att = AttitudeUtil.getAttitudeCount(iPlayer, iPCand1)
-		iC2Att = AttitudeUtil.getAttitudeCount(iPlayer, iPCand2)
-
-		# * if both candidates are at 'friendly' status, votes for one with highest attitude
-		if iC2Att < iC1Att: # ties go to Candidate #1
-			return 1
-		else:
-			return 2
-
-	def getPlayerOnTeam(self, iTeam):
-		for i in xrange(GC.getMAX_PC_PLAYERS()):
-			if iTeam == GC.getPlayer(i).getTeam():
-				return i
-
-		return -1
-
-	def getAP_UN_OwnerTeam(self):
-		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = BUILDING.getVoteSource(i)
-			for j in xrange(GC.getNumVoteSourceInfos()):
-				if iVoteSource == j:
-					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-						CyPlayerX = GC.getPlayer(iPlayerX)
-						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
-							return CyPlayerX.getTeam()
-		return -1
-
-
 
 	# returns a unique ID for a widget in this screen
 	def getNextWidgetName(self):

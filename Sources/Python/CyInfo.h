@@ -526,14 +526,17 @@ public:
 	/// <summary>How many of this building a victory requires; 0 when it plays no part in that victory.</summary>
 	int getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const;
 
-	//	THE DIPLOMATIC BODY. ⚠ VOTESOURCE_ is not a registered type prefix, so these are addressed by BARE ID
-	//	rather than through the prefix plane -- the registry has no other route.
+	//	THE DIPLOMATIC BODY: named reads taking the vote source's bare id.
 	/// <summary>The localized title this diplomatic body gives its leader (its "secretary general").</summary>
 	std::wstring getVoteSourceSecretaryGeneralText(int iVoteSourceId) const;
-	/// <summary>Does this VOTE belong to that diplomatic body?</summary>
-	bool hasVoteSource(int iVoteId, int iVoteSourceId) const;
-	/// <summary>Is this vote the one that ELECTS the body's leader (`role: secretaryGeneral`)?</summary>
-	bool isVoteSecretaryGeneral(int iVoteId) const;
+	/// <summary>The resolutions this body can hold, in vote order (cvInternalGlobals::getVoteSourceVotes).</summary>
+	python::list getVoteSourceVotes(int iVoteSourceId) const;
+	/// <summary>The buildings that found this body, in building order (cvInternalGlobals::getVoteSourceBuildings).</summary>
+	python::list getVoteSourceBuildings(int iVoteSourceId) const;
+	/// <summary>The vote that elects this body's leader (`role: secretaryGeneral`); -1 when it has none.</summary>
+	int getVoteSourceSecretaryGeneralVote(int iVoteSourceId) const;
+	/// <summary>This body's vote for a victory (`role: victory`); -1 when it has none.</summary>
+	int getVoteSourceVictoryVote(int iVoteSourceId) const;
 	python::list getCivilizationLeaders(int iCivilizationId) const;
 	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
 	/// civilization, so an unknown id is never offered as a playable choice.</summary>

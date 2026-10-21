@@ -151,6 +151,15 @@ REASON is what protects a legitimate off-switch).
   (`CvTeam::getCitiesByCulture`), each counted up to the culture victory's level; each culture victory city shows
   its turns to that level (`CvCity::getCultureTurnsTo`). The conquest row counts the teams that block conquest,
   known and unknown (`CvTeam::countConquestRivals`), and the team's vassals.
+- **Team elections** (a vote source's Secretary General and victory votes, `getVoteSourceSecretaryGeneralVote` /
+  `getVoteSourceVictoryVote`): the candidates are the teams `CvGame::isTeamVoteEligible` admits; an AI votes as
+  `CvPlayerAI::AI_teamVote` (its own team when it stands, else the team it is a vassal of, else the team it likes
+  most above a floor of 0, 7 for a victory vote), and only voting members vote. The Victory screen's Members tab
+  shows the forecast: each player's vote (`CvPlayerAI::AI_forecastTeamVote`, a human counted only for its own
+  team), the totals (`CvGame::countForecastTeamVotes`) and the forecast winner with its lead
+  (`CvGame::getForecastTeamVoteWinner`), against the election's own required votes (`CvGame::getVoteRequired`).
+  The building that founds a vote source (`getVoteSourceBuildings`) is shown with its owner
+  (`CvGame::getBuildingOwnerTeam`).
 
 ## See also
 

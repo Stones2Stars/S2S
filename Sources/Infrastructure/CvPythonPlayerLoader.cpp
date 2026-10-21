@@ -354,6 +354,7 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("isOption", &CyPlayer::isOption, "bool ()")
 		.def("setOption", &CyPlayer::setOption, "void ()")
 		.def("getVotes", &CyPlayer::getVotes, "int (int /*VoteTypes*/ eVote, int /*VoteSourceTypes*/ eVoteSource)")
+		.def("getForecastTeamVote", &CyPlayer::getForecastTeamVote, "int (int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource)")
 		.def("isFullMember", &CyPlayer::isFullMember, "bool ()")
 		.def("isVotingMember", &CyPlayer::isVotingMember, "bool ()")
 		.def("isPlayable", &CyPlayer::isPlayable, "bool ()")

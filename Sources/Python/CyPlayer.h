@@ -306,6 +306,9 @@ public:
 	bool isOption(int /*PlayerOptionTypes*/ eIndex) const;
 	void setOption(int /*PlayerOptionTypes*/ eIndex, bool bNewValue);
 	int getVotes(int /*VoteTypes*/ eVote, int /*VoteSourceTypes*/ eVoteSource) const;
+	///<summary>The team this player is forecast to vote for in iVote at iVoteSource, or -1 when it is counted for
+	/// no one (CvPlayerAI::AI_forecastTeamVote).</summary>
+	int getForecastTeamVote(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const;
 	bool isFullMember(int /*VoteSourceTypes*/ eVoteSource) const;
 	bool isVotingMember(int /*VoteSourceTypes*/ eVoteSource) const;
 	bool isPlayable() const;

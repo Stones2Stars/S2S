@@ -703,6 +703,17 @@ public:
 	///<summary>The projects eVictory's projects need built first (CvProjectInfo::getNeededProjects), in project
 	/// order, found at load.</summary>
 	const std::vector<ProjectTypes>& getVictoryNeededProjects(VictoryTypes eVictory) const;
+	///<summary>The resolutions eVoteSource can hold (CvVoteInfo::getVoteSources), in vote order, found at load.</summary>
+	const std::vector<VoteTypes>& getVoteSourceVotes(VoteSourceTypes eVoteSource) const;
+	///<summary>The buildings that found eVoteSource (CvBuildingInfo::getDiploVoteType), in building order, found at
+	/// load.</summary>
+	const std::vector<BuildingTypes>& getVoteSourceBuildings(VoteSourceTypes eVoteSource) const;
+	///<summary>eVoteSource's election of its Secretary General: its first vote with that role, in vote order;
+	/// NO_VOTE when it holds none.</summary>
+	VoteTypes getVoteSourceSecretaryGeneralVote(VoteSourceTypes eVoteSource) const;
+	///<summary>eVoteSource's vote for a victory: its first vote with that role, in vote order; NO_VOTE when it holds
+	/// none.</summary>
+	VoteTypes getVoteSourceVictoryVote(VoteSourceTypes eVoteSource) const;
 
 	int getNumUnitArtStyleTypeInfos() const;
 	CvUnitArtStyleTypeInfo& getUnitArtStyleTypeInfo(UnitArtStyleTypes eUnitArtStyleTypeNum) const;
@@ -1147,6 +1158,10 @@ private:
 	std::vector<std::vector<BuildingTypes> > m_victoryBuildings;
 	std::vector<std::vector<ProjectTypes> > m_victoryProjects;
 	std::vector<std::vector<ProjectTypes> > m_victoryNeededProjects;
+	std::vector<std::vector<VoteTypes> > m_voteSourceVotes;
+	std::vector<std::vector<BuildingTypes> > m_voteSourceBuildings;
+	std::vector<VoteTypes> m_voteSourceSecretaryGeneralVotes;
+	std::vector<VoteTypes> m_voteSourceVictoryVotes;
 	std::vector<PromotionTypes> m_aiStatusPromotions;
 	std::vector<PromotionTypes> m_starsigns;
 

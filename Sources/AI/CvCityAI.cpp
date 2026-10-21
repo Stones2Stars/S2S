@@ -6494,34 +6494,29 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					EnablerKernel::scanCondDeps(kBuilding.getRequires()->operate, kVoteDeps, false, false);
 				}
 
-				for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
+				if (NO_VOTESOURCE != kBuilding.getDiploVoteType())
 				{
-					PROFILE("CvCityAI::AI_buildingValueThresholdOriginal.Votes");
-
-					if (kBuilding.getDiploVoteType() == iI)
+					int votingSourceValue = 0;
+					if (kVoteDeps.stateReligionInCity)
 					{
-						int votingSourceValue = 0;
-						if (kVoteDeps.stateReligionInCity)
+						int iShareReligionCount = 0;
+						int iPlayerCount = 0;
+						for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 						{
-							int iShareReligionCount = 0;
-							int iPlayerCount = 0;
-							for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+							if (iPlayer != getOwner() && GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 							{
-								if (iPlayer != getOwner() && GET_PLAYER((PlayerTypes)iPlayer).isAlive())
+								iPlayerCount++;
+								if (kOwner.getEmpireContext().stateReligion() == GET_PLAYER((PlayerTypes)iPlayer).getEmpireContext().stateReligion())
 								{
-									iPlayerCount++;
-									if (kOwner.getEmpireContext().stateReligion() == GET_PLAYER((PlayerTypes)iPlayer).getEmpireContext().stateReligion())
-									{
-										iShareReligionCount++;
-									}
+									iShareReligionCount++;
 								}
 							}
-							votingSourceValue += (200 * (1 + iShareReligionCount)) / (1 + iPlayerCount);
 						}
-						else votingSourceValue += 100;
-
-						iValue += (votingSourceValue * (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY1) ? 5 : 1));
+						votingSourceValue += (200 * (1 + iShareReligionCount)) / (1 + iPlayerCount);
 					}
+					else votingSourceValue += 100;
+
+					iValue += (votingSourceValue * (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY1) ? 5 : 1));
 				}
 
 				iValue += (

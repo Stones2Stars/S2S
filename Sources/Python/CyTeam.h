@@ -72,6 +72,8 @@ public:
 	int countConquestRivals(int /*PlayerTypes*/ iObserver, bool bKnown) const;
 	///<summary>The living teams that are this team's vassals (CvTeam::getVassalCount).</summary>
 	int getVassalCount() const;
+	///<summary>The votes the team's players hold in iVote at iVoteSource (CvTeam::getVotes).</summary>
+	int getVotes(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const;
 
 	bool isAtWar(bool bCountMinors) const;
 	int getAtWarCount(bool bIgnoreMinors) const;

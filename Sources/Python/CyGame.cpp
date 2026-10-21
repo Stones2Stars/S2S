@@ -1,6 +1,7 @@
 #include "CvGameCoreDLL.h"
 #include "CyPyList.h"
 #include "Infos/CvBuildInfo.h"   // setBuildDisabled -- the build it toggles
+#include "Infos/CvVoteInfo.h"    // hasVoteSource -- the forecast reads check the vote belongs to the body
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"   // the interface SELECTION reads
 #include "Engine/CvUnit.h"
 #include "Engine/CvCity.h"
@@ -63,29 +64,97 @@ int CyGame::getAdjustedLandPercent(VictoryTypes eVictory) const
 	return m_pGame.getAdjustedLandPercent(eVictory);
 }
 
-bool CyGame::isChooseElection(VoteTypes eVote) const
+namespace
 {
-	return m_pGame.isChooseElection(eVote);
+	///<summary>Whether iVote and iVoteSource are both real ids.</summary>
+	bool cygame_isVoteAndSource(int iVote, int iVoteSource)
+	{
+		return iVote >= 0 && iVote < GC.getNumVoteInfos() && iVoteSource >= 0 && iVoteSource < GC.getNumVoteSourceInfos();
+	}
+
+	///<summary>Whether iVote is a resolution of iVoteSource, both ids real.</summary>
+	bool cygame_isVoteOfSource(int iVote, int iVoteSource)
+	{
+		return cygame_isVoteAndSource(iVote, iVoteSource) && GC.getVoteInfo((VoteTypes)iVote).hasVoteSource(iVoteSource);
+	}
 }
 
-bool CyGame::isTeamVoteEligible(TeamTypes eTeam, VoteSourceTypes eVoteSource) const
+bool CyGame::isChooseElection(VoteTypes eVote) const
 {
-	return m_pGame.isTeamVoteEligible(eTeam, eVoteSource);
+	if (eVote < 0 || eVote >= GC.getNumVoteInfos())
+	{
+		return false;
+	}
+	return m_pGame.isChooseElection(eVote);
 }
 
 int CyGame::countPossibleVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 {
+	if (!cygame_isVoteAndSource(eVote, eVoteSource))
+	{
+		return 0;
+	}
 	return m_pGame.countPossibleVote(eVote, eVoteSource);
 }
 
 int CyGame::getVoteRequired(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 {
+	if (!cygame_isVoteAndSource(eVote, eVoteSource))
+	{
+		return 0;
+	}
 	return m_pGame.getVoteRequired(eVote, eVoteSource);
 }
 
 int CyGame::getSecretaryGeneral(VoteSourceTypes eVoteSource) const
 {
 	return m_pGame.getSecretaryGeneral(eVoteSource);
+}
+
+int CyGame::getBuildingOwnerTeam(int /*BuildingTypes*/ iBuilding) const
+{
+	if (iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos())
+	{
+		return NO_TEAM;
+	}
+	return m_pGame.getBuildingOwnerTeam((BuildingTypes)iBuilding);
+}
+
+python::list CyGame::getTeamVoteForecast(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const
+{
+	python::list rows = python::list();
+	if (!cygame_isVoteOfSource(iVote, iVoteSource))
+	{
+		return rows;
+	}
+	std::vector<TeamTypes> candidates;
+	m_pGame.getTeamVoteCandidates((VoteSourceTypes)iVoteSource, candidates);
+	foreach_(const TeamTypes eCandidate, candidates)
+	{
+		rows.append(python::make_tuple((int)eCandidate, m_pGame.countForecastTeamVotes((VoteTypes)iVote, (VoteSourceTypes)iVoteSource, eCandidate)));
+	}
+	return rows;
+}
+
+python::tuple CyGame::getTeamVoteForecastWinner(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const
+{
+	if (!cygame_isVoteOfSource(iVote, iVoteSource))
+	{
+		return python::make_tuple(-1, std::wstring(), std::wstring());
+	}
+	const VoteTypes eVote = (VoteTypes)iVote;
+	const VoteSourceTypes eVoteSource = (VoteSourceTypes)iVoteSource;
+	int iWinnerVotes = 0;
+	int iMargin = 0;
+	const TeamTypes eWinner = m_pGame.getForecastTeamVoteWinner(eVote, eVoteSource, iWinnerVotes, iMargin);
+	if (eWinner == NO_TEAM)
+	{
+		return python::make_tuple(-1, std::wstring(), std::wstring());
+	}
+	const int iPossible = m_pGame.countPossibleVote(eVote, eVoteSource);
+	return python::make_tuple((int)eWinner,
+		std::wstring(ratioText(100 * (int64_t)iWinnerVotes, iPossible, 1).GetCString()),
+		std::wstring(ratioText(100 * (int64_t)iMargin, iPossible, 1).GetCString()));
 }
 
 bool CyGame::canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const
@@ -908,11 +977,13 @@ void CyGame::pythonPublish()
 		.def("getAdjustedLandPercent", &CyGame::getAdjustedLandPercent)
 
 		.def("isChooseElection", &CyGame::isChooseElection)
-		.def("isTeamVoteEligible", &CyGame::isTeamVoteEligible)
 		.def("countPossibleVote", &CyGame::countPossibleVote)
 		.def("getVoteRequired", &CyGame::getVoteRequired)
 		.def("getSecretaryGeneral", &CyGame::getSecretaryGeneral)
 		.def("canHaveSecretaryGeneral", &CyGame::canHaveSecretaryGeneral)
+		.def("getBuildingOwnerTeam", &CyGame::getBuildingOwnerTeam)
+		.def("getTeamVoteForecast", &CyGame::getTeamVoteForecast)
+		.def("getTeamVoteForecastWinner", &CyGame::getTeamVoteForecastWinner)
 		.def("getVoteSourceReligion", &CyGame::getVoteSourceReligion)
 
 		.def("countCivPlayersAlive", &CyGame::countCivPlayersAlive)
