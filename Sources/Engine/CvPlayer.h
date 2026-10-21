@@ -452,6 +452,12 @@ public:
 
 	void doEspionageOneOffPoints(int iChange);
 	int getEspionageSpending(TeamTypes eAgainstTeam, int iTotal = -1) const;
+	///<summary>The espionage points this player puts against all the teams it has met in a turn: the sum of its
+	/// spending against each (getEspionageSpending).</summary>
+	int getTotalEspionageSpending() const;
+	///<summary>Whether this player can field eMission at all: the mission is enabled and its team holds the tech it
+	/// needs.</summary>
+	bool isEspionageMissionAvailable(EspionageMissionTypes eMission) const;
 	bool canDoEspionageMission(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pUnit) const;
 	int64_t getEspionageMissionBaseCost(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit) const;
 	int getEspionageMissionCost(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot = NULL, int iExtraData = -1, const CvUnit* pSpyUnit = NULL) const;
@@ -702,6 +708,10 @@ public:
 	bool isDemographicsVisibleTo(PlayerTypes eObserver) const;
 	///<summary>Whether eObserver may see what this player is researching.</summary>
 	bool isResearchVisibleTo(PlayerTypes eObserver) const;
+	///<summary>Whether eObserver may see this player's espionage -- its points against the observer, its spending,
+	/// its multiplier and counter-espionage: its own team, debug mode, or the observer's team ahead in espionage
+	/// (CvTeam::isEspionageAheadOf).</summary>
+	bool isEspionageVisibleTo(PlayerTypes eObserver) const;
 	///<summary>How many of this player's cities eObserver knows of: all of them when the count is exact for it,
 	/// else the cities revealed to its team, and the capital.</summary>
 	int getCitiesKnownTo(PlayerTypes eObserver) const;

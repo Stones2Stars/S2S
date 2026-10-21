@@ -73,10 +73,6 @@ enum PyIntrinsicSlot
 	PYINT_HURRY_GOLD_PER_PRODUCTION,   // HURRY_ -- gold paid per hammer
 	PYINT_HURRY_PRODUCTION_PER_POPULATION,
 	PYINT_HURRY_IS_ANGER,       // HURRY_ -- does using it anger the population
-	PYINT_ESPIONAGE_COST,       // ESPIONAGEMISSION_ -- its base cost, -1 when the mission is unavailable
-	PYINT_ESPIONAGE_TARGETS_CITY,
-	PYINT_ESPIONAGE_IS_PASSIVE,
-	PYINT_ESPIONAGE_TECH_PREREQ,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
 	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
 	// The ERA start grants (`grants.*`) -- what a player beginning in this era is handed. All six are authored
 	// (startingGold by every era), so they are live data, not headroom.

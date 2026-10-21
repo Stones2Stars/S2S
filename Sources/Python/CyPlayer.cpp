@@ -600,6 +600,22 @@ int CyPlayer::getEspionageSpending(int /*TeamTypes*/ eIndex) const
 	return m_pPlayer->getEspionageSpending((TeamTypes) eIndex);
 }
 
+int CyPlayer::getTotalEspionageSpending() const
+{
+	return m_pPlayer->getTotalEspionageSpending();
+}
+
+bool CyPlayer::isEspionageMissionAvailable(int /*EspionageMissionTypes*/ eMission) const
+{
+	if (eMission < 0 || eMission >= GC.getNumEspionageMissionInfos()) return false;
+	return m_pPlayer->isEspionageMissionAvailable((EspionageMissionTypes)eMission);
+}
+
+bool CyPlayer::isEspionageVisibleTo(int /*PlayerTypes*/ iObserver) const
+{
+	return m_pPlayer->isEspionageVisibleTo((PlayerTypes)iObserver);
+}
+
 bool CyPlayer::canDoEspionageMission(int /*EspionageMissionTypes*/ eMission, int /*PlayerTypes*/ eTargetPlayer, const CyPlot* pPlot, int iExtraData) const
 {
 	return m_pPlayer->canDoEspionageMission((EspionageMissionTypes) eMission, (PlayerTypes) eTargetPlayer, NULL != pPlot ? pPlot->getPlot() : NULL, iExtraData, NULL);

@@ -10339,6 +10339,12 @@ bool CvPlayer::isResearchVisibleTo(PlayerTypes eObserver) const
 	return isIntelVisibleTo(eObserver, GC.getSeeResearchMission());
 }
 
+bool CvPlayer::isEspionageVisibleTo(PlayerTypes eObserver) const
+{
+	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	return GC.getGame().isDebugMode() || getTeam() == eObserverTeam || GET_TEAM(eObserverTeam).isEspionageAheadOf(getTeam());
+}
+
 
 bool CvPlayer::isCityCountExactFor(PlayerTypes eObserver) const
 {
@@ -14348,6 +14354,30 @@ int CvPlayer::getEspionageSpending(TeamTypes eAgainstTeam, int iTotal) const
 	return iSpendingValue;
 }
 
+int CvPlayer::getTotalEspionageSpending() const
+{
+	int iTotal = 0;
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
+	{
+		const int iSpending = getEspionageSpending(static_cast<TeamTypes>(iTeam));
+		if (iSpending > 0)
+		{
+			iTotal += iSpending;
+		}
+	}
+	return iTotal;
+}
+
+bool CvPlayer::isEspionageMissionAvailable(EspionageMissionTypes eMission) const
+{
+	const CvEspionageMissionInfo& kMission = GC.getEspionageMissionInfo(eMission);
+	if (kMission.getCost() == -1)
+	{
+		return false;
+	}
+	return kMission.getTechPrereq() == NO_TECH || GET_TEAM(getTeam()).isHasTech(kMission.getTechPrereq());
+}
+
 bool CvPlayer::canDoEspionageMission(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pUnit) const
 {
 	if (getID() == eTargetPlayer || NO_PLAYER == eTargetPlayer)
@@ -14360,14 +14390,12 @@ bool CvPlayer::canDoEspionageMission(EspionageMissionTypes eMission, PlayerTypes
 		return false;
 	}
 
-	const CvEspionageMissionInfo& kMission = GC.getEspionageMissionInfo(eMission);
-
-	// Need Tech Prereq, if applicable
-	if (kMission.getTechPrereq() != NO_TECH && !GET_TEAM(getTeam()).isHasTech(kMission.getTechPrereq()))
+	if (!isEspionageMissionAvailable(eMission))
 	{
 		return false;
 	}
 
+	const CvEspionageMissionInfo& kMission = GC.getEspionageMissionInfo(eMission);
 	const int iCost = getEspionageMissionCost(eMission, eTargetPlayer, pPlot, iExtraData, pUnit);
 	if (iCost < 0)
 	{

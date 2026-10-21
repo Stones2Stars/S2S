@@ -1423,26 +1423,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getHurryInfo((HurryTypes)iId).causesAnger() ? 1 : 0;
 		break;
 
-	case PYINT_ESPIONAGE_COST:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).getCost();
-		break;
-
-	case PYINT_ESPIONAGE_TARGETS_CITY:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isTargetsCity() ? 1 : 0;
-		break;
-
-	case PYINT_ESPIONAGE_IS_PASSIVE:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isPassive() ? 1 : 0;
-		break;
-
-	case PYINT_ESPIONAGE_TECH_PREREQ:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return (int)GC.getEspionageMissionInfo((EspionageMissionTypes)iId).getTechPrereq();
-		break;
-
 	case PYINT_IS_BUILD:
 		if (szTypePrefix == "MISSION_" && iId < GC.getNumMissionInfos())
 			return GC.getMissionInfo((MissionTypes)iId).isBuild() ? 1 : 0;
