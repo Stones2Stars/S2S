@@ -290,7 +290,8 @@ public:
 	void setForcedAIAutoPlay(PlayerTypes iPlayer, int iNewValue, bool bForced = false);
 	void changeForcedAIAutoPlay(PlayerTypes iPlayer, int iNewValue);
 
-	bool getStarshipLaunched(int ID) const;
+	///<summary>Whether eTeam has launched its starship (the space victory's launch, kept once set).</summary>
+	bool isStarshipLaunched(TeamTypes eTeam) const;
 	bool getDiplomaticVictoryAchieved(int ID) const;
 
 	int getCurrentVoteID() const;

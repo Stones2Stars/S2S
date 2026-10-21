@@ -12,6 +12,7 @@
 #include "CvBuildingInfo.h"
 #include "Enabler/CvEnablerKernel.h"   // obsoletedByHeldTech -- obsoletion is DERIVED from the held techs
 #include "Repos/InfoRepo.h"
+#include "Repos/BuildingsRepo.h"   // worldWonders -- the world wonders the victory score counts
 #include "CvBonusInfo.h"
 #include "CvCity.h"
 #include "CvDeal.h"
@@ -6448,162 +6449,179 @@ void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 }
 
 
-int64_t CvTeam::getTotalVictoryScore() const
+namespace
 {
-	PROFILE_EXTRA_FUNC();
-	int64_t iTotalVictoryScore = 0;
-
-	int64_t globalCulture = 0;
-	int globalPopulation = 0;
-	int globalWonderScore = 0;
-
-	int teamWonderScore = 0;
-
-	int totalTeamReligion = 0;
-	int totalTeamMonumentalCities = 0;
-
-	int64_t globalPowerHistory = 0;
-	int64_t teamPowerHistory = 0;
-
-	for (int iK = 0; iK < GC.getNumBuildingInfos(); iK++)
+	///<summary>A part with the given measures and points.</summary>
+	VictoryScorePart ct_part(int64_t iTeam, int64_t iWorld, int64_t iPoints)
 	{
-		if (GC.getBuildingInfo((BuildingTypes)iK).getAllowed()->cap(ALLOWEDCAP_WORLD) == 1)
+		VictoryScorePart part;
+		part.team = iTeam;
+		part.world = iWorld;
+		part.points = iPoints;
+		return part;
+	}
+
+	///<summary>A part worth the team's share of the world, in percent; 0 when the world has none.</summary>
+	VictoryScorePart ct_sharePart(int64_t iTeam, int64_t iWorld)
+	{
+		return ct_part(iTeam, iWorld, iWorld > 0 ? iTeam * 100 / iWorld : 0);
+	}
+}
+
+void CvTeam::getHolyCityReligions(std::vector<std::pair<ReligionTypes, int> >& religions) const
+{
+	for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
+	{
+		if (hasHolyCity((ReligionTypes)iReligion))
 		{
-			globalWonderScore++;
+			religions.push_back(std::make_pair((ReligionTypes)iReligion, GC.getGame().calculateReligionPercent((ReligionTypes)iReligion)));
+		}
+	}
+}
+
+ReligionTypes CvTeam::getScoringReligion() const
+{
+	ReligionTypes eBest = NO_RELIGION;
+	int iBestPercent = -1;
+	std::vector<std::pair<ReligionTypes, int> > religions;
+	getHolyCityReligions(religions);
+	for (uint iReligion = 0; iReligion < religions.size(); iReligion++)
+	{
+		if (religions[iReligion].second > iBestPercent)
+		{
+			iBestPercent = religions[iReligion].second;
+			eBest = religions[iReligion].first;
+		}
+	}
+	return eBest;
+}
+
+void CvTeam::getVictoryScoreParts(VictoryScorePart (&parts)[NUM_VICTORY_SCORE_PARTS]) const
+{
+	CvGame& kGame = GC.getGame();
+	int64_t iTeamWonders = 0;
+	int64_t iWorldPopulation = 0;
+	int64_t iWorldCulture = 0;
+	int64_t iTeamPower = 0;
+	int64_t iWorldPower = 0;
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!player.isAlive())
+		{
+			continue;
+		}
+		iWorldPopulation += player.getTotalPopulation();
+		iWorldCulture += player.getCulture();
+		std::vector<int64_t> powerHistory;
+		player.getHistory(PLAYER_HISTORY_POWER, 0, kGame.getGameTurn(), powerHistory);
+		int64_t iPower = 0;
+		foreach_(const int64_t iTurnPower, powerHistory)
+		{
+			iPower += iTurnPower;
+		}
+		iWorldPower += iPower;
+		if (player.getTeam() == getID())
+		{
+			iTeamWonders += player.getSevoWondersScore(0);
+			iTeamPower += iPower;
 		}
 	}
 
-	// Get the Religion Info First
-	// By definition, global religion percent is 100, so we don't need a variable for it.
-	// Note: This detects whether the TEAM has the holy city.
-	for (int iK = 0; iK < GC.getNumReligionInfos(); iK++)
+	int64_t iMonumentalCities = 0;
+	for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
 	{
-		if (hasHolyCity((ReligionTypes)iK))
+		if (GET_PLAYER((PlayerTypes)iPlayer).isAliveAndTeam(getID()))
 		{
-			// Player has holy city
-			const int tempReligion = GC.getGame().calculateReligionPercent((ReligionTypes)iK);
-			if (tempReligion > totalTeamReligion)
+			foreach_(const CvCity* pCity, GET_PLAYER((PlayerTypes)iPlayer).cities())
 			{
-				totalTeamReligion = tempReligion;
-			}
-		}
-	}
-
-	// Get land, population, culture totals for player and globally.
-	// Also get the starship launches and diplovictories achieved.
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			//Calculate global totals while looping through
-
-			globalCulture += GET_PLAYER((PlayerTypes)iI).getCulture();
-			globalPopulation += GET_PLAYER((PlayerTypes)iI).getTotalPopulation();
-
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
-			{
-				teamWonderScore += GET_PLAYER((PlayerTypes)iI).getSevoWondersScore(0);
-			}
-		}
-	}
-
-	// Get the power history sums
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			//Calculate global totals while looping through
-			int64_t tempPower = 0;
-			for (int iL = GC.getGame().getGameTurn(); iL > -1; iL--)
-			{
-				tempPower += GET_PLAYER((PlayerTypes)iI).getHistory(PLAYER_HISTORY_POWER, iL);
-			}
-
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
-			{
-				teamPowerHistory += tempPower;
-			}
-			globalPowerHistory += tempPower;
-		}
-	}
-
-	// Get the number of monumental cities owned by this team
-	if (GC.getGame().culturalVictoryValid())
-	{
-		const CultureLevelTypes eVictoryLevel = GC.getGame().culturalVictoryCultureLevel();
-
-		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-			{
-				foreach_(const CvCity * pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
+				if (pCity->isMonumental())
 				{
-					if (pLoopCity->getCultureLevel() >= eVictoryLevel)
-					{
-						totalTeamMonumentalCities++;
-					}
+					iMonumentalCities++;
 				}
 			}
 		}
 	}
 
-	// Add the WonderScore component
-	if (globalWonderScore > 0)
+	const ReligionTypes eScoringReligion = getScoringReligion();
+	const int iReligionPercent = eScoringReligion != NO_RELIGION ? kGame.calculateReligionPercent(eScoringReligion) : 0;
+	const bool bLaunched = kGame.isStarshipLaunched(getID());
+
+	parts[VICTORY_SCORE_WONDERS] = ct_sharePart(iTeamWonders, (int64_t)BuildingsRepo::get().worldWonders().size());
+	parts[VICTORY_SCORE_POPULATION] = ct_sharePart(getTotalPopulation(), iWorldPopulation);
+	parts[VICTORY_SCORE_LAND] = ct_sharePart(getTotalLand(), GC.getMap().getLandPlots());
+	parts[VICTORY_SCORE_CULTURE] = ct_sharePart(countTotalCulture(), iWorldCulture);
+	parts[VICTORY_SCORE_MONUMENTAL_CITIES] = ct_part(iMonumentalCities, 0, 30 * iMonumentalCities);
+	parts[VICTORY_SCORE_POWER] = ct_sharePart(iTeamPower, iWorldPower);
+	parts[VICTORY_SCORE_RELIGION] = ct_part(iReligionPercent, 100, iReligionPercent);
+	parts[VICTORY_SCORE_STARSHIP] = ct_part(bLaunched ? 1 : 0, 1, bLaunched ? 100 : 0);
+}
+
+TeamTypes CvTeam::getBestVictoryScoreRival() const
+{
+	TeamTypes eBest = NO_TEAM;
+	int64_t iBestScore = -1;
+	for (int iTeam = 0; iTeam < MAX_PC_TEAMS; iTeam++)
 	{
-		iTotalVictoryScore += teamWonderScore * 100 / globalWonderScore;
-	}
-
-	// Add the population score component
-	if (globalPopulation > 0)
-	{
-		iTotalVictoryScore += getTotalPopulation() * 100 / globalPopulation;
-	}
-
-	// Add the land score component
-	const int globalLand = GC.getMap().getLandPlots();
-
-	if (globalLand > 0)
-	{
-		iTotalVictoryScore += getTotalLand() * 100 / globalLand;
-	}
-
-	// Add the culture score component
-	if (globalCulture > 0)
-	{
-		uint64_t iTotalCulture = countTotalCulture();
-
-		if (iTotalCulture > MAX_INT / 100)
+		const CvTeam& team = GET_TEAM((TeamTypes)iTeam);
+		if (iTeam == getID() || !team.isAlive() || team.isMinorCiv())
 		{
-			iTotalVictoryScore += countTotalCulture() / (globalCulture / 100);
+			continue;
 		}
-		else
+		const int64_t iScore = team.getTotalVictoryScore();
+		if (iScore > iBestScore)
 		{
-			iTotalVictoryScore += countTotalCulture() * 100 / globalCulture;
+			iBestScore = iScore;
+			eBest = (TeamTypes)iTeam;
 		}
 	}
+	return eBest;
+}
 
-	// Add the monumental cities component
-	if (totalTeamMonumentalCities > 0)
+namespace
+{
+	///<summary>The city with more of its owner's culture first.</summary>
+	bool ct_hasMoreCulture(const CvCity* pLeft, const CvCity* pRight)
 	{
-		iTotalVictoryScore += 30 * totalTeamMonumentalCities;
+		return pLeft->getCultureTimes100(pLeft->getOwner()) > pRight->getCultureTimes100(pRight->getOwner());
 	}
+}
 
-	// Add the Power component
-	if (globalPowerHistory > 0)
+void CvTeam::getCitiesByCulture(int iCount, std::vector<const CvCity*>& cities) const
+{
+	std::vector<const CvCity*> teamCities;
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 	{
-		iTotalVictoryScore += (teamPowerHistory * 100 / globalPowerHistory);
+		if (GET_PLAYER((PlayerTypes)iPlayer).isAliveAndTeam(getID()))
+		{
+			foreach_(const CvCity* pCity, GET_PLAYER((PlayerTypes)iPlayer).cities())
+			{
+				teamCities.push_back(pCity);
+			}
+		}
 	}
-
-	// Add the Religion component
-	iTotalVictoryScore += totalTeamReligion;
-
-	//Starship points!  Big money.
-	if (GC.getGame().getStarshipLaunched(getID()))
+	std::stable_sort(teamCities.begin(), teamCities.end(), ct_hasMoreCulture);
+	for (int iRank = 0; iRank < iCount && iRank < (int)teamCities.size(); iRank++)
 	{
-		iTotalVictoryScore += 100;
+		cities.push_back(teamCities[iRank]);
 	}
+}
 
-	return iTotalVictoryScore;
+bool CvTeam::isKnownTo(PlayerTypes eObserver) const
+{
+	return GC.getGame().isIntelOpenToAll() || GET_TEAM(GET_PLAYER(eObserver).getTeam()).isHasMet(getID());
+}
+
+int64_t CvTeam::getTotalVictoryScore() const
+{
+	VictoryScorePart parts[NUM_VICTORY_SCORE_PARTS];
+	getVictoryScoreParts(parts);
+	int64_t iTotal = 0;
+	for (int iPart = 0; iPart < NUM_VICTORY_SCORE_PARTS; iPart++)
+	{
+		iTotal += parts[iPart].points;
+	}
+	return iTotal;
 }
 
 

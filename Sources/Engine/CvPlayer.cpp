@@ -10415,15 +10415,7 @@ bool CvPlayer::isTooBusyForWarRequestFrom(PlayerTypes eAsker) const
 
 bool CvPlayer::isKnownTo(PlayerTypes eObserver) const
 {
-	if (!isEverAlive())
-	{
-		return false;
-	}
-	if (GC.getGame().isIntelOpenToAll())
-	{
-		return true;
-	}
-	return GET_TEAM(GET_PLAYER(eObserver).getTeam()).isHasMet(getTeam());
+	return isEverAlive() && GET_TEAM(getTeam()).isKnownTo(eObserver);
 }
 
 
@@ -14126,6 +14118,7 @@ bool CvPlayer::isAmountHistory(PlayerHistoryKind eKind)
 	case PLAYER_HISTORY_INDUSTRY:
 	case PLAYER_HISTORY_AGRICULTURE:
 	case PLAYER_HISTORY_POWER:
+	case PLAYER_HISTORY_CULTURE:
 		return true;
 	default:
 		return false;
@@ -17523,20 +17516,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		readAmountHistory(wrapper, m_mapAgricultureHistory, "CvPlayer::numAgricultureHistoryEntries", "CvPlayer::numAgriHistEntries");
 		readAmountHistory(wrapper, m_mapPowerHistory, "CvPlayer::numPowerHistoryEntries", "CvPlayer::numPowerHistEntries");
 
-		{
-			m_mapCultureHistory.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numCultHistEntries");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iTurn;
-				double fScore = 0;
-				WRAPPER_READ(wrapper, "CvPlayer", &iTurn);
-				WRAPPER_READ(wrapper, "CvPlayer", &fScore);
-				m_mapCultureHistory[iTurn] = static_cast<int64_t>(fScore);
-			}
-		}
+		readAmountHistory(wrapper, m_mapCultureHistory, "CvPlayer::numCultureHistoryEntries", "CvPlayer::numCultHistEntries");
 
 		{
 			m_mapEspionageHistory.clear();
@@ -17812,7 +17792,16 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeRoundCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGold);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCulture);
+		{
+			//	A save that holds the culture under the m_iCulture tag kept it in the reduced form, scaled as it loads.
+			int64_t iReducedCulture = 0;
+			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &m_iCulture, "nationalCulture");
+			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iReducedCulture, "m_iCulture");
+			if (iReducedCulture > 0)
+			{
+				m_iCulture = 100 * iReducedCulture;
+			}
+		}
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMinTaxIncome);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxTaxIncome);
 
@@ -18383,7 +18372,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		{
 			uint iSize = m_mapCultureHistory.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numCultHistEntries");
+			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numCultureHistoryEntries");
 			CvTurnScoreMap::iterator it;
 			for (it = m_mapCultureHistory.begin(); it != m_mapCultureHistory.end(); ++it)
 			{
@@ -18520,7 +18509,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		//TB Traits end
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGold);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCulture);
+		WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", m_iCulture, "nationalCulture");
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMinTaxIncome);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxTaxIncome);
 
@@ -25720,7 +25709,7 @@ uint64_t CvPlayer::getLeaderLevelupNextCultureTotal() const
 		iY--;
 		iY = std::max(1, iY);
 	}
-	return iPromoThreshold * CvGameSpeedScale::speedPercent() / 25;
+	return 100 * (iPromoThreshold * CvGameSpeedScale::speedPercent() / 25);
 }
 
 uint64_t CvPlayer::getLeaderLevelupCultureToEarn() const

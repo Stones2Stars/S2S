@@ -24,6 +24,12 @@
   > ⛔ The per-PLAYER dimension is load-bearing and is not a candidate for "simplifying" to one total: cultural
   > OWNERSHIP is a contest, so every consumer asks how much culture a SPECIFIC player has here. A single number
   > would say a place has culture without saying whose.
+- **National culture** (`CvPlayer::getCulture`) accumulates every rise of culture in the player's cities
+  (`CvCity::setCultureTimes100` / `changeCultureTimes100`). It is an amount like city culture
+  ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)),
+  and so are the leader-level thresholds it is measured against (`getLeaderLevelupNextCultureTotal`). The culture
+  history is an amount history ([info-screen.md § Graphs](info-screen.md#graphs)). It is saved under
+  `nationalCulture`; a save that holds it under `m_iCulture` kept the reduced form, and the load scales it.
 - **Decay:** `max(0, culture·(1000−decayPermille)/1000)`, `decayPermille = TILE_CULTURE_DECAY_PERCENT·1000/speedPercent`;
   ×15 when the plot is out of any city's culture range; a value >1 cannot decay below 1.
 - **Ownership** (`calculateCulturalOwner`): keep the current owner when `hasFixedBorders() &&

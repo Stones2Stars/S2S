@@ -1642,6 +1642,22 @@ enum WonderListKind
 	NUM_WONDER_LIST_KINDS
 };
 
+///<summary>The parts a team's victory score is the sum of (CvTeam::getVictoryScoreParts): the Mastery victory's
+/// measures.</summary>
+enum VictoryScorePartKind
+{
+	VICTORY_SCORE_WONDERS = 0,
+	VICTORY_SCORE_POPULATION,
+	VICTORY_SCORE_LAND,
+	VICTORY_SCORE_CULTURE,
+	VICTORY_SCORE_MONUMENTAL_CITIES,
+	VICTORY_SCORE_POWER,
+	VICTORY_SCORE_RELIGION,
+	VICTORY_SCORE_STARSHIP,
+
+	NUM_VICTORY_SCORE_PARTS
+};
+
 //	The city's CULTURE standing: what the owner has accumulated here, what the next level costs, which level it
 //	currently sits at and the turns to the next one (CvCity::getCultureTurnsLeft). One group -- the threshold is
 //	meaningless without the amount beside it.

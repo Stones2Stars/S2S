@@ -125,6 +125,20 @@ REASON is what protects a legitimate off-switch).
 - **Countdown** = `VictoryInfo.getVictoryDelayTurns × speedPercent/100` (+ extension for partial space projects), −1/turn
   while the condition holds; at 0, `rand(100) < getLaunchSuccessRate` gates the win (failure → `resetVictoryProgress`).
   Mastery/Total clears all other winners (by `getTotalVictoryScore`); Mercy Rule: a team > half the global total wins after a countdown.
+- **The victory score** (`CvTeam::getTotalVictoryScore`) is the sum of its parts (`CvTeam::getVictoryScoreParts`,
+  `VictoryScorePartKind`), each the team's measure, the world's and the points:
+  - the world wonders the team's players built, against every world wonder in the data
+    (`BuildingsRepo::worldWonders`), worth that percent;
+  - population, land and national culture, each worth its percent of the world's;
+  - 30 per monumental city (`CvCity::isMonumental`: cultural victory valid and the city at or above the cultural
+    victory's culture level, `CvGame::culturalVictoryCultureLevel`);
+  - the power history's percent of the world's;
+  - the percent of the world following the religion the score counts (`CvTeam::getScoringReligion`: of the
+    religions whose holy city the team holds, `CvTeam::getHolyCityReligions`, the highest);
+  - 100 for a launched starship (`CvGame::isStarshipLaunched`).
+
+  The world sums count every living player. The Victory screen's Mastery rows show these parts, with the rival of
+  the highest score (`CvTeam::getBestVictoryScoreRival`) named when the viewer knows it (`CvTeam::isKnownTo`).
 
 ## See also
 

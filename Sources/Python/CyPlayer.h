@@ -467,6 +467,7 @@ public:
 	bool isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const;
 	void setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue);
 
+	///<summary>The player's national culture (CvPlayer::getCulture).</summary>
 	int64_t getCulture() const;
 
 	bool getBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter);

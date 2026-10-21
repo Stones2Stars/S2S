@@ -23,9 +23,9 @@ agriculture, power, culture, espionage, and with Revolutions on, stability. `CyP
 last)` answers a civilization's whole run of turns in one read (`CvPlayer::getHistory`), 0 for a turn with no
 record. The stability graph draws 1000 less the recorded stability.
 
-The economy, industry, agriculture and power histories are amounts (`CvPlayer::isAmountHistory`): recorded in the
-engine's form and reduced by their readers — `CyPlayer::getHistory`, and the replay (`CvReplayInfo`). A save that
-holds them under their earlier count tags (`numEconHistEntries` and its kin) stored them reduced, and
+The economy, industry, agriculture, power and culture histories are amounts (`CvPlayer::isAmountHistory`): recorded
+in the engine's form and reduced by their readers — `CyPlayer::getHistory`, and the replay (`CvReplayInfo`). A save
+that holds them under their earlier count tags (`numEconHistEntries` and its kin) stored them reduced, and
 `CvPlayer::readAmountHistory` scales those turns as they load.
 
 ## Top Cities

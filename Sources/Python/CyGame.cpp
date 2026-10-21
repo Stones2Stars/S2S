@@ -448,11 +448,6 @@ bool CyGame::isPaused() const
 	return m_pGame.isPaused();
 }
 
-bool CyGame::getStarshipLaunched(int playaID) const
-{
-	return m_pGame.getStarshipLaunched(playaID);
-}
-
 VictoryTypes CyGame::getVictory() const
 {
 	return m_pGame.getVictory();
@@ -1093,8 +1088,6 @@ void CyGame::pythonPublish()
 
 		.def("saveGame", &CyGame::saveGame)
 
-
-		.def("getStarshipLaunched", &CyGame::getStarshipLaunched)
 
 		.def("getModderGameOption", &CyGame::getModderGameOption)
 		.def("setModderGameOption", &CyGame::setModderGameOption)

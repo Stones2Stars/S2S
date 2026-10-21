@@ -9993,9 +9993,10 @@ bool CvGame::foundBarbarianCity()
 	return false;
 }
 
-bool CvGame::getStarshipLaunched(int ID) const
+bool CvGame::isStarshipLaunched(TeamTypes eTeam) const
 {
-	return starshipLaunched[GET_PLAYER((PlayerTypes)ID).getTeam()];
+	FASSERT_BOUNDS(0, MAX_TEAMS, eTeam);
+	return starshipLaunched[eTeam];
 }
 
 bool CvGame::getDiplomaticVictoryAchieved(int ID) const

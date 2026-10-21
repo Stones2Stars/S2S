@@ -8246,6 +8246,12 @@ CultureLevelTypes CvCity::getCultureLevel() const
 	return m_eCultureLevel;
 }
 
+bool CvCity::isMonumental() const
+{
+	const CvGame& kGame = GC.getGame();
+	return kGame.culturalVictoryValid() && getCultureLevel() >= kGame.culturalVictoryCultureLevel();
+}
+
 int CvCity::getCultureThreshold() const
 {
 	PROFILE_EXTRA_FUNC();
@@ -9092,7 +9098,7 @@ void CvCity::setCultureTimes100(PlayerTypes eIndex, int64_t iNewValue, bool bPlo
 
 	if (!bNationalSet && iOldCulture < iNewValue)
 	{
-		GET_PLAYER(getOwner()).changeCulture((iNewValue - iOldCulture) / 100);
+		GET_PLAYER(getOwner()).changeCulture(iNewValue - iOldCulture);
 	}
 }
 
@@ -9108,9 +9114,9 @@ void CvCity::changeCultureTimes100(PlayerTypes eIndex, int64_t iChange, bool bPl
 
 	const int64_t iOld = getCultureTimes100(eIndex);
 
-	if (iChange > 99)
+	if (iChange > 0)
 	{
-		GET_PLAYER(getOwner()).changeCulture(iChange / 100);
+		GET_PLAYER(getOwner()).changeCulture(iChange);
 	}
 
 	int64_t iNew;

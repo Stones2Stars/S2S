@@ -45,6 +45,20 @@ public:
 	///<summary>Whether this team has more espionage points against eTeam than eTeam has against it.</summary>
 	bool isEspionageAheadOf(int /*TeamTypes*/ eTeam) const;
 	int64_t getTotalVictoryScore() const;
+	///<summary>The parts of the team's victory score (CvTeam::getVictoryScoreParts), as rows of (VictoryScorePartKind,
+	/// team, world, points).</summary>
+	python::list getVictoryScoreParts() const;
+	///<summary>The religions whose holy city the team holds, as rows of (religion, percent of the world, counted by
+	/// the victory score) (CvTeam::getHolyCityReligions, CvTeam::getScoringReligion).</summary>
+	python::list getHolyCityReligions() const;
+	///<summary>The civilization team with the highest victory score besides this one, or -1
+	/// (CvTeam::getBestVictoryScoreRival).</summary>
+	int getBestVictoryScoreRival() const;
+	///<summary>The team's iCount cities with the most of their owner's culture (CvTeam::getCitiesByCulture), as rows
+	/// of (owner, city id, culture, monumental).</summary>
+	python::list getCitiesByCulture(int iCount) const;
+	///<summary>Whether iObserver knows of this team (CvTeam::isKnownTo).</summary>
+	bool isKnownTo(int /*PlayerTypes*/ iObserver) const;
 
 	bool isAtWar(bool bCountMinors) const;
 	int getAtWarCount(bool bIgnoreMinors) const;
@@ -57,7 +71,6 @@ public:
 	int getHasReligionCount(int /*ReligionTypes*/ eReligion) const;
 	int getHasCorporationCount(int /*CorporationTypes*/ eCorporation) const;
 
-	int64_t countTotalCulture() const;
 
 	int countNumCitiesByArea(const CyArea* pArea) const;
 
