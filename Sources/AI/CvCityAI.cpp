@@ -6812,9 +6812,10 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+	const std::vector<int>* pEnabledProjects = project.edge(EDGEF_ENABLES, EDGEB_PROJECTS);
+	if (pEnabledProjects != NULL && GET_TEAM(getTeam()).getProjectCount(eProject) < 1)
 	{
-		iValue += 10 * std::max(0, GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject));
+		iValue += 10 * (int)pEnabledProjects->size();
 	}
 
 	const int iOurNumCities = GET_PLAYER(getOwner()).getNumCities();

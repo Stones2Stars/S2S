@@ -7,10 +7,10 @@
 //	CyVictoryInfo -- the VICTORY accessor, a sibling of CyWorldInfo / CyGameSpeedInfo / CyEspionageMissionInfo on
 //	the PER-INFO plane ([patterns.md] THE PYTHON READ BOUNDARY). The id is the victory, passed per call.
 //
-//	⚑ IT IS THE WHOLE REGISTRY IN FOUR READS, because it MIRRORS THE INFO'S OWN SHAPE rather than the legacy
-//	getter set. CvVictoryInfo already groups its `condition` block ([json.md] §9) behind two parameterized reads
-//	over the block's authored keys, so this accessor does the same: one test over the boolean rules, one read
-//	over the numeric thresholds, plus the two intrinsics. Nothing here is a per-field getter.
+//	⚑ IT MIRRORS THE INFO'S OWN SHAPE rather than the legacy getter set. CvVictoryInfo already groups its
+//	`condition` block ([json.md] §9) behind two parameterized reads over the block's authored keys, so this
+//	accessor does the same: one test over the boolean rules, one read over the numeric thresholds, plus the two
+//	intrinsics and the buildings and projects the victory needs. Nothing here is a per-field getter.
 //	⛔ The alternative -- isConquest / isDiploVote / isTargetScore / isEndScore / isTotalVictory /
 //	getReligionPercent / getNumCultureCities / ... -- is the ~300-hand-named-getter shape
 //	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)) rebuilt one screen at a time, and it grows by CHANNEL where this grows by GROUP.
@@ -35,6 +35,13 @@ public:
 	// INTRINSIC -- the CULTURELEVEL_ FK the culture rule names (-1 = no culture-level rule), and the win movie.
 	int getCityCulture(int iVictory) const;
 	std::string getMovie(int iVictory) const;
+
+	///<summary>The buildings the victory needs a number of (cvInternalGlobals::getVictoryBuildings).</summary>
+	python::list getBuildings(int iVictory) const;
+	///<summary>The projects the victory needs a number of (cvInternalGlobals::getVictoryProjects).</summary>
+	python::list getProjects(int iVictory) const;
+	///<summary>The projects the victory's projects need built first (cvInternalGlobals::getVictoryNeededProjects).</summary>
+	python::list getNeededProjects(int iVictory) const;
 
 	static void pythonPublish();
 };

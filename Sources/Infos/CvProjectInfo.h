@@ -83,7 +83,8 @@ public:
 	// set-based -- the per-edge iNeeded count is dropped, all 1 today), reconstructed at LOAD by the readJson
 	// reverse pass (CvReversePass), which calls the writers below. LOAD-ONLY writers. ---
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
-	int getProjectsNeeded(int iProject) const { return m_projectsNeeded.count(iProject) ? 1 : 0; }
+	///<summary>The projects this one needs built first, in project order.</summary>
+	const std::set<int>& getNeededProjects() const { return m_projectsNeeded; }
 	void setTechPrereq(TechTypes eTech) { m_eTechPrereq = eTech; }
 	void addProjectNeeded(int iProject) { m_projectsNeeded.insert(iProject); }
 

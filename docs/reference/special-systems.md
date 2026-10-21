@@ -118,8 +118,12 @@ REASON is what protects a legitimate off-switch).
 ## Victory
 
 - `CvGame::testVictory()` every turn (grace: bail if `< speedPercent/10` turns elapsed). Checks: Time/Score, Conquest
-  (no other alive non-vassal team has cities), Domination (X% pop AND Y% land), Religious, Cultural (N cities at a
-  level), Scientific/Building (≥ threshold of a building), Space (every project ≥ `getVictoryMinThreshold`).
+  (no other team blocks it, `CvTeam::blocksConquestBy`: alive, not the conqueror's vassal, with cities), Domination
+  (X% pop AND Y% land of `CvGame::getVictoryMeasureWorld`), Religious, Cultural (N cities at a level),
+  Scientific/Building (≥ threshold of each building in `getVictoryBuildings`), Space (each project in
+  `getVictoryProjects` ≥ `getVictoryMinThreshold`). The building and project lists per victory, and the projects
+  those projects need (`getVictoryNeededProjects`: Apollo for the spaceship), are built at load
+  (`cvInternalGlobals::buildLoadTimeIndexes`).
 - **`starshipLaunched[team]` is a one-way latch** — set on the first Space pass; later passes skip the project check.
   A cascade re-deriving project counts **must preserve this latch** or the launch is wrongly rescinded.
 - **Countdown** = `VictoryInfo.getVictoryDelayTurns × speedPercent/100` (+ extension for partial space projects), −1/turn
@@ -139,6 +143,14 @@ REASON is what protects a legitimate off-switch).
 
   The world sums count every living player. The Victory screen's Mastery rows show these parts, with the rival of
   the highest score (`CvTeam::getBestVictoryScoreRival`) named when the viewer knows it (`CvTeam::isKnownTo`).
+- **The Victory screen's other conditions** compare the viewer's team with one rival per row: the known civilization
+  team with the highest measure (`CvTeam::getBestKnownVictoryRival`, `VictoryMeasureKind`), the first between
+  equals, none when no known team has any. The measures are the score, population and land (shown as shares of
+  `CvGame::getVictoryMeasureWorld`), the scoring religion's percent, the buildings and projects built toward the
+  victory (projects counting the ones they need), and the culture of the team's top cities
+  (`CvTeam::getCitiesByCulture`), each counted up to the culture victory's level; each culture victory city shows
+  its turns to that level (`CvCity::getCultureTurnsTo`). The conquest row counts the teams that block conquest,
+  known and unknown (`CvTeam::countConquestRivals`), and the team's vassals.
 
 ## See also
 

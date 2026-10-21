@@ -59,6 +59,19 @@ public:
 	python::list getCitiesByCulture(int iCount) const;
 	///<summary>Whether iObserver knows of this team (CvTeam::isKnownTo).</summary>
 	bool isKnownTo(int /*PlayerTypes*/ iObserver) const;
+	///<summary>The known civilization team with the highest iMeasure for iVictory besides this one, or -1
+	/// (CvTeam::getBestKnownVictoryRival).</summary>
+	int getBestKnownVictoryRival(int /*VictoryMeasureKind*/ iMeasure, int /*VictoryTypes*/ iVictory, int /*PlayerTypes*/ iObserver) const;
+	///<summary>The team's share of the world's iMeasure in percent, to two decimals (CvGame::getVictoryMeasureWorld);
+	/// 0 when the world has none.</summary>
+	std::wstring getVictoryShareText(int /*VictoryMeasureKind*/ iMeasure) const;
+	///<summary>Whether the team built every project iVictory's projects need (CvTeam::hasVictoryNeededProjects).</summary>
+	bool hasVictoryNeededProjects(int /*VictoryTypes*/ iVictory) const;
+	///<summary>The teams in the way of this team's conquest victory that iObserver knows of, or, with bKnown false,
+	/// does not (CvTeam::countConquestRivals).</summary>
+	int countConquestRivals(int /*PlayerTypes*/ iObserver, bool bKnown) const;
+	///<summary>The living teams that are this team's vassals (CvTeam::getVassalCount).</summary>
+	int getVassalCount() const;
 
 	bool isAtWar(bool bCountMinors) const;
 	int getAtWarCount(bool bIgnoreMinors) const;

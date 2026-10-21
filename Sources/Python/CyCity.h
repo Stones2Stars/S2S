@@ -137,6 +137,8 @@ public:
 	python::list getReligions() const;
 	python::list getCorporations() const;
 	python::list getCultureReads() const;
+	///<summary>Turns until the owner's culture here reaches the culture level iLevel (CvCity::getCultureTurnsTo).</summary>
+	int getCultureTurnsTo(int /*CultureLevelTypes*/ iLevel) const;
 	///<summary>The city's wellbeing totals, indexed by CityWellbeingNetRead.</summary>
 	python::list getWellbeingNets() const;
 	///<summary>The city's trade routes, indexed by CityTradeRead.</summary>

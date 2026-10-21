@@ -266,6 +266,9 @@ public:
 	///<summary>Turns until the owner's culture here reaches the next culture level at the current culture rate,
 	/// at least 1; -1 at the top level or with no culture coming in.</summary>
 	int getCultureTurnsLeft() const;
+	///<summary>Turns until the owner's culture here reaches eLevel at the current culture rate: 0 when it already
+	/// has, -1 with no culture coming in.</summary>
+	int getCultureTurnsTo(CultureLevelTypes eLevel) const;
 	bool isProduction() const;
 	bool isProductionUnitCombat(int iIndex) const;
 	bool isProductionUnit() const;

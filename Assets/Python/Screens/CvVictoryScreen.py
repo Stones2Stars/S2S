@@ -4,17 +4,15 @@ import AttitudeUtil
 import PythonToolTip
 
 # globals
-# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
-# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I? A game object's own data is
+# asked OF THAT OBJECT --
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-VICTORY = CyVictoryInfo()   # the per-info accessor: the whole `condition` block in two grouped reads
-CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
+VICTORY = CyVictoryInfo()   # the per-info accessor: the `condition` block and the buildings and projects needed
 GAME = GC.getGame()
 ENABLER = CyEnabler()
-ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 
@@ -32,9 +30,6 @@ class CvVictoryScreen:
 		self.nWidgetCount = 0
 
 		self.iTab = 0
-
-		self.ApolloTeamsChecked = set()
-		self.ApolloTeamCheckResult = {}
 
 	def hasAllTechs(self, CyTeamX, lTechs):
 		"""Does this team hold EVERY tech in the list?
@@ -162,87 +157,8 @@ class CvVictoryScreen:
 		iTeamAct = CyPlayer.getTeam()
 		CyTeam = GC.getTeam(iTeamAct)
 
-		# checking if apollo has been built - clear arrays / lists / whatever they are called
-		self.ApolloTeamsChecked = set()
-		self.ApolloTeamCheckResult = {}
-
-		# Population
-		iTotalPop = GAME.getTotalPopulation()
-		ourPop = CyTeam.getTotalPopulation()
-		if iTotalPop > 0:
-			fPopPercent = ourPop * 100.0 / iTotalPop
-		else:
-			fPopPercent = 0.0
-			iTotalPop = 1
-
-		bDebugModeDLL = GAME.isDebugMode()
-		iBestPopTeam = -1
-		iBestPop = 0
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			if iTeamX == iTeamAct:
-				continue
-			CyTeamX = GC.getTeam(iTeamX)
-			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-				if CyTeam.isHasMet(iTeamX) or bDebugModeDLL:
-					iPop = CyTeamX.getTotalPopulation()
-					if iPop > iBestPop:
-						iBestPop = iPop
-						iBestPopTeam = iTeamX
-
-		# Score
-		iOurScore = GAME.getTeamScore(iTeamAct)
-
-		iBestScoreTeam = -1
-		iBestScore = 0
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			if iTeamX == iTeamAct:
-				continue
-			CyTeamX = GC.getTeam(iTeamX)
-			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-				if CyTeam.isHasMet(iTeamX) or bDebugModeDLL:
-					iScore = GAME.getTeamScore(iTeamX)
-					if iScore > iBestScore:
-						iBestScore = iScore
-						iBestScoreTeam = iTeamX
-
-		# Land Area
-		iTotalLand = GC.getMap().getLandPlots()
-		iOurLand = CyTeam.getTotalLand()
-		fLandPercent = iOurLand * 100.0 / iTotalLand
-
-		iBestLandTeam = -1
-		iBestLand = 0
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			CyTeamX = GC.getTeam(iTeamX)
-			if iTeamX == iTeamAct:
-				continue
-			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-				if CyTeam.isHasMet(iTeamX) or bDebugModeDLL:
-					teamLand = CyTeamX.getTotalLand()
-					if teamLand > iBestLand:
-						iBestLand = teamLand
-						iBestLandTeam = iTeamX
-
-		# Religion
-		iOurReligion = -1
-		ourReligionPercent = 0
-		for iLoopReligion in xrange(GC.getNumReligionInfos()):
-			if CyTeam.hasHolyCity(iLoopReligion):
-				religionPercent = GAME.calculateReligionPercent(iLoopReligion)
-				if religionPercent > ourReligionPercent:
-					ourReligionPercent = religionPercent
-					iOurReligion = iLoopReligion
-
-		iBestReligion = -1
-		bestReligionPercent = 0
-		for iLoopReligion in xrange(GC.getNumReligionInfos()):
-			if iLoopReligion != iOurReligion:
-				religionPercent = GAME.calculateReligionPercent(iLoopReligion)
-				if religionPercent > bestReligionPercent:
-					bestReligionPercent = religionPercent
-					iBestReligion = iLoopReligion
-
 		# Vote
+		bDebugModeDLL = GAME.isDebugMode()
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
 			iVoteSource = BUILDING.getVoteSource(i)
@@ -427,15 +343,11 @@ class CvVictoryScreen:
 					iRow = screen.appendTableRow(szTable)
 					screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_CONCEPT_SPACESHIP", ()), "", eWidGen, 1, 2, 1<<0)
 
-					bNeedParts = False
-
 					if aOurParts[iPart][1]:
 						screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_LAUNCHED", ()), "", eWidGen, 1, 2, 1<<0)
 						screen.setTableText(szTable, 2, iRow, ufont2 + str(aOurParts[iPart][3]), "", eWidGen, 1, 2, 1<<0)
 					else:
 						screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOTLAUNCHED", ()), "", eWidGen, 1, 2, 1<<0)
-						if CyTeam.getProjectCount(GC.getInfoTypeForString("PROJECT_APOLLO_PROGRAM")) > 0:
-							bNeedParts = True
 
 					if CyTeamBest and aRivalParts[iPart][1]:
 						screen.setTableText(szTable, 3, iRow, ufont2 + u"%s" %(TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_LAUNCHED", ())), "", eWidGen, 1, 2, 1<<0)
@@ -447,14 +359,15 @@ class CvVictoryScreen:
 					screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), TRNSLTR.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, eWidGen, 1234, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
 					screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iRow, 1)
 
-					if bNeedParts:
-						for i in xrange(GC.getNumProjectInfos()):
-							for iL in xrange(GC.getNumVictoryInfos()):
-								if INFO.getProjectVictoryThreshold(i, iL) > 0:
-									if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
-										iRow = screen.appendTableRow(szTable)
-										screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (INFO.getProjectVictoryThreshold(i, iL), INFO.getTextKey("PROJECT_", i))), "", eWidGen, 1, 2, 1<<1)
-										screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getProjectCount(i)), "", eWidGen, 1, 2, 1<<0)
+					if not aOurParts[iPart][1]:
+						for iVictory in xrange(GC.getNumVictoryInfos()):
+							if not CyTeam.hasVictoryNeededProjects(iVictory):
+								continue
+							for iProject in VICTORY.getProjects(iVictory):
+								if INFO.isProjectSpaceship(iProject):
+									iRow = screen.appendTableRow(szTable)
+									screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (INFO.getProjectVictoryThreshold(iProject, iVictory), INFO.getTextKey("PROJECT_", iProject))), "", eWidGen, 1, 2, 1<<1)
+									screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getProjectCount(iProject)), "", eWidGen, 1, 2, 1<<0)
 
 					screen.appendTableRow(szTable)
 
@@ -484,20 +397,6 @@ class CvVictoryScreen:
 								screen.setTableText(szTable, 1, iRow, ufont2b + str(CyTeamX.getTotalVictoryScore()), "", eWidGen, 1, 2, 1<<0)
 
 					return
-
-		# Conquest
-		nRivals = 0
-		nknown = 0
-		nVassaled = 0
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			if iTeamX == iTeamAct: continue
-			CyTeamX = GC.getTeam(iTeamX)
-			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-				nRivals += 1
-				if CyTeamX.isHasMet(iTeamAct):
-					nknown += 1
-					if CyTeamX.isVassal(iTeamAct):
-						nVassaled += 1
 
 		# Non-mastery victory conditions
 		iTemp1 = 6 * a18thX
@@ -533,7 +432,6 @@ class CvVictoryScreen:
 
 				iCategoryRow = iRow
 				screen.setTableText(szTable, 0, iRow, szText, "", eWidGen, 1, 2, 1<<1)
-				bSpaceshipFound = False
 
 				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_END_SCORE):
 					if iMaxTurns > iTurn:
@@ -543,165 +441,125 @@ class CvVictoryScreen:
 					iRow = screen.appendTableRow(szTable)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_HIGHEST_SCORE", (CyGameTextMgr().getTimeStr(GAME.getStartTurn() + iMaxTurns, False), ))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					screen.setTableText(szTable, 1, iRow, ufont2 + (u"%d" % iOurScore), "", eWidGen, 1, 2, 1<<2)
+					screen.setTableText(szTable, 1, iRow, ufont2 + (u"%d" % GAME.getTeamScore(iTeamAct)), "", eWidGen, 1, 2, 1<<2)
 
-					if iBestScoreTeam != -1:
-						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestScoreTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%d" % iBestScore), "", eWidGen, 1, 2, 1<<0)
+					iRival = CyTeam.getBestKnownVictoryRival(VictoryMeasureKind.VICTORY_MEASURE_SCORE, iLoopVC, iActivePlayer)
+					if iRival != -1:
+						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iRival).getName() + ":", "", eWidGen, 1, 2, 1<<0)
+						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%d" % GAME.getTeamScore(iRival)), "", eWidGen, 1, 2, 1<<0)
 
 				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_CONQUEST):
+					iKnownRivals = CyTeam.countConquestRivals(iActivePlayer, True)
+					iUnknownRivals = CyTeam.countConquestRivals(iActivePlayer, False)
+					iVassals = CyTeam.getVassalCount()
 					iRow = screen.appendTableRow(szTable)
 					screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELIMINATE_ALL", ()), "", eWidGen, 1, 2, 1<<1)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_RIVALS_LEFT", ()) + " "
-					if nknown:
-						szText += str(nknown)
-					elif nRivals:
+					if iKnownRivals:
+						szText += str(iKnownRivals)
+					elif iUnknownRivals:
 						szText += szUnknown
 					else:
 						szText += TRNSLTR.getText("TXT_KEY_NONE", ())
 					screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 
-					if nVassaled:
-						szText = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_VASSALED", (nVassaled,))
+					if iVassals:
+						szText = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_VASSALED", (iVassals,))
 						screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
-					if nRivals - nknown:
-						szText = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_UNKNOWN", (nRivals - nknown,))
+					if iUnknownRivals:
+						szText = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_UNKNOWN", (iUnknownRivals,))
 						screen.setTableText(szTable, 3, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 
 				if GAME.getAdjustedPopulationPercent(iLoopVC) > 0:
 					iRow = screen.appendTableRow(szTable)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_POP", (GAME.getAdjustedPopulationPercent(iLoopVC), ))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					screen.setTableText(szTable, 1, iRow, ufont2 + (u"%.2f%%" % fPopPercent), "", eWidGen, 1, 2, 1<<2)
-					if iBestPopTeam != -1:
-						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestPopTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%.2f%%" % (iBestPop * 100 / iTotalPop)), "", eWidGen, 1, 2, 1<<0)
+					self.setShareRow(screen, szTable, iRow, CyTeam, VictoryMeasureKind.VICTORY_MEASURE_POPULATION, iLoopVC)
 
 				if GAME.getAdjustedLandPercent(iLoopVC) > 0:
 					iRow = screen.appendTableRow(szTable)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_LAND", (GAME.getAdjustedLandPercent(iLoopVC), ))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					screen.setTableText(szTable, 1, iRow, ufont2 + (u"%.2f%%" % fLandPercent), "", eWidGen, 1, 2, 1<<2)
-					if iBestLandTeam != -1:
-						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestLandTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%.2f%%" % (iBestLand * 100 / iTotalLand)), "", eWidGen, 1, 2, 1<<0)
+					self.setShareRow(screen, szTable, iRow, CyTeam, VictoryMeasureKind.VICTORY_MEASURE_LAND, iLoopVC)
 
 				if VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT) > 0:
 					iRow = screen.appendTableRow(szTable)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_RELIGION", (VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT),))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					if iOurReligion != -1:
-						szText = INFO.getDescription("RELIGION_", iOurReligion) + u": %d%%" % ourReligionPercent
-						screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
-					else:
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NO_HOLY", ())
-						screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
-					if iBestReligion != -1:
-						szText = INFO.getDescription("RELIGION_", iBestReligion) + u": %d%%" % bestReligionPercent
-						screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
+					screen.setTableText(szTable, 1, iRow, ufont2 + self.getScoringReligionText(CyTeam), "", eWidGen, 1, 2, 1<<2)
+					iRival = CyTeam.getBestKnownVictoryRival(VictoryMeasureKind.VICTORY_MEASURE_RELIGION, iLoopVC, iActivePlayer)
+					if iRival != -1:
+						CyTeamRival = GC.getTeam(iRival)
+						screen.setTableText(szTable, 2, iRow, ufont2 + CyTeamRival.getName() + ":", "", eWidGen, 1, 2, 1<<0)
+						screen.setTableText(szTable, 3, iRow, ufont2 + self.getScoringReligionText(CyTeamRival), "", eWidGen, 1, 2, 1<<0)
 
-
-				iBestBuildingTeam = -1
-				bestBuilding = 0
-				for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-					if iTeamX == iTeamAct: continue
-					CyTeamX = GC.getTeam(iTeamX)
-					if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-						if CyTeam.isHasMet(iTeamX) or bDebugModeDLL:
-							teamBuilding = 0
-							for i in xrange(GC.getNumBuildingInfos()):
-								if INFO.getBuildingVictoryThreshold(i, iLoopVC) > 0:
-									teamBuilding += CyTeamX.getBuildingCount(i)
-							if teamBuilding > bestBuilding:
-								bestBuilding = teamBuilding
-								iBestBuildingTeam = iTeamX
-
-				for i in xrange(GC.getNumBuildingInfos()):
-					if INFO.getBuildingVictoryThreshold(i, iLoopVC) > 0:
+				lBuildings = VICTORY.getBuildings(iLoopVC)
+				if lBuildings:
+					iRival = CyTeam.getBestKnownVictoryRival(VictoryMeasureKind.VICTORY_MEASURE_BUILDINGS, iLoopVC, iActivePlayer)
+					for iBuilding in lBuildings:
 						iRow = screen.appendTableRow(szTable)
-						szNumber = unicode(INFO.getBuildingVictoryThreshold(i, iLoopVC))
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("BUILDING_", i)))
+						szNumber = unicode(INFO.getBuildingVictoryThreshold(iBuilding, iLoopVC))
+						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("BUILDING_", iBuilding)))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-						screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getBuildingCount(i)), "", eWidGen, 1, 2, 1<<2)
-						if iBestBuildingTeam != -1:
-							screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestBuildingTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-							screen.setTableText(szTable, 3, iRow, ufont2 + str(GC.getTeam(iBestBuildingTeam).getBuildingCount(i)), "", eWidGen, 1, 2, 1<<0)
+						screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getBuildingCount(iBuilding)), "", eWidGen, 1, 2, 1<<2)
+						if iRival != -1:
+							screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iRival).getName() + ":", "", eWidGen, 1, 2, 1<<0)
+							screen.setTableText(szTable, 3, iRow, ufont2 + str(GC.getTeam(iRival).getBuildingCount(iBuilding)), "", eWidGen, 1, 2, 1<<0)
 
-				iBestProjectTeam = -1
-				bestProject = -1
-				for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-					if iTeamX == iTeamAct: continue
-					CyTeamX = GC.getTeam(iTeamX)
-					if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-						if (CyTeam.isHasMet(iTeamX) or bDebugModeDLL) and self.isApolloBuiltbyTeam(CyTeamX):
-							teamProject = 0
-							for i in xrange(GC.getNumProjectInfos()):
-								if INFO.getProjectVictoryThreshold(i, iLoopVC) > 0:
-									teamProject += CyTeamX.getProjectCount(i)
-							if teamProject > bestProject:
-								bestProject = teamProject
-								iBestProjectTeam = iTeamX
+				lProjects = VICTORY.getProjects(iLoopVC)
+				if lProjects:
+					iRival = CyTeam.getBestKnownVictoryRival(VictoryMeasureKind.VICTORY_MEASURE_PROJECTS, iLoopVC, iActivePlayer)
+					bOurNeededBuilt = CyTeam.hasVictoryNeededProjects(iLoopVC)
 
-				bApolloShown = False
-				for i in xrange(GC.getNumProjectInfos()):
-					iVictoryThreshold = INFO.getProjectVictoryThreshold(i, iLoopVC)
-					if iVictoryThreshold > 0:
-						if not self.isApolloBuilt():
-							iRow = screen.appendTableRow(szTable)
-							screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_PROJECT_APOLLO_PROGRAM", ()), "", eWidGen, 1, 2, 1<<1)
-							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
-							break
+					# The projects the victory's projects need: who built them
+					for iNeeded in VICTORY.getNeededProjects(iLoopVC):
+						iRow = screen.appendTableRow(szTable)
+						screen.setTableText(szTable, 0, iRow, ufont2 + INFO.getDescription("PROJECT_", iNeeded), "", eWidGen, 1, 2, 1<<1)
+						if CyTeam.getProjectCount(iNeeded) > 0:
+							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szTeamName, )), "", eWidGen, 1, 2, 1<<2)
 						else:
-							bApolloBuiltByActiveTeam = self.isApolloBuiltbyTeam(CyTeam)
-							if not bApolloShown:
-								bApolloShown = True
-								iRow = screen.appendTableRow(szTable)
-								screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_PROJECT_APOLLO_PROGRAM", ()), "", eWidGen, 1, 2, 1<<1)
+							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
+						if iRival != -1 and GC.getTeam(iRival).getProjectCount(iNeeded) > 0:
+							screen.setTableText(szTable, 2, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (GC.getTeam(iRival).getName(), )), "", eWidGen, 1, 2, 1<<0)
 
-								if bApolloBuiltByActiveTeam:
-									screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szTeamName, )), "", eWidGen, 1, 2, 1<<2)
-								else:
-									screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
-
-								if iBestProjectTeam != -1:
-									screen.setTableText(szTable, 2, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (GC.getTeam(iBestProjectTeam).getName(), )), "", eWidGen, 1, 2, 1<<0)
-
+					# The victory's projects, once someone known has built what they need
+					bRivalNeededBuilt = iRival != -1 and GC.getTeam(iRival).hasVictoryNeededProjects(iLoopVC)
+					if bOurNeededBuilt or bRivalNeededBuilt:
+						for iProject in lProjects:
+							iThreshold = INFO.getProjectVictoryThreshold(iProject, iLoopVC)
+							iMinThreshold = INFO.getProjectVictoryMinThreshold(iProject, iLoopVC)
+							lReqTechs = INFO.getRequiresIdsInClause("PROJECT_", iProject, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL)
 							iRow = screen.appendTableRow(szTable)
-							lReqTechs = INFO.getRequiresIdsInClause("PROJECT_", i, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL)
 
-							if INFO.getProjectVictoryMinThreshold(i, iLoopVC) == iVictoryThreshold:
-								szNumber = unicode(iVictoryThreshold)
+							if iMinThreshold == iThreshold:
+								szNumber = unicode(iThreshold)
 							else:
-								szNumber = unicode(INFO.getProjectVictoryMinThreshold(i, iLoopVC)) + u"-" + unicode(iVictoryThreshold)
+								szNumber = unicode(iMinThreshold) + u"-" + unicode(iThreshold)
+							szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("PROJECT_", iProject)))
+							screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 
-							sSSPart = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("PROJECT_", i)))
-							screen.setTableText(szTable, 0, iRow, ufont2 + sSSPart, "", eWidGen, 1, 2, 1<<1)
+							if bOurNeededBuilt:
+								iBuilt = CyTeam.getProjectCount(iProject)
+								szPlayer = szTeamName + ":"
+								szCount = "%i [+%i]" % (iBuilt, CyTeam.getProjectMaking(iProject))
 
-							if bApolloBuiltByActiveTeam:
-								bOwnProject = CyTeam.getProjectCount(i)
+								iColor = 0
+								if iBuilt == iThreshold:
+									szCount = "%i" % iBuilt
+									iColor = self.COLOR_GREEN
+								elif iBuilt >= iMinThreshold:
+									iColor = self.COLOR_YELLOW
 
-								bHasTech = self.hasAllTechs(CyTeam, lReqTechs)
-								sSSPlayer = szTeamName + ":"
-								sSSCount = "%i [+%i]" % (bOwnProject, CyTeam.getProjectMaking(i))
+								if iColor > 0:
+									szPlayer = TRNSLTR.changeTextColor(szPlayer, iColor)
+									szCount = TRNSLTR.changeTextColor(szCount, iColor)
 
-								iHasTechColor = -1
-								iSSColor = 0
-								if bOwnProject == iVictoryThreshold:
-									sSSCount = "%i" % (bOwnProject)
-									iSSColor = self.COLOR_GREEN
-								elif bOwnProject >= INFO.getProjectVictoryMinThreshold(i, iLoopVC):
-									iSSColor = self.COLOR_YELLOW
-
-								if iSSColor > 0:
-									sSSPlayer = TRNSLTR.changeTextColor(sSSPlayer, iSSColor)
-									sSSCount = TRNSLTR.changeTextColor(sSSCount, iSSColor)
-
-								szText = sSSPlayer
-								if bHasTech:
-									szText += " - " + sSSCount
+								szText = szPlayer
+								if self.hasAllTechs(CyTeam, lReqTechs):
+									szText += " - " + szCount
 								screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 
-								if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
+								if INFO.isProjectSpaceship(iProject):
 									# Add spaceship button
 									screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), TRNSLTR.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, eWidGen, 1234, -1, ButtonStyles.BUTTON_STYLE_STANDARD)
 									screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iCategoryRow, 1)
@@ -715,28 +573,26 @@ class CvVictoryScreen:
 										screen.setTableText(szTable, 2, iCategoryRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 										screen.setTableText(szTable, 3, iCategoryRow, ufont2 + str(victoryDelay), "", eWidGen, 1, 2, 1<<0)
 
-							# add AI space ship info
-							if iBestProjectTeam != -1:
-								CyTeamBest = GC.getTeam(iBestProjectTeam)
-								bOwnProject = CyTeamBest.getProjectCount(i)
-								sSSPlayer = GC.getTeam(iBestProjectTeam).getName() + ":"
-								sSSCount = "%i" % (bOwnProject)
+							if bRivalNeededBuilt:
+								CyTeamRival = GC.getTeam(iRival)
+								iBuilt = CyTeamRival.getProjectCount(iProject)
+								szPlayer = CyTeamRival.getName() + ":"
+								szCount = "%i" % iBuilt
 
-								iHasTechColor = -1
-								iSSColor = 0
-								if bOwnProject == iVictoryThreshold:
-									iSSColor = self.COLOR_GREEN
-								elif bOwnProject >= INFO.getProjectVictoryMinThreshold(i, iLoopVC):
-									iSSColor = self.COLOR_YELLOW
-								elif self.hasAllTechs(CyTeamBest, lReqTechs) and (self.hasAllTechs(CyTeam, lReqTechs) or self.canResearchAll(CyPlayer.getID(), lReqTechs)):
-									iSSColor = GC.getInfoTypeForString("COLOR_PLAYER_ORANGE")
+								iColor = 0
+								if iBuilt == iThreshold:
+									iColor = self.COLOR_GREEN
+								elif iBuilt >= iMinThreshold:
+									iColor = self.COLOR_YELLOW
+								elif self.hasAllTechs(CyTeamRival, lReqTechs) and (self.hasAllTechs(CyTeam, lReqTechs) or self.canResearchAll(iActivePlayer, lReqTechs)):
+									iColor = GC.getInfoTypeForString("COLOR_PLAYER_ORANGE")
 
-								if iSSColor > 0:
-									sSSPlayer = TRNSLTR.changeTextColor(sSSPlayer, iSSColor)
-									sSSCount = TRNSLTR.changeTextColor(sSSCount, iSSColor)
+								if iColor > 0:
+									szPlayer = TRNSLTR.changeTextColor(szPlayer, iColor)
+									szCount = TRNSLTR.changeTextColor(szCount, iColor)
 
-								screen.setTableText(szTable, 2, iRow, ufont2 + sSSPlayer, "", eWidGen, 1, 2, 1<<0)
-								screen.setTableText(szTable, 3, iRow, ufont2 + sSSCount, "", eWidGen, 1, 2, 1<<0)
+								screen.setTableText(szTable, 2, iRow, ufont2 + szPlayer, "", eWidGen, 1, 2, 1<<0)
+								screen.setTableText(szTable, 3, iRow, ufont2 + szCount, "", eWidGen, 1, 2, 1<<0)
 
 				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_DIPLO_VOTE) and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
 					for (iVoteBuilding, iUNTeam, bUnknown) in aiVoteBuilding:
@@ -753,68 +609,26 @@ class CvVictoryScreen:
 							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
 
 				eVictoryCulture = VICTORY.getCityCulture(iLoopVC)
-				if eVictoryCulture != CultureLevelTypes.NO_CULTURELEVEL:
+				iNumCultureCities = VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_NUM_CULTURE_CITIES)
+				if eVictoryCulture != CultureLevelTypes.NO_CULTURELEVEL and iNumCultureCities > 0:
+					aOurCities = CyTeam.getCitiesByCulture(iNumCultureCities)
+					iRival = CyTeam.getBestKnownVictoryRival(VictoryMeasureKind.VICTORY_MEASURE_CULTURE, iLoopVC, iActivePlayer)
+					if iRival != -1:
+						aRivalCities = GC.getTeam(iRival).getCitiesByCulture(iNumCultureCities)
+					else:
+						aRivalCities = []
 
-					iNumCultureCities = VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_NUM_CULTURE_CITIES)
-					if iNumCultureCities > 0:
-						ourBestCities = self.getListCultureCities(iActivePlayer, iLoopVC)[0:iNumCultureCities]
+					iRow = screen.appendTableRow(szTable)
+					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (iNumCultureCities, INFO.getTextKey("CULTURELEVEL_", eVictoryCulture)))
+					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 
-						iBestCulturePlayer = -1
-						bestCityCulture = 0
-						maxCityCulture = CULTURELEVEL.getSpeedThreshold(eVictoryCulture, GAME.getGameSpeedType())
-
-						for iPlayerX in xrange(GC.getMAX_PLAYERS()):
-							CyPlayerX = GC.getPlayer(iPlayerX)
-							if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and not CyPlayerX.isNPC():
-								if iPlayerX != iActivePlayer and (CyTeam.isHasMet(CyPlayerX.getTeam()) or bDebugModeDLL):
-									theirBestCities = self.getListCultureCities(iPlayerX, iLoopVC)[0:iNumCultureCities]
-
-									iTotalCulture = 0
-									for loopCity in theirBestCities:
-										if loopCity[0] >= maxCityCulture:
-											iTotalCulture += maxCityCulture
-										else:
-											iTotalCulture += loopCity[0]
-
-									if iTotalCulture >= bestCityCulture:
-										bestCityCulture = iTotalCulture
-										iBestCulturePlayer = iPlayerX
-
-						if iBestCulturePlayer != -1:
-							theirBestCities = self.getListCultureCities(iBestCulturePlayer, iLoopVC)[0:iNumCultureCities]
-						else:
-							theirBestCities = []
-
-						iRow = screen.appendTableRow(szTable)
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (iNumCultureCities, INFO.getTextKey("CULTURELEVEL_", eVictoryCulture)))
-						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-
-						for i in xrange(iNumCultureCities):
-							if len(ourBestCities) > i or len(theirBestCities) > i:
-								if i:
-									iRow = screen.appendTableRow(szTable)
-
-								if len(ourBestCities) > i:
-									szText = ourBestCities[i][1].getName() + ": "
-									if ourBestCities[i][2] < 1:
-										szText += TRNSLTR.getText("TXT_KEY_VICTORY_SCORE", ())
-									elif ourBestCities[i][2] < 1000:
-										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (ourBestCities[i][2],))
-									else:
-										szText += INFO.getDescription("CULTURELEVEL_", ourBestCities[i][1].getCultureLevel())
-									screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
-
-								if len(theirBestCities) > i:
-									szText = theirBestCities[i][1].getName() + ": "
-									if theirBestCities[i][2] < 1:
-										szText += TRNSLTR.getText("TXT_KEY_VICTORY_SCORE", ())
-									elif theirBestCities[i][2] < 1000:
-										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (theirBestCities[i][2],))
-									else:
-										szText += INFO.getDescription("CULTURELEVEL_", theirBestCities[i][1].getCultureLevel())
-									screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
-							else:
-								break
+					for i in xrange(max(len(aOurCities), len(aRivalCities))):
+						if i:
+							iRow = screen.appendTableRow(szTable)
+						if i < len(aOurCities):
+							screen.setTableText(szTable, 1, iRow, ufont2 + self.getCultureCityText(aOurCities[i], eVictoryCulture), "", eWidGen, 1, 2, 1<<2)
+						if i < len(aRivalCities):
+							screen.setTableText(szTable, 2, iRow, ufont2 + self.getCultureCityText(aRivalCities[i], eVictoryCulture), "", eWidGen, 1, 2, 1<<0)
 
 
 	def showGameSettingsScreen(self, screen):
@@ -1376,27 +1190,34 @@ class CvVictoryScreen:
 		return -1
 
 
-	def getListCultureCities(self, iPlayer, iVictory):
+	def getCultureCityText(self, aCityRow, eCultureLevel):
+		"""A culture victory city, from a CyTeam.getCitiesByCulture row: its name and the turns until it reaches
+		eCultureLevel, or its culture level once there or with no culture coming in."""
+		CyCity = GC.getPlayer(aCityRow[0]).getCity(aCityRow[1])
+		iTurns = CyCity.getCultureTurnsTo(eCultureLevel)
+		if 0 < iTurns < 1000:
+			szState = TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (iTurns,))
+		else:
+			szState = INFO.getDescription("CULTURELEVEL_", CyCity.getCultureLevel())
+		return CyCity.getName() + ": " + szState
 
-		if iPlayer != -1:
-			CyPlayer = GC.getPlayer(iPlayer)
-			if CyPlayer.isAlive():
-				iThreshold = CULTURELEVEL.getSpeedThreshold(VICTORY.getCityCulture(iVictory), GAME.getGameSpeedType())
-				aList = []
+	def setShareRow(self, screen, szTable, iRow, CyTeam, iMeasure, iVictory):
+		"""Fill a domination row: the team's share of the world's measure, and the best known rival's."""
+		eWidGen = WidgetTypes.WIDGET_GENERAL
+		ufont2 = self.aFontList[6]
+		screen.setTableText(szTable, 1, iRow, ufont2 + CyTeam.getVictoryShareText(iMeasure) + u"%", "", eWidGen, 1, 2, 1<<2)
+		iRival = CyTeam.getBestKnownVictoryRival(iMeasure, iVictory, self.iActivePlayer)
+		if iRival != -1:
+			CyTeamRival = GC.getTeam(iRival)
+			screen.setTableText(szTable, 2, iRow, ufont2 + CyTeamRival.getName() + ":", "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(szTable, 3, iRow, ufont2 + CyTeamRival.getVictoryShareText(iMeasure) + u"%", "", eWidGen, 1, 2, 1<<0)
 
-				for CyCity in CyPlayer.cities():
-					iRate = CyCity.getCommerces()[CommerceTypes.COMMERCE_CULTURE]
-					if not iRate:
-						iTurns = -1
-					else:
-						iCultureLeft = iThreshold - CyCity.getCultureForPlayer(iPlayer) / 100
-						iTurns = int((iCultureLeft + iRate - 1) / iRate)
-					aList.append(((CyCity.getCultureForPlayer(iPlayer) / 100), CyCity, iTurns))
-
-				aList.sort()
-				aList.reverse()
-				return aList
-		return []
+	def getScoringReligionText(self, CyTeam):
+		"""The team's scoring religion and the percent of the world following it, or that it holds no holy city."""
+		for iReligion, iPercent, bScoring in CyTeam.getHolyCityReligions():
+			if bScoring:
+				return INFO.getDescription("RELIGION_", iReligion) + u": %d%%" % iPercent
+		return TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NO_HOLY", ())
 
 
 # BUG Additions Start
@@ -1490,44 +1311,6 @@ class CvVictoryScreen:
 							return CyPlayerX.getTeam()
 		return -1
 
-
-	def isApolloBuilt(self):
-		iTeam = GC.getPlayer(self.iActivePlayer).getTeam()
-		CyTeam = GC.getTeam(iTeam)
-
-		# check if anyone has built the apollo project (PROJECT_APOLLO_PROGRAM)
-		for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
-			CyTeamX = GC.getTeam(iTeamX)
-			if CyTeamX.isAlive() and not CyTeamX.isMinorCiv():
-				if iTeamX == iTeam:
-					bContact = True
-				elif CyTeam.isHasMet(iTeamX) or GAME.isDebugMode():
-					bContact = True
-				else:
-					bContact = False
-
-				if bContact and self.isApolloBuiltbyTeam(CyTeamX):
-					return True
-		return False
-
-	def isApolloBuiltbyTeam(self, CyTeam):
-		iTeam = CyTeam.getID()
-
-		iNumProjectInfos = GC.getNumProjectInfos()
-		for i in xrange(iNumProjectInfos):
-			if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
-				for j in INFO.getProjectNeededProjects(i):
-					if CyTeam.getProjectCount(j) < 1:
-						break
-				else:
-					self.ApolloTeamCheckResult[iTeam] = True
-					self.ApolloTeamsChecked.add(iTeam)
-					return True
-				break
-
-		self.ApolloTeamCheckResult[iTeam] = False
-		self.ApolloTeamsChecked.add(iTeam)
-		return False
 
 
 	# returns a unique ID for a widget in this screen
