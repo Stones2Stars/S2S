@@ -206,6 +206,15 @@ int CyTeam::getVassalCount() const
 	return m_pTeam->getVassalCount();
 }
 
+int CyTeam::getVotes(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const
+{
+	if (iVote < 0 || iVote >= GC.getNumVoteInfos() || iVoteSource < 0 || iVoteSource >= GC.getNumVoteSourceInfos())
+	{
+		return 0;
+	}
+	return m_pTeam->getVotes((VoteTypes)iVote, (VoteSourceTypes)iVoteSource);
+}
+
 int CyTeam::getAtWarCount(bool bIgnoreMinors) const
 {
 	return m_pTeam->getAtWarCount(bIgnoreMinors);
@@ -784,6 +793,7 @@ void CyTeam::pythonPublish()
 		.def("hasVictoryNeededProjects", &CyTeam::hasVictoryNeededProjects)
 		.def("countConquestRivals", &CyTeam::countConquestRivals)
 		.def("getVassalCount", &CyTeam::getVassalCount)
+		.def("getVotes", &CyTeam::getVotes)
 
 		.def("isAtWar", &CyTeam::isAtWar)
 		.def("getAtWarCount", &CyTeam::getAtWarCount)

@@ -17,6 +17,7 @@
 #include "CvTechInfo.h"           // the TECH_GAME_START root every player holds (its start civics)
 #include "CvEspionageMissionInfo.h"
 #include "CvProjectInfo.h"        // the projects each victory needs, and the projects those need
+#include "CvVoteInfo.h"           // each vote source's resolutions and elections
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -2500,6 +2501,30 @@ const std::vector<ProjectTypes>& cvInternalGlobals::getVictoryNeededProjects(Vic
 	return m_victoryNeededProjects[eVictory];
 }
 
+const std::vector<VoteTypes>& cvInternalGlobals::getVoteSourceVotes(VoteSourceTypes eVoteSource) const
+{
+	FASSERT_BOUNDS(0, (int)m_voteSourceVotes.size(), eVoteSource);
+	return m_voteSourceVotes[eVoteSource];
+}
+
+const std::vector<BuildingTypes>& cvInternalGlobals::getVoteSourceBuildings(VoteSourceTypes eVoteSource) const
+{
+	FASSERT_BOUNDS(0, (int)m_voteSourceBuildings.size(), eVoteSource);
+	return m_voteSourceBuildings[eVoteSource];
+}
+
+VoteTypes cvInternalGlobals::getVoteSourceSecretaryGeneralVote(VoteSourceTypes eVoteSource) const
+{
+	FASSERT_BOUNDS(0, (int)m_voteSourceSecretaryGeneralVotes.size(), eVoteSource);
+	return m_voteSourceSecretaryGeneralVotes[eVoteSource];
+}
+
+VoteTypes cvInternalGlobals::getVoteSourceVictoryVote(VoteSourceTypes eVoteSource) const
+{
+	FASSERT_BOUNDS(0, (int)m_voteSourceVictoryVotes.size(), eVoteSource);
+	return m_voteSourceVictoryVotes[eVoteSource];
+}
+
 int& cvInternalGlobals::getNumAnimationOperatorTypes()
 {
 	return m_iNumAnimationOperatorTypes;
@@ -3509,6 +3534,36 @@ void cvInternalGlobals::buildLoadTimeIndexes()
 		foreach_(const int iNeeded, neededProjects)
 		{
 			m_victoryNeededProjects[iVictory].push_back(static_cast<ProjectTypes>(iNeeded));
+		}
+	}
+
+	// The resolutions and buildings of each vote source, and its Secretary General and victory elections.
+	m_voteSourceVotes.assign(getNumVoteSourceInfos(), std::vector<VoteTypes>());
+	m_voteSourceBuildings.assign(getNumVoteSourceInfos(), std::vector<BuildingTypes>());
+	m_voteSourceSecretaryGeneralVotes.assign(getNumVoteSourceInfos(), NO_VOTE);
+	m_voteSourceVictoryVotes.assign(getNumVoteSourceInfos(), NO_VOTE);
+	for (int iVote = 0; iVote < getNumVoteInfos(); iVote++)
+	{
+		const CvVoteInfo& kVote = getVoteInfo(static_cast<VoteTypes>(iVote));
+		foreach_(const VoteSourceTypes eVoteSource, kVote.getVoteSources())
+		{
+			m_voteSourceVotes[eVoteSource].push_back(static_cast<VoteTypes>(iVote));
+			if (kVote.getRole() == VOTE_ROLE_SECRETARY_GENERAL && m_voteSourceSecretaryGeneralVotes[eVoteSource] == NO_VOTE)
+			{
+				m_voteSourceSecretaryGeneralVotes[eVoteSource] = static_cast<VoteTypes>(iVote);
+			}
+			else if (kVote.getRole() == VOTE_ROLE_VICTORY && m_voteSourceVictoryVotes[eVoteSource] == NO_VOTE)
+			{
+				m_voteSourceVictoryVotes[eVoteSource] = static_cast<VoteTypes>(iVote);
+			}
+		}
+	}
+	for (int iBuilding = 0; iBuilding < getNumBuildingInfos(); iBuilding++)
+	{
+		const int iVoteSource = getBuildingInfo(static_cast<BuildingTypes>(iBuilding)).getDiploVoteType();
+		if (NO_VOTESOURCE != iVoteSource)
+		{
+			m_voteSourceBuildings[iVoteSource].push_back(static_cast<BuildingTypes>(iBuilding));
 		}
 	}
 

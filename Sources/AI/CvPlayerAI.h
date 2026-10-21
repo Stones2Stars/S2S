@@ -258,6 +258,14 @@ public:
 	// END: Show Hidden Attitude Mod
 
 	PlayerVoteTypes AI_diploVote(const VoteSelectionSubData& kVoteData, VoteSourceTypes eVoteSource, bool bPropose);
+	///<summary>The team the AI votes for in eVote, a team election at eVoteSource: its own team when it stands,
+	/// else the standing team it is a vassal of, else the standing team it likes most above a floor (higher for a
+	/// victory vote); PLAYER_VOTE_ABSTAIN when none clears it.</summary>
+	PlayerVoteTypes AI_teamVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
+	///<summary>The team this player is forecast to vote for in eVote, a team election at eVoteSource:
+	/// PLAYER_VOTE_ABSTAIN when it is not a voting member; a human votes for its own team when it stands and is
+	/// not counted otherwise; an AI votes as AI_teamVote.</summary>
+	PlayerVoteTypes AI_forecastTeamVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 
 	int AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pList, bool bIgnoreAnnual = false, int iExtra = 1) const;
 	bool AI_goldDeal(const CLinkList<TradeData>* pList) const;

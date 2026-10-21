@@ -7406,6 +7406,56 @@ int CvPlayerAI::AI_getColonyAttitude(PlayerTypes ePlayer) const
 
 
 
+PlayerVoteTypes CvPlayerAI::AI_teamVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const
+{
+	if (GC.getGame().isTeamVoteEligible(getTeam(), eVoteSource))
+	{
+		return (PlayerVoteTypes)getTeam();
+	}
+	int iBestValue;
+
+	if ((GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_VICTORY))
+	{
+		iBestValue = 7;
+	}
+	else iBestValue = 0;
+
+	PlayerVoteTypes eBestTeam = PLAYER_VOTE_ABSTAIN;
+
+	std::vector<TeamTypes> candidates;
+	GC.getGame().getTeamVoteCandidates(eVoteSource, candidates);
+	foreach_(const TeamTypes eCandidate, candidates)
+	{
+		if (GET_TEAM(getTeam()).isVassal(eCandidate))
+		{
+			return (PlayerVoteTypes)eCandidate;
+		}
+
+		const int iValue = GET_TEAM(getTeam()).AI_getAttitudeVal(eCandidate);
+
+		if (iValue > iBestValue)
+		{
+			iBestValue = iValue;
+			eBestTeam = (PlayerVoteTypes)eCandidate;
+		}
+	}
+	return eBestTeam;
+}
+
+PlayerVoteTypes CvPlayerAI::AI_forecastTeamVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const
+{
+	if (!isAlive() || !isVotingMember(eVoteSource))
+	{
+		return PLAYER_VOTE_ABSTAIN;
+	}
+	const PlayerVoteTypes eTeamVote = AI_teamVote(eVote, eVoteSource);
+	if (isHumanPlayer() && eTeamVote != (PlayerVoteTypes)getTeam())
+	{
+		return PLAYER_VOTE_ABSTAIN;
+	}
+	return eTeamVote;
+}
+
 PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, VoteSourceTypes eVoteSource, bool bPropose)
 {
 	PROFILE_FUNC();
@@ -7414,40 +7464,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 	if (GC.getGame().isTeamVote(eVote))
 	{
-		if (GC.getGame().isTeamVoteEligible(getTeam(), eVoteSource))
-		{
-			return (PlayerVoteTypes)getTeam();
-		}
-		int iBestValue;
-
-		if ((GC.getVoteInfo(eVote).getRole() == VOTE_ROLE_VICTORY))
-		{
-			iBestValue = 7;
-		}
-		else iBestValue = 0;
-
-		PlayerVoteTypes eBestTeam = PLAYER_VOTE_ABSTAIN;
-
-		for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
-		{
-			if (GET_TEAM((TeamTypes)iI).isAlive()
-			&& GC.getGame().isTeamVoteEligible((TeamTypes)iI, eVoteSource))
-			{
-				if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI))
-				{
-					return (PlayerVoteTypes)iI;
-				}
-
-				const int iValue = GET_TEAM(getTeam()).AI_getAttitudeVal((TeamTypes)iI);
-
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-					eBestTeam = (PlayerVoteTypes)iI;
-				}
-			}
-		}
-		return eBestTeam;
+		return AI_teamVote(eVote, eVoteSource);
 	}
 
 	TeamTypes eSecretaryGeneral = GC.getGame().getSecretaryGeneral(eVoteSource);

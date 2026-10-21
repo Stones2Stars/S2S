@@ -40,11 +40,19 @@ public:
 	int getAdjustedLandPercent( VictoryTypes eVictory) const;
 
 	bool isChooseElection(VoteTypes eVote) const;
-	bool isTeamVoteEligible(TeamTypes eTeam, VoteSourceTypes eVoteSource) const;
 	int countPossibleVote(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 	int getVoteRequired(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
 	int getSecretaryGeneral(VoteSourceTypes eVoteSource) const;
 	bool canHaveSecretaryGeneral(VoteSourceTypes eVoteSource) const;
+	///<summary>The team of the first living player with iBuilding, or -1 (CvGame::getBuildingOwnerTeam).</summary>
+	int getBuildingOwnerTeam(int /*BuildingTypes*/ iBuilding) const;
+	///<summary>The teams standing in iVote at iVoteSource, in team order, as rows of (team, forecast votes)
+	/// (CvGame::getTeamVoteCandidates, CvGame::countForecastTeamVotes); empty when iVote is not iVoteSource's.</summary>
+	python::list getTeamVoteForecast(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const;
+	///<summary>The forecast winner of iVote at iVoteSource as (team, percent of the possible votes, lead over the
+	/// next in percent of the possible votes), the percents to one decimal; (-1, "", "") when no team stands or
+	/// iVote is not iVoteSource's (CvGame::getForecastTeamVoteWinner).</summary>
+	python::tuple getTeamVoteForecastWinner(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const;
 	int getVoteSourceReligion(VoteSourceTypes eVoteSource) const;
 
 	int countCivPlayersAlive() const;

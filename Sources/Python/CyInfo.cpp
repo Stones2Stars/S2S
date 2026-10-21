@@ -796,18 +796,28 @@ std::wstring CyInfo::getVoteSourceSecretaryGeneralText(int iVoteSourceId) const
 	return std::wstring(GC.getVoteSourceInfo((VoteSourceTypes)iVoteSourceId).getSecretaryGeneralText());
 }
 
-bool CyInfo::hasVoteSource(int iVoteId, int iVoteSourceId) const
+python::list CyInfo::getVoteSourceVotes(int iVoteSourceId) const
 {
-	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
-	if (pVote == NULL || iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return false;
-	return pVote->hasVoteSource(iVoteSourceId);
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return python::list();
+	return cyToIdList(GC.getVoteSourceVotes((VoteSourceTypes)iVoteSourceId));
 }
 
-bool CyInfo::isVoteSecretaryGeneral(int iVoteId) const
+python::list CyInfo::getVoteSourceBuildings(int iVoteSourceId) const
 {
-	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
-	if (pVote == NULL) return false;
-	return pVote->getRole() == VOTE_ROLE_SECRETARY_GENERAL;
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return python::list();
+	return cyToIdList(GC.getVoteSourceBuildings((VoteSourceTypes)iVoteSourceId));
+}
+
+int CyInfo::getVoteSourceSecretaryGeneralVote(int iVoteSourceId) const
+{
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return NO_VOTE;
+	return GC.getVoteSourceSecretaryGeneralVote((VoteSourceTypes)iVoteSourceId);
+}
+
+int CyInfo::getVoteSourceVictoryVote(int iVoteSourceId) const
+{
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return NO_VOTE;
+	return GC.getVoteSourceVictoryVote((VoteSourceTypes)iVoteSourceId);
 }
 
 bool CyInfo::isSpecialistSlave(int iSpecialistId) const
@@ -1748,8 +1758,10 @@ void CyInfo::pythonPublish()
 		.def("getProjectNeededProjects", &CyInfo::getProjectNeededProjects)
 		.def("getBuildingVictoryThreshold", &CyInfo::getBuildingVictoryThreshold)
 		.def("getVoteSourceSecretaryGeneralText", &CyInfo::getVoteSourceSecretaryGeneralText)
-		.def("hasVoteSource", &CyInfo::hasVoteSource)
-		.def("isVoteSecretaryGeneral", &CyInfo::isVoteSecretaryGeneral)
+		.def("getVoteSourceVotes", &CyInfo::getVoteSourceVotes)
+		.def("getVoteSourceBuildings", &CyInfo::getVoteSourceBuildings)
+		.def("getVoteSourceSecretaryGeneralVote", &CyInfo::getVoteSourceSecretaryGeneralVote)
+		.def("getVoteSourceVictoryVote", &CyInfo::getVoteSourceVictoryVote)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
 		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)

@@ -31,14 +31,14 @@ the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface sta
 > nine `isRevealed`, four `getBuildingOriginalTime`, three `hasBuilding` and two `plot()` — all of which would
 > have thrown on the following click.)* ⇒ When you touch a file for ANY reason, clear its dead reads while you
 > are in it, and grep the file rather than trusting the traceback that sent you there.
-> The families known to have NO read today, so nobody re-derives the list:
-> **the vote** (`isVoteSourceType` / `isSecretaryGeneral` — the rebuilt `CvVoteInfo` answers them as
-> `hasVoteSource()` and `getRole() == VOTE_ROLE_SECRETARY_GENERAL`, so the DATA is there and only the binding is
-> missing), **the vote source** (`VOTESOURCE_` is not a registered prefix at all — it needs its own accessor),
-> **the victory thresholds** (authored on the building/project, wanted per victory — a reverse view, so it lands
-> at load like the build's produces does, never a per-victory registry sweep), **the ERA** (no registered prefix;
+> The family known to have NO read today, so nobody re-derives the list: **the ERA** (no registered prefix;
 > ⚠ contrast `WORLD_`, which is NOT a JSON prefix either yet IS mapped explicitly in `CyInfo.cpp` — so absence
 > from the `readJson` X-macro list is not proof a prefix is unserved, CHECK the mapper).
+> ⚑ **The vote, vote-source and victory-threshold reads are SERVED as reverse views built at load**
+> (`cvInternalGlobals::buildLoadTimeIndexes`): a vote source's resolutions, buildings and two elections as
+> `CyInfo::getVoteSourceVotes` / `getVoteSourceBuildings` / `getVoteSourceSecretaryGeneralVote` /
+> `getVoteSourceVictoryVote` (bare id), and a victory's buildings
+> and projects as `CyVictoryInfo::getBuildings` / `getProjects` / `getNeededProjects`.
 > ⚑ **The odd ART reads that used to sit on that list are SERVED, and how they landed is the pattern to copy:**
 > the leader art-define and diplo-music tags as `CyInfo::getLeaderHeadArt` / `getLeaderDiploPeaceMusicScriptId`,
 > and the religion disabled-icon as `CyInfo::getReligionButtonDisabled`. A read belonging to ONE registry is a

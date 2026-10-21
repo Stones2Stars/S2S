@@ -1174,6 +1174,16 @@ int CyPlayer::getVotes(int /*VoteTypes*/ eVote, int /*VoteSourceTypes*/ eVoteSou
 	return m_pPlayer->getVotes((VoteTypes)eVote, (VoteSourceTypes)eVoteSource);
 }
 
+int CyPlayer::getForecastTeamVote(int /*VoteTypes*/ iVote, int /*VoteSourceTypes*/ iVoteSource) const
+{
+	if (iVote < 0 || iVote >= GC.getNumVoteInfos() || iVoteSource < 0 || iVoteSource >= GC.getNumVoteSourceInfos())
+	{
+		return NO_TEAM;
+	}
+	const PlayerVoteTypes eForecast = GET_PLAYER(m_pPlayer->getID()).AI_forecastTeamVote((VoteTypes)iVote, (VoteSourceTypes)iVoteSource);
+	return eForecast >= 0 ? (int)eForecast : NO_TEAM;
+}
+
 bool CyPlayer::isFullMember(int /*VoteSourceTypes*/ eVoteSource) const
 {
 	return m_pPlayer->isFullMember((VoteSourceTypes)eVoteSource);
