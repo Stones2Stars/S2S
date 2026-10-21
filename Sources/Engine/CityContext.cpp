@@ -86,11 +86,30 @@ void CityContext::clear() const
 // ---- the ONE derivation per stored block ------------------------------------------------------------------------
 
 
+namespace
+{
+	///<summary>Announce one of the city's stored counts moving from iOldCount to iNewCount, once the store holds
+	/// it: emitAdded with the rise, or emitRemoved with the fall.</summary>
+	void cc_announceCountMove(const CvCity& city, int iOldCount, int iNewCount,
+		void (*emitAdded)(int, int, int), void (*emitRemoved)(int, int, int))
+	{
+		if (iNewCount > iOldCount)
+		{
+			emitAdded(city.getID(), city.getOwner(), iNewCount - iOldCount);
+		}
+		else if (iNewCount < iOldCount)
+		{
+			emitRemoved(city.getID(), city.getOwner(), iOldCount - iNewCount);
+		}
+	}
+}
+
 // Re-derive the area facts: the city's area ID, that area's tile count, and the largest ADJACENT water body. The
 // area id replaces a per-read plot()->area() chase; the water-body size replaces CvPlot::isCoastalLand's 8-neighbour
 // scan, which dereferenced an adjacent water plot's CvArea on EVERY coastal check.
 void CityContext::refreshAreaFacts() const
 {
+	const int iOldAreaTileCount = m_areaTileCount;
 	m_areaId = -1;
 	m_areaTileCount = 0;
 	m_maxAdjacentWaterTiles = 0;
@@ -99,72 +118,68 @@ void CityContext::refreshAreaFacts() const
 		return;
 	}
 	const CvPlot* pCentrePlot = m_city->plot();
-	if (pCentrePlot == NULL)
+	if (pCentrePlot != NULL)
 	{
-		return;
-	}
-	m_areaId = pCentrePlot->getArea();
-	const CvArea* pArea = pCentrePlot->area();
-	if (pArea != NULL)
-	{
-		m_areaTileCount = pArea->getNumTiles();
-	}
-	// A water city plot is never coastal LAND, matching CvPlot::isCoastalLand's own first test.
-	if (pCentrePlot->isWater())
-	{
-		return;
-	}
-	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
-	{
-		const CvPlot* pAdjacentPlot = plotDirection(pCentrePlot->getX(), pCentrePlot->getY(), (DirectionTypes)iDirection);
-		if (pAdjacentPlot == NULL || !pAdjacentPlot->isWater())
+		m_areaId = pCentrePlot->getArea();
+		const CvArea* pArea = pCentrePlot->area();
+		if (pArea != NULL)
 		{
-			continue;
+			m_areaTileCount = pArea->getNumTiles();
 		}
-		const CvArea* pAdjacentArea = pAdjacentPlot->area();
-		if (pAdjacentArea == NULL)
+		// A water city plot is never coastal LAND, matching CvPlot::isCoastalLand's own first test.
+		if (!pCentrePlot->isWater())
 		{
-			continue;   // the map is unsettled; the maintainer re-runs this once it is
-		}
-		if (pAdjacentArea->getNumTiles() > m_maxAdjacentWaterTiles)
-		{
-			m_maxAdjacentWaterTiles = pAdjacentArea->getNumTiles();
+			for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+			{
+				const CvPlot* pAdjacentPlot = plotDirection(pCentrePlot->getX(), pCentrePlot->getY(), (DirectionTypes)iDirection);
+				if (pAdjacentPlot == NULL || !pAdjacentPlot->isWater())
+				{
+					continue;
+				}
+				const CvArea* pAdjacentArea = pAdjacentPlot->area();
+				if (pAdjacentArea == NULL)
+				{
+					continue;   // the map is unsettled; the maintainer re-runs this once it is
+				}
+				if (pAdjacentArea->getNumTiles() > m_maxAdjacentWaterTiles)
+				{
+					m_maxAdjacentWaterTiles = pAdjacentArea->getNumTiles();
+				}
+			}
 		}
 	}
+	cc_announceCountMove(*m_city, iOldAreaTileCount, m_areaTileCount, emitCityAreaSizeAdded, emitCityAreaSizeRemoved);
 }
 
-// Re-derive the holy-city count. The bare IS_HOLY_CITY read walked every religion info per call asking the game
-// registry; the count answers it with one comparison.
-// The DISTANCE_TO_GOVERNMENT_CENTER store. It re-derives WHOLE on any fact that can move it (a government
-// centre appearing or going, a city gained or lost) rather than per-event deltas -- the one-derivation shape
-// every other block here uses. The min over the owner's government centres is what the legacy distance
-// formula computed PER READ; holding it is the whole point ([contexts.md]: cost tracks EVENT volume, never
-// read volume).
+// The DISTANCE_TO_GOVERNMENT_CENTER store, an event-triggered recalc
+// ([docs/cascade/13-context-maintained-events.md] § THE SANCTIONED EXCEPTION).
 void CityContext::refreshGovernmentCenterDistance() const
 {
+	const int iOldDistance = m_governmentCenterDistance;
 	m_governmentCenterDistance = 0;
 	if (m_city == NULL)
 	{
 		return;
 	}
-	if (m_city->isGovernmentCenter())
+	if (!m_city->isGovernmentCenter())
 	{
-		return;
-	}
-	int iNearest = -1;
-	foreach_(const CvCity* pLoopCity, GET_PLAYER(m_city->getOwner()).cities())
-	{
-		if (pLoopCity == m_city || !pLoopCity->isGovernmentCenter())
+		int iNearest = -1;
+		foreach_(const CvCity* pLoopCity, GET_PLAYER(m_city->getOwner()).cities())
 		{
-			continue;
+			if (pLoopCity == m_city || !pLoopCity->isGovernmentCenter())
+			{
+				continue;
+			}
+			const int iDistance = plotDistance(m_city->getX(), m_city->getY(), pLoopCity->getX(), pLoopCity->getY());
+			if (iNearest < 0 || iDistance < iNearest)
+			{
+				iNearest = iDistance;
+			}
 		}
-		const int iDistance = plotDistance(m_city->getX(), m_city->getY(), pLoopCity->getX(), pLoopCity->getY());
-		if (iNearest < 0 || iDistance < iNearest)
-		{
-			iNearest = iDistance;
-		}
+		m_governmentCenterDistance = (iNearest > 0) ? iNearest : 0;
 	}
-	m_governmentCenterDistance = (iNearest > 0) ? iNearest : 0;
+	cc_announceCountMove(*m_city, iOldDistance, m_governmentCenterDistance,
+		emitCityGovernmentCenterDistanceAdded, emitCityGovernmentCenterDistanceRemoved);
 }
 
 // The CORPORATION-ACTIVE verdict store (see the header): re-read the ONE engine implementation, announce only a
@@ -902,7 +917,9 @@ bool CityContext::wantsEvent(int iEventId)
 	case SEVT_CIVIC_ADOPTED:               // leg 2: a policy flip (noCorporations / noForeignCorporations)
 	case SEVT_EMPIRE_TRAIT_ADDED:
 	case SEVT_EMPIRE_TRAIT_REMOVED:
-	case SEVT_CITY_OWNER_ADDED:            // leg 2 again: acquisition swaps whose player-level legs compose
+	// A city gaining an owner (founding or acquisition): leg 2 again, and the city's area facts and its distance to
+	// the owner's government centres are measured.
+	case SEVT_CITY_OWNER_ADDED:
 	// A government centre appeared or went: every city of that player re-measures its distance to the nearest one.
 	// ⚑ BOTH directions drive the SAME re-measure, and that is not a discriminator the fact has lost: the answer
 	// is a MINIMUM over the player's centres, so gaining one and losing one both move it and neither direction
@@ -921,8 +938,6 @@ bool CityContext::wantsEvent(int iEventId)
 	// maintenance and the seeding path for the vicinity store.
 	case SEVT_PLOT_WORKABLE_BY_ADDED:
 	case SEVT_PLOT_WORKABLE_BY_REMOVED:
-	// A new city has no derived blocks yet.
-	case SEVT_CITY_FOUNDED:
 	// The load bracket: buffer the membership facts, drain them once the stream has ended.
 	case SEVT_GAME_LOAD_STARTED:
 	case SEVT_GAME_LOAD_FINISHED:
@@ -1162,13 +1177,17 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 		}
 		break;
 	case SEVT_CITY_OWNER_ADDED:
-		// Acquisition: the city's verdicts now compose against the NEW owner's player-level legs.
+		// Founding or acquisition: the city's verdicts now compose against the NEW owner's player-level legs, and
+		// its area and its distance to the owner's government centres are measured. At load the load build below
+		// measures them, once the whole stream has landed.
 		if (!spineGameLoadInProgress())
 		{
 			const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
 				pCity->getCityContext().refreshAllCorporationsActive();
+				pCity->getCityContext().refreshAreaFacts();
+				pCity->getCityContext().refreshGovernmentCenterDistance();
 			}
 		}
 		break;
@@ -1218,20 +1237,6 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 					pCity->getCityContext().refreshAreaFacts();
 				}
 			}
-		}
-		break;
-	}
-
-	case SEVT_CITY_FOUNDED:
-	{
-		const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
-		if (pCity != NULL)
-		{
-			// ⛔ The holy-city and headquarters counts are NOT built here, and adding them would be a bug: both
-			// are delta stores fed ±1 by their own facts, which a founding city has none of yet. A build pass
-			// beside a delta store double-counts.
-			pCity->getCityContext().refreshAreaFacts();
-			pCity->getCityContext().refreshGovernmentCenterDistance();
 		}
 		break;
 	}

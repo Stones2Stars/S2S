@@ -476,6 +476,10 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_EMPIRE_UNIT_COUNT_REMOVED:        return "[SPINE/EMPIRE] empireUnitCountRemoved";
 	case SEVT_EMPIRE_CITY_COUNT_ADDED:          return "[SPINE/EMPIRE] empireCityCountAdded";
 	case SEVT_EMPIRE_CITY_COUNT_REMOVED:        return "[SPINE/EMPIRE] empireCityCountRemoved";
+	case SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED:   return "[SPINE/CITY] cityGovernmentCenterDistanceAdded";
+	case SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_REMOVED: return "[SPINE/CITY] cityGovernmentCenterDistanceRemoved";
+	case SEVT_CITY_AREA_SIZE_ADDED:             return "[SPINE/CITY] cityAreaSizeAdded";
+	case SEVT_CITY_AREA_SIZE_REMOVED:           return "[SPINE/CITY] cityAreaSizeRemoved";
 	case SEVT_CITY_BUILDING_ADDED:              return "[SPINE/CITY] cityBuildingAdded";
 	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE/CITY] cityBuildingRemoved";
 	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE/CITY] cityBuildingActivated";
@@ -1733,6 +1737,38 @@ void emitEmpireCityCountRemoved(int iPlayer, int iCount)
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
+}
+
+namespace
+{
+	///<summary>Announce one of the city's stored counters moving by iCount.</summary>
+	void es_emitCityCount(int iEvent, int iCity, int iOwner, int iCount)
+	{
+		CvSpineEvent kEvent(EVENTKIND_DOMAIN, iEvent, -1, iCount, 0, iOwner, iCity);
+		kEvent.iDomainTag = SD_SPINE;
+		kEvent.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+		eventSpine().emit(kEvent);
+	}
+}
+
+void emitCityGovernmentCenterDistanceAdded(int iCity, int iOwner, int iCount)
+{
+	es_emitCityCount(SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED, iCity, iOwner, iCount);
+}
+
+void emitCityGovernmentCenterDistanceRemoved(int iCity, int iOwner, int iCount)
+{
+	es_emitCityCount(SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_REMOVED, iCity, iOwner, iCount);
+}
+
+void emitCityAreaSizeAdded(int iCity, int iOwner, int iCount)
+{
+	es_emitCityCount(SEVT_CITY_AREA_SIZE_ADDED, iCity, iOwner, iCount);
+}
+
+void emitCityAreaSizeRemoved(int iCity, int iOwner, int iCount)
+{
+	es_emitCityCount(SEVT_CITY_AREA_SIZE_REMOVED, iCity, iOwner, iCount);
 }
 
 void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount)

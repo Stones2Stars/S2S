@@ -1795,6 +1795,21 @@ namespace
 			kTally.iRefused, kTally.iApplied, (int)kPlayer.getID(), -1);
 	}
 
+	/// <summary>Re-books every deposit a city-wide count token scales in one city -- the token is the city's own
+	/// count, so no empire-scope deposit reads it -- and reports the route's tally.</summary>
+	void mc_rebookAtCity(const char* szToken, const CvCity& kCity)
+	{
+		const std::vector<DepositIndex::GatedDeposit>* pGated = DepositIndex::gatedByToken(szToken);
+		if (pGated == NULL)
+		{
+			return;
+		}
+		McGatedTally kTally;
+		mc_bookGated(pGated, kCity, &kTally);
+		CascadeChannelRegistry::reportAtomRoute(szToken, (int)pGated->size(), kTally.iFound, kTally.iNoSource,
+			kTally.iRefused, kTally.iApplied, (int)kCity.getOwner(), kCity.getID());
+	}
+
 	// Does this atom gate anything that lands on the PLOT plane at all? The plot pass is the expensive half (an
 	// eval ctx per plot per atom, over every tile the owner's cities can work), and the overwhelming majority of
 	// atoms gate nothing there -- so asking the compiled list first turns a whole-map walk into a no-op for them.
@@ -3149,6 +3164,29 @@ namespace
 					mc_rebookAtPlayerAndCities("CITY", *pPlayer);
 				}
 				break;
+			// The city's own stored counts moved -- the `per: DISTANCE_TO_GOVERNMENT_CENTER` (distance maintenance)
+			// and `per: AREA_SIZE` count routes, re-booked in that city. The store announces after it holds the new
+			// value, so the re-book reads it.
+			case SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED:
+			case SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_REMOVED:
+			{
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				if (pCity != NULL)
+				{
+					mc_rebookAtCity("DISTANCE_TO_GOVERNMENT_CENTER", *pCity);
+				}
+				break;
+			}
+			case SEVT_CITY_AREA_SIZE_ADDED:
+			case SEVT_CITY_AREA_SIZE_REMOVED:
+			{
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				if (pCity != NULL)
+				{
+					mc_rebookAtCity("AREA_SIZE", *pCity);
+				}
+				break;
+			}
 			// ⚖ OWNERSHIP MOVES WHO SEES THE TILE'S BONUS, AND NOTHING ELSE HERE. CvPlot::setOwner CALLS
 			// updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own, so the two facts cannot
 			// come apart), and every other modifier consequence of an ownership flip rides those facts: the

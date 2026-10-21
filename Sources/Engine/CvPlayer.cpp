@@ -6299,6 +6299,19 @@ bool CvPlayer::canFound(int iX, int iY, bool bTestVisible) const
 }
 
 
+CvCity* CvPlayer::placeCity(int iX, int iY)
+{
+	CvCity* pCity = initCity(iX, iY, true, true);
+	// OWNERSHIP is announced as soon as the city exists -- the same order (and the same NO_PLAYER -> owner
+	// transition) the load reseed uses at CvCity::read, which establishes that the city belongs to its owner before
+	// its contents.
+	if (pCity != NULL)
+	{
+		emitCityOwnerAdded(pCity->getID(), (int)getID(), GC.getMap().plotNum(pCity->getX(), pCity->getY()));
+	}
+	return pCity;
+}
+
 void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 {
 	PROFILE_EXTRA_FUNC();
@@ -6308,18 +6321,14 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		return;
 	}
 
-	CvCity* pCity = initCity(iX, iY, true, true);
+	CvCity* pCity = placeCity(iX, iY);
 	FAssertMsg(pCity, "City is not assigned a valid value");
 
-	// The city now EXISTS -- announce the founding before any settle-time provision runs. Founding otherwise emits
-	// no identifiable fact (only side-effects: populationChanged / plotOwnerChanged / cityNetworkChanged).
+	// The city now EXISTS and its ownership is announced -- announce the founding before any settle-time provision
+	// runs. Founding otherwise emits no identifiable fact (only side-effects: populationChanged / plotOwnerChanged /
+	// cityNetworkChanged).
 	if (pCity != NULL)
 	{
-		// OWNERSHIP first, then the founding -- the same order (and the same NO_PLAYER -> owner transition) the load
-		// reseed uses at CvCity::read, which establishes that the city belongs to its owner before its contents.
-		// Without this a FOUNDED city never announces ownership in live play at all: the only other owner emits are
-		// dispose and acquire, so the load path and the play path would disagree about the same fact.
-		emitCityOwnerAdded(pCity->getID(), (int)getID(), GC.getMap().plotNum(pCity->getX(), pCity->getY()));
 		emitCityFounded((int)getID(), pCity->getID(),
 			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
 	}

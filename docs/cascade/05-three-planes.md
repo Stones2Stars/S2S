@@ -60,7 +60,7 @@ buys. Four consequences:
 
 - **⛔ THE SOURCE APPLY BOOKS EVERY ENTRY A RE-BOOK ROUTE CAN REACH — CONDITIONED *OR* `per`-SCALED.** The
   count and threshold routes that RE-BOOK (owed − booked: the wonder-category, POPULATION, rate, CITY count,
-  improvement, property and ERA-condition routes) move only a difference, so they are exact only if the source apply recorded
+  DISTANCE_TO_GOVERNMENT_CENTER, AREA_SIZE, improvement, property and ERA-condition routes) move only a difference, so they are exact only if the source apply recorded
   what it deposited. Booking the CONDITIONED entries alone leaves a scaled, unconditioned deposit at booked = 0,
   and its first count move re-applies the whole `value × count`. ⚑ Measured: two per-national-wonder
   free-specialist traits in a 37-wonder capital each landed twice, +74 phantom slots. ⚠ The DELTA route

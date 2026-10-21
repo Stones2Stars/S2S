@@ -616,7 +616,7 @@
    "distance": {
     "flat": [
      {
-      "value": 0.85,
+      "value": 0,
       "per": {
        "type": "DISTANCE_TO_GOVERNMENT_CENTER"
       }

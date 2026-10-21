@@ -485,6 +485,16 @@ enum SpineDomainEvent
 	/// iA = HOW MANY, iC = player. DOMAIN.</summary>
 	SEVT_EMPIRE_CITY_COUNT_ADDED      = 215,
 	SEVT_EMPIRE_CITY_COUNT_REMOVED    = 216,
+	/// <summary>The city's DISTANCE_TO_GOVERNMENT_CENTER count grew / shrank (CityContext's stored distance, announced
+	/// by CityContext::refreshGovernmentCenterDistance after it stored the new value). iA = HOW MANY tiles moved,
+	/// iC = owner, iSrcLoc = cityId. DOMAIN.</summary>
+	SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED   = 217,
+	SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_REMOVED = 218,
+	/// <summary>The city's AREA_SIZE count grew / shrank (CityContext's stored area tile count, announced by
+	/// CityContext::refreshAreaFacts after it stored the new value). iA = HOW MANY tiles moved, iC = owner,
+	/// iSrcLoc = cityId. DOMAIN.</summary>
+	SEVT_CITY_AREA_SIZE_ADDED         = 219,
+	SEVT_CITY_AREA_SIZE_REMOVED       = 220,
 	// A city's PROPERTY value crossed one of the band BOUNDARIES the authored `requires.operate` clauses declare
 	// -- the value ROSE across one (_ADDED) or FELL across one (_REMOVED). iType = the PROPERTY_, iC = owner,
 	// iSrcLoc = cityId. DOMAIN.
@@ -1063,6 +1073,16 @@ void emitEmpireUnitCountRemoved(int iPlayer, int iUnit, int iCount);
 void emitEmpireCityCountAdded(int iPlayer, int iCount);
 /// <summary>The player's city list shrank. Call after the list changed. iCount = HOW MANY, unsigned.</summary>
 void emitEmpireCityCountRemoved(int iPlayer, int iCount);
+/// <summary>The city's distance to its owner's nearest government centre grew. Call after the store holds it.
+/// iCount = HOW MANY tiles, unsigned.</summary>
+void emitCityGovernmentCenterDistanceAdded(int iCity, int iOwner, int iCount);
+/// <summary>The city's distance to its owner's nearest government centre shrank. Call after the store holds it.
+/// iCount = HOW MANY tiles, unsigned.</summary>
+void emitCityGovernmentCenterDistanceRemoved(int iCity, int iOwner, int iCount);
+/// <summary>The city's area grew. Call after the store holds it. iCount = HOW MANY tiles, unsigned.</summary>
+void emitCityAreaSizeAdded(int iCity, int iOwner, int iCount);
+/// <summary>The city's area shrank. Call after the store holds it. iCount = HOW MANY tiles, unsigned.</summary>
+void emitCityAreaSizeRemoved(int iCity, int iOwner, int iCount);
 // ===== PLOT GROUP / AREA =====
 void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount);
 void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount);

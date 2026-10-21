@@ -6743,9 +6743,10 @@ void CvGameTextMgr::getCityBreakdownLines(const CvCityBreakdown& kBreakdown, std
 		case CITY_BREAKDOWN_AMOUNT:
 			if (kLine.hasOwnStack)
 			{
+				// The icon is passed twice: the text engine fills each placeholder once, so a reused %s2 stays literal.
 				kTextLines.push_back(gDLL->getText("TXT_KEY_CITYHELP_LINE_STACKED", gt_signedAmountText(kLine.value).GetCString(),
 					szIcon.GetCString(), szLabel.GetCString(), amountText(kLine.stackBase).GetCString(),
-					gt_signedPercentText(kLine.stackPercent).GetCString()));
+					szIcon.GetCString(), gt_signedPercentText(kLine.stackPercent).GetCString()));
 			}
 			else
 			{

@@ -103,7 +103,7 @@ bool CyPlayer::startingPlotWithinRange(const CyPlot* pPlot, int /*PlayerTypes*/ 
 
 CyCity* CyPlayer::initCity(int x, int y)
 {
-	return new CyCity(m_pPlayer->initCity(x, y, true, true));
+	return new CyCity(m_pPlayer->placeCity(x, y));
 }
 
 void CyPlayer::acquireCity(CyCity* pCity, bool bConquest, bool bTrade)
