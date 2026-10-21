@@ -5,17 +5,12 @@ from CvPythonExtensions import *
 import CvScreenEnums
 
 # globals
-# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
-# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# The one data-fetching library: INFO = what an entity CARRIES. A game object's own data is asked OF THAT OBJECT --
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
-# The per-info accessor for this registry. Named reads, because these values belong to ESPIONAGEMISSION_ alone
-# -- asking the generic slot plane for them is what silently classified NO mission and crashed this screen.
-ESPIONAGEMISSION = CyEspionageMissionInfo()
+ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 GAME = GC.getGame()
-ENABLER = CyEnabler()
-ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
@@ -53,7 +48,7 @@ class TheScreen:
 
 	def __init__(self, main):
 		self.iTab = iTab = main.iTab
-		self.iTargetPlayer = iTargetPlayer = main.iTargetPlayer
+		self.iTargetPlayer = main.iTargetPlayer
 		self.bMissionList = main.bMissionList
 		screen = CyGInterfaceScreen("EspionageAdvisor", CvScreenEnums.ESPIONAGE_ADVISOR)
 		# Get screen resolution.
@@ -88,34 +83,7 @@ class TheScreen:
 		self.bRefreshLeftPanel = False
 		self.iRedrawCount = 0
 		self.nWidgetCount = 0
-		self.iCityActID = -1
-		self.iMissionAct = -1
-		self.iPlayerAct = iPlayerAct = GAME.getActivePlayer()
-		self.CyPlayerAct = CyPlayerAct = GC.getPlayer(iPlayerAct)
-		self.iTeamAct = iTeamAct = CyPlayerAct.getTeam()
-		self.CyTeamAct = CyTeamAct = GC.getTeam(iTeamAct)
-
-		aList = []
-		for iRank in range(GC.getMAX_PC_PLAYERS()):
-			iPlayerX = GAME.getRankPlayer(iRank)
-			if iPlayerX == iPlayerAct:
-				continue
-			CyPlayerX = GC.getPlayer(iPlayerX)
-			if not CyPlayerX.isAlive(): break
-
-			iTeamX = CyPlayerX.getTeam()
-			if iTeamX == iTeamAct: continue
-
-			if CyTeamAct.isHasMet(iTeamX):
-				aList.append(iPlayerX)
-
-		if aList:
-			if iTargetPlayer not in aList:
-				self.iTargetPlayer = aList[0]
-		else:
-			self.iTargetPlayer = None
-
-		self.aPlayerList = aList
+		self.setViewedPlayer(GAME.getActivePlayer())
 
 		# Declare constants
 		self.charBeaker			= u'%c' % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
@@ -125,26 +93,6 @@ class TheScreen:
 		self.ANGRY_CIV_CHAR				= GAME.getSymbolID(FontSymbols.ANGRY_CIV_CHAR)
 		iWidGen = WidgetTypes.WIDGET_GENERAL
 		iFontTitle = FontTypes.TITLE_FONT
-
-		# mission constants
-		#	Seeded first: the loop below only assigns inside its branch, so a data set with no matching
-		#	mission left these UNBOUND and every later read raised AttributeError on the instance rather
-		#	than reporting a missing mission. -1 is the id space's own "none".
-		self.MissionInvestigateCity = -1
-		self.MissionSeeDemo = -1
-		self.MissionSeeResearch = -1
-		self.MissionCityVisibility = -1
-		for kMission in INFO.getIndex("ESPIONAGEMISSION_"):
-			iMissionLoop = kMission["id"]
-			if ESPIONAGEMISSION.getCost(iMissionLoop) != -1 and ESPIONAGEMISSION.isPassive(iMissionLoop):
-				if ESPIONAGEMISSION.isInvestigateCity(iMissionLoop):
-					self.MissionInvestigateCity = iMissionLoop
-				elif ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
-					self.MissionSeeDemo = iMissionLoop
-				elif ESPIONAGEMISSION.isSeeResearch(iMissionLoop):
-					self.MissionSeeResearch = iMissionLoop
-				else:
-					self.MissionCityVisibility = iMissionLoop
 
 		# Build Espionage Advisor screen.
 		screen.setRenderInterfaceOnly(True)
@@ -191,12 +139,43 @@ class TheScreen:
 					screen.addPullDownString("DebugDropdown", GC.getPlayer(j).getName(), j, j, False )
 
 
+	def setViewedPlayer(self, iPlayerAct):
+		# The screen shows one player's espionage: its own, or in debug mode the player chosen in the dropdown.
+		self.iPlayerAct = iPlayerAct
+		self.CyPlayerAct = CyPlayerAct = GC.getPlayer(iPlayerAct)
+		self.iTeamAct = iTeamAct = CyPlayerAct.getTeam()
+		self.CyTeamAct = CyTeamAct = GC.getTeam(iTeamAct)
+
+		aList = []
+		for iRank in range(GC.getMAX_PC_PLAYERS()):
+			iPlayerX = GAME.getRankPlayer(iRank)
+			if iPlayerX == iPlayerAct:
+				continue
+			CyPlayerX = GC.getPlayer(iPlayerX)
+			if not CyPlayerX.isAlive(): break
+
+			iTeamX = CyPlayerX.getTeam()
+			if iTeamX == iTeamAct: continue
+
+			if CyTeamAct.isHasMet(iTeamX):
+				aList.append(iPlayerX)
+
+		if aList:
+			if self.iTargetPlayer not in aList:
+				self.iTargetPlayer = aList[0]
+		else:
+			self.iTargetPlayer = None
+		self.iCityActID = -1
+		self.iMissionAct = -1
+
+		self.aPlayerList = aList
+
+
 	def drawMissionTab(self, screen):
 		iTargetPlayer = self.iTargetPlayer
 		if iTargetPlayer is None:
 			return
 
-		bDebug = GAME.isDebugMode()
 		iPlayerAct = self.iPlayerAct
 		CyPlayerAct = self.CyPlayerAct
 		iTeamAct = self.iTeamAct
@@ -289,12 +268,10 @@ class TheScreen:
 			iEP = CyTeamAct.getEspionagePointsAgainstTeam(iTeamX)
 			screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, uFont2 + str(iEP), 1<<1, x2, y3, 0, iFontTitle, iWidGen, -1, -1)
 
-			iEP_X = CyTeamX.getEspionagePointsAgainstTeam(iTeamAct)
-			if iEP > iEP_X * 1.1 or bDebug:
-				bSeeDetails = True
+			bSeeDetails = CyPlayerX.isEspionageVisibleTo(iPlayerAct)
+			if bSeeDetails:
+				iEP_X = CyTeamX.getEspionagePointsAgainstTeam(iTeamAct)
 				screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, uFont2 + str(iEP_X), 1<<1, x2, y4, 0, iFontTitle, iWidGen, 0, 0)
-			else:
-				bSeeDetails = False
 
 			# Points per turn
 			screen.setLabelAt("EspIcon" + szPlayerX, LeaderPanel, szIcon, 1<<0, 0, dy1, 0, iFontTitle, iWidGen, 0, 0)
@@ -353,18 +330,12 @@ class TheScreen:
 					szText = "<color=255,0,0>(" + str(iCounterEsp) + ")"
 					screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, uFont2 + szText, 1<<0, x1, y4, 0, iFontTitle, iWidGen, 0, 0)
 
-			# Symbols for 'Demographics' and 'Research'
-			iDemoCost = CyPlayerAct.getEspionageMissionCost(self.MissionSeeDemo, iPlayerX, None, -1)
-			iTechCost = CyPlayerAct.getEspionageMissionCost(self.MissionSeeResearch, iPlayerX, None, -1)
-
-			# can see demographics icon
-			if iEP >= iDemoCost:
+			# Symbols for 'Demographics' and 'Research': whether this player may see them of the rival
+			if CyPlayerX.isDemographicsVisibleTo(iPlayerAct):
 				szText = charLifeSupportSS
 			else:
 				szText = charCross
-
-			# can see research icon
-			if iEP >= iTechCost:
+			if CyPlayerX.isResearchVisibleTo(iPlayerAct):
 				szText += charBeaker
 			else:
 				szText += charCross
@@ -372,16 +343,12 @@ class TheScreen:
 			screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, uFont3 + szText, 1<<1, dx - 56, y3 - 2, 0, iFontTitle, iWidGen, 0, 0)
 
 			if bSeeDetails:
-				# Target Player
-				iDemoCost = CyPlayerX.getEspionageMissionCost(self.MissionSeeDemo, iPlayerAct, None, -1)
-				iTechCost = CyPlayerX.getEspionageMissionCost(self.MissionSeeResearch, iPlayerAct, None, -1)
-				# can see demographics icon
-				if iEP_X >= iDemoCost:
+				# ... and whether the rival may see them of this player
+				if CyPlayerAct.isDemographicsVisibleTo(iPlayerX):
 					szText = charLifeSupportSS
 				else:
 					szText = charCross
-				# can see research icon
-				if iEP_X >= iTechCost:
+				if CyPlayerAct.isResearchVisibleTo(iPlayerX):
 					szText += charBeaker
 				else:
 					szText += charCross
@@ -446,10 +413,8 @@ class TheScreen:
 		iCount = 0
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
 			# Filter
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
-			if not INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY): continue
-			iTechPrereq = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
-			if iTechPrereq != -1 and not CyTeamAct.isHasTech(iTechPrereq): continue
+			if not CyPlayerAct.isEspionageMissionAvailable(iMissionX): continue
+			if not ESPIONAGEMISSION.isTargetsCity(iMissionX): continue
 			# Carry on
 			szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 			screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iMissionX, 0, 1<<0)
@@ -559,10 +524,10 @@ class TheScreen:
 		else: CyPlot = None
 
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
-			iTech = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
-			bTargetCity = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY)
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_IS_PASSIVE):
+			if ESPIONAGEMISSION.getCost(iMissionX) == -1: continue
+			iTech = ESPIONAGEMISSION.getTechPrereq(iMissionX)
+			bTargetCity = ESPIONAGEMISSION.isTargetsCity(iMissionX)
+			if ESPIONAGEMISSION.isPassive(iMissionX):
 				if bMissionList != bTargetCity:
 					iCost = CyPlayerAct.getEspionageMissionCost(iMissionX, iPlayer, CyPlot, -1)
 					if iCost == -1: continue
@@ -620,10 +585,7 @@ class TheScreen:
 
 
 	def drawSpyvSpyTab(self, screen):
-		bDebug = GAME.isDebugMode()
 		iPlayerAct = self.iPlayerAct
-		iTeamAct = self.iTeamAct
-		CyTeamAct = self.CyTeamAct
 
 		iWidGen			= WidgetTypes.WIDGET_GENERAL
 		iPanelStd		= PanelStyles.PANEL_STYLE_STANDARD
@@ -671,15 +633,7 @@ class TheScreen:
 			iTeamX = CyPlayerX.getTeam()
 			CyTeamX = GC.getTeam(iTeamX)
 
-			iEP = CyTeamAct.getEspionagePointsAgainstTeam(iTeamX)
-			if iTeamAct != iTeamX:
-				iEP_X = CyTeamX.getEspionagePointsAgainstTeam(iTeamAct)
-			else:
-				iEP_X = -1
-			if iEP > iEP_X * 1.1 or bDebug:
-				bSeeDetails = True
-			else:
-				bSeeDetails = False
+			bSeeDetails = CyPlayerX.isEspionageVisibleTo(iPlayerAct)
 
 			artPath = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 
@@ -690,18 +644,10 @@ class TheScreen:
 
 			# show total EP spending over the last turn
 			if bSeeDetails:
-				iSpending = 0
-				for iTeamZ in xrange(GC.getMAX_PC_TEAMS()):
-					if iTeamZ == iTeamX: continue
-					CyTeamZ = GC.getTeam(iTeamZ)
-					if not CyTeamZ.isAlive(): continue
-					if CyTeamX.isHasMet(iTeamZ):
-						iSpending += CyPlayerX.getEspionageSpending(iTeamZ)
+				iSpending = CyPlayerX.getTotalEspionageSpending()
 				szText = ""
 				if iSpending > 0:
 					szText = "<color=0,255,0>+"
-				elif iSpending < 0:
-					szText = "<color=255,0,0>"
 				szText += str(iSpending)
 			else:
 				szText = "<color=255,255,0>?"
@@ -796,7 +742,7 @@ class TheScreen:
 					self.drawSpyvSpyTab(screen)
 				return 1
 			iTargetPlayer = self.iTargetPlayer
-			if self.iTab == 0 and iTargetPlayer != -1:
+			if self.iTab == 0 and iTargetPlayer is not None:
 				szSplit = FUNCTION.split("|")
 				if FUNCTION == "LeaderBtn":
 					if ID != self.iTargetPlayer:
@@ -823,6 +769,9 @@ class TheScreen:
 					self.refreshMissionTab_Right(screen)
 					return 1
 				if szSplit[0] == "WeightBtn":
+					# The change is sent for the player at this machine, so it applies only while the screen shows that player.
+					if self.iPlayerAct != GAME.getActivePlayer():
+						return 1
 					iTeam = inputClass.iData1
 					CyPlayerAct = self.CyPlayerAct
 					iWeight = CyPlayerAct.getEspionageSpendingWeightAgainstTeam(iTeam)
@@ -854,6 +803,13 @@ class TheScreen:
 			##### Debug Dropdown #####
 			if FUNCTION == "DebugDropdown":
 				iIndex = screen.getSelectedPullDownID("DebugDropdown")
-				self.iPlayerAct = screen.getPullDownData("DebugDropdown", iIndex)
+				self.setViewedPlayer(screen.getPullDownData("DebugDropdown", iIndex))
+				self.deleteAllWidgets(screen)
+				for szWidget in ("CityMissionTable0", "CityMissionTable1", "CityMissionList0", "CityMissionList1"):
+					screen.deleteWidget(szWidget)
+				if self.iTab == 0:
+					self.drawMissionTab(screen)
+				else:
+					self.drawSpyvSpyTab(screen)
 				return 1
 		return 0

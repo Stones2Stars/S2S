@@ -160,6 +160,13 @@ public:
 	int getAdvancedStartVisibilityCost(const CyPlot* pPlot) const;
 
 	int getEspionageSpending(int /*PlayerTypes*/ ePlayer) const;
+	///<summary>The espionage points this player puts against all the teams it has met in a turn
+	/// (CvPlayer::getTotalEspionageSpending).</summary>
+	int getTotalEspionageSpending() const;
+	///<summary>Whether this player can field eMission at all (CvPlayer::isEspionageMissionAvailable).</summary>
+	bool isEspionageMissionAvailable(int /*EspionageMissionTypes*/ eMission) const;
+	///<summary>Whether iObserver may see this player's espionage (CvPlayer::isEspionageVisibleTo).</summary>
+	bool isEspionageVisibleTo(int /*PlayerTypes*/ iObserver) const;
 	bool canDoEspionageMission(int /*EspionageMissionTypes*/ eMission, int /*PlayerTypes*/ eTargetPlayer, const CyPlot* pPlot, int iExtraData) const;
 	int getEspionageMissionCost(int /*EspionageMissionTypes*/ eMission, int /*PlayerTypes*/ eTargetPlayer, const CyPlot* pPlot, int iExtraData) const;
 

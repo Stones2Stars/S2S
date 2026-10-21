@@ -1,10 +1,11 @@
-# What a player sees of its rivals — the score list, the civ hover, the Info screen
+# What a player sees of its rivals — the score list, the civ hover, the espionage advisor, the Info screen
 
 The score list (`CvMainInterface.updateScoreStrings`, drawn by `BUG/Scoreboard.py`), the civ hover
-(`CvDLLWidgetData::parseContactCivHelp`) and the Info screen (`CvInfoScreen`) show what one player knows of the
-others. Every number on the score list, the civ hover's power lines and the Info screen's demographics table is
-the engine's: Python places the text and picks colours from the player's options, and works nothing out
-([THE ONE HOVER](tooltip-look.md#the-one-hover) derives nothing, and neither does a screen).
+(`CvDLLWidgetData::parseContactCivHelp`), the espionage advisor (`CvEspionageAdvisor`) and the Info screen
+(`CvInfoScreen`) show what one player knows of the others. Every number and rule on the score list, the civ hover's
+power lines, the espionage advisor and the Info screen's demographics table is the engine's: Python places the text
+and picks colours, and works nothing out ([THE ONE HOVER](tooltip-look.md#the-one-hover) derives nothing, and
+neither does a screen).
 
 ## One rule decides what a player may see
 
@@ -57,6 +58,25 @@ turn to now; without it, it is the player's last finished turn. Both cover one t
 - **Worst enemy:** `CyTeam::getWorstEnemy`, a team id (`CvTeamAI::AI_getWorstEnemy`).
 - **War:** `CvPlayer::isTooBusyForWarRequestFrom(eAsker)` — the engine's own war-trade refusal
   (`DENIAL_TOO_MANY_WARS`) for some third team the asker could name.
+
+## The espionage advisor
+
+- **The rival's side** — its points against the viewer, its spending, its multiplier and counter-espionage, what
+  it may see of the viewer, and its row in Spy vs Spy — shows when `CvPlayer::isEspionageVisibleTo(viewer)`: the
+  viewer's own team, debug mode, or the viewer's team ahead in espionage (`CvTeam::isEspionageAheadOf`, the read of
+  the score list's espionage marker, so outside debug mode the marker and the details agree).
+- **The intel icons** are the visibility rule above: what the viewer may see of each rival
+  (`rival.isDemographicsVisibleTo(viewer)`, `isResearchVisibleTo`), and, on the rival's side, what the rival may
+  see of the viewer.
+- **A player's spending in a turn** is `CvPlayer::getTotalEspionageSpending`, the sum of its spending against
+  each team it has met (`CvPlayer::getEspionageSpending`).
+- **The missions:** `CvPlayer::isEspionageMissionAvailable` answers whether a player can field a mission at all
+  (enabled, its tech held), and `canDoEspionageMission` asks it too. The mission list shows the available city
+  missions; the passive effects and the active city missions are listed with each one's cost against the chosen
+  rival or city and any missing tech named beside it. Mission data comes through `CyEspionageMissionInfo`'s named
+  reads.
+- **In debug mode** the dropdown shows another player's view. The spending weights change only for the player at
+  this machine, so their buttons act only while the screen shows that player.
 
 ## The demographics table
 

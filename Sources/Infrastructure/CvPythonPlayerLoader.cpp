@@ -244,6 +244,9 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getAdvancedStartVisibilityCost", &CyPlayer::getAdvancedStartVisibilityCost, "int (CyPlot* pPlot)")
 
 		.def("getEspionageSpending", &CyPlayer::getEspionageSpending, "int (PlayerTypes eIndex)")
+		.def("getTotalEspionageSpending", &CyPlayer::getTotalEspionageSpending, "int ()")
+		.def("isEspionageMissionAvailable", &CyPlayer::isEspionageMissionAvailable, "bool (EspionageMissionTypes eMission)")
+		.def("isEspionageVisibleTo", &CyPlayer::isEspionageVisibleTo, "bool (PlayerTypes iObserver)")
 		.def("canDoEspionageMission", &CyPlayer::canDoEspionageMission, "bool (EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, CyPlot* pPlot, int iExtraData)")
 		.def("getEspionageMissionCost", &CyPlayer::getEspionageMissionCost, "int (EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, CyPlot* pPlot, int iExtraData)")
 		.def("getEspionageSpendingWeightAgainstTeam", &CyPlayer::getEspionageSpendingWeightAgainstTeam, "int (TeamTypes eIndex)")

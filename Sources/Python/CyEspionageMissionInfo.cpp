@@ -32,25 +32,18 @@ bool CyEspionageMissionInfo::isPassive(int iMission) const
 	return pMission->isPassive();
 }
 
-bool CyEspionageMissionInfo::isInvestigateCity(int iMission) const
+bool CyEspionageMissionInfo::isTargetsCity(int iMission) const
 {
 	const CvEspionageMissionInfo* pMission = cyem_mission(iMission);
 	if (pMission == NULL) return false;
-	return pMission->isInvestigateCity();
+	return pMission->isTargetsCity();
 }
 
-bool CyEspionageMissionInfo::isSeeDemographics(int iMission) const
+int CyEspionageMissionInfo::getTechPrereq(int iMission) const
 {
 	const CvEspionageMissionInfo* pMission = cyem_mission(iMission);
-	if (pMission == NULL) return false;
-	return pMission->isSeeDemographics();
-}
-
-bool CyEspionageMissionInfo::isSeeResearch(int iMission) const
-{
-	const CvEspionageMissionInfo* pMission = cyem_mission(iMission);
-	if (pMission == NULL) return false;
-	return pMission->isSeeResearch();
+	if (pMission == NULL) return -1;
+	return (int)pMission->getTechPrereq();
 }
 
 void CyEspionageMissionInfo::pythonPublish()
@@ -58,8 +51,7 @@ void CyEspionageMissionInfo::pythonPublish()
 	python::class_<CyEspionageMissionInfo>("CyEspionageMissionInfo")
 		.def("getCost",            &CyEspionageMissionInfo::getCost)
 		.def("isPassive",          &CyEspionageMissionInfo::isPassive)
-		.def("isInvestigateCity",  &CyEspionageMissionInfo::isInvestigateCity)
-		.def("isSeeDemographics",  &CyEspionageMissionInfo::isSeeDemographics)
-		.def("isSeeResearch",      &CyEspionageMissionInfo::isSeeResearch)
+		.def("isTargetsCity",      &CyEspionageMissionInfo::isTargetsCity)
+		.def("getTechPrereq",      &CyEspionageMissionInfo::getTechPrereq)
 		;
 }
