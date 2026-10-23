@@ -16091,9 +16091,6 @@ int64_t CvCity::calcCorporateMaintenance() const
 			const int iCorpStack = maintenancePercentStack((int)MAINTENANCE_CORPORATION);
 			iCorpTaxes = iCorpTaxes * std::max(0, 100 + iCorpStack) / 100;
 
-			iCorpTaxes *= GC.getHandicapInfo(getHandicapType()).getMaintenanceModifier(MAINTENANCE_CORPORATION, CASC_SCOPE_EMPIRE);
-			iCorpTaxes /= 100;
-
 			iTaxes += iCorpTaxes;
 		}
 	}

@@ -10,7 +10,7 @@
    "city": {
     "distance": {
      "flat": [
-      { "value": 0, "per": { "type": "DISTANCE_TO_GOVERNMENT_CENTER" } },
+      { "value": 0.85, "per": { "type": "DISTANCE_TO_GOVERNMENT_CENTER" } },
       { "value": 0.1, "per": { "type": "POPULATION" } }
      ]
     },

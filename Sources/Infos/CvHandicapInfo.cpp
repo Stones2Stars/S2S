@@ -58,11 +58,6 @@ int CvHandicapInfo::gameStartBase(ModifierFamily eFamily, int iKind, CvCascScope
 	return iBase;
 }
 
-int CvHandicapInfo::getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
-{
-	return gameStartBase(MODFAM_MAINTENANCE, (int)eKind, eScope, CASC_UNIT_PERCENT, false);
-}
-
 int CvHandicapInfo::getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope, bool bAiAudience) const
 {
 	return gameStartBase(MODFAM_UPKEEP, (int)eKind, eScope, CASC_UNIT_PERCENT, bAiAudience);

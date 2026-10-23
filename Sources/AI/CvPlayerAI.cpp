@@ -3050,33 +3050,30 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 		iValue *= (8 + iNumCities * 4);
 		iValue /= (2 + (iNumCities * 4) + iDistance);
-		if (pNearestCity->isCapital())
+		if (pNearestCity->isGovernmentCenter())
 		{
 			iValue *= 150;
 			iValue /= 100;
 		}
-		else if (getCapitalCity() != NULL)
+		else
 		{
-			//Provide up to a 50% boost to value (80% for adv.start)
-			//for city sites which are relatively close to the core
-			//compared with the most distance city from the core
-			//(having a boost rather than distance penalty avoids some distortion)
-
-			//This is not primarly about maitenance but more about empire
-			//shape as such forbidden palace/state property are not big deal.
-			int iMaxDistanceFromCapital = 0;
-
-			int iCapitalX = getCapitalCity()->getX();
-			int iCapitalY = getCapitalCity()->getY();
-
-			foreach_(const CvCity * pLoopCity, cities())
+			// Up to a 50% boost (80% for advanced start) for a site close to a government centre, relative to the
+			// city farthest from one: distance maintenance is charged per tile to the nearest centre.
+			int iGovernmentCenterDistance = MAX_INT;
+			int iMaxGovernmentCenterDistance = 0;
+			foreach_(const CvCity* pLoopCity, cities())
 			{
-				iMaxDistanceFromCapital = std::max(iMaxDistanceFromCapital, plotDistance(iCapitalX, iCapitalY, pLoopCity->getX(), pLoopCity->getY()));
+				if (pLoopCity->isGovernmentCenter())
+				{
+					iGovernmentCenterDistance = std::min(iGovernmentCenterDistance, plotDistance(iX, iY, pLoopCity->getX(), pLoopCity->getY()));
+				}
+				iMaxGovernmentCenterDistance = std::max(iMaxGovernmentCenterDistance, pLoopCity->getCityContext().governmentCenterDistance());
 			}
-
-			FAssert(iMaxDistanceFromCapital > 0);
-			iValue *= 100 + (((bAdvancedStart ? 80 : 50) * std::max(0, (iMaxDistanceFromCapital - iDistance))) / iMaxDistanceFromCapital);
-			iValue /= 100;
+			if (iMaxGovernmentCenterDistance > 0)
+			{
+				iValue *= 100 + ((bAdvancedStart ? 80 : 50) * std::max(0, iMaxGovernmentCenterDistance - iGovernmentCenterDistance)) / iMaxGovernmentCenterDistance;
+				iValue /= 100;
+			}
 		}
 	}
 
