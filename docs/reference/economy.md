@@ -27,6 +27,9 @@ hand out what their difficulty steps add (`calcFinalUnitUpkeepFrom`, `calculateU
   ⚖ **TWO TIERS, and the order is the mechanic:** each component KIND resolves against its OWN modifiers (a
   handicap authoring `maintenance.empire.distance.percent` scales distance without touching corporation), and
   the TOTAL then takes the empire-wide `amount` stack. Flattening the two would cross-apply every kind's modifier.
+  ⚖ **A handicap's maintenance percent is an ordinary additive delta, baseline 0** — Noble authors `0`, Settler
+  `-60`, Deity `100`. The handicap is an empire-scope modifier source like any other, so each kind's stack carries
+  it and nothing applies it a second time; corporation maintenance takes it through its own stack the same way.
   ⚑ **The rebel discount is ONE authored entry** (`maintenance.empire.percent −50, enabled: "IS_REBEL"`),
   replacing four separate hardcoded halvings.
   ⛔ **THE COMPONENTS ARE THOSE THREE — `MAINTENANCE_CORPORATION` IS NOT A CITY COMPONENT.** It is its own

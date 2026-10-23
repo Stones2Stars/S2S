@@ -5973,7 +5973,19 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				if (kBuilding.providesAmenity(CLS_AMENITY_GOVERNMENT_CENTER))
 				{
 					FAssert(!kBuilding.providesAmenity(CLS_AMENITY_CAPITAL));
-					iValue += (int)((maintenanceOfKind(MAINTENANCE_DISTANCE) / 100 - 3) * iNumCitiesInArea);
+					// The distance maintenance a centre here saves: each city's distance leg, in the share of its
+					// distance to the nearest centre this one would cut.
+					int64_t iMaintenanceSaved = 0;
+					foreach_(const CvCity* pLoopCity, kOwner.cities())
+					{
+						const int iDistance = pLoopCity->getCityContext().governmentCenterDistance();
+						const int iNewDistance = plotDistance(getX(), getY(), pLoopCity->getX(), pLoopCity->getY());
+						if (iNewDistance < iDistance)
+						{
+							iMaintenanceSaved += pLoopCity->maintenanceOfKind(MAINTENANCE_DISTANCE) * (iDistance - iNewDistance) / iDistance;
+						}
+					}
+					iValue += (int)(iMaintenanceSaved * iGoldValueAssessmentModifier / 500);
 				}
 
 				if (kBuilding.providesCapability(CLS_CAPABILITY_HAS_CENTERED_MAP))

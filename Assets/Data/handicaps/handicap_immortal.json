@@ -3,16 +3,16 @@
  "maintenance": {
   "empire": {
    "distance": {
-    "percent": 180
+    "percent": 80
    },
    "numCities": {
-    "percent": 180
+    "percent": 80
    },
    "colony": {
-    "percent": 180
+    "percent": 80
    },
    "corporation": {
-    "percent": 180
+    "percent": 80
    }
   }
  },

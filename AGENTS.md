@@ -1081,6 +1081,15 @@ the total-observability bar below.)
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real
   thing. **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces so
   each can be built and reasoned about once, properly.
+- **⛔ NO SPECIAL-CASE EXCEPTIONS — avoid them like the plague; they are how this codebase got into its state.** A
+  value rides the GENERIC path, and data that does not fit that path is RE-AUTHORED to fit it, never accommodated
+  by a branch that reads it differently. ⚑ The worked case: the handicaps authored maintenance as a legacy
+  multiplier (`percent: 100` = ×1) while the cascade reads `percent` as an additive delta, so Noble paid double.
+  The fix rebased the DATA to a 0 baseline; a "subtract 100 for handicaps" read, or a hand-applied `× handicap /
+  100` after the stack, is the exception this rule refuses ([economy.md](docs/reference/economy.md)).
+- **⛔ BALANCE IS NEVER A REASON TO ZERO AN AUTHORED VALUE.** Were it one, everything would be zeroed. A mechanic
+  that bites too hard once it finally works points at a DEFECT behind it — a consumer that cannot see it (the AI),
+  a value on the wrong unit — and that defect is the work; switching the mechanic off hides it.
 - **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH.** Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
   REMOVED, in code as well as docs.

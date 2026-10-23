@@ -47,7 +47,14 @@
 > **MIN over the player's government centres**, so
 > a centre appearing in ONE city can shorten the distance for EVERY city, and one disappearing forces a re-derive
 > against the remaining set. The fact names the city that gained or lost the designation; the values that move
-> belong to all the others.
+> belong to all the others. The recalc is triggered as well by the city gaining an owner (founding or
+> acquisition, `SEVT_CITY_OWNER_ADDED`, outside the load bracket) and by the load build.
+> ⚑ **A recalculated COUNT announces its own move.** The distance is the `per: DISTANCE_TO_GOVERNMENT_CENTER`
+> count of distance maintenance, a plane-B scaler ([05-three-planes.md](05-three-planes.md)), so the store emits
+> `SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED / _REMOVED` with the tiles moved once it holds the new value, and the
+> modifier re-books the deposits scaled on it in that city. `CityContext::refreshAreaFacts` announces the city's
+> `AREA_SIZE` count the same way (`SEVT_CITY_AREA_SIZE_ADDED / _REMOVED`). A recalc that only stored the value
+> would leave every deposit booked against the count it held when the source arrived.
 > ⇒ **THE TEST, and it is narrow:** a recalc is sanctioned when (1) a genuine DOMAIN fact triggers it, (2) the
 > consequence is NON-LOCAL — the fact cannot name the values that move — and (3) no finer route exists to derive,
 > because the quantity is an aggregate over a set (a min, a nearest, a wholesale identity reassignment) rather
@@ -212,8 +219,10 @@ FOSSIL OF A MISSING EMIT, above ([self-heal is not a backstop](03-no-staleness-n
     > ⚠ `m_iCityRadiusCount` / `m_aiPlayerCityRadiusCount` keep their own readers and stay — what this replaces is
     > the vicinity fold's need to re-derive membership, never those counters.
   - the **AREA facts** ← the plot-TYPE fact near the city, the per-area **`SEVT_AREA_TILE_ADDED / _REMOVED`**
-    (one area's tile count moved — only the cities IN that area re-read), and the wholesale
-    **areas-recalculated** fact below.
+    (one area's tile count moved — only the cities IN that area re-read), the wholesale
+    **areas-recalculated** fact below, the city gaining an owner (`SEVT_CITY_OWNER_ADDED`, outside the load
+    bracket) and the load build. A move of the tile count is announced as the city's `AREA_SIZE` count fact, the
+    way the government-centre distance announces its own (§ THE SANCTIONED EXCEPTION, above).
     > ⛔ **The per-area route DECLINES while `CvMap::recalculateAreas` is mid-pass** (`isRecalculatingAreas`).
     > That pass clears every plot's area and reassigns every id, firing the per-area fact once per plot, so a
     > per-tile refresh inside it would be O(plots × cities) of work against a map that does not exist yet — and

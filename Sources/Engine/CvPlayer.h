@@ -157,6 +157,10 @@ public:
 	CvPlotGroup* initPlotGroup(CvPlot* pPlot, bool bRecalculateBonuses);
 
 	CvCity* initCity(int iX, int iY, bool bBumpUnits, bool bUpdatePlotGroups);
+	///<summary>Create a city of this player at (iX, iY) and announce its ownership (SEVT_CITY_OWNER_ADDED): the
+	/// one way a city comes to exist outside acquisition -- founding adds its own founded fact, and the Worldbuilder
+	/// and scenario loader place one directly.</summary>
+	CvCity* placeCity(int iX, int iY);
 	void acquireCity(CvCity* pCity, bool bConquest, bool bTrade, bool bUpdatePlotGroups);
 	void killCities();
 	CvWString getNewCityName() const;

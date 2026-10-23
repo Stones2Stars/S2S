@@ -147,7 +147,9 @@ public:
 	// CONSTRAINT: no choke point may call these directly. Every mutation that moves a stored fact emits its own DOMAIN
 	// fact, so the consumer is the single trigger path; a direct call beside the event would be a second maintenance
 	// surface for the same state.
-	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
+	///<summary>Re-derive the city's area ID, its area's tile count and the coastal water-body size; a move of the
+	/// tile count is announced as the city's AREA_SIZE count fact (SEVT_CITY_AREA_SIZE_ADDED / _REMOVED).</summary>
+	void refreshAreaFacts() const;
 	// ⚖ THE DESIGNATION COUNTS ARE DELTA STORES, applied ±1 by the fact that names the designation -- never
 	// re-derived. Both used to be answered by asking CvGame once per entry of the whole religion / corporation
 	// registry, which is read-time work that GROWS with a registry and therefore earns a store
@@ -159,9 +161,9 @@ public:
 	// MANY name it, which is all any consumer of the bare verdict asks.
 	void changeHolyCityCount(int iChange) const;
 	void changeHeadquartersCount(int iChange) const;
-	// Distance to the owner's nearest government centre. Re-derived for EVERY city of a player when a
-	// government centre appears or goes, and for one city when it is founded or changes hands -- the fan-out is
-	// bounded by the city count and the facts driving it are rare.
+	///<summary>Re-derive the distance to the owner's nearest government centre: for EVERY city of a player when a
+	/// government centre appears or goes, and for one city when it gains an owner. A move is announced as the
+	/// city's count fact (SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED / _REMOVED).</summary>
 	void refreshGovernmentCenterDistance() const;
 	// THE CORPORATION-ACTIVE VERDICT STORE. The verdict ({HAS_CORPORATION: X} = ACTIVE, json §3.5) is a four-leg
 	// engine composition -- presence, the player-level state, the obsoleting tech, a consumed bonus held -- so no
@@ -196,8 +198,8 @@ public:
 	int  areaSize() const;                    // the AREA_SIZE counter, served from the maintained area facts
 	// The DISTANCE_TO_GOVERNMENT_CENTER counter: plot distance to the NEAREST government centre of this city's
 	// owner, 0 in a government centre itself. STORED rather than forwarded because deriving it walks the owner's
-	// cities -- precisely the per-read scan contexts.md exists to delete, and it is asked once per maintenance
-	// rebuild per city. A city with no government centre anywhere answers 0 (nothing to be distant from).
+	// cities -- precisely the per-read scan contexts.md exists to delete. A city with no government centre
+	// anywhere answers 0 (nothing to be distant from).
 	int  governmentCenterDistance() const;
 	bool isCoastal(int iMinWaterSize) const;  // the HAS_COAST minArea city form: the largest ADJACENT water body >= iMinWaterSize
 	bool isHolyCityAny() const;               // bare IS_HOLY_CITY -- this city is some religion's holy city
@@ -334,7 +336,8 @@ private:
 	mutable int m_holyCityCount;               // how many religions hold this city as their holy city
 	mutable int m_headquartersCount;           // how many corporations are headquartered here
 	// Plot distance to the owner's NEAREST government centre (0 here, or with none anywhere). One int answers
-	// the whole distance-maintenance leg; it moves only on a government-centre crossing or a city gained/lost.
+	// the whole distance-maintenance leg; it moves on a government-centre crossing, the city gaining an owner, and the
+	// load build.
 	mutable int m_governmentCenterDistance;
 	// The remembered CORPORATION-ACTIVE verdicts (refreshCorporationActive above) -- one char per corporation,
 	// lazily sized to the registry. Held ONLY for crossing detection; every read of the verdict stays the live

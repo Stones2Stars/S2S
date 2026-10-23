@@ -1562,7 +1562,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITYHELP_LINE_STACKED</Tag>
-		<English>%s1%s2 %s3 (%s4%s2 %s5)</English>
+		<English>%s1%s2 %s3 (%s4%s5 %s6)</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITYHELP_LINE_PERCENT</Tag>

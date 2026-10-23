@@ -49,7 +49,6 @@ public:
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Kind and
 	// scope are separate arguments -- docs/architecture/patterns.md §The coherent surface (scope is a separate axis); every magnitude is ×100 -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model);
 	// bAiAudience selects the dual-leaf audience where the census authors an ai plane.)
-	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const;
 	int getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope, bool bAiAudience) const;
 	int getCostsModifier(CostsKind eKind, CvCascScope eScope, bool bAiAudience) const;
 	int getCombat(CombatKind eKind, CvCascScope eScope, bool bAiAudience) const;

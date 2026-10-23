@@ -107,6 +107,10 @@ announces the GATED verdict (`isPowered`), which genuinely differs from the stor
 _REMOVED`** (`CvPlayer::initCity` once the new city is initialized, `CvPlayer::deleteCity` after the removal, and the
 in-read half in `CvPlayer::read` once the list has landed, carrying the whole count — the empire tally beside the
 per-city `SEVT_CITY_OWNER_*`, whose removal half fires while the city still resolves and is still counted),
+**`SEVT_CITY_GOVERNMENT_CENTER_DISTANCE_ADDED / _REMOVED`** and **`SEVT_CITY_AREA_SIZE_ADDED / _REMOVED`** (the
+city's own `DISTANCE_TO_GOVERNMENT_CENTER` and `AREA_SIZE` counts moving, announced by `CityContext`'s
+recalculation once it holds the new value, carrying the tiles moved — the per-city count beside the facts that
+trigger the recalculation, [context-maintained events](../../cascade/13-context-maintained-events.md)),
 **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`**
 and **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
 AREA_SIZE + max-adjacent-water read; the area pair also names the PLOT that moved, in `iB`, because that plot's
