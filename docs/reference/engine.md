@@ -130,6 +130,14 @@ few that [superseded-ideas #22](../architecture/superseded-ideas.md) accepts in 
 "mirror the legacy behaviour" argument. It is a statement about shared state, never nostalgia for legacy code.
 ⚠ Beware the subtle form: a short-circuit (`bCheap && getSorenRandNum(...)`) skips the draw when the left side is
 false, so a refactor that merely REORDERS a condition can desync the stream without touching a single draw.
+⛔ **A PATH THAT RUNS ON ONE CLIENT MUST NEVER REACH THE SYNCHRONIZED STREAM, OR WRITE AI STATE.** Draws are never
+transmitted: each client advances its own copy, so a screen, tooltip or hover that draws once on the viewing
+machine puts that client permanently one step ahead, and the next shared draw answers differently. ⚑ Worked: the
+city screen's unit recommendation called `AI_bestUnit` / `AI_bestUnitAI` with the default `bAsync = false`, so
+opening a city with an empty queue drew `"AI Best UnitAI"` / `"AI Best Unit"` on the owner's machine only, and
+also filled `m_bestUnits`, the city's memo that the next real production choice reads. ⇒ An AI chooser called
+for DISPLAY passes `bAsync = true` (async stream, no memo write), and `bNoRand = true` where the answer should not
+flicker between redraws.
 
 **⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT.** No seed, stream, or draw is curated, and neither the
 cascade nor the curator owns any part of it — do not model it, do not migrate it, do not invent a `random`

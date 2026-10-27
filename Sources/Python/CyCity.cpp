@@ -1590,14 +1590,16 @@ int CyCity::getBestUnit() const
 {
 	if (m_pCity == NULL) return -1;
 	int iBestValue = 0;
-	return (int)m_pCity->AI_bestUnit(iBestValue);
+	// The city screen runs on the viewing client only, so the recommendation must neither draw from the synchronized
+	// stream nor write the city's m_bestUnits memo (docs/reference/engine.md, the synchronized RNG is shared state).
+	return (int)m_pCity->AI_bestUnit(iBestValue, -1, NULL, true, NULL, true);
 }
 
 int CyCity::getBestUnitForRole(int iUnitAI) const
 {
 	if (m_pCity == NULL || iUnitAI < 0 || iUnitAI >= NUM_UNITAI_TYPES) return -1;
 	int iBestValue = 0;
-	return (int)m_pCity->AI_bestUnitAI((UnitAITypes)iUnitAI, iBestValue);
+	return (int)m_pCity->AI_bestUnitAI((UnitAITypes)iUnitAI, iBestValue, true, true, &CvUnitSelectionCriteria().IgnoreGrowth(true));
 }
 
 python::list CyCity::getOrder() const

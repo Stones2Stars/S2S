@@ -179,9 +179,9 @@ hand out what their difficulty steps add (`calcFinalUnitUpkeepFrom`, `calculateU
   > ⚑ **It shares NOTHING with the C++ half**: it reads none of the removed defines (its weights are hardcoded
   > 100 / 10000 / 1000000) and never called `doGlobalWarming` in the DLL. That independence is what made the C++
   > removal safe, and it is the fact to re-check rather than re-derive.
-  > ⛔ It is NOT removed here: random events are a permanent, owner-ruled Python-authoritative carve-out, out of
-  > scope for this data model. ⚠ So do not read its survival as evidence the mechanic works, and do not "restore"
-  > a C++ leg to serve it.
+  > ⛔ It is NOT removed here: it is a random event, and those move into the engine through the event port (#425,
+  > the trigger plane). ⚠ So do not read its survival as evidence the mechanic works, and do not "restore" the
+  > removed C++ leg to serve it.
 - **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …
