@@ -140,3 +140,5 @@ Verify against the tree before acting on any claim that something is built.
 - **[MOD-README.md](MOD-README.md)** — the mod's front-door / build-pipeline readme (the code repo's mirror).
 - **[CHANGELOG.md](CHANGELOG.md)** — the mod changelog.
 - The hosted catalogs (DESPAIR / REALISM / COMPLEXITY) → **[`indexes/`](indexes/)** (served via Pages, which publishes `docs/`).
+  The `.md` is the source; the `*_INDEX.html` pages are generated from it by `python Tools/build-indexes.py`
+  (`--check` reports a stale page) — never edit the html by hand.

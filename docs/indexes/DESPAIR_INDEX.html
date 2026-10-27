@@ -60,7 +60,7 @@
   .meter { flex: 1; height: 10px; background: var(--bar-bg); border-radius: 5px; overflow: hidden; }
   .meter > i { display: block; height: 100%; background: var(--bar-fill); border-radius: 5px; }
   .entry p { margin: .7rem 0; }
-  .entry ol { margin: .5rem 0 .8rem 1.4rem; padding: 0; }
+  .entry ol, .entry ul { margin: .5rem 0 .8rem 1.4rem; padding: 0; }
   .entry li { margin: .35rem 0; }
   code {
     font-family: Consolas, 'Courier New', monospace; font-size: .88em;
@@ -93,45 +93,46 @@
 <header>
   <div class="elephant">🐘</div>
   <h1>The S2S Despair Index™</h1>
-  <p class="tagline">A rigorously unscientific ranking of the standout bugs from the
-  Stones2Stars rework, ordered by the quantity of despair each induces in a developer at
-  the moment of comprehension.</p>
+  <p class="tagline">A rigorously unscientific ranking of the standout bugs from the last couple
+  of weeks, ordered by the quantity of despair each induces in a developer at the moment of
+  comprehension.</p>
 </header>
 
 <div class="preamble">
   Despair is measured in <strong>centiphants (cp)</strong> — the SI unit of despair,
-  calibrated against a war elephant that was assigned to defend a city and was later found,
-  by the project owner personally, standing seven tiles away in someone else's country.
+  calibrated against a war elephant that was assigned to defend a city and was later found, by
+  the project owner personally, standing seven tiles away in someone else's country.
   <br><br>
   Sibling publication of the <a href="REALISM_INDEX.html">Realism Index</a>. This index is for
   bugs — things the code does wrong. The Realism Index is for <em>features</em> — things the
   code does exactly as designed, which is somehow worse.
   <br><br>
-  This document is not holy writ. It is an outlet. No process shall ever cite it.
+  This document is not holy writ. It is an outlet. No process shall ever cite it. Names stay
+  out of it — we ridicule the code, never the author or the module it came from.
 </div>
 
 <article class="entry gold">
   <h2><span class="medal">🥇</span> 1. The Tactical Elephant Vacation Package</h2>
   <div class="score-row"><span class="score">100 cp (definitional)</span><span class="meter"><i style="width:100%"></i></span></div>
   <p>An Elephant Gunner garrisoned to defend its city was observed sightseeing in the human
-  player's territory, 7 tiles from home. This required <strong>three independent bugs
-  stacked like a turducken</strong>:</p>
+  player's territory, 7 tiles from home. This required <strong>three independent bugs stacked
+  like a turducken</strong>:</p>
   <ol>
-    <li>Parking in a city silently retyped any unit to <code>UNITAI_CITY_DEFENSE</code> —
-    a unit that <em>cannot use defensive bonuses</em> became the city's official primary
+    <li>Parking in a city silently retyped any unit to <code>UNITAI_CITY_DEFENSE</code> — a
+    unit that <em>cannot use defensive bonuses</em> became the city's official primary
     defender.</li>
     <li>The garrison was then offered a "nearby" attack whose search radius was
     <code>(range+1) × (moves+1)</code> = <strong>9 tiles</strong>, with no territory
     restriction.</li>
-    <li>And "guard a good spot in the city's <em>vicinity</em>" scanned a
-    <strong>43×43 tile box</strong>, because <code>NUM_CITY_PLOTS_2</code> (a plot
-    <em>count</em>, 21) was passed to <code>rect()</code> (which takes a <em>radius</em>).
-    The vicinity was a quarter of the continent.</li>
+    <li>And "guard a good spot in the city's <em>vicinity</em>" scanned a <strong>43×43 tile
+    box</strong>, because <code>NUM_CITY_PLOTS_2</code> (a plot <em>count</em>, 21) was passed
+    to <code>rect()</code> (which takes a <em>radius</em>). The vicinity was a quarter of the
+    continent.</li>
   </ol>
   <p>Every individual fix reveals the next bug, like a matryoshka doll where every layer is
   also on fire. The live specimen (unit 1843333) was traced in real time via the new HTTP
-  endpoint: fortified on a lovely defensive hill, 7 tiles out, proudly counted as a
-  garrison member of a city it contributed exactly nothing to.</p>
+  endpoint: fortified on a lovely defensive hill, 7 tiles out, proudly counted as a garrison
+  member of a city it contributed exactly nothing to.</p>
   <p class="status">Status: fixed across PRs #383 and #391. The elephant stays home now.
   Probably.</p>
 </article>
@@ -139,41 +140,88 @@
 <article class="entry silver">
   <h2><span class="medal">🥈</span> 2. The Library of Alexandria, Burned Nightly</h2>
   <div class="score-row"><span class="score">95 cp</span><span class="meter"><i style="width:95%"></i></span></div>
-  <p>Building values — the numbers behind every "what should this city build?" decision —
-  were guarded by a cache that <code>CvCity::doTurn</code> <strong>deleted every turn, for
-  every city, unconditionally</strong>. No event-driven invalidation, no staleness check;
-  just <code>SAFE_DELETE</code> at dawn. And every "recalculation" re-derived
-  <strong>static XML facts by brute force</strong> — which buildings enable which
-  (O(buildings²) <code>canConstruct</code> sweeps), which units each building unlocks
-  (O(buildings × units) expression evaluations) — answers that cannot change without
-  restarting the game, re-learned ~1,350 times per turn at ~100 ms each. Peak measurement:
-  <strong>134.7 seconds of a 170.8-second turn. 87% of the entire late game</strong>,
-  spent re-deriving the tech tree from first principles.</p>
+  <p>Building values — the numbers behind every "what should this city build?" decision — were
+  guarded by a cache that <code>CvCity::doTurn</code> <strong>deleted every turn, for every
+  city, unconditionally</strong>. No event-driven invalidation, no staleness check; just
+  <code>SAFE_DELETE</code> at dawn. And every "recalculation" re-derived <strong>static XML
+  facts by brute force</strong> — which buildings enable which (O(buildings²)
+  <code>canConstruct</code> sweeps), which units each building unlocks (O(buildings × units)
+  expression evaluations) — answers that cannot change without restarting the game, re-learned
+  ~1,350 times per turn at ~100 ms each. Peak measurement: <strong>134.7 seconds of a
+  170.8-second turn. 87% of the entire late game</strong>, spent re-deriving the tech tree
+  from first principles.</p>
   <p>The despair is a trilogy:</p>
-  <p><strong>Act II:</strong> the static relationships were made <em>actually static</em> —
-  a load-time reverse index, ~390× on the hotspot (11.7 s/turn → 0.05 s). Victory
-  declared. Then the <strong>identical O(buildings²) brute-force sweep was found alive in
-  a second location</strong> — the building-scoring loop's "enables other buildings" bonus
-  — quietly burning ~4 s/turn and wearing a <code>// TODO OPT</code> comment like a name
-  tag.</p>
-  <p><strong>Act III:</strong> the first cache-<em>retention</em> fix returned 40% instead
-  of the expected 4×, because the "retain values" flush still stamped every cache
-  <strong>incomplete</strong> every turn, and the first read then forced a full recompute
-  anyway. The library kept its books and re-read all of them just to be sure.</p>
-  <p class="status">Status: fixed in three installments (the #314 static index, retention
-  + staggered refresh, the scoring-loop migration). The residual ~2.6 s/turn is
-  event-driven and has an appointment with the repository.</p>
+  <ul>
+    <li><strong>Act II:</strong> the static relationships were made <em>actually static</em> —
+    a load-time reverse index, ~390× on the hotspot (11.7 s/turn → 0.05 s). Victory declared.
+    Then the <strong>identical O(buildings²) brute-force sweep was found alive in a second
+    location</strong> — the building-scoring loop's "enables other buildings" bonus — quietly
+    burning ~4 s/turn and wearing a <code>// TODO OPT</code> comment like a name tag.</li>
+    <li><strong>Act III:</strong> the first cache-<em>retention</em> fix returned 40% instead
+    of the expected 4×, because the "retain values" flush still stamped every cache
+    <strong>incomplete</strong> every turn, and the first read then forced a full recompute
+    anyway. The library kept its books and re-read all of them just to be sure.</li>
+  </ul>
+  <p class="status">Status: fixed in three installments (the #314 static index, retention +
+  staggered refresh, the scoring-loop migration). The residual ~2.6 s/turn is event-driven and
+  has an appointment with the repository.</p>
 </article>
 
 <article class="entry bronze">
-  <h2><span class="medal">🥉</span> 3. The (Un)Fortified Position</h2>
+  <h2><span class="medal">🥉</span> 3. The City That Rebuilt Itself For Every Building It Considered</h2>
+  <div class="score-row"><span class="score">94 cp</span><span class="meter"><i style="width:94%"></i></span></div>
+  <p>A city choosing what to build asks each candidate <em>"what are you worth to me?"</em> —
+  and to answer, the valuation first works out what the city currently <strong>is</strong>:
+  how happy, how healthy, how fed, how crowded.</p>
+  <p>It did that for every candidate. Per building, per scoring pass:</p>
+  <ul>
+    <li><strong>three</strong> full wellbeing realizations — <code>netHappiness</code>,
+    <code>netHealth</code>, <code>getWellbeing</code>, the same four channels three times
+    over, because three callers each wanted them in a slightly different shape;</li>
+    <li><strong>two</strong> complete yield group reads;</li>
+    <li>a scan of the city's worked plots;</li>
+    <li>a scan of its specialists.</li>
+  </ul>
+  <p>None of that can differ between two buildings scored in the same pass. It describes the
+  city. The candidate's own contribution — the actual question — is one call at the
+  bottom.</p>
+  <p>Then the punchline. One line of that prelude asks how valuable gold is right now, which
+  reaches <code>AI_fundingHealth</code>, which sums the realized gold commerce of
+  <strong>every city in the empire</strong>, each one a full per-city rate combine — to
+  produce a number that is then bucketed into <em>"is the profit margin over 25?"</em> The
+  empire was therefore totalled to nine significant figures in order to decide which of five
+  buckets it was in, once per candidate building, per pass, per city.</p>
+  <p>Those five buckets come back from a single <code>short</code> on five unrelated scales.
+  One of them is <code>10000</code>, and it carries the immortal comment <em>"A magic number
+  in case we want this state to have some kind of significance."</em> Its sibling
+  <code>10001</code> exists in case a treasury ratio exceeds 9999. And the runway estimate
+  underneath scales by <code>hammerCostPercent()</code> — the <strong>production-cost</strong>
+  multiplier — while its own comment describes a count of <em>turns</em>. There is a gamespeed
+  scaler for pace. It is a different one.</p>
+  <p>Measured: <code>AI_chooseProduction</code> was <strong>37.5 seconds of a 40.6-second turn
+  phase</strong>, and 99.8% of that was the building scoring. Thirty of thirty debugger
+  samples landed on the same chain. The turn emitted nothing at all while it did this, because
+  a spin writes no logs.</p>
+  <p>The archaeology is the kind part, and it is the reason this is despair rather than blame:
+  the loop was written when the AI scored the <strong>entire building database</strong> every
+  time, and re-deriving the city per candidate was a rounding error beside that. The enabler
+  now maintains a small frontier, so the comparison became cheap and the invariant became the
+  whole bill. The cost did not appear — it was uncovered.</p>
+  <p class="status">Status: the city is pre-calculated once per pass and handed to the
+  comparison; the gold weight derives at most once per turn. The oracle it calls is still
+  slated for removal — it is a precise answer to a question nobody asked, computed
+  expensively, and then rounded off.</p>
+</article>
+
+<article class="entry">
+  <h2>4. The (Un)Fortified Position</h2>
   <div class="score-row"><span class="score">92 cp</span><span class="meter"><i style="width:92%"></i></span></div>
   <p>AI garrisons parked with one-turn <code>MISSION_SKIP</code>, so they never actually
   fortified — meaning <strong>AI cities have never received fortification defense
   bonuses</strong>, plausibly since the BTS era. Cities under-read their own defense,
   concluded they needed more defenders, hoarded them, and every one of those defenders
   re-planned its entire existence from scratch <strong>every single turn, forever</strong>
-  (~15&nbsp;s/turn for CITY_DEFENSE alone).</p>
+  (~15 s/turn for CITY_DEFENSE alone).</p>
   <p>The perf bug and the gameplay bug were the same bug, the fix was <em>"push FORTIFY
   instead of SKIP"</em>, and the wrongness was old enough to vote. Generations of defenders
   stood in cities, awake, slightly nervous, accruing nothing.</p>
@@ -182,96 +230,189 @@
 </article>
 
 <article class="entry">
-  <h2>4. Schrödinger's Job Application</h2>
+  <h2>5. The Ambush That Asks Each Player Separately</h2>
+  <div class="score-row"><span class="score">88 cp</span><span class="meter"><i style="width:88%"></i></span></div>
+  <p>Multiplayer lockstep has one rule: every machine runs the same code on the same inputs.
+  The ambush / assassinate confirmation manages to break it <strong>three times in one button
+  press</strong>:</p>
+  <ol>
+    <li>The popup writes the chosen target into the ambusher <strong>on the clicking player's
+    machine only</strong>. The networked confirm then runs everywhere and reads that field —
+    so the player who clicked strikes the unit they picked, while everyone else's copy of the
+    game, having never been told, shrugs and strikes the best defender instead.</li>
+    <li>Even the fallback is not shared. Inside the synced command, the defender search takes
+    <em>"should I respect war status?"</em> from <strong><code>!gDLL-&gt;altKey()</code> —
+    whether the Alt key is held down on that particular machine, right now</strong>. Every
+    client consults its own keyboard. The outcome of the ambush is decided by a show of hands,
+    except the hands are on keyboards in different countries.</li>
+    <li>And <em>cancelling</em> is the gentle desync: the cancel clears the ambusher's state
+    locally and nowhere else, so on every other machine the unit keeps a stale target, and its
+    next ambush skips its own setup.</li>
+  </ol>
+  <p>The game option that turns the choice popup on is itself applied only on the machine of
+  whoever changed it, so the players may not even agree on whether the popup
+  <em>exists</em>.</p>
+  <p class="status">Status: open (#613).</p>
+</article>
+
+<article class="entry">
+  <h2>6. Schrödinger's Job Application</h2>
   <div class="score-row"><span class="score">85 cp</span><span class="meter"><i style="width:85%"></i></span></div>
   <p>A unit's first <code>processContracts</code> call of the turn <em>advertised</em> for
   work, found none, and returned <code>true</code> — "I did something!" The slice driver,
   taking it at its word, re-ran the unit's <strong>entire decision cascade a second
   time</strong>. For ~6,000 advertising units. Every turn.</p>
-  <p>The unit's day consisted of asking "does anyone need me?", hearing silence, and
-  billing it as a full shift — and the <em>system agreed</em>.</p>
+  <p>The unit's day consisted of asking "does anyone need me?", hearing silence, and billing
+  it as a full shift — and the <em>system agreed</em>.</p>
   <p class="status">Status: fixed. Asking around is no longer a career.</p>
 </article>
 
 <article class="entry">
-  <h2>5. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey</h2>
+  <h2>7. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey</h2>
   <div class="score-row"><span class="score">78 cp</span><span class="meter"><i style="width:78%"></i></span></div>
-  <p>The role-conversion gate asked <em>"could this unit theoretically help with
-  crime?"</em> while the assignment handler asked <em>"does this unit actually have the
-  equipment?"</em> Different answers → units flipped roles <strong>~750 times per
-  turn</strong>, and the phantom "we're handling it!" signal suppressed real crime-fighting
-  production, which drove the cheap-military production spam.</p>
-  <p>You put your whole UnitAI in, you take your whole UnitAI out, you do the hokey pokey
-  and you corrupt the demand accounting. That's what it's all about.</p>
+  <p>The role-conversion gate asked <em>"could this unit theoretically help with crime?"</em>
+  while the assignment handler asked <em>"does this unit actually have the equipment?"</em>
+  Different answers → units flipped roles <strong>~750 times per turn</strong>, and the
+  phantom "we're handling it!" signal suppressed real crime-fighting production, which drove
+  the cheap-military production spam.</p>
+  <p>You put your whole UnitAI in, you take your whole UnitAI out, you do the hokey pokey and
+  you corrupt the demand accounting. That's what it's all about.</p>
   <p class="status">Status: fixed — both sides now ask the same question.</p>
 </article>
 
 <article class="entry">
-  <h2>6. Strength by Committee</h2>
+  <h2>8. Strength by Committee</h2>
   <div class="score-row"><span class="score">72 cp</span><span class="meter"><i style="width:72%"></i></span></div>
-  <p>Ask a simple question — "how strong is this unit against that one?" — and the engine cannot
-  tell you where the answer came from. A unit's combat strength is built by pouring <strong>~40
-  signed percentages into one integer</strong> and multiplying once at the very end
-  (<code>CvUnit.cpp:12164</code>). Into that single number, <em>four separate "vs" systems</em>
-  deposit with no precedence and no record of origin: the vs-combat-class matrix (authored on the
-  unit, on its promotions, AND on every one of the ~20 classes the unit belongs to),
-  vs-specific-unit attack, vs-specific-unit defense, and flanking. They are added. Once added, a
-  <code>+50%</code> from the class matrix is indistinguishable from a <code>+50%</code> a modder
-  pasted onto the unit — there is no way, in code or data, to learn which of the four cooks salted
-  the soup.</p>
-  <p>So a Mounted unit can hand-author "+50% vs Spearman" — directly contradicting the canonical
-  anti-Mounted class — and the game just adds it on top, silently inverting its own
-  rock-paper-scissors with no warning. The matrix that was supposed to <em>be</em> the system is
-  vestigial (18 edges across 14 of 418 classes; 96% of classes are inert tags); the real logic
-  sprawls across <strong>966 per-unit edges — 54&times; the matrix</strong> — hand-pasted onto
+  <p>Ask a simple question — "how strong is this unit against that one?" — and the engine
+  cannot tell you where the answer came from. A unit's combat strength is built by pouring
+  <strong>~40 signed percentages into one integer</strong> and multiplying once at the very
+  end (<code>CvUnit.cpp:12164</code>). Into that single number, <em>four separate "vs"
+  systems</em> deposit with no precedence and no record of origin: the vs-combat-class matrix
+  (authored on the unit, on its promotions, AND on every one of the ~20 classes the unit
+  belongs to), vs-specific-unit attack, vs-specific-unit defense, and flanking. They are
+  added. Once added, a <code>+50%</code> from the class matrix is indistinguishable from a
+  <code>+50%</code> a modder pasted onto the unit — there is no way, in code or data, to learn
+  which of the four cooks salted the soup.</p>
+  <p>So a Mounted unit can hand-author "+50% vs Spearman" — directly contradicting the
+  canonical anti-Mounted class — and the game just adds it on top, silently inverting its own
+  rock-paper-scissors with no warning. The matrix that was supposed to <em>be</em> the system
+  is vestigial (18 edges across 14 of 418 classes; 96% of classes are inert tags); the real
+  logic sprawls across <strong>966 per-unit edges — 54x the matrix</strong> — hand-pasted onto
   individual units.</p>
-  <p>The finishing touch: the help text that would let a player audit any of this <strong>labels
-  the two axes backwards</strong> — vs-class renders as "vs. Type" and vs-type as "vs. Class"
-  (<code>CvGameTextMgr.cpp:1009/1043/12860/12896</code>). The one window into the circus is a
-  fun-house mirror. And the AI, summing the overlapping channels, pays twice for the same
-  advantage.</p>
-  <p class="status">Status: documented, not fixed (<code>reference/unitcombat.md</code>). The real
-  structure — one single-origin vs-class matrix with explicit per-unit overrides, the orthogonal
-  taxonomies (size/species/motility) split out, and the labels un-swapped — is a standing rework.
-  For now nobody knows where the +50% came from, the engine least of all.</p>
+  <p>The finishing touch: the help text that would let a player audit any of this
+  <strong>labels the two axes backwards</strong> — vs-class renders as "vs. Type" and vs-type
+  as "vs. Class" (<code>CvGameTextMgr.cpp:1009/1043/12860/12896</code>). The one window into
+  the circus is a fun-house mirror. And the AI, summing the overlapping channels, pays twice
+  for the same advantage.</p>
+  <p class="status">Status: documented, not fixed (<code>reference/unitcombat.md</code>). The
+  real structure — one single-origin vs-class matrix with explicit per-unit overrides, the
+  orthogonal taxonomies (size/species/motility) split out, and the labels un-swapped — is a
+  standing rework. For now nobody knows where the +50% came from, the engine least of all.</p>
 </article>
 
 <article class="entry">
-  <h2>7. The Unkillable Peasant</h2>
+  <h2>9. The Unkillable Peasant</h2>
   <div class="score-row"><span class="score">71 cp</span><span class="meter"><i style="width:71%"></i></span></div>
   <p><code>getCombatOdds</code> floored per-round damage to 0 against ~zero-strength
   defenders, making a dying militiaman <strong>mathematically immortal</strong>. The AI
   under-reported its own win odds against trivial opposition — in the engine that feeds
   <em>every AI attack decision and the player-facing combat preview</em>.</p>
-  <p>Somewhere in the math, a tank regarded a wounded peasant with genuine caution, and
-  every layer above it nodded along.</p>
+  <p>Somewhere in the math, a tank regarded a wounded peasant with genuine caution, and every
+  layer above it nodded along.</p>
   <p class="status">Status: fixed (damage clamped to ≥1 per round). The peasant is at
   peace.</p>
 </article>
 
 <article class="entry">
-  <h2>8. The Bear Patrol</h2>
-  <div class="score-row"><span class="score">62 cp</span><span class="meter"><i style="width:62%"></i></span></div>
-  <p>The world's city defenders kept abandoning their posts to duel wildlife. Garrison
-  sorties fire at a <strong>55% odds bar</strong> against any "enemy" within reach — and
-  in the prehistoric era, the enemy is eleven hundred bears. A defender leaving the walls
-  to fight one at coin-flip odds risks everything to remove a threat that <strong>cannot
-  attack cities</strong>; multiplied across every garrison, every turn, the world's
-  starting defense corps (84 units, including the non-renewable founding guardians) bled
-  to <strong>25 by turn 71</strong> — protecting cities from creatures that were never
-  coming. Bonus reveal: the second sortie path turned out to be the unexplained dispatch
-  from the elephant cold case — <code>chokeDefend</code>'s "radius 1" attack actually
-  searched 4–6 tiles, through the same range-inflation formula, the whole time.</p>
-  <p>Is the Bear Patrol working? Citizens, look around: not a single city has ever fallen
-  to a bear.</p>
-  <p class="status">Status: fixed (#400) — garrisons only hunt bears they are nearly
-  certain to beat (the meat is genuinely worth it, ruled the owner), and chokeDefend uses
-  the leashed sortie. The bears are now mostly unbothered, and exclusively by
-  professionals.</p>
+  <h2>10. The Lumber Mill That Remembers When It Was Born</h2>
+  <div class="score-row"><span class="score">70 cp</span><span class="meter"><i style="width:70%"></i></span></div>
+  <p>A building's bonus/vicinity yield — <em>"+1 production for a Lumber Mill while you have
+  Prime Timber nearby"</em> — depended not on whether you currently <strong>had</strong> the
+  building and the bonus, but on whether the building happened to be standing at the
+  <strong>exact instant the bonus blinked into existence.</strong>
+  <code>doVicinityBonus()</code> was a poor-man's event: rather than ask each turn <em>"do I
+  have both?"</em>, it fired a one-time <strong>±1 stamp</strong> only on the
+  <em>transition</em> — the turn a bonus became present — onto whatever buildings were active
+  right then, and persisted that stamp in the savegame forever. Connect the timber,
+  <em>then</em> build the mill, and the transition had already fired with no mill to receive
+  it: <strong>+0, permanently.</strong> Build the mill, <em>then</em> connect the timber: +1.
+  Same city, same building, same resource — the yield decided by the <strong>order</strong>
+  you acquired them, frozen into the save.</p>
+  <p>The cherry: because the <code>−1</code> also only fired on the <em>loss</em> transition,
+  against whoever was active <em>then</em>, a mill built after the bonus and still standing
+  when it was later lost got stamped <strong>−1</strong> — docked production for a resource it
+  had never once benefited from.</p>
+  <p>And it corrupted the <strong>base</strong> yield — all three of food, production,
+  commerce — so it quietly poisoned growth, build times, and the whole
+  commerce→gold/research/culture split downstream. A slow, invisible, order-dependent rot.
+  Same disease as #2: a cache whose invalidation was a vibe.</p>
+  <p><strong>The mill has a twin born of the same disease — the school that forgot it
+  learned.</strong> A building's <strong>tech-boosted</strong> yield (a workshop that gains +1
+  production once you research Metallurgy) entered the <code>m_buildingExtraYield100</code>
+  cache by the <em>exact same</em> one-time transition: the cache was stamped only when the
+  <strong>tech was researched</strong> (<code>CvTeam</code>), against whatever buildings stood
+  at that instant. Research the tech, <em>then</em> build the workshop, and the stamp had
+  already fired with no workshop to catch it — its tech-yield <strong>never</strong> entered
+  the cache, forever. Same city, same building, same tech — credited or not by the
+  <strong>order</strong> you acquired them. (The bonus/vicinity twin above lost on
+  connect-then-build; this one loses on research-then-build. One bug, two acquisition
+  orders.)</p>
+  <p class="status">Status: both classes fixed in the rework —
+  <code>getBuildingExtraYield100</code> is now a pure function of current state (active
+  building × present bonus × current tech), recomputed every read, so construction order is
+  irrelevant and the stamps' savegame ghosts are abandoned as dead data.</p>
 </article>
 
 <article class="entry">
-  <h2>9. The Eternal Anesthesiologist</h2>
+  <h2>11. The Bear Patrol</h2>
+  <div class="score-row"><span class="score">62 cp</span><span class="meter"><i style="width:62%"></i></span></div>
+  <p>The world's city defenders kept abandoning their posts to duel wildlife. Garrison sorties
+  fire at a <strong>55% odds bar</strong> against any "enemy" within reach — and in the
+  prehistoric era, the enemy is eleven hundred bears. A defender leaving the walls to fight
+  one at coin-flip odds risks everything to remove a threat that <strong>cannot attack
+  cities</strong>; multiplied across every garrison, every turn, the world's starting defense
+  corps (84 units, including the non-renewable founding guardians) bled to <strong>25 by turn
+  71</strong> — protecting cities from creatures that were never coming. Bonus reveal: the
+  second sortie path turned out to be the unexplained dispatch from the elephant cold case —
+  <code>chokeDefend</code>'s "radius 1" attack actually searched 4–6 tiles, through the same
+  range-inflation formula, the whole time.</p>
+  <p>Is the Bear Patrol working? Citizens, look around: not a single city has ever fallen to a
+  bear.</p>
+  <p class="status">Status: fixed (#400) — garrisons only hunt bears they are nearly certain
+  to beat (the meat is genuinely worth it, ruled the owner), and chokeDefend uses the leashed
+  sortie. The bears are now mostly unbothered, and exclusively by professionals.</p>
+</article>
+
+<article class="entry">
+  <h2>12. Education Secedes From the Union</h2>
+  <div class="score-row"><span class="score">61 cp</span><span class="meter"><i style="width:61%"></i></span></div>
+  <p>Every property in the game runs on one rule: a building switches on when the property
+  crosses a threshold and stays on — cumulatively, to infinity. Crime, disease, pollution,
+  tourism: all the same shape, one line of intent.</p>
+  <p>Then there is <strong>education</strong>. Education's author surveyed this and built
+  <strong>four parallel thirteen-band succession ladders</strong> — positive era, negative
+  era, <em>Argumentative Awareness</em>, and <em>Blissful Ignorance</em> — wired together with
+  <code>ReplacementBuildings</code> so each band <em>removes</em> the one beneath it, and each
+  band re-declares the <strong>full</strong> cumulative bonus. A fifty-two- building lattice
+  to express what every other property says with a single threshold. To be smart. For
+  science.</p>
+  <p>Summed the way the new cascade sums everything else, it over-counts roughly fourfold:
+  London's education was paying <strong>+140% commerce</strong> where <strong>+35%</strong>
+  was intended. The fix was to repatriate education into the union — strip the inter-band
+  <code>replace</code>s, re-author each band as merely its <em>increment</em>, and let the
+  bands stack like every other property.</p>
+  <p>Bonus secessionist: the air-pollution band <code>BLACKENED_SKIES</code> used that same
+  <code>replace</code> to <strong>delete</strong> your observatories — a replace means
+  <em>remove</em> — so one smoggy afternoon permanently demolished the James Webb Space
+  Telescope until you rebuilt it from scratch. It now merely <strong>disables</strong> them
+  (dormant), because an observatory should go dark under smog, not be nuked from orbit.</p>
+  <p class="status">Status: pulled in line on <code>json-data-migration</code> (#428).
+  Education stacks cumulatively like crime; <code>BLACKENED_SKIES</code> disables instead of
+  demolishing. The breakaway republic has rejoined.</p>
+</article>
+
+<article class="entry">
+  <h2>13. The Eternal Anesthesiologist</h2>
   <div class="score-row"><span class="score">60 cp</span><span class="meter"><i style="width:60%"></i></span></div>
   <p><code>AI_heal</code> returned <code>true</code> for a heal no-op when the unit
   <em>couldn't heal</em>, so units re-decided "heal in city" <strong>49–196 times per
@@ -282,55 +423,77 @@
 </article>
 
 <article class="entry">
-  <h2>10. The Wonder That Builds Character</h2>
+  <h2>14. The Wonder That Builds Character</h2>
   <div class="score-row"><span class="score">59 cp</span><span class="meter"><i style="width:59%"></i></span></div>
   <p>A National Wonder reaches into your civilization and hands it a personality. Build the
-  right one and you don't get a bonus — you acquire a <em>trait</em>, the same kind of thing
-  a leader is born with, applied in full via <code>setHasTrait</code> →
+  right one and you don't get a bonus — you acquire a <em>trait</em>, the same kind of thing a
+  leader is born with, applied in full via <code>setHasTrait</code> →
   <code>processTrait</code>, modifier bundle and all. Demolish the building and the trait is
   revoked: you are, briefly, a different civilization, then yourself again.</p>
   <p>The trait system — meant to describe who your leader <em>is</em> — has been quietly
   conscripted as a general-purpose effect courier, wired to buildings through a
-  <code>FreeTraitTypes</code> foreign key and gated by a <code>bCivilizationTrait</code>
-  flag. 22 "traits" turn out to be wonders in a coat: the <em>Ancient Way of the…</em> set,
-  the astrological influences. "What traits does this civilization have" stopped being a
-  question about leaders and became a question about your construction history.</p>
+  <code>FreeTraitTypes</code> foreign key and gated by a <code>bCivilizationTrait</code> flag.
+  22 "traits" turn out to be wonders in a coat: the <em>Ancient Way of the…</em> set, the
+  astrological influences. "What traits does this civilization have" stopped being a question
+  about leaders and became a question about your construction history.</p>
   <p>Three things that should never touch — a building, a leader trait, and a nationwide
   effect — were fused into one, and the engine applies the whole bundle without blinking,
   because as far as it is concerned this is entirely normal.</p>
-  <p class="status">Status: working exactly as designed (a sibling waits in the Realism
-  Index) — which is the entire despair: it functions flawlessly while catapulting a fresh
-  bug at any developer who dares touch it. The wonder giveth a personality; the wrecking
-  ball taketh it away.</p>
+  <p class="status">Status: working exactly as designed (a sibling waits in the Realism Index)
+  — which is the entire despair: it functions flawlessly while catapulting a fresh bug at any
+  developer who dares touch it. The wonder giveth a personality; the wrecking ball taketh it
+  away.</p>
 </article>
 
 <article class="entry">
-  <h2>11. The Trait in a Trenchcoat</h2>
+  <h2>15. The Trait in a Trenchcoat</h2>
   <div class="score-row"><span class="score">58 cp</span><span class="meter"><i style="width:58%"></i></span></div>
-  <p>There is no such thing as a "complex trait." There are 64 ordinary traits, each of
-  which is secretly <em>two</em> traits standing on each other's shoulders in one
+  <p>There is no such thing as a "complex trait." There are 64 ordinary traits, each of which
+  is secretly <em>two</em> traits standing on each other's shoulders in one
   <code>&lt;Type&gt;</code>. The vanilla <code>TRAIT_AGGRESSIVE</code> carries, inline and
   under its own name, a complete second personality — <code>ReplacementID:
-  TRAIT_COMPLEX_AGGRESSIVE</code>, a type that exists nowhere else, has no record of its
-  own, and answers to no one. A generic engine (<code>CvInfoReplacements</code>) waits for
-  one game option to flip, then swaps the whole soul out mid-sentence. Nothing in the
-  trait's own data admits this can happen; the only tell is two tags a hundred lines
-  apart.</p>
+  TRAIT_COMPLEX_AGGRESSIVE</code>, a type that exists nowhere else, has no record of its own,
+  and answers to no one. A generic engine (<code>CvInfoReplacements</code>) waits for one game
+  option to flip, then swaps the whole soul out mid-sentence. Nothing in the trait's own data
+  admits this can happen; the only tell is two tags a hundred lines apart.</p>
   <p>The faithful reader — a migration that, reasonably, treats the same
-  <code>&lt;Type&gt;</code> appearing twice as an override — lovingly merges the disguise
-  into the man wearing it, producing 64 chimeras with a vanilla face and a complex strategy,
-  each insisting it is one trait while sourcing its opinions from two.</p>
+  <code>&lt;Type&gt;</code> appearing twice as an override — lovingly merges the disguise into
+  the man wearing it, producing 64 chimeras with a vanilla face and a complex strategy, each
+  insisting it is one trait while sourcing its opinions from two.</p>
   <p>In fairness, the fix itself isn't even bad — a clean conditional whole-object
-  replacement. The despair is that "what traits does this leader have" has no answer until
-  you <em>also</em> ask a game option, a separate templated class, and a type that was never
+  replacement. The despair is that "what traits does this leader have" has no answer until you
+  <em>also</em> ask a game option, a separate templated class, and a type that was never
   really there.</p>
-  <p class="status">Status: untangled (#428) — the disguise is now its own
-  <code>TRAIT_COMPLEX_*</code> file, the base trait declares <code>replacedBy</code> and
-  keeps its own face, and the store stopped marrying strangers.</p>
+  <p class="status">Status: untangled (#428) — and then the verdict came back harsher: it was
+  never one trait wearing a disguise, it was <strong>two completely different traits hacked on
+  top of each other</strong>. So they are now split into <strong>two separate sets</strong> —
+  <code>Assets/Data/traits/simple/</code> (88) and <code>…/complex/</code> (302, the entire
+  complex system, which turns out to be a single content module) — the <code>replacedBy</code>
+  cross-link is <strong>dropped</strong> (you don't get "replaced by" a stranger), and complex
+  traits are slated to become their <strong>own Info type behind a shared interface</strong>
+  in the coding pass. The store stopped marrying strangers; the divorce is now finalized in
+  two separate filing cabinets.</p>
+  <p><em>Later chapter (the divorce backfires) — earning its keep on the live-parity
+  pass:</em> with the link <strong>dropped</strong>, the offline value-calc — fed the actual
+  running game to find where its numbers diverge — had no way to know that a leader's held
+  <code>TRAIT_INDUSTRIOUS1</code> should read the <em>simple</em> sheet (<code>+30%</code>
+  production trade) or the <em>complex</em> one (<code>+0%</code>). It took several
+  reload-and-compare rounds to rediscover, from first principles, the very fact that had been
+  thrown away: under one game option the engine simply <strong>overwrites the base trait
+  wholesale with its replacement</strong> — the exact roundabout the divorce was meant to
+  escape, now re-derived by hand because the only record of it had been shredded. All hail the
+  gift for inventing endlessly convoluted ways to not follow any kind of common sense. The
+  resolution keeps them <strong>fully apart, properly this time</strong>: the complex set is
+  made <em>self-complete</em> — each complex trait folds in its own override (the base sheet
+  overwritten by the replacement, blanks filled from the base) and is filed under the held
+  type — so the calc reads exactly one clean definition per game-option and <strong>neither
+  set depends on the other at runtime</strong>. The exes do not reconcile; each simply keeps a
+  complete copy of the shared records instead of one quietly reaching into the other's filing
+  cabinet mid-sentence.*</p>
 </article>
 
 <article class="entry">
-  <h2>12. The Settler's Phantom Mortgage</h2>
+  <h2>16. The Settler's Phantom Mortgage</h2>
   <div class="score-row"><span class="score">57 cp</span><span class="meter"><i style="width:57%"></i></span></div>
   <p>Open a settler's <code>UnitInfo</code>, change its production cost, build a settler. The
   price barely moves. The number you edited (<code>iCost</code>) is real, but it is a sliver —
@@ -338,64 +501,62 @@
   appraised value of the city the settler has not founded yet</strong>.</p>
   <p><code>getProductionNeeded(unit)</code> ends with <code>iBaseCost + 100 *
   getUnitExtraCost(eUnit)</code> (<code>CvPlayer.cpp:7002</code>), and the comment directly
-  above says the quiet part out loud: <em>"The getUnitExtraCost() is where we get the cost for a
-  settler unit (that's ALL this does). The cost scales to GROWTH factors rather than training
-  factors."</em> That extra cost is not unit data at all — for every unit holding the
+  above says the quiet part out loud: <em>"The getUnitExtraCost() is where we get the cost for
+  a settler unit (that's ALL this does). The cost scales to GROWTH factors rather than
+  training factors."</em> That extra cost is not unit data at all — for every unit holding the
   <code>found</code> skill it is <code>getNewCityProductionValue()</code>: the advanced-start
-  city and per-population costs, scaled by game speed and era <em>growth</em> percent. It is the
-  very same function that prices an Advanced-Start city purchase. A settler costs what a city is
-  worth, because under the hood a settler <strong>is</strong> a city you have not placed yet.</p>
-  <p>It used to be worse in two ways, both since removed. The price also charged a share of the
-  hammer cost of every building a new city ships with free, so an ancient-start settler cost
-  several times a prehistoric-start one. And the number lived in a saved per-player vector
-  refreshed only at player reset and on a handicap change, so the era scaling it advertised
-  stayed frozen at whatever era the game began in.</p>
-  <p>Freshly topical: the data migration faithfully maps <code>iCost &rarr; cost.production</code>
-  — perfectly honest about the field, perfectly wrong about the unit — and wrong for exactly the
-  eight founders the settler-grants pass just spent a session wiring buildings onto. The one
-  number a modder would reach for is a decoy standing in front of a price tag written in another
-  building's hammers.</p>
+  city and per-population costs, scaled by game speed and era <em>growth</em> percent. It is
+  the very same function that prices an Advanced-Start city purchase. A settler costs what a
+  city is worth, because under the hood a settler <strong>is</strong> a city you have not
+  placed yet.</p>
+  <p>It used to be worse in two ways, both since removed. The price also charged a share of
+  the hammer cost of every building a new city ships with free, so an ancient-start settler
+  cost several times a prehistoric-start one. And the number lived in a saved per-player
+  vector refreshed only at player reset and on a handicap change, so the era scaling it
+  advertised stayed frozen at whatever era the game began in.</p>
+  <p>Freshly topical: the data migration faithfully maps <code>iCost → cost.production</code>
+  — perfectly honest about the field, perfectly wrong about the unit — and wrong for exactly
+  the eight founders the settler-grants pass just spent a session wiring buildings onto. The
+  one number a modder would reach for is a decoy standing in front of a price tag written in
+  another building's hammers.</p>
   <p class="status">Status: working as designed, now documented for the #430 cost pass (the
-  cascade must not trust a founder's <code>cost.production</code>). A settler has never once been
-  priced by its own data sheet.</p>
+  cascade must not trust a founder's <code>cost.production</code>). A settler has never once
+  been priced by its own data sheet.</p>
 </article>
 
 <article class="entry">
-  <h2>13. International Civil Asset Forfeiture</h2>
+  <h2>17. International Civil Asset Forfeiture</h2>
   <div class="score-row"><span class="score">55 cp</span><span class="meter"><i style="width:55%"></i></span></div>
   <p>Foreign police cars were observed parked on the human player's <strong>resource
   tiles</strong>, mission hover proudly reading <em>"Maintain property control."</em> The
-  mechanism: when a property-control unit isn't at its target city, the AI rolls a d10
-  every re-plan — and on 0–5 it simply <strong>doesn't move</strong>, skipping in place
-  wherever it stands, formally maintaining whatever tile that happens to be. The code
-  comment says <em>"RNG 50% only will move."</em> <code>iValue &lt;= 5</code> out of ten
-  outcomes is 60%. The comment cannot count, the police cannot drive, and the unit
-  random-walks toward its destination at ~0.4 steps per turn, getting stranded mid-route
-  in other nations' territory — where it sets up a checkpoint on someone else's
-  uranium.</p>
-  <p>Bonus: if pathing failed, it parked on <em>"waiting for escort"</em> — an escort that
-  is never dispatched to property units. The police car waits for backup. Forever.
-  Abroad.</p>
-  <p>In fairness to the code, the mission is called <em>property control</em>, and the
-  police cars controlled the plot like it was their property. The bug was in our
-  expectations.</p>
-  <p class="status">Status: fixed (#396) — the dice are gone, journeys commit, and units
-  pool at home, fortified. The uranium has been returned.</p>
+  mechanism: when a property-control unit isn't at its target city, the AI rolls a d10 every
+  re-plan — and on 0–5 it simply <strong>doesn't move</strong>, skipping in place wherever it
+  stands, formally maintaining whatever tile that happens to be. The code comment says
+  <em>"RNG 50% only will move."</em> <code>iValue &lt;= 5</code> out of ten outcomes is 60%.
+  The comment cannot count, the police cannot drive, and the unit random-walks toward its
+  destination at ~0.4 steps per turn, getting stranded mid-route in other nations' territory —
+  where it sets up a checkpoint on someone else's uranium.</p>
+  <p>Bonus: if pathing failed, it parked on <em>"waiting for escort"</em> — an escort that is
+  never dispatched to property units. The police car waits for backup. Forever. Abroad.</p>
+  <p>In fairness to the code, the mission is called <em>property control</em>, and the police
+  cars controlled the plot like it was their property. The bug was in our expectations.</p>
+  <p class="status">Status: fixed (#396) — the dice are gone, journeys commit, and units pool
+  at home, fortified. The uranium has been returned.</p>
 </article>
 
 <article class="entry">
-  <h2>14. The Merger With No Undo (Bring a Boat)</h2>
+  <h2>18. The Merger With No Undo (Bring a Boat)</h2>
   <div class="score-row"><span class="score">54 cp</span><span class="meter"><i style="width:54%"></i></span></div>
   <p>Size Matters lets you fuse three units into one bigger one. The merge stamped the new
   unit with an <em>inhibit-split</em> flag — and the only line in the entire codebase that
   ever cleared it was the one that loads a unit onto a <strong>transport ship</strong>. So a
   merged army could never be split apart again <em>unless you first put it on a boat</em>.</p>
-  <p>It gets better. The individual-unit merge path — a second, inline copy of the merge
-  logic — quietly never set the flag, so <em>that</em> path worked fine. The "merge everyone
-  in this group" path went through the shared merge core and inherited the permanent lock:
-  same feature, two implementations, opposite behaviour. And the AI's own Size-Matters
-  city-defense fallback <em>splits a merged defender back into pieces</em> — so the lock
-  silently disabled a defensive move the AI still believed it had.</p>
+  <p>It gets better. The individual-unit merge path — a second, inline copy of the merge logic
+  — quietly never set the flag, so <em>that</em> path worked fine. The "merge everyone in this
+  group" path went through the shared merge core and inherited the permanent lock: same
+  feature, two implementations, opposite behaviour. And the AI's own Size-Matters city-defense
+  fallback <em>splits a merged defender back into pieces</em> — so the lock silently disabled
+  a defensive move the AI still believed it had.</p>
   <p>The flag was an anti-oscillation band-aid, almost certainly from the pre-git era, back
   when the AI's decision tree would thrash a single stack merge→split→merge forever on
   contradictory logic. The AI has improved measurably since; the band-aid outlived the wound
@@ -406,16 +567,19 @@
 </article>
 
 <article class="entry">
-  <h2>15. The .vcxproj of Lies</h2>
+  <h2>19. The .vcxproj of Lies</h2>
   <div class="score-row"><span class="score">47 cp</span><span class="meter"><i style="width:47%"></i></span></div>
-  <p>The Visual Studio project file confidently states <code>PlatformToolset: v142</code>.
-  The actual compiler is the <strong>Microsoft Visual C++ Toolkit 2003</strong> (MSVC 7.1).
-  The project file drives nothing, is synced with nothing, and has already caused one wrong
+  <p>The Visual Studio project file confidently states <code>PlatformToolset: v142</code>. The
+  actual compiler is the <strong>Microsoft Visual C++ Toolkit 2003</strong> (MSVC 7.1). The
+  project file drives nothing, is synced with nothing, and has already caused one wrong
   toolchain conclusion that had to be corrected with a HARD RULE in block capitals.</p>
   <p>The single most authoritative-<em>looking</em> file in the repository is a museum
   exhibit. Trust it and you'll write <code>auto</code>, and the year 2003 will personally
   reach through the linker to stop you.</p>
-  <p class="status">Status: mitigated by documentation and fear.</p>
+  <p class="status">Status: mitigated by documentation, fear, and a warning now stapled to
+  every one of the seven lying <code>PlatformToolset</code> lines (plus banners atop the
+  <code>.vcxproj</code>/<code>.filters</code>/<code>.sln</code>) so an agent that greps
+  straight to the lie meets the truth on the same line.</p>
 </article>
 
 <section class="hm">
@@ -423,46 +587,45 @@
 
   <article class="entry">
     <h3>The Zen Logger</h3>
-    <p><code>AI_setAsGarrison</code> contained, for years, a gated logging block of
-    perfectly empty braces: at log level 3 it logged <em>nothing</em>, flawlessly. One hand
-    garrisoning. Replaced this week by <code>[UNT/garrison]</code>, which logs
-    <em>something</em>.</p>
+    <p><code>AI_setAsGarrison</code> contained, for years, a gated logging block of perfectly
+    empty braces: at log level 3 it logged <em>nothing</em>, flawlessly. One hand garrisoning.
+    Replaced this week by <code>[UNT/garrison]</code>, which logs <em>something</em>.</p>
   </article>
 
   <article class="entry">
     <h3>The Integer Answering a Yes/No Question</h3>
-    <p>A stale argument passed <code>2</code> into <code>bool bAllowAnyDefenders</code>,
-    left over from a signature that no longer exists. Truncated to <code>true</code>, it
-    spent years confidently answering a question it was never asked.</p>
+    <p>a stale argument passed <code>2</code> into <code>bool bAllowAnyDefenders</code>, left
+    over from a signature that no longer exists. Truncated to <code>true</code>, it spent
+    years confidently answering a question it was never asked.</p>
   </article>
 
   <article class="entry">
     <h3>Waiting for Escortdot</h3>
-    <p>Human-automated workers stall forever on <code>WAIT_FOR_ESCORT</code>, because
-    escorts are only ever dispatched to AI workers. Two workers, by a road, waiting.
-    <em>"Shall we improve the tile?" "We can't." "Why not?" "We're waiting for the
-    escort."</em> The escort has never once come.</p>
+    <p>human-automated workers stall forever on <code>WAIT_FOR_ESCORT</code>, because escorts
+    are only ever dispatched to AI workers. Two workers, by a road, waiting. <em>"Shall we
+    improve the tile?" "We can't." "Why not?" "We're waiting for the escort."</em> The escort
+    has never once come.</p>
   </article>
 </section>
 
 <div class="fineprint">
-  <p>Scale calibration note: 100 cp = 1 full Elephant. Readings above 100 are
-  theoretically possible but would legally require the elephant to file an expense report
-  for the trip.</p>
-  <p>Contribution policy (owner-sanctioned): when the ongoing rework unearths something
-  worthy — a bug whose comprehension produces an audible exhale — it may be added here,
-  with a score, a name, and the respect it does not deserve. These entries double as an
-  honest summary of the state of the inherited codebase, which is part of why the rework
-  exists.</p>
+  <p>Scale calibration note: 100 cp = 1 full Elephant. Readings above 100 are theoretically
+  possible but would legally require the elephant to file an expense report for the trip.</p>
+  <p>Contribution policy (owner-sanctioned): when the ongoing rework unearths something worthy
+  — a bug whose comprehension produces an audible exhale — it may be added here, with a score,
+  a name, and the respect it does not deserve. These entries double as an honest summary of
+  the state of the inherited codebase, which is part of why the rework exists.</p>
+  <p>Fresh despair may be reported, contested, or savored on the <a
+  href="https://discord.gg/RyqQ3jAMx">S2S Discord</a>.</p>
 </div>
 
 <footer>
   <p><strong>Stones2Stars</strong> — a Civ4 / Caveman2Cosmos rework ·
   <a href="https://github.com/Stones2Stars/S2S">github.com/Stones2Stars/S2S</a> ·
-  <a href="https://discord.gg/YkFKJGK8R">discord.gg/R8Uejx6uaK</a></p>
-  <p>Sibling publications: <a href="REALISM_INDEX.html">The Realism Index™</a> (things the
-  code does exactly as designed, which is somehow worse) and
-  <a href="COMPLEXITY_INDEX.html">The Complexity Index™</a> (one entry, and it is everything).</p>
+  <a href="https://discord.gg/RyqQ3jAMx">discord.gg/RyqQ3jAMx</a></p>
+  <p>Sibling publications: the <a href="REALISM_INDEX.html">Realism Index</a> (mechanics
+  working exactly as designed, which is somehow worse) and the <a
+  href="COMPLEXITY_INDEX.html">Complexity Index</a> (one entry, and it is everything).</p>
 </footer>
 
 </div>

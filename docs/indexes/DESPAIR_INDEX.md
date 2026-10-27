@@ -127,7 +127,32 @@ awake, slightly nervous, accruing nothing.
 
 ---
 
-## 5. Schrödinger's Job Application — 85 cp
+## 5. The Ambush That Asks Each Player Separately — 88 cp
+
+Multiplayer lockstep has one rule: every machine runs the same code on the same inputs. The
+ambush / assassinate confirmation manages to break it **three times in one button press**:
+
+1. The popup writes the chosen target into the ambusher **on the clicking player's machine
+   only**. The networked confirm then runs everywhere and reads that field — so the player
+   who clicked strikes the unit they picked, while everyone else's copy of the game, having
+   never been told, shrugs and strikes the best defender instead.
+2. Even the fallback is not shared. Inside the synced command, the defender search takes
+   *"should I respect war status?"* from **`!gDLL->altKey()` — whether the Alt key is held
+   down on that particular machine, right now**. Every client consults its own keyboard. The
+   outcome of the ambush is decided by a show of hands, except the hands are on keyboards in
+   different countries.
+3. And *cancelling* is the gentle desync: the cancel clears the ambusher's state locally and
+   nowhere else, so on every other machine the unit keeps a stale target, and its next ambush
+   skips its own setup.
+
+The game option that turns the choice popup on is itself applied only on the machine of
+whoever changed it, so the players may not even agree on whether the popup *exists*.
+
+*Status: open (#613).*
+
+---
+
+## 6. Schrödinger's Job Application — 85 cp
 
 A unit's first `processContracts` call of the turn *advertised* for work, found none, and
 returned `true` — "I did something!" The slice driver, taking it at its word, re-ran the
@@ -140,7 +165,7 @@ as a full shift — and the *system agreed*.
 
 ---
 
-## 6. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey — 78 cp
+## 7. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey — 78 cp
 
 The role-conversion gate asked *"could this unit theoretically help with crime?"* while
 the assignment handler asked *"does this unit actually have the equipment?"* Different
@@ -155,7 +180,7 @@ you corrupt the demand accounting. That's what it's all about.
 
 ---
 
-## 7. Strength by Committee — 72 cp
+## 8. Strength by Committee — 72 cp
 
 Ask a simple question — "how strong is this unit against that one?" — and the engine cannot tell
 you where the answer came from. A unit's combat strength is built by pouring **~40 signed
@@ -185,7 +210,7 @@ came from, the engine least of all.*
 
 ---
 
-## 8. The Unkillable Peasant — 71 cp
+## 9. The Unkillable Peasant — 71 cp
 
 `getCombatOdds` floored per-round damage to 0 against ~zero-strength defenders, making a
 dying militiaman **mathematically immortal**. The AI under-reported its own win odds
@@ -199,7 +224,7 @@ layer above it nodded along.
 
 ---
 
-## 9. The Lumber Mill That Remembers When It Was Born — 70 cp
+## 10. The Lumber Mill That Remembers When It Was Born — 70 cp
 
 A building's bonus/vicinity yield — *"+1 production for a Lumber Mill while you have Prime Timber
 nearby"* — depended not on whether you currently **had** the building and the bonus, but on whether the
@@ -234,7 +259,7 @@ irrelevant and the stamps' savegame ghosts are abandoned as dead data.*
 
 ---
 
-## 10. The Bear Patrol — 62 cp
+## 11. The Bear Patrol — 62 cp
 
 The world's city defenders kept abandoning their posts to duel wildlife. Garrison sorties
 fire at a **55% odds bar** against any "enemy" within reach — and in the prehistoric era,
@@ -255,7 +280,7 @@ The bears are now mostly unbothered, and exclusively by professionals.*
 
 ---
 
-## 11. Education Secedes From the Union — 61 cp
+## 12. Education Secedes From the Union — 61 cp
 
 Every property in the game runs on one rule: a building switches on when the property
 crosses a threshold and stays on — cumulatively, to infinity. Crime, disease, pollution,
@@ -284,7 +309,7 @@ crime; `BLACKENED_SKIES` disables instead of demolishing. The breakaway republic
 
 ---
 
-## 12. The Eternal Anesthesiologist — 60 cp
+## 13. The Eternal Anesthesiologist — 60 cp
 
 `AI_heal` returned `true` for a heal no-op when the unit *couldn't heal*, so units
 re-decided "heal in city" **49–196 times per turn** — and in rare alignments, the turn
@@ -297,7 +322,7 @@ pressing it 195 more times. Except occasionally the building never lets you leav
 
 ---
 
-## 13. The Wonder That Builds Character — 59 cp
+## 14. The Wonder That Builds Character — 59 cp
 
 A National Wonder reaches into your civilization and hands it a personality. Build the right
 one and you don't get a bonus — you acquire a *trait*, the same kind of thing a leader is
@@ -322,7 +347,7 @@ dares touch it. The wonder giveth a personality; the wrecking ball taketh it awa
 
 ---
 
-## 14. The Trait in a Trenchcoat — 58 cp
+## 15. The Trait in a Trenchcoat — 58 cp
 
 There is no such thing as a "complex trait." There are 64 ordinary traits, each of which is
 secretly *two* traits standing on each other's shoulders in one `<Type>`. The vanilla
@@ -365,7 +390,7 @@ the other's filing cabinet mid-sentence.*
 
 ---
 
-## 15. The Settler's Phantom Mortgage — 57 cp
+## 16. The Settler's Phantom Mortgage — 57 cp
 
 Open a settler's `UnitInfo`, change its production cost, build a settler. The price barely
 moves. The number you edited (`iCost`) is real, but it is a sliver — the *actual* cost of a
@@ -397,7 +422,7 @@ founder's `cost.production`). A settler has never once been priced by its own da
 
 ---
 
-## 16. International Civil Asset Forfeiture — 55 cp
+## 17. International Civil Asset Forfeiture — 55 cp
 
 Foreign police cars were observed parked on the human player's **resource tiles**, mission
 hover proudly reading *"Maintain property control."* The mechanism: when a property-control
@@ -419,7 +444,7 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 17. The Merger With No Undo (Bring a Boat) — 54 cp
+## 18. The Merger With No Undo (Bring a Boat) — 54 cp
 
 Size Matters lets you fuse three units into one bigger one. The merge stamped the new unit
 with an *inhibit-split* flag — and the only line in the entire codebase that ever cleared it
@@ -444,7 +469,7 @@ oscillation ever returns. Boats are once more optional.*
 
 ---
 
-## 18. The .vcxproj of Lies — 47 cp
+## 19. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
@@ -458,25 +483,6 @@ stop you.
 *Status: mitigated by documentation, fear, and a warning now stapled to every one of the
 seven lying `PlatformToolset` lines (plus banners atop the `.vcxproj`/`.filters`/`.sln`) so an
 agent that greps straight to the lie meets the truth on the same line.*
-
----
-
-## 19. The Outcome That Is the Mission — 46 cp
-
-Go looking for where the subdued-animal heritage missions are gated. You find a class named
-`CvOutcome` and reasonably conclude it models the *outcome* — the result, the thing that happens
-*after* the mission resolves. It does not. `CvOutcome` **is the mission**: the action, the gate,
-the entire apparatus deciding whether the deed may be done at all. The result — the literal
-meaning of the word "outcome" — is the one thing it is not about.
-
-The misdirection arrives in two layers. The gate everyone reaches for first, `canAddHeritage`,
-is a *permissive* prereq-check that waves through ~91 heritages unconditionally and is therefore
-not where anything is really decided; the **actual** gate lives inside a class that, by its own
-name, swears to be about something else entirely. You can lose a genuinely surprising amount of
-time confirming that the class called Outcome holds no opinions whatsoever on outcomes.
-
-*Status: working as named, provided the name is read as a dare. Untouched — it gates the heritage
-missions correctly; it simply declines to admit what it is.*
 
 ---
 
