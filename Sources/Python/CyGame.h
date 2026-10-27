@@ -207,6 +207,11 @@ public:
 	int getSorenRandNum(int iNum, const char* pszLog) const;
 	bool GetWorldBuilderMode() const;				// remove once CvApp is exposed
 	bool isPitbossHost() const;				// remove once CvApp is exposed
+	///<summary>
+	/// Whether this machine decides the game-wide rules: the network host, the PitBoss server, or the only machine
+	/// (docs/reference/engine.md, synced code reads nothing that differs per machine).
+	///</summary>
+	bool isRulesHost() const;
 	int getCurrentLanguage() const;				// remove once CvApp is exposed
 	void setCurrentLanguage(int iNewLanguage);				// remove once CvApp is exposed
 	int getNumLanguages() const;				// remove once CvApp is exposed -- moves WITH the two above

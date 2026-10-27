@@ -746,6 +746,11 @@ bool CyGame::isPitbossHost() const				// remove once CvApp is exposed
 	return gDLL->IsPitbossHost();
 }
 
+bool CyGame::isRulesHost() const
+{
+	return !GC.getGame().isNetworkMultiPlayer() || gDLL->isFMPMgrHost() || gDLL->IsPitbossHost();
+}
+
 int CyGame::getCurrentLanguage() const				// remove once CvApp is exposed
 {
 	return gDLL->getCurrentLanguage();
@@ -1130,6 +1135,7 @@ void CyGame::pythonPublish()
 
 		.def("GetWorldBuilderMode", &CyGame::GetWorldBuilderMode)
 		.def("isPitbossHost", &CyGame::isPitbossHost)
+		.def("isRulesHost", &CyGame::isRulesHost)
 		.def("getCurrentLanguage", &CyGame::getCurrentLanguage)
 		.def("setCurrentLanguage", &CyGame::setCurrentLanguage)
 		.def("getNumLanguages", &CyGame::getNumLanguages)

@@ -160,6 +160,10 @@ inputs differ between machines and must never decide synced code:
   synced code reads it through the owner of the unit, city or group it is deciding for. A `getBugOption*` read in
   synced code is a desync. ⚠ The setting is applied when the message EXECUTES, on every client including the
   sender — never set locally beside the send, or the sender's state runs ahead of everyone else's.
+  ⚖ **A GAME-WIDE setting (`MODDERGAMEOPTION_*`) is the HOST's to decide**: only the host machine sends it
+  (`CyGame.isRulesHost()` — the network host, the PitBoss server, or the only machine), when it starts a game
+  and when it changes one; every client applies it as the message executes. It is never re-pushed on load —
+  the save carries the rules the host chose, so no player can change them by loading the game.
 - **Local input or UI state** — the keyboard (`gDLL->altKey()`), the selection, a popup's registers, the active
   player. A player's choice travels **in the command's payload**, whole; the `Execute` that applies it reads the
   payload and nothing local.

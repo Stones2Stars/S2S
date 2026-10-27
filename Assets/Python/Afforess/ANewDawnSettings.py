@@ -19,6 +19,16 @@ DIFFICULTY_EVENT_ID = CvUtil.getNewEventID()
 COLOR_EVENT_ID = CvUtil.getNewEventID()
 CANBUILD_EVENT_ID = CvUtil.getNewEventID()
 
+# A game-wide rule is the host's to decide (docs/reference/engine.md, synced code reads nothing that differs per
+# machine): only the host sends it, when it starts a game or changes a rule, and never while a load re-sends
+# settings -- the save already carries the rules.
+bLoadingSettings = False
+
+def sendModderGameOption(eOption, value):
+	if bLoadingSettings or not GAME.isRulesHost():
+		return
+	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GAME.getActivePlayer(), int(eOption), int(value), 0)
+
 class ANewDawnSettings:
 	def __init__(self, eventManager):
 		eventManager.addEventHandler("OnLoad", self.onLoadGame)
@@ -26,7 +36,11 @@ class ANewDawnSettings:
 		eventManager.addEventHandler("ModNetMessage", self.onModNetMessage)
 
 	def onLoadGame(self,argsList):
+		# The save carries the game-wide rules; only the per-player settings are re-sent.
+		global bLoadingSettings
+		bLoadingSettings = True
 		self.optionUpdate()
+		bLoadingSettings = False
 
 	def onGameStart(self,argsList):
 		self.optionUpdate()
@@ -43,58 +57,9 @@ class ANewDawnSettings:
 		if protocol == MODDEROPTION_EVENT_ID:
 			pPlayer = GC.getPlayer(data1)
 			pPlayer.setModderOption(data2, data3)
-		#ModderGameOptions
+		#ModderGameOptions: the host's rule, applied on every client as the message executes
 		elif protocol == MODDERGAMEOPTION_EVENT_ID:
-			if data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_DEFENDER_WITHDRAW):
-				ANewDawnOpt.setDefenderWithdraw(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_UNITS_PER_TILES):
-				ANewDawnOpt.setMaxUnitsPerTile(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE):
-				ANewDawnOpt.setMaxBombardDefense(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MIN_CITY_DISTANCE):
-				ANewDawnOpt.setMinCityDistance(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_CANNOT_CLAIM_OCEAN):
-				ANewDawnOpt.setCanNotClaimOcean(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_RESOURCE_DEPLETION):
-				ANewDawnOpt.setDepletionMod(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_GREATER_GREAT_FARMER):
-				ANewDawnOpt.setGreaterGreatFarmer(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_BETTER_INTERCETION):
-				ANewDawnOpt.setBetterAirInterception(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_AIRLIFT_RANGE):
-				ANewDawnOpt.setMaxRebaseRange(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MERCY_RULE):
-				ANewDawnOpt.setMercyRule(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_REALISTIC_DIPLOMACY):
-				ANewDawnOpt.setRealisiticDiplomacy(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_BATTLEFIELD_PROMOTIONS):
-				ANewDawnOpt.setBattlefieldPromotions(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_STARSIGNS):
-				ANewDawnOpt.setStarsigns(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_IMPROVED_XP):
-				ANewDawnOpt.setImprovedXP(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_RELIGION_DECAY):
-				ANewDawnOpt.setReligionDecay(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MULTIPLE_RELIGION_SPREAD):
-				ANewDawnOpt.setMultipleReligionSpread(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_DECAY):
-				ANewDawnOpt.setFogWarDecay(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_NBTURNS):
-				ANewDawnOpt.setFogWarNbTurns(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_MINORCIV_TECH):
-				ANewDawnOpt.setMinorCivTech(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_MINIMAL):
-				ANewDawnOpt.setAssassinateMinimal(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_CHOICE):
-				ANewDawnOpt.setAssassinateChoice(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING):
-				ANewDawnOpt.setNoAutoCorporationFounding(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY):
-				ANewDawnOpt.setFlexibleDifficultyAI(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR):
-				ANewDawnOpt.setHistoricalAccurateCalendar(data3)
-			elif data2 == int(ModderGameOptionTypes.MODDERGAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT):
-				ANewDawnOpt.setNextTraitCultureReqPercent(data3)
+			GAME.setModderGameOption(data2, data3)
 		#Change Difficulty
 		elif protocol == DIFFICULTY_EVENT_ID:
 			pPlayer = GC.getPlayer(data1)
@@ -118,31 +83,25 @@ def changedRoMReset(option, value):
 
 #####################################################
 def changedDefenderWithdraw(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_DEFENDER_WITHDRAW, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_DEFENDER_WITHDRAW), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_DEFENDER_WITHDRAW, value)
 
 def changedMaxUnitsPerTile(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_UNITS_PER_TILES, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_UNITS_PER_TILES), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_UNITS_PER_TILES, value)
 
 def changedFlexibleDifficultyTurnIncrements(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_FLEXIBLE_DIFFICULTY_TURN_INCREMENTS), int(value), 0)
 
 def changedFlexibleDifficultyAITurnIncrements(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_TURN_INCREMENTS, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_TURN_INCREMENTS), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_TURN_INCREMENTS, value)
 
 def changedMaxBombardDefense(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE, value)
 
 def changedMinCityDistance(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MIN_CITY_DISTANCE, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MIN_CITY_DISTANCE), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MIN_CITY_DISTANCE, value)
 
 def changedCanNotClaimOcean(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_CANNOT_CLAIM_OCEAN, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_CANNOT_CLAIM_OCEAN), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_CANNOT_CLAIM_OCEAN, value)
 
 def changedNoFriendlyPillaging(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_NO_FRIENDLY_PILLAGING), int(value), 0)
@@ -157,12 +116,10 @@ def changedFlexibleDifficultyMaximumDiff(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_FLEXIBLE_DIFFICULTY_MAX_DIFFICULTY), int(value - 1), 0)
 
 def changedFlexibleDifficultyAIMinimumDiff(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MIN_DIFFICULTY, value - 1)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MIN_DIFFICULTY), int(value - 1), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MIN_DIFFICULTY, value - 1)
 
 def changedFlexibleDifficultyAIMaximumDiff(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MAX_DIFFICULTY, value - 1)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MAX_DIFFICULTY), int(value - 1), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_MAX_DIFFICULTY, value - 1)
 
 def changedFlexibleDifficultyMinRank(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_FLEXIBLE_DIFFICULTY_MIN_RANK), int(value), 0)
@@ -171,46 +128,37 @@ def changedFlexibleDifficultyMaxRank(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_FLEXIBLE_DIFFICULTY_MAX_RANK), int(value), 0)
 
 def changedDepletionMod(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_RESOURCE_DEPLETION, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_RESOURCE_DEPLETION), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_RESOURCE_DEPLETION, value)
 
 def changedGreaterGreatFarmer(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_GREATER_GREAT_FARMER, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_GREATER_GREAT_FARMER), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_GREATER_GREAT_FARMER, value)
 
 def changedBetterAirInterception(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_BETTER_INTERCETION, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_BETTER_INTERCETION), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_BETTER_INTERCETION, value)
 
 def changedMaxRebaseRange(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_AIRLIFT_RANGE, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_AIRLIFT_RANGE), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_AIRLIFT_RANGE, value)
 
 def changedMercyRule(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MERCY_RULE, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MERCY_RULE), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MERCY_RULE, value)
 
 def changedRealisiticDiplomacy(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_REALISTIC_DIPLOMACY, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_REALISTIC_DIPLOMACY), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_REALISTIC_DIPLOMACY, value)
 
 def changedShowRevCivics(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_SHOW_REV_EFFECTS), int(value), 0)
 
 def changedBattlefieldPromotions(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_BATTLEFIELD_PROMOTIONS, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_BATTLEFIELD_PROMOTIONS), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_BATTLEFIELD_PROMOTIONS, value)
 
 def changedStarsigns(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_STARSIGNS, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_STARSIGNS), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_STARSIGNS, value)
 
 def changedHideReplacedBuildings(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_HIDE_REPLACED_BUILDINGS), int(value), 0)
 
 def changedImprovedXP(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_IMPROVED_XP, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_IMPROVED_XP), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_IMPROVED_XP, value)
 
 def changedPlayerColor(option, value):
 	iColor = value - 1
@@ -243,12 +191,10 @@ def changedIgnoreDisabledBuildingAlerts(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_IGNORE_DISABLED_ALERTS), int(value), 0)
 
 def changedReligionDecay(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_RELIGION_DECAY, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_RELIGION_DECAY), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_RELIGION_DECAY, value)
 
 def changedMultipleReligionSpread(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MULTIPLE_RELIGION_SPREAD, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MULTIPLE_RELIGION_SPREAD), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MULTIPLE_RELIGION_SPREAD, value)
 
 def changedAllowTerraforming(option, value):
 	CyMessageControl().sendModNetMessage(CANBUILD_EVENT_ID, GC.getGame().getActivePlayer(), GC.getInfoTypeForString("BUILD_TERRAFORM_GRASS"), not value, 0)
@@ -263,46 +209,37 @@ def changedSeaTunnels(option, value):
 	CyMessageControl().sendModNetMessage(CANBUILD_EVENT_ID, GC.getGame().getActivePlayer(), GC.getInfoTypeForString("BUILD_TUNNEL"), not value, 0)
 
 def changedNoAutoCorporationFounding(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING, value)
 
 def changedWarPrizes(option, value):
 	GC.setDefineINT("WAR_PRIZES", int(value))
 
 def changedNextTraitCultureReqPercent(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT, value)
 
 def changedFlexibleDifficultyAI(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY, value)
 
 def changedHistoricalAccurateCalendar(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR, value)
 
 def changedInfrastructureIgnoresImprovements(option, value):
 	CyMessageControl().sendModNetMessage(MODDEROPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderOptionTypes.MODDEROPTION_INFRASTRUCTURE_IGNORES_IMPROVEMENTS), int(value), 0)
 
 def changedFogWarDecay(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_DECAY, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_DECAY), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_DECAY, value)
 
 def changedFogWarNbTurns(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_NBTURNS, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_NBTURNS), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_FOGWAR_NBTURNS, value)
 
 def changedMinorCivTech(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MINORCIV_TECH, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_MINORCIV_TECH), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_MINORCIV_TECH, value)
 
 def changedAssassinateMinimal(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_MINIMAL, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_MINIMAL), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_MINIMAL, value)
 
 def changedAssassinateChoice(option, value):
-	GC.getGame().setModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_CHOICE, value)
-	CyMessageControl().sendModNetMessage(MODDERGAMEOPTION_EVENT_ID, GC.getGame().getActivePlayer(), int(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_CHOICE), int(value), 0)
+	sendModderGameOption(ModderGameOptionTypes.MODDERGAMEOPTION_ASSASSINATE_CHOICE, value)
 
 
 
