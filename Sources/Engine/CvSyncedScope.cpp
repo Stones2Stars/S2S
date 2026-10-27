@@ -14,17 +14,20 @@ namespace
 {
 	enum SyncEvent
 	{
-		SYNC_DRAW = 1
+		SYNC_DRAW = 1,
+		SYNC_HOST       // which machine decides the game-wide rules, as each host query answered it
 	};
 	enum SyncField
 	{
-		SYNCF_stream = 1, SYNCF_label, SYNCF_callerRva, SYNCF_turn, SYNCF_turnSlice, SYNCF_sites
+		SYNCF_stream = 1, SYNCF_label, SYNCF_callerRva, SYNCF_turn, SYNCF_turnSlice, SYNCF_sites,
+		SYNCF_activePlayer, SYNCF_network, SYNCF_fmpHost, SYNCF_pitbossHost, SYNCF_rulesHost
 	};
 	const char* syncLinePrefix(int iEventId)
 	{
 		switch (iEventId)
 		{
 		case SYNC_DRAW: return "[SYNC/draw]";
+		case SYNC_HOST: return "[SYNC/host]";
 		default:        return NULL;
 		}
 	}
@@ -39,6 +42,11 @@ namespace
 		case SYNCF_turn:      return "turn";
 		case SYNCF_turnSlice: return "turnSlice";
 		case SYNCF_sites:     return "sites";
+		case SYNCF_activePlayer: return "activePlayer";
+		case SYNCF_network:      return "network";
+		case SYNCF_fmpHost:      return "fmpHost";
+		case SYNCF_pitbossHost:  return "pitbossHost";
+		case SYNCF_rulesHost:    return "rulesHost";
 		default:              return NULL;
 		}
 	}
@@ -59,6 +67,21 @@ CvSyncedScope::~CvSyncedScope()
 bool CvSyncedScope::isActive()
 {
 	return s_iDepth > 0;
+}
+
+bool CvSyncedScope::isRulesHost()
+{
+	return !GC.getGame().isNetworkMultiPlayer() || gDLL->isFMPMgrHost() || gDLL->IsPitbossHost();
+}
+
+void CvSyncedScope::reportHost()
+{
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_SYNC, SYNC_HOST, 1)
+		.addI(SYNCF_activePlayer, (int)GC.getGame().getActivePlayer())
+		.addI(SYNCF_network, GC.getGame().isNetworkMultiPlayer() ? 1 : 0)
+		.addI(SYNCF_fmpHost, gDLL->isFMPMgrHost() ? 1 : 0)
+		.addI(SYNCF_pitbossHost, gDLL->IsPitbossHost() ? 1 : 0)
+		.addI(SYNCF_rulesHost, isRulesHost() ? 1 : 0));
 }
 
 void CvSyncedScope::checkDraw(const CvRandom* pStream, const char* szLabel, const void* pCaller)

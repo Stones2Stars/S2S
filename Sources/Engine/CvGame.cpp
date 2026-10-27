@@ -2423,6 +2423,7 @@ void CvGame::update()
 	{
 		CvSyncedScope syncedScope;
 		onFinalInitialized(!spineGameLoadInProgress());
+		CvSyncedScope::reportHost();
 	}
 
 	//	Per-frame DLL work accumulated across the whole turn (logged at CvGame::doTurn) --

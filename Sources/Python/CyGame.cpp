@@ -18,6 +18,7 @@
 #include "CyReplayInfo.h"
 #include "CvReplayInfo.h"
 #include "Infos/CvGameText.h"   // getNumLanguages -- the options screen's language dropdown
+#include "Engine/CvSyncedScope.h"
 
 //
 // Python wrapper class for CvGame
@@ -748,7 +749,7 @@ bool CyGame::isPitbossHost() const				// remove once CvApp is exposed
 
 bool CyGame::isRulesHost() const
 {
-	return !GC.getGame().isNetworkMultiPlayer() || gDLL->isFMPMgrHost() || gDLL->IsPitbossHost();
+	return CvSyncedScope::isRulesHost();
 }
 
 int CyGame::getCurrentLanguage() const				// remove once CvApp is exposed

@@ -25,6 +25,17 @@ public:
 	///</summary>
 	static void checkDraw(const CvRandom* pStream, const char* szLabel, const void* pCaller);
 
+	///<summary>
+	/// Whether this machine decides the game-wide rules: the network host, the PitBoss server, or the only machine.
+	///</summary>
+	static bool isRulesHost();
+
+	///<summary>
+	/// Writes [SYNC/host] -- what each host query answered on this machine -- so two players' Sync.log show
+	/// which machine took the host's role.
+	///</summary>
+	static void reportHost();
+
 private:
 	static int s_iDepth;
 };
