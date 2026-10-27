@@ -4308,7 +4308,7 @@ void CvSelectionGroup::updateMissionTimer(int iSteps)
 
 		if (isHuman())
 		{
-			if (isAutomated() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false)
+			if (isAutomated() && !GC.getGame().isGameMultiPlayer() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false)
 			|| GET_PLAYER((GC.getGame().isNetworkMultiPlayer()) ? getOwner() : GC.getGame().getActivePlayer()).isOption(PLAYEROPTION_QUICK_MOVES))
 			{
 				if (!GC.getGame().isGameMultiPlayer())

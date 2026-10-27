@@ -1401,18 +1401,21 @@ int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam)
 		m_tradeTechValuesCachedTurn = GC.getGame().getGameTurn();
 	}
 	const int iCacheIndex = eTech * MAX_TEAMS + getID();
+	CvPlayerAI& teamLeader = GET_PLAYER(getLeaderID());
+	// A value involving a human is computed on the async stream, so it differs per client and is never cached:
+	// a cached copy would be served to synced AI-AI valuation on this client only.
+	const bool bAsync = (teamLeader.isHumanPlayer() || GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).isHumanPlayer());
 
-	stdext::hash_map<int,int>::const_iterator itr = m_tradeTechValueCache.find(iCacheIndex);
-	if (itr != m_tradeTechValueCache.end())
+	if (!bAsync)
 	{
-		return itr->second;
+		stdext::hash_map<int,int>::const_iterator itr = m_tradeTechValueCache.find(iCacheIndex);
+		if (itr != m_tradeTechValueCache.end())
+		{
+			return itr->second;
+		}
 	}
 	{
 		PROFILE("CvTeamAI::AI_techTradeVal.CacheMiss");
-
-		CvPlayerAI& teamLeader = GET_PLAYER(getLeaderID());
-
-		const bool bAsync = (teamLeader.isHumanPlayer() || GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).isHumanPlayer());
 
 		const int iOurActualTechValue = teamLeader.AI_TechValueCached(eTech, bAsync, true);
 		const int iAverageTechValue = teamLeader.AI_averageCurrentTechValue(eTech, bAsync);
@@ -1465,8 +1468,10 @@ int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam)
 
 		iValue = getModifiedIntValue(iValue, GC.getTechInfo(eTech).getAITradeModifier());
 
-		m_tradeTechValueCache[iCacheIndex] = iValue;
-
+		if (!bAsync)
+		{
+			m_tradeTechValueCache[iCacheIndex] = iValue;
+		}
 		return iValue;
 	}
 }
