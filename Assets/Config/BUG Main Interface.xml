@@ -16,7 +16,9 @@
 			</list>
 
 			<!-- Humans use AI pathing -->
-			<option id="UseAIPathing" key="UseAIPathing" type="boolean" default="False" get="isUseAIPathing" dirtyBit="MiscButtons"/>
+			<option id="UseAIPathing" key="UseAIPathing" type="boolean" default="False" get="isUseAIPathing" dirtyBit="MiscButtons">
+				<change module="AutomatedSettings" function="changedNetworkedBugOption"/>
+			</option>
 
 			<!-- Auto-end decisionless turns -->
 			<option id="AutoEndDecisionlessTurns" key="AutoEndDecisionlessTurns" type="boolean" default="False" get="isAutoEndDecisionlessTurns" dirtyBit="MiscButtons"/>

@@ -63,8 +63,15 @@ protect a binding, and do not build a resolver to prove one safe first.
   being removed. The cut is the forcing function that DRIVES completeness, so it never waits on it — and when the
   library cannot answer a read, ADD the read, never borrow legacy meanwhile.
 
-- **DATA FETCHING, not gameplay.** It serves reads/payloads; Python-authoritative gameplay (Revolution, events)
-  stays Python and becomes a CONSUMER.
+- **DATA FETCHING AND CHOICE, NEVER GAMEPLAY.** ⛔ **Python is the display layer: it displays, and it lets the
+  player make choices. The EFFECT of a choice is applied by the ENGINE — never computed, prepared or applied in
+  Python first.** So the library serves reads, Python hands back a choice, and everything that choice changes
+  happens in C++. ⇒ Gameplay that runs in Python today (Revolution, random events, the contrib stacks) is legacy
+  to PORT into the engine, never a consumer to keep serving. ⚑ **Port first whatever can cause an OOS**, because
+  a one-client Python path that draws from the synchronized stream or writes game state desyncs the game
+  ([the synchronized RNG is shared state](../../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)).
+  ⚖ The one exception is MAP SCRIPTS: world generation through the named callbacks, drawing on `MapRand`, an open
+  extension point for third-party scripts ([python-read-map.md §4](../../reference/python-read-map.md#4-the-boundary-rulings--and-the-two-questions-still-open)).
 
   ⚖ **THE `Cy*` LAYER IS THE CONTROLLER AND STAYS THIN — BUT THE INTERNAL→EXTERNAL CONVERSION IS ITS JOB.** Engine
   is the model, `Cy*` the controller, Python the view. Thin means **no logic**: no computation, no policy, no
@@ -214,9 +221,10 @@ registry to find "what needs me" is a cross-link, answered by the load-time reve
 ## ⛔ The cut is directional — only the READ surface dies
 
 - **Python → engine READS** (the `Cy*` info/state bindings) — replaced by the library; the binding surface is GONE.
-- **Engine → Python CALLBACKS** — **NEEDED, and kept.** `CvEventReporter`, the map-script hooks and `CvOutcome`'s
-  Python outcomes are what make Python-authoritative gameplay possible at all, so this is REQUIRED FUNCTIONALITY,
-  not a deferral. ⚠ The list is open: treat a callback you find as kept unless ruled otherwise.
+- **Engine → Python CALLBACKS** — **kept as NOTIFICATION.** The engine tells the display layer what happened, and
+  the map-script hooks stay (the exception above). ⛔ A callback that carries a gameplay EFFECT — `CvOutcome`'s
+  Python outcomes, the random-event `canDo*`/`do*` callbacks, a Python override of a gameplay verdict — is the
+  legacy the choice rule above ports into the engine, not functionality to protect.
   ⚖ **Kept, but the successor is named:** `CvEventReporter` is replaced by the TRIGGERS machine and events move INTO
   C++ ([triggers.md](../../specs/triggers.md)) when that work item is taken. So this is a scope boundary with a
   known destination — do not read the event surface as "Python owns this forever".

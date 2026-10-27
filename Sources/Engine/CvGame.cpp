@@ -8,6 +8,7 @@
 #include "CvGameCoreDLL.h"
 #include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT)
 #include "Engine/CvGameSpeedScale.h"
+#include "Engine/CvSyncedScope.h"
 #include "Conditions/CvConditionQuery.h"   // the ONE structural read over a requires tree
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "Enabler/CvEnablerConsumer.h" // enablerEmitDomainCensus -- the new-game half of the [ENABLER/census] read
@@ -46,6 +47,9 @@
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvUnitFilters.h"
+
+extern "C" void* _ReturnAddress(void);
+#pragma intrinsic(_ReturnAddress)
 
 #ifdef NO_RANDOM
 	int iNumAlea;
@@ -2417,7 +2421,9 @@ void CvGame::update()
 	//	⚑ NEW GAME vs LOAD comes from the bracket itself -- a load is exactly "a GAME_LOAD_STARTED is open".
 	if (!m_bFinalInitialized)
 	{
+		CvSyncedScope syncedScope;
 		onFinalInitialized(!spineGameLoadInProgress());
+		CvSyncedScope::reportHost();
 	}
 
 	//	Per-frame DLL work accumulated across the whole turn (logged at CvGame::doTurn) --
@@ -2504,38 +2510,44 @@ again:
 			CvEventReporter::getInstance().genericEvent("gameUpdate", pyArgs.makeFunctionArgs());
 		}
 
-		if (getNumGameTurnActive() == 0 && (!isPbem() || !getPbemTurnSent()))
 		{
-			doTurn();
-		}
-		{
-			PERF_ACCUM(gPerfUpdateScoreAccumMs);
-			updateScore();
-		}
-		updateMoves();
-		{
-			PERF_ACCUM(gPerfUpdateTimersAccumMs);
-			updateTimers();
-			updateTurnTimer();
-		}
+			// The simulation step every client runs in lockstep. The per-frame gameUpdate event above stays outside:
+			// its frequency is the local frame rate.
+			CvSyncedScope syncedScope;
 
-		{
-			PERF_ACCUM(gPerfAssignWorkAccumMs);
-			AI_updateAssignWork();
-		}
-		{
-			PERF_ACCUM(gPerfTestAliveAccumMs);
-			testAlive();
-		}
+			if (getNumGameTurnActive() == 0 && (!isPbem() || !getPbemTurnSent()))
+			{
+				doTurn();
+			}
+			{
+				PERF_ACCUM(gPerfUpdateScoreAccumMs);
+				updateScore();
+			}
+			updateMoves();
+			{
+				PERF_ACCUM(gPerfUpdateTimersAccumMs);
+				updateTimers();
+				updateTurnTimer();
+			}
 
-		if (getAIAutoPlay(getActivePlayer()) <= 0 && !gDLL->GetAutorun() && GAMESTATE_EXTENDED != getGameState() && countHumanPlayersAlive() == 0)
-		{
-			setGameState(GAMESTATE_OVER);
+			{
+				PERF_ACCUM(gPerfAssignWorkAccumMs);
+				AI_updateAssignWork();
+			}
+			{
+				PERF_ACCUM(gPerfTestAliveAccumMs);
+				testAlive();
+			}
+
+			if (getAIAutoPlay(getActivePlayer()) <= 0 && !gDLL->GetAutorun() && GAMESTATE_EXTENDED != getGameState() && countHumanPlayersAlive() == 0)
+			{
+				setGameState(GAMESTATE_OVER);
+			}
+			if (m_iTurnSlice < MAX_INT)
+				m_iTurnSlice += 1;
+			 // A counter can't be allowed to stop incrementing, so loop it.
+			else m_iTurnSlice = MAX_INT - 99999;
 		}
-		if (m_iTurnSlice < MAX_INT)
-			m_iTurnSlice += 1;
-		 // A counter can't be allowed to stop incrementing, so loop it.
-		else m_iTurnSlice = MAX_INT - 99999;
 
 		if (NO_PLAYER != getActivePlayer() && playerAct.getAdvancedStartPoints() >= 0 && !gDLL->getInterfaceIFace()->isInAdvancedStart())
 		{
@@ -2869,6 +2881,8 @@ bool CvGame::selectionListIgnoreBuildingDefense() const
 
 void CvGame::implementDeal(PlayerTypes eWho, PlayerTypes eOtherWho, CLinkList<TradeData>* pOurList, CLinkList<TradeData>* pTheirList, bool bForce)
 {
+	// The EXE calls this when it executes a networked deal, on every client.
+	CvSyncedScope syncedScope;
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eWho);
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eOtherWho);
 	FAssertMsg(eWho != eOtherWho, "eWho is not expected to be equal with eOtherWho");
@@ -8122,7 +8136,7 @@ CvRandom& CvGame::getMapRand()
 
 int CvGame::getMapRandNum(int iNum, const char* pszLog)
 {
-	return m_mapRand.get(iNum, pszLog);
+	return m_mapRand.getFrom(iNum, pszLog, _ReturnAddress());
 }
 
 
@@ -8161,7 +8175,7 @@ int CvGame::getSorenRandNum(int iNum, const char* pszLog)
 	}
 	int Result = iNum * iNumAlea / 10;
 #else
-	int Result = m_sorenRand.get(iNum, pszLog);
+	int Result = m_sorenRand.getFrom(iNum, pszLog, _ReturnAddress());
 #endif
 
 

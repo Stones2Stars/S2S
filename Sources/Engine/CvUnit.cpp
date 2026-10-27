@@ -1307,7 +1307,7 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 
 	copyNameFrom(*pUnit);
 
-	if (pUnit->isDescInName() && getBugOptionBOOL("MiscHover__UpdateUnitNameOnUpgrade", true, "BUG_UPDATE_UNIT_NAME_ON_UPGRADE"))
+	if (pUnit->isDescInName() && GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_UPDATE_UNIT_NAME_ON_UPGRADE))
 	{
 		CvWString szUnitType(pUnit->getDescription());
 
@@ -19443,8 +19443,8 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 	{
 		return;
 	}
-	std::map<CvUnit*, int> mapUnitDamage;
-	std::map<CvUnit*, int>::iterator it;
+	// In plot order, so an exact tie goes to the same unit on every client (never to the lower address).
+	std::vector< std::pair<CvUnit*, int> > unitDamage;
 
 	const int iPossibleTargets = std::min((pPlot->getNumVisiblePotentialEnemyDefenders(this) - 1), collateralDamageMaxUnits());
 
@@ -19455,7 +19455,7 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 		&& !pLoopUnit->isInvisible(getTeam(), false)
 		&& pLoopUnit->canDefend())
 		{
-			mapUnitDamage[pLoopUnit] = pLoopUnit->getHP() * (1 + GC.getGame().getSorenRandNum(10000, "Collateral Damage"));
+			unitDamage.push_back(std::make_pair(pLoopUnit, pLoopUnit->getHP() * (1 + GC.getGame().getSorenRandNum(10000, "Collateral Damage"))));
 		}
 	}
 
@@ -19470,22 +19470,23 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 	while (iCount < iPossibleTargets)
 	{
 		int iBestValue = 0;
-		CvUnit* pBestUnit = NULL;
+		int iBestIndex = -1;
 
-		for (it = mapUnitDamage.begin(); it != mapUnitDamage.end(); ++it)
+		for (int iIndex = 0; iIndex < (int)unitDamage.size(); ++iIndex)
 		{
-			if (it->second > iBestValue)
+			if (unitDamage[iIndex].second > iBestValue)
 			{
-				iBestValue = it->second;
-				pBestUnit = it->first;
+				iBestValue = unitDamage[iIndex].second;
+				iBestIndex = iIndex;
 			}
 		}
 
-		if (pBestUnit == NULL)
+		if (iBestIndex < 0)
 		{
 			break;
 		}
-		mapUnitDamage.erase(pBestUnit);
+		CvUnit* pBestUnit = unitDamage[iBestIndex].first;
+		unitDamage.erase(unitDamage.begin() + iBestIndex);
 		//TB SubCombat Mod Begin
 		//	collateral immunity is ONE boolean skill ([skills.md] §1: the legacy per-source keying -- siege /
 		//	assault-mech / robot, all the siege variant -- collapses to a single enabler), so the per-class
@@ -25780,13 +25781,13 @@ bool CvUnit::doAmbush(bool bAssassinate)
 	return true;
 }
 
-void CvUnit::enactAmbush(bool bAssassinate, CvUnit * pSelectedDefender)
+void CvUnit::enactAmbush(bool bAssassinate, CvUnit * pSelectedDefender, bool bTestAtWar)
 {
 	CvPlot* pPlot = plot();
 	CvUnit* pDefender = NULL;
 	if (!pSelectedDefender)
 	{
-		pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, !gDLL->altKey(), NO_TEAM == getDeclareWarMove(pPlot), false, bAssassinate);
+		pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, bTestAtWar, NO_TEAM == getDeclareWarMove(pPlot), false, bAssassinate);
 	}
 	else
 	{

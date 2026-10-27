@@ -21,7 +21,8 @@
 >   `cascadeEvalCondition` ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — **no
 >   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvCondition*`). Numerics build the
 >   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). A named
->   `python.callback` into `CvOutcomeInterface` stays Python.
+>   `python.callback` into `CvOutcomeInterface` is gameplay in Python, and ports into the engine
+>   ([data fetching and choice, never gameplay](../architecture/patterns/06-the-python-read-boundary-one.md#the-four-words)).
 > - **⛔ JSON CARRIES NO UNIQUE LOGIC — so inline Python in data (`python.code`) does not exist.** A code string
 >   compiled out of an info file is the "Python in XML" hack: invisible to every checker, compiled into a throwaway
 >   module at load, and able to fail silently. What such a body did is expressed as DATA — a verb plus the ordinary

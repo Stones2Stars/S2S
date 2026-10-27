@@ -10,6 +10,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated CLS_* ids the ability reads key on
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
+#include "Engine/CvSyncedScope.h"
 #include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
 #include "Engine/CvCityBreakdown.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
@@ -1427,6 +1428,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			m_aiModderOptions[iI] = 0;
 		}
+		// The networked BUG settings start at their BUG defaults; an AI player keeps them, a human's own values
+		// arrive as messages when the game starts or loads.
+		m_aiModderOptions[MODDEROPTION_PRODUCTION_OVERFLOW_LIMIT] = 2;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_FOOD] = 10;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_HAMMER] = 8;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_COMMERCE] = 6;
+		m_aiModderOptions[MODDEROPTION_UPDATE_UNIT_NAME_ON_UPGRADE] = 1;
 		m_mapEventsOccured.clear();
 		m_mapEventCountdown.clear();
 		m_aFreeUnitCombatPromotions.clear();
@@ -4847,6 +4855,8 @@ void CvPlayer::contact(PlayerTypes ePlayer)
 void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2)
 {
 	PROFILE_EXTRA_FUNC();
+	// The EXE calls this when it executes a networked diplomacy event, on every client.
+	CvSyncedScope syncedScope;
 	//OutputDebugString(CvString::format("UI interaction - diplo event for player %d (with player %d)\n", m_eID, ePlayer).c_str());
 
 	switch (eDiploEvent)
@@ -26083,11 +26093,6 @@ int CvPlayer::getAmbushingUnit() const
 	return m_iAmbushingUnit;
 }
 
-int CvPlayer::getAmbushingTargetUnit() const
-{
-	return m_iAmbushingTargetUnit;
-}
-
 bool CvPlayer::isAssassinate() const
 {
 	return m_bAssassinate;
@@ -26097,12 +26102,6 @@ void CvPlayer::setAmbushingUnit(int iNewValue, bool bAssassinate)
 {
 	m_iAmbushingUnit = iNewValue;
 	m_bAssassinate = bAssassinate;
-}
-
-void CvPlayer::setAmbushingTargetUnit(int iNewValue, bool bAssassinate)
-{
-	m_iAmbushingTargetUnit = iNewValue;
-	//m_bAssassinate = bAssassinate;
 }
 
 void CvPlayer::setGreatGeneralPointsForType(const UnitTypes eUnit, const int iValue)

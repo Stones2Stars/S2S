@@ -11003,10 +11003,14 @@ OutputRatios CvCityAI::AI_plotOutputRatios() const
 	// The city's REALIZED yields in ONE read; ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
+	const CvPlayer& owner = GET_PLAYER(getOwner());
 	return OutputRatios(
 		aiRealizedYields[YIELD_FOOD] / 100,
 		aiRealizedYields[YIELD_PRODUCTION] / 100,
-		aiRealizedYields[YIELD_COMMERCE] / 100);
+		aiRealizedYields[YIELD_COMMERCE] / 100,
+		owner.getModderOption(MODDEROPTION_BASE_WEIGHT_FOOD),
+		owner.getModderOption(MODDEROPTION_BASE_WEIGHT_HAMMER),
+		owner.getModderOption(MODDEROPTION_BASE_WEIGHT_COMMERCE));
 }
 
 int CvCityAI::AI_getHappyFromHurry(HurryTypes eHurry) const

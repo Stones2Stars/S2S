@@ -221,6 +221,11 @@ public:
 	bool AI_isWillingToTalk(PlayerTypes ePlayer) const;
 	bool AI_demandRebukedSneak(PlayerTypes ePlayer) const;
 	bool AI_demandRebukedWar(PlayerTypes ePlayer) const;
+	///<summary>
+	/// Whether a rebuked demand makes this AI declare war. bAsync draws on the async stream, for the diplomacy
+	/// screen that runs on one client; the synced turn path draws on the synchronized stream.
+	///</summary>
+	bool AI_demandRebukedWar(PlayerTypes ePlayer, bool bAsync) const;
 	bool AI_hasTradedWithTeam(TeamTypes eTeam) const;
 
 	AttitudeTypes AI_getAttitude(PlayerTypes ePlayer, bool bForced = true) const;

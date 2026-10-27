@@ -5,6 +5,10 @@
 #include "Defines/CvGlobals.h"
 #include "CvRandom.h"
 #include "Infrastructure/CvTaggedSaveFormatWrapper.h"
+#include "Engine/CvSyncedScope.h"
+
+extern "C" void* _ReturnAddress(void);
+#pragma intrinsic(_ReturnAddress)
 
 #define RANDOM_A      (1103515245)
 #define RANDOM_C      (12345)
@@ -52,6 +56,12 @@ void CvRandom::reset(unsigned long ulSeed)
 
 uint16_t CvRandom::get(uint16_t usNum, const char* pszLog)
 {
+	return getFrom(usNum, pszLog, _ReturnAddress());
+}
+
+uint16_t CvRandom::getFrom(uint16_t usNum, const char* pszLog, const void* pCaller)
+{
+	CvSyncedScope::checkDraw(this, pszLog, pCaller);
 #ifdef _DEBUG
 	if (pszLog != NULL && GC.getLogging() && GC.getRandLogging()
 	&& GC.getGame().isNetworkMultiPlayer() && GC.getGame().getTurnSlice() > 0)
@@ -70,7 +80,8 @@ uint16_t CvRandom::get(uint16_t usNum, const char* pszLog)
 
 unsigned int CvRandom::getInt()
 {
-	return get(MAX_UNSIGNED_SHORT,NULL) + (get(MAX_UNSIGNED_SHORT,NULL) << 16);
+	const void* pCaller = _ReturnAddress();
+	return getFrom(MAX_UNSIGNED_SHORT, NULL, pCaller) + (getFrom(MAX_UNSIGNED_SHORT, NULL, pCaller) << 16);
 }
 
 

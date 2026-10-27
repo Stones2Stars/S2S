@@ -18,6 +18,7 @@
 #include "CyReplayInfo.h"
 #include "CvReplayInfo.h"
 #include "Infos/CvGameText.h"   // getNumLanguages -- the options screen's language dropdown
+#include "Engine/CvSyncedScope.h"
 
 //
 // Python wrapper class for CvGame
@@ -746,6 +747,11 @@ bool CyGame::isPitbossHost() const				// remove once CvApp is exposed
 	return gDLL->IsPitbossHost();
 }
 
+bool CyGame::isRulesHost() const
+{
+	return CvSyncedScope::isRulesHost();
+}
+
 int CyGame::getCurrentLanguage() const				// remove once CvApp is exposed
 {
 	return gDLL->getCurrentLanguage();
@@ -1130,6 +1136,7 @@ void CyGame::pythonPublish()
 
 		.def("GetWorldBuilderMode", &CyGame::GetWorldBuilderMode)
 		.def("isPitbossHost", &CyGame::isPitbossHost)
+		.def("isRulesHost", &CyGame::isRulesHost)
 		.def("getCurrentLanguage", &CyGame::getCurrentLanguage)
 		.def("setCurrentLanguage", &CyGame::setCurrentLanguage)
 		.def("getNumLanguages", &CyGame::getNumLanguages)

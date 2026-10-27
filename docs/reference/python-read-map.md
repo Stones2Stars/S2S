@@ -253,10 +253,9 @@ direction (what requires me), never the forward requirement tree.
 **987 sites / 176 distinct names** where Python tells the engine to *do* something, concentrated in the editor
 (`Screens/Worldbuilder/` + `pyWB/`), the gameplay callbacks at `<root>` and `EntryPoints/`, and Revolution.
 
-These are **not data fetching** and the library must not absorb them — that would pull gameplay into the DLL
-boundary, which [the deliverable ruling](../architecture/patterns.md) explicitly forbids ("Python-authoritative gameplay
-stays Python"). But they are a real boundary that stage 4 must design *beside* the library, because the same
-handler that reads through the library writes through this path. Two sub-shapes:
+These are **not data fetching** and the library must not absorb them. Where one applies a gameplay EFFECT it is
+legacy to port into the engine ([data fetching and choice, never gameplay](../architecture/patterns/06-the-python-read-boundary-one.md#the-four-words));
+what survives is the player's CHOICE handed to the engine, and the editor. Two sub-shapes:
 
 1. **Entity mutation** — `setHasReligion`, `changeRevolutionIndex`, `createUnit`, `setImprovementType`. The
    WorldBuilder/scenario and gameplay-callback path.
@@ -340,11 +339,6 @@ found. Rescuing it re-creates the per-getter surface the rebuild is deleting.
 exists only because there was no way to ask for "these N values for these M cities" in one call. The library
 answers it with a **columnar per-entity payload over a city set** — which also deletes the `eval`, and answers
 all 19 columns as ONE fetch rather than 19 reads.
-
-**`Screens/Advisors/RevolutionWatchAdvisor.py:703`** — `self.HEADER_DICT[column[0]] = eval(column[8], ...)`
-evaluates element 8 of the same column-tuple shape. Here the evaluated string is a **header/icon expression**
-(`u"<char>"`), not an engine call — so it is a TEXT-plane indirection, lower severity, but the same pattern and
-the same fix.
 
 **`MapScriptToolsOld.py:193`** — `iLat = abs(eval(mapGetLatitude))` evaluates a latitude expression supplied by
 the *map script*. Map-script-driven, so its content is not statically enumerable from this tree at all.
@@ -444,12 +438,13 @@ Stated plainly, because a completeness gate depends on it:
 
 ## 3. The Python-authoritative systems
 
-These stay Python by [owner carve-out](../../AGENTS.md#design) and become **consumers**
-of the library.
+These run gameplay in Python today, so each one is a PORT into the engine
+([data fetching and choice, never gameplay](../architecture/patterns/06-the-python-read-boundary-one.md#the-four-words)),
+not a consumer to keep serving. The read needs below are what each one consumes until it is ported.
 
 ### 3.1 Revolution
 
-`Revolution/Gameready/Revolution.py` · `Screens/Advisors/RevolutionWatchAdvisor.py` ·
+`Revolution/Gameready/Revolution.py` ·
 `Revolution/RevEvents.py` · `Revolution/RevUtils.py` · `Revolution/Gameready/BarbarianCiv.py` ·
 `Contrib/RevDCM.py` · `Revolution/RevolutionInit.py` · `Revolution/RevData.py` ·
 `Revolution/Gameready/AIAutoPlay.py` · `Revolution/Development/`.
@@ -528,7 +523,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    pedia carries: an enumeration that crosses the boundary once per entity wants ONE crossing, so a per-type
    read that fills a list beats a call per id.
    The observations the split was built on stand, and they say why the map-gen TYPES are read by nobody else,
-   never that the reads go unserved: `CvMapGeneratorUtil.py` (269) + `MapScriptToolsOld.py` (672) + the `Assets/Maps`
+   never that the reads go unserved: `CvMapGeneratorUtil.py` (269) + `MapScriptToolsOld.py` (672) + the `PrivateMaps/`
    scripts (a) consume map-generation info types (`WorldInfo` 60 · `ClimateInfo` 20 · `SeaLevelInfo` 3 ·
    `MapInfo`) **nothing else reads**, (b) run **before most game state exists** — a different lifetime than any
    screen or gameplay consumer, (c) are **write-dominated** (they BUILD the map; the library is a read surface),
@@ -580,8 +575,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a `triggers` entry,
    never as a Python event — RULED.** `trigger → chance → action` with the `destroy` verb
    ([json.md §5](../specs/json.md)) already expresses that shape exactly, so the capability belongs as DATA on
-   the trigger plane. This does NOT reopen the events carve-out (#425 events stay Python) — it fixes where this
-   one shape of capability lives if it is ever wanted.
+   the trigger plane, which is also where the event port (#425) takes the rest of the random events.
 
 4. **Does the library own TEXT, or only the rendered lines it produces?**
    §1.1 recommends the latter (library returns localized display strings for what it serves; screen chrome stays

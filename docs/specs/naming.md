@@ -67,7 +67,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `POLICY_` | an empire policy (`POLICY_NO_FOREIGN_TRADE`) | ⚙ runtime-GENERATED (from `policies` block keys) |
 | `EFFECT_` | a map graphics effect (`EFFECT_BIRDSCATTER`) | ☐ XML only — referenced from a feature's `world.art.effect`. *(NOT `BUILDING_EFFECT_*`, the property pseudo-buildings — those are the `BUILDING_` infotype.)* |
 | `MAPCATEGORY_` | a map category (`MAPCATEGORY_EARTH`) | ☐ XML only — referenced from a building's `requires.build` |
-| `EVENT_` | an event (and its trigger) | ☐ XML only — PERMANENT carve-out (#425 event rework — events stay Python, out of #430) |
+| `EVENT_` | an event (and its trigger) | ☐ XML only — until the event port (#425) moves events into the engine on the trigger plane |
 | `ART_` | an art define (`ART_DEF_*`, `ART_PEDIA`, …) | ☐ XML only — referenced from `ui` / `world` art blocks |
 
 Paths are relative to `Assets/Data/` (ported) or `Assets/XML/` (not). The legacy XML holds the **complete** id

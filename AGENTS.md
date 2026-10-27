@@ -1131,8 +1131,7 @@ the total-observability bar below.)
   work hoping it won't have impact — and the measured result is a half-built branch whose load-bearing minority is
   quietly missing while it looks nearly done. The general form of
   [data migration is never deferred](docs/specs/validation.md#the-observation-surface), extended from data to ALL work. The ONLY exceptions
-  are owner-ruled PERMANENT design carve-outs, recorded as such (the golden-age yield-effect member-mirror;
-  Python-authoritative gameplay staying Python).
+  are owner-ruled PERMANENT design carve-outs, recorded as such (the golden-age yield-effect member-mirror).
 - **"Minimal, local changes" bounds the SIZE of an edit, NOT the SCOPE of the work.** A targeted fix inside a
   tightly-coupled legacy core file stays minimal — don't sprawl it or gratuitously refactor around it. But this is
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),
@@ -1147,8 +1146,10 @@ the total-observability bar below.)
   binding, not a compatibility shim beside it, not a parallel that both remain live — the replacement is a clean
   surface shaped by the cascade/JSON model, and the legacy `Cy*` surface is cut away rather than left breathing
   ([legacy must fail loud, never mask a cascade gap](docs/specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap): a legacy path left alive masks the
-  hole; build-the-proper-structure-once, above: no transitional shim). Python-authoritative
-  *gameplay* still stays Python — this is about the INFO/state binding surface, not about pulling gameplay into the DLL.
+  hole; build-the-proper-structure-once, above: no transitional shim).
+  ⛔ **And Python carries no gameplay: it displays and it collects the player's choices, and the ENGINE applies
+  every effect** ([data fetching and choice, never gameplay](docs/architecture/patterns/06-the-python-read-boundary-one.md#the-four-words)).
+  Gameplay still running in Python is legacy to port into C++, and anything of it that can cause an OOS goes first.
 - **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella.** New/edited code includes the specific
   header it needs; the umbrella is flagged for retirement. **⛔ Retiring it is a dedicated, hand-careful pass, NOT a
   session-tail script run** (build-the-proper-structure-once, above) — a scripted attempt

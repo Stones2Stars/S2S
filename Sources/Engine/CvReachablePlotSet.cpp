@@ -11,7 +11,21 @@
 #include "CvReachablePlotSet.h"
 #include "CvSelectionGroup.h"
 
-CvReachablePlotSet::const_iterator::const_iterator(const CvReachablePlotSet* parent, stdext::hash_map<CvPlot*,CvReachablePlotInfo>::const_iterator& itr) : m_parent(parent)
+size_t CvPlotPositionHash::operator()(const CvPlot* pPlot) const
+{
+	return (size_t)(pPlot->getY() * 65536 + pPlot->getX());
+}
+
+bool CvPlotPositionHash::operator()(const CvPlot* pLeft, const CvPlot* pRight) const
+{
+	if (pLeft->getY() != pRight->getY())
+	{
+		return pLeft->getY() < pRight->getY();
+	}
+	return pLeft->getX() < pRight->getX();
+}
+
+CvReachablePlotSet::const_iterator::const_iterator(const CvReachablePlotSet* parent, CvReachablePlotMap::const_iterator& itr) : m_parent(parent)
 {
 	m_itr = itr;
 }
@@ -231,7 +245,7 @@ CvReachablePlotSet* CvReachablePlotSet::findCachedPlotSet(const CvSelectionGroup
 	SAFE_DELETE(pLRUEntry->plotSet);
 
 	pLRUEntry->plotSet = new CvReachablePlotSet(pGroup, iFlags);
-	pLRUEntry->plotSet->m_reachablePlots = new stdext::hash_map<CvPlot*,CvReachablePlotInfo>();
+	pLRUEntry->plotSet->m_reachablePlots = new CvReachablePlotMap();
 	pLRUEntry->iLRUSeq = CachedPlotSets->iNextLRU++;
 
 	return pLRUEntry->plotSet;
@@ -247,7 +261,7 @@ void CvReachablePlotSet::Populate(int iRange)
 	}
 	else if ( m_reachablePlots == NULL )
 	{
-		m_reachablePlots = new stdext::hash_map<CvPlot*,CvReachablePlotInfo>();
+		m_reachablePlots = new CvReachablePlotMap();
 	}
 	else
 	{
@@ -261,7 +275,7 @@ void CvReachablePlotSet::Populate(int iRange)
 
 		if ( m_iRange == -1 )
 		{
-			stdext::hash_map<CvPlot*, CvReachablePlotInfo>* reachablePlots = (m_proxyTo == NULL ? m_reachablePlots : m_proxyTo->m_reachablePlots);
+			CvReachablePlotMap* reachablePlots = (m_proxyTo == NULL ? m_reachablePlots : m_proxyTo->m_reachablePlots);
 
 			CvReachablePlotInfo	info;
 
@@ -360,7 +374,7 @@ void CvReachablePlotSet::enumerateReachablePlotsInternal(int iRange, int iDepth,
 	{
 		std::vector<std::pair<CvPlot*,int> >	nextRing;
 
-		stdext::hash_map<CvPlot*, CvReachablePlotInfo>* reachablePlots = (m_proxyTo == NULL ? m_reachablePlots : m_proxyTo->m_reachablePlots);
+		CvReachablePlotMap* reachablePlots = (m_proxyTo == NULL ? m_reachablePlots : m_proxyTo->m_reachablePlots);
 
 		for (std::vector<std::pair<CvPlot*,int> >::const_iterator itr = prevRing.begin(), itrend = prevRing.end(); itr != itrend; ++itr)
 		{

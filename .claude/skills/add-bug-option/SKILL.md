@@ -106,14 +106,22 @@ const bool bOn  = getBugOptionBOOL("CityScreen__MyToggle", true);
 - When BUG is active these call Python `getOptionINT/BOOL(id, default)`; otherwise
   they fall back to `GC.getDefineINT/BOOL("BULL__<id>", default)`, then the default.
 - These do a Python round-trip per call (`PROFILE_FUNC` guarded). Fine for cold
-  paths (turn processing, UI hovers). For a hot path, cache the value at an
-  option-refresh point like the `CityScreen__BaseWeight*` reads in
-  `CvGlobals.cpp` (~line 3044) instead of calling per use.
+  paths (UI hovers, display); for a hot path, cache the value at an
+  option-refresh point instead of calling per use.
 
-> **Multiplayer caveat:** BUG options are **per-user and not network-synced**. Do
-> NOT let one drive core synced game state (production, combat results, yields) in
-> a multiplayer game — different players' values will desync. Safe for display,
-> UI, automation hints, and single-player/experimental tweaks.
+> **⛔ A BUG option that changes synchronized state is NEVER read with `getBugOption*`.**
+> BUG options are per-machine, so a read in synced code desyncs multiplayer — and that
+> includes "automation hints" that change what a player's units or cities do. Such an
+> option is a **networked per-player setting** instead
+> ([engine.md § synced code reads nothing that differs per machine](../../../docs/reference/engine.md#-synced-code-reads-nothing-that-differs-per-machine)):
+> 1. add a `MODDEROPTION_*` member at the end of `ModderOptionTypes` (`Sources/Defines/CvEnums.h`),
+>    publish it in `Sources/Python/CyEnums.cpp`, and give it the XML default in `CvPlayer::reset`;
+> 2. add the option to `NETWORKED_BUG_OPTIONS` in `Assets/Python/Afforess/AutomatedSettings.py`
+>    and give its `<option>` a `<change module="AutomatedSettings" function="changedNetworkedBugOption"/>`;
+> 3. read it in C++ through the owner: `GET_PLAYER(getOwner()).getModderOption(MODDEROPTION_*)`.
+>
+> The value is applied when the message executes, on every client including the sender —
+> never set it locally beside the send. `getBugOption*` is for display and UI only.
 
 ## Validate
 

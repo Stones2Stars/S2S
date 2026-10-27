@@ -130,6 +130,47 @@ few that [superseded-ideas #22](../architecture/superseded-ideas.md) accepts in 
 "mirror the legacy behaviour" argument. It is a statement about shared state, never nostalgia for legacy code.
 ⚠ Beware the subtle form: a short-circuit (`bCheap && getSorenRandNum(...)`) skips the draw when the left side is
 false, so a refactor that merely REORDERS a condition can desync the stream without touching a single draw.
+⛔ **A PATH THAT RUNS ON ONE CLIENT MUST NEVER REACH THE SYNCHRONIZED STREAM, OR WRITE AI STATE.** Draws are never
+transmitted: each client advances its own copy, so a screen, tooltip or hover that draws once on the viewing
+machine puts that client permanently one step ahead, and the next shared draw answers differently. ⚑ Worked: the
+city screen's unit recommendation called `AI_bestUnit` / `AI_bestUnitAI` with the default `bAsync = false`, so
+opening a city with an empty queue drew `"AI Best UnitAI"` / `"AI Best Unit"` on the owner's machine only, and
+also filled `m_bestUnits`, the city's memo that the next real production choice reads. ⇒ An AI chooser called
+for DISPLAY passes `bAsync = true` (async stream, no memo write), and `bNoRand = true` where the answer should not
+flicker between redraws.
+⚑ **THE TRIPWIRE: `CvSyncedScope` marks the roots of synced execution, and a synchronized draw outside every root
+is reported as `[SYNC/draw]` in `Sync.log`** — the stream (`soren` / `map`), the label, and the calling site's
+`callerRva` (resolve with `ln CvGameCoreDLL+<rva>` against the PDB), once per site. The check lives in
+`CvRandom::getFrom`, so it also sees draws that bypass `getSorenRandNum` (`shuffleArray`, `getInt`, Python's
+`getSorenRand().get`); it identifies the two synced streams by address, because `CvRandom`'s layout is bound by the
+EXE. Draws before `isFinalInitialized()` are setup that every client runs identically and are not checked.
+The roots: the simulation block of `CvGame::update` (from `doTurn` through the turn-slice advance — the per-frame
+`gameUpdate` event before it is NOT a root, its frequency is the local frame rate), the `onFinalInitialized` call,
+every `CvNet*::Execute`, and the EXE's networked entry points `CvGame::implementDeal` and
+`CvPlayer::handleDiploEvent`. ⛔ **A new synced entry point declares a `CvSyncedScope`; a `[SYNC/draw]` line is either
+a one-client path to fix or a synced root that was missed — decide which, never silence it.** ⚠ It reports and
+does not assert yet: it becomes an assert once a multiplayer session shows the root list complete.
+
+## ⛔ SYNCED CODE READS NOTHING THAT DIFFERS PER MACHINE
+
+Integer arithmetic and RNG discipline keep the computation identical; this keeps the INPUTS identical. Three
+inputs differ between machines and must never decide synced code:
+- **A user setting.** A BUG option or `.ini` value that changes synchronized state is a **networked per-player
+  setting**: the owner's value lives in `CvPlayer`'s modder-option store, reaches every client as a message, and
+  synced code reads it through the owner of the unit, city or group it is deciding for. A `getBugOption*` read in
+  synced code is a desync. ⚠ The setting is applied when the message EXECUTES, on every client including the
+  sender — never set locally beside the send, or the sender's state runs ahead of everyone else's.
+  ⚖ **A GAME-WIDE setting (`MODDERGAMEOPTION_*`) is the HOST's to decide**: only the host machine sends it
+  (`CyGame.isRulesHost()` — the network host, the PitBoss server, or the only machine; each machine writes what
+  it answered as `[SYNC/host]` in `Sync.log` once the game starts or loads), when it starts a game
+  and when it changes one; every client applies it as the message executes. It is never re-pushed on load —
+  the save carries the rules the host chose, so no player can change them by loading the game.
+- **Local input or UI state** — the keyboard (`gDLL->altKey()`), the selection, a popup's registers, the active
+  player. A player's choice travels **in the command's payload**, whole; the `Execute` that applies it reads the
+  payload and nothing local.
+- **Memory addresses.** A container keyed, hashed or ordered by pointer iterates in a different order on every
+  machine, so a synced loop that draws, breaks ties or stops early over one diverges. Synced code iterates by id
+  or plot index.
 
 **⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT.** No seed, stream, or draw is curated, and neither the
 cascade nor the curator owns any part of it — do not model it, do not migrate it, do not invent a `random`

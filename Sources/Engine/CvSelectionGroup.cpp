@@ -302,18 +302,18 @@ void CvSelectionGroup::doTurn()
 			}
 #endif
 
-			if (isAutomated() && getAutomateType() == AUTOMATE_EXPLORE && getBugOptionBOOL("Actions__SentryHealing", true, "BUG_SENTRY_HEALING") && sentryAlert())
+			if (isAutomated() && getAutomateType() == AUTOMATE_EXPLORE && GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_SENTRY_HEALING) && sentryAlert())
 			{
-				if (!(getBugOptionBOOL("Actions__SentryHealingOnlyNeutral", true, "BUG_SENTRY_HEALING_ONLY_NEUTRAL") && plot()->isOwned()))
+				if (!(GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_SENTRY_HEALING_ONLY_NEUTRAL) && plot()->isOwned()))
 				{
 					setActivityType(ACTIVITY_AWAKE);
 				}
 			}
 // AIAndy: This is pointless when there is the separate sentry while heal button
 #ifndef _MOD_SENTRY
-			if (eActivityType == ACTIVITY_HEAL && getBugOptionBOOL("Actions__SentryHealing", true, "BUG_SENTRY_HEALING") && sentryAlert())
+			if (eActivityType == ACTIVITY_HEAL && GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_SENTRY_HEALING) && sentryAlert())
 			{
-				if (!(getBugOptionBOOL("Actions__SentryHealingOnlyNeutral", true, "BUG_SENTRY_HEALING_ONLY_NEUTRAL") && plot()->isOwned()))
+				if (!(GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_SENTRY_HEALING_ONLY_NEUTRAL) && plot()->isOwned()))
 				{
 					setActivityType(ACTIVITY_AWAKE);
 				}
@@ -3839,12 +3839,12 @@ bool CvSelectionGroup::groupBuild(BuildTypes eBuild)
 		if (eImprovement == NO_IMPROVEMENT)
 		{
 			// clearing a forest or jungle
-			if (getBugOptionBOOL("Actions__PreChopForests", true, "BUG_PRECHOP_FORESTS"))
+			if (GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_PRE_CHOP_FORESTS))
 			{
 				bCheckChop = true;
 			}
 		}
-		else if (getBugOptionBOOL("Actions__PreChopImprovements", true, "BUG_PRECHOP_IMPROVEMENTS"))
+		else if (GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_PRE_CHOP_IMPROVEMENTS))
 		{
 			bCheckChop = true;
 		}
@@ -4308,7 +4308,7 @@ void CvSelectionGroup::updateMissionTimer(int iSteps)
 
 		if (isHuman())
 		{
-			if (isAutomated() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false)
+			if (isAutomated() && !GC.getGame().isGameMultiPlayer() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false)
 			|| GET_PLAYER((GC.getGame().isNetworkMultiPlayer()) ? getOwner() : GC.getGame().getActivePlayer()).isOption(PLAYEROPTION_QUICK_MOVES))
 			{
 				if (!GC.getGame().isGameMultiPlayer())

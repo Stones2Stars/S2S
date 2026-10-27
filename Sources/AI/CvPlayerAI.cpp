@@ -6701,14 +6701,21 @@ bool CvPlayerAI::AI_demandRebukedSneak(PlayerTypes ePlayer) const
 // Returns true if the AI wants to declare war...
 bool CvPlayerAI::AI_demandRebukedWar(PlayerTypes ePlayer) const
 {
+	return AI_demandRebukedWar(ePlayer, true);
+}
+
+bool CvPlayerAI::AI_demandRebukedWar(PlayerTypes ePlayer, bool bAsync) const
+{
 	FAssertMsg(!isHumanPlayer(), "isHuman did not return false as expected");
 	FAssertMsg(ePlayer != getID(), "shouldn't call this function on ourselves");
 
 	FAssert(!(GET_TEAM(getTeam()).isAVassal()));
 	FAssert(!(GET_TEAM(getTeam()).isHuman()));
 
-	// needs to be async because it only happens on the computer of the player who is in diplomacy...
-	if (GC.getASyncRand().get(100, "AI Demand Rebuked ASYNC") < GC.getLeaderHeadInfo(getPersonalityType()).getDemandRebukedWarProb())
+	const int iRoll = bAsync
+		? GC.getASyncRand().get(100, "AI Demand Rebuked ASYNC")
+		: GC.getGame().getSorenRandNum(100, "AI Demand Rebuked");
+	if (iRoll < GC.getLeaderHeadInfo(getPersonalityType()).getDemandRebukedWarProb())
 	{
 		if (GET_TEAM(getTeam()).getPower(true) > GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getDefensivePower())
 		{
@@ -17575,7 +17582,7 @@ void CvPlayerAI::AI_beginDiplomacy(CvDiploParameters* pDiploParams, PlayerTypes 
 		if (ai_request == pDiploParams->getDiploComment())
 		{
 			this->handleDiploEvent(DIPLOEVENT_REJECTED_DEMAND, ePlayer, -1, -1);
-			if (AI_demandRebukedWar(ePlayer))
+			if (AI_demandRebukedWar(ePlayer, false))
 			{
 				this->handleDiploEvent(DIPLOEVENT_DEMAND_WAR, ePlayer, -1, -1);
 			}
@@ -25849,6 +25856,11 @@ void CvPlayerAI::AI_invalidateAttitudeCache()
 
 void CvPlayerAI::AI_changeAttitudeCache(const PlayerTypes ePlayer, const int iChange)
 {
+	// An uncomputed slot stays uncomputed: the next read derives it with the change already included.
+	if (m_aiAttitudeCache[ePlayer] == MAX_INT)
+	{
+		return;
+	}
 	if (m_aiAttitudeCache[ePlayer] == 100 && iChange < 0
 	|| m_aiAttitudeCache[ePlayer] == -100 && iChange > 0)
 	{

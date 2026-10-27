@@ -36,7 +36,9 @@
 
 		<section id="Unit">
 			<option id="UpdateUnitNameOnUpgrade" key="Update Name On Upgrade"
-					type="boolean" default="True"/>
+					type="boolean" default="True">
+				<change module="AutomatedSettings" function="changedNetworkedBugOption"/>
+			</option>
 			<option id="UnitExperience" key="Unit Experience"
 					type="boolean" default="True" dll="3"/>
 			<option id="UnitExperienceModifiers" key="Unit Experience Modifiers"

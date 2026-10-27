@@ -86,8 +86,8 @@ for the empire and team packages, whose source set is each package's own `applie
   (an event granting extra happiness/health) — genuine one-shot non-derivable state (the event-store class,
   § THE MAINTAINED SUM, above); the PLAYER accumulator additionally bundles the
   DERIVABLE trait+tech, which the calc NETS OUT (− engine trait/tech + the cascade nets), keeping only the
-  event/unattributed residual. Wiring these as proper cascade event grants is **event-rework scope** (#425 events
-  stay Python / the F3 grants apply-loop), NOT a modifier-cut ride-in to fix here.
+  event/unattributed residual. Wiring these as proper cascade event grants is **event-rework scope** (#425, the
+  event port into the engine / the F3 grants apply-loop), NOT a modifier-cut ride-in to fix here.
 - **GATE FLAGS** — the `abolished<Channel>` amenity family ([json.md §8](../specs/json.md)) zeroes its side wholesale.
   They are **HARD OFF-SWITCHES, never modifiers**: while a live grantor confers one *"unhappiness does
   not exist in the city"* — the side ceases to exist rather than being reduced, so the combine drops the whole

@@ -638,7 +638,7 @@ class CvNetConfirmAmbush : public CvMessageData
 {
 public:
 	CvNetConfirmAmbush();
-	CvNetConfirmAmbush(PlayerTypes ePlayer, bool bConfirm);
+	CvNetConfirmAmbush(PlayerTypes ePlayer, bool bConfirm, int iTargetUnit, bool bTestAtWar);
 	virtual void Debug(char* szAddendum);
 	virtual void Execute();
 	virtual void PutInBuffer(FDataStreamBase* pStream);
@@ -646,5 +646,7 @@ public:
 private:
 	PlayerTypes m_ePlayer;
 	bool m_bConfirm;
+	int m_iTargetUnit;   // the chosen defender's unit id; FFreeList::INVALID_INDEX = the best defender
+	bool m_bTestAtWar;
 };
 #endif
