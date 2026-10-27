@@ -861,7 +861,7 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 
 			if (!pGroup->AI_isControlled())
 			{
-				m_useAIPathingAlways = getBugOptionBOOL("MainInterface__UseAIPathing", false);
+				m_useAIPathingAlways = GET_PLAYER(pGroup->getOwner()).isModderOption(MODDEROPTION_USE_AI_PATHING);
 			}
 		}
 
@@ -1806,7 +1806,7 @@ bool CvPathGenerator::newgeneratePath(const CvPlot* pFrom, const CvPlot* pTo, Cv
 		CvPlot::NextCachePathEpoch();
 		if (!pGroup->AI_isControlled())
 		{
-			m_useAIPathingAlways = getBugOptionBOOL("MainInterface__UseAIPathing", false);
+			m_useAIPathingAlways = GET_PLAYER(pGroup->getOwner()).isModderOption(MODDEROPTION_USE_AI_PATHING);
 		}
 	}
 

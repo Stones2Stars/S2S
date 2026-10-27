@@ -3405,14 +3405,6 @@ void cvInternalGlobals::refreshOptionsBUG()
 	gCityLogLevel = 4;
 	gUnitLogLevel = 4;
 #endif // DEBUG
-
-
-
-	OutputRatios::setBaseOutputWeights(
-		getBugOptionINT("CityScreen__BaseWeightFood", 10),
-		getBugOptionINT("CityScreen__BaseWeightHammer", 8),
-		getBugOptionINT("CityScreen__BaseWeightCommerce", 6)
-	);
 }
 
 

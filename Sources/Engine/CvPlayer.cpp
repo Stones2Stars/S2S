@@ -1428,6 +1428,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		{
 			m_aiModderOptions[iI] = 0;
 		}
+		// The networked BUG settings start at their BUG defaults; an AI player keeps them, a human's own values
+		// arrive as messages when the game starts or loads.
+		m_aiModderOptions[MODDEROPTION_PRODUCTION_OVERFLOW_LIMIT] = 2;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_FOOD] = 10;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_HAMMER] = 8;
+		m_aiModderOptions[MODDEROPTION_BASE_WEIGHT_COMMERCE] = 6;
+		m_aiModderOptions[MODDEROPTION_UPDATE_UNIT_NAME_ON_UPGRADE] = 1;
 		m_mapEventsOccured.clear();
 		m_mapEventCountdown.clear();
 		m_aFreeUnitCombatPromotions.clear();

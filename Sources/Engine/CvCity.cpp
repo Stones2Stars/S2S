@@ -7591,12 +7591,12 @@ int CvCity::getFoodKeptPercent() const { return range(cascadeValue(MODFAM_FOOD_K
 int CvCity::getMaxProductionOverflow() const
 {
 	// The multiplier (turns of base production that may be banked as overflow before
-	// the excess is converted to gold) is a player-configurable BUG option; default 2
+	// the excess is converted to gold) is the city owner's networked setting; default 2
 	// reproduces the historical hard-coded behaviour.
 	// Overflow is banked in whole hammers, so the rate reduces at this use.
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
-	return aiYields[YIELD_PRODUCTION] / 100 * getBugOptionINT("CityScreen__ProductionOverflowLimit", 2);
+	return aiYields[YIELD_PRODUCTION] / 100 * GET_PLAYER(getOwner()).getModderOption(MODDEROPTION_PRODUCTION_OVERFLOW_LIMIT);
 }
 
 

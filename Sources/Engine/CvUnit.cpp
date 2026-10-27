@@ -1307,7 +1307,7 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 
 	copyNameFrom(*pUnit);
 
-	if (pUnit->isDescInName() && getBugOptionBOOL("MiscHover__UpdateUnitNameOnUpgrade", true, "BUG_UPDATE_UNIT_NAME_ON_UPGRADE"))
+	if (pUnit->isDescInName() && GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_UPDATE_UNIT_NAME_ON_UPGRADE))
 	{
 		CvWString szUnitType(pUnit->getDescription());
 
