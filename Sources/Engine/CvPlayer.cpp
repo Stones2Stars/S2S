@@ -10,6 +10,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated CLS_* ids the ability reads key on
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
+#include "Engine/CvSyncedScope.h"
 #include "Engine/CvBuildCostScale.h"   // the option-gated build-cost compositions (one place)
 #include "Engine/CvCityBreakdown.h"
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
@@ -4847,6 +4848,8 @@ void CvPlayer::contact(PlayerTypes ePlayer)
 void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2)
 {
 	PROFILE_EXTRA_FUNC();
+	// The EXE calls this when it executes a networked diplomacy event, on every client.
+	CvSyncedScope syncedScope;
 	//OutputDebugString(CvString::format("UI interaction - diplo event for player %d (with player %d)\n", m_eID, ePlayer).c_str());
 
 	switch (eDiploEvent)

@@ -136,6 +136,8 @@ enum SpineDomainTag
 	               // has the wrong number of moves" could not be attributed to a leg, or even confirmed, without
 	               // reading the screen. The legs are what make it a census rather than a number: the unit's own
 	               // resolved allowance and the empire's stand on different planes and only one of them is ever wrong.
+	SD_SYNC,       // [SYNC] a draw on the synchronized RNG made outside every synced root (CvSyncedScope) -- a
+	               // multiplayer desync candidate, named by label and calling site.
 	NUM_SPINE_DOMAINS
 };
 

@@ -15,6 +15,7 @@
 #include "Engine/CvUnit.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "CvInfos.h"
+#include "Engine/CvSyncedScope.h"
 
 CvMessageData* CvMessageData::createMessage(GameMessageTypes eType)
 {
@@ -130,6 +131,7 @@ void CvNetExtendedGame::Debug(char* szAddendum)
 
 void CvNetExtendedGame::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).makeExtendedGame();
@@ -159,6 +161,7 @@ void CvNetAutoMoves::Debug(char* szAddendum)
 
 void CvNetAutoMoves::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GC.getGame().logNetMsgData("Executing CvNetAutoMoves message with payload [%d]\n", m_ePlayer);
@@ -194,6 +197,7 @@ void CvNetTurnComplete::Debug(char* szAddendum)
 
 void CvNetTurnComplete::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GC.getGame().logNetMsgData("Executing CvNetTurnComplete message with payload [%d]\n", m_ePlayer);
@@ -233,6 +237,7 @@ void CvNetPushOrder::Debug(char* szAddendum)
 
 void CvNetPushOrder::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvCity* pCity = GET_PLAYER(m_ePlayer).getCity(m_iCityID);
@@ -297,6 +302,7 @@ void CvNetPopOrder::Debug(char* szAddendum)
 
 void CvNetPopOrder::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvCity* pCity = GET_PLAYER(m_ePlayer).getCity(m_iCityID);
@@ -355,6 +361,7 @@ void CvNetDoTask::Debug(char* szAddendum)
 
 void CvNetDoTask::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvCity* pCity = GET_PLAYER(m_ePlayer).getCity(m_iCityID);
@@ -419,6 +426,7 @@ void CvNetUpdateCivics::Debug(char* szAddendum)
 
 void CvNetUpdateCivics::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER && !m_aeCivics.empty())
 	{
 		GET_PLAYER(m_ePlayer).revolution(&m_aeCivics[0]);
@@ -460,6 +468,7 @@ void CvNetResearch::Debug(char* szAddendum)
 
 void CvNetResearch::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (m_iDiscover > 0)
@@ -524,6 +533,7 @@ void CvNetEspionageChange::Debug(char* szAddendum)
 
 void CvNetEspionageChange::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).changeEspionageSpendingWeightAgainstTeam(m_eTargetTeam, m_iChange);
@@ -561,6 +571,7 @@ void CvNetAdvancedStartAction::Debug(char* szAddendum)
 
 void CvNetAdvancedStartAction::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (!gDLL->getInterfaceIFace()->isExitingToMainMenu())
@@ -601,6 +612,7 @@ void CvNetModNetMessage::Debug(char* szAddendum)
 
 void CvNetModNetMessage::Execute()
 {
+	CvSyncedScope syncedScope;
 	GC.getGame().logNetMsgData("Executing CvNetModNetMessage message with payload [%d, %d, %d, %d, %d]\n", m_iData1, m_iData2, m_iData3, m_iData4, m_iData5);
 	CvEventReporter::getInstance().reportModNetMessage(m_iData1, m_iData2, m_iData3, m_iData4, m_iData5);
 	GC.getGame().logNetMsgData("Executed CvNetModNetMessage message with payload [%d, %d, %d, %d, %d]\n", m_iData1, m_iData2, m_iData3, m_iData4, m_iData5);
@@ -637,6 +649,7 @@ void CvNetConvert::Debug(char* szAddendum)
 
 void CvNetConvert::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).convert(m_eReligion);
@@ -668,6 +681,7 @@ void CvNetEmpireSplit::Debug(char* szAddendum)
 
 void CvNetEmpireSplit::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).splitEmpire(m_iAreaId);
@@ -700,6 +714,7 @@ void CvNetFoundReligion::Debug(char* szAddendum)
 
 void CvNetFoundReligion::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).foundReligion(m_eReligion, m_eSlotReligion, true);
@@ -733,6 +748,7 @@ void CvNetLaunchSpaceship::Debug(char* szAddendum)
 
 void CvNetLaunchSpaceship::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).launch(m_eVictory);
@@ -765,6 +781,7 @@ void CvNetEventTriggered::Debug(char* szAddendum)
 
 void CvNetEventTriggered::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).applyEvent(m_eEvent, m_iEventTriggeredId);
@@ -800,6 +817,7 @@ void CvNetJoinGroup::Debug(char* szAddendum)
 
 void CvNetJoinGroup::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvUnit* pUnit = GET_PLAYER(m_ePlayer).getUnit(m_iUnitID);
@@ -863,6 +881,7 @@ void CvNetPushMission::Debug(char* szAddendum)
 
 void CvNetPushMission::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvUnit* pUnit = GET_PLAYER(m_ePlayer).getUnit(m_iUnitID);
@@ -930,6 +949,7 @@ void CvNetAutoMission::Debug(char* szAddendum)
 
 void CvNetAutoMission::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvUnit* pUnit = GET_PLAYER(m_ePlayer).getUnit(m_iUnitID);
@@ -987,6 +1007,7 @@ void CvNetDoCommand::Debug(char* szAddendum)
 
 void CvNetDoCommand::Execute()
 {
+	CvSyncedScope syncedScope;
 	PROFILE_EXTRA_FUNC();
 	if (m_ePlayer != NO_PLAYER)
 	{
@@ -1061,6 +1082,7 @@ void CvNetPercentChange::Debug(char* szAddendum)
 
 void CvNetPercentChange::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).changeCommercePercent(m_eCommerce, m_iChange);
@@ -1096,6 +1118,7 @@ void CvNetChangeVassal::Debug(char* szAddendum)
 
 void CvNetChangeVassal::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		FAssert(GET_PLAYER(m_ePlayer).getTeam() != m_eMasterTeam);
@@ -1134,6 +1157,7 @@ void CvNetChooseElection::Debug(char* szAddendum)
 
 void CvNetChooseElection::Execute()
 {
+	CvSyncedScope syncedScope;
 	GC.getGame().setVoteChosen(m_iSelection, m_iVoteId);
 }
 
@@ -1166,6 +1190,7 @@ void CvNetDiploVote::Debug(char* szAddendum)
 
 void CvNetDiploVote::Execute()
 {
+	CvSyncedScope syncedScope;
 	GC.getGame().castVote(m_ePlayer, m_iVoteId, m_eChoice);
 }
 
@@ -1198,6 +1223,7 @@ void CvNetChangeWar::Debug(char* szAddendum)
 
 void CvNetChangeWar::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		FAssert(GET_PLAYER(m_ePlayer).getTeam() != m_eRivalTeam);
@@ -1256,6 +1282,7 @@ void CvNetPing::SetFromBuffer(FDataStreamBase* pStream)
 
 void CvNetPing::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (GC.getGame().getActiveTeam() != NO_TEAM)
 	{
 		if (GET_PLAYER(m_ePlayer).getTeam() == GC.getGame().getActiveTeam() || GET_TEAM(GC.getGame().getActiveTeam()).isVassal(GET_PLAYER(m_ePlayer).getTeam()) || GET_TEAM(GET_PLAYER(m_ePlayer).getTeam()).isVassal(GC.getGame().getActiveTeam()))
@@ -1279,6 +1306,7 @@ void CvNetAddReminder::Debug(char* szAddendum)
 
 void CvNetAddReminder::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		Cy::call(PYCivModule, "netAddReminder", Cy::Args() << m_ePlayer << m_iGameTurn << m_szMessage.c_str());
@@ -1373,6 +1401,7 @@ void CvNetBuildLists::Debug(char *szAddendum)
 
 void CvNetBuildLists::Execute()
 {
+	CvSyncedScope syncedScope;
 	// This is somewhat dirty but this message should only be sent at game start.
 	// The player data is changed directly from SetFromBuffer instead of from Execute as build lists are split into multiple messages.
 	// There is a chance that that can cause a desync. In that case an intermediate buffer for the stream data has to be added here.
@@ -1413,6 +1442,7 @@ void CvNetBuildListPushOrder::Debug(char* szAddendum)
 
 void CvNetBuildListPushOrder::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).m_pBuildLists->pushOrder(m_iID, m_eOrder, m_iData, -1, m_bAlt, !(m_bShift || m_bCtrl), m_bShift);
@@ -1460,6 +1490,7 @@ void CvNetBuildListPopOrder::Debug(char* szAddendum)
 
 void CvNetBuildListPopOrder::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).m_pBuildLists->popOrder(m_iID, m_iNum);
@@ -1500,6 +1531,7 @@ void CvNetBuildListEdit::Debug(char* szAddendum)
 
 void CvNetBuildListEdit::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (m_iID == -1)
@@ -1552,6 +1584,7 @@ void CvNetChooseBuildUp::Debug(char* szAddendum)
 
 void CvNetChooseBuildUp::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (m_ePromotionLine != NO_PROMOTIONLINE)
@@ -1598,6 +1631,7 @@ void CvNetChooseTrait::Debug(char* szAddendum)
 
 void CvNetChooseTrait::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		GET_PLAYER(m_ePlayer).setHasTrait(m_eTrait, m_bNewValue);
@@ -1633,6 +1667,7 @@ void CvNetMergeAll::Debug(char* szAddendum)
 
 void CvNetMergeAll::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		CvUnit* pHeadUnit = GET_PLAYER(m_ePlayer).getUnit(m_iUnitID);
@@ -1697,6 +1732,7 @@ namespace NetChooseMergeUnit {
 
 void CvNetChooseMergeUnit::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (m_iUnitID == -1) // cancel signal is detected (-1 != 0, thus signal is delivered, cf. 848@CvDLLButtonPopup::OnOKClicked()::case BUTTONPOPUP_CHOOSE_MERGE_UNIT)
@@ -1857,6 +1893,7 @@ void CvNetConfirmSplitUnit::Debug(char* szAddendum)
 
 void CvNetConfirmSplitUnit::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (GET_PLAYER(m_ePlayer).getSplittingUnit() != FFreeList::INVALID_INDEX && m_bConfirm)
@@ -1984,6 +2021,7 @@ void CvNetImprovementUpgrade::Debug(char* szAddendum)
 
 void CvNetImprovementUpgrade::Execute()
 {
+	CvSyncedScope syncedScope;
 	PlayerTypes ePlayer = m_ePlayer;
 	if (m_ePlayer != NO_PLAYER)
 	{
@@ -2035,6 +2073,7 @@ void CvNetChooseArrestUnit::Debug(char* szAddendum)
 
 void CvNetChooseArrestUnit::Execute()
 {
+	CvSyncedScope syncedScope;
 	GET_PLAYER(m_eCopPlayer).getUnit(m_iCopID)->attackSamePlotSpecifiedUnit(GET_PLAYER(m_eVictimPlayer).getUnit(m_iVictimID));
 }
 
@@ -2070,6 +2109,7 @@ void CvNetConfirmAmbush::Debug(char* szAddendum)
 
 void CvNetConfirmAmbush::Execute()
 {
+	CvSyncedScope syncedScope;
 	if (m_ePlayer != NO_PLAYER)
 	{
 		if (GET_PLAYER(m_ePlayer).getAmbushingUnit() != FFreeList::INVALID_INDEX && m_bConfirm)

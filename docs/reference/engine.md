@@ -138,6 +138,18 @@ opening a city with an empty queue drew `"AI Best UnitAI"` / `"AI Best Unit"` on
 also filled `m_bestUnits`, the city's memo that the next real production choice reads. ⇒ An AI chooser called
 for DISPLAY passes `bAsync = true` (async stream, no memo write), and `bNoRand = true` where the answer should not
 flicker between redraws.
+⚑ **THE TRIPWIRE: `CvSyncedScope` marks the roots of synced execution, and a synchronized draw outside every root
+is reported as `[SYNC/draw]` in `Sync.log`** — the stream (`soren` / `map`), the label, and the calling site's
+`callerRva` (resolve with `ln CvGameCoreDLL+<rva>` against the PDB), once per site. The check lives in
+`CvRandom::getFrom`, so it also sees draws that bypass `getSorenRandNum` (`shuffleArray`, `getInt`, Python's
+`getSorenRand().get`); it identifies the two synced streams by address, because `CvRandom`'s layout is bound by the
+EXE. Draws before `isFinalInitialized()` are setup that every client runs identically and are not checked.
+The roots: the simulation block of `CvGame::update` (from `doTurn` through the turn-slice advance — the per-frame
+`gameUpdate` event before it is NOT a root, its frequency is the local frame rate), the `onFinalInitialized` call,
+every `CvNet*::Execute`, and the EXE's networked entry points `CvGame::implementDeal` and
+`CvPlayer::handleDiploEvent`. ⛔ **A new synced entry point declares a `CvSyncedScope`; a `[SYNC/draw]` line is either
+a one-client path to fix or a synced root that was missed — decide which, never silence it.** ⚠ It reports and
+does not assert yet: it becomes an assert once a multiplayer session shows the root list complete.
 
 **⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT.** No seed, stream, or draw is curated, and neither the
 cascade nor the curator owns any part of it — do not model it, do not migrate it, do not invent a `random`
