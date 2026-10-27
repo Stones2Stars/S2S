@@ -1572,7 +1572,6 @@ protected:
 	int m_iSecondMergeSelection;
 	int m_iSplittingUnit;
 	int m_iAmbushingUnit;
-	int m_iAmbushingTargetUnit;
 	bool m_bAssassinate;
 
 	int m_iHurryCount;
@@ -2033,10 +2032,8 @@ public:
 	void setSplittingUnit(int iNewValue);
 
 	int getAmbushingUnit() const;
-	int getAmbushingTargetUnit() const;
 	bool isAssassinate() const;
 	void setAmbushingUnit(int iNewValue, bool bAssassinate = false);
-	void setAmbushingTargetUnit(int iNewValue, bool bAssassinate = true);
 
 	int getGreatGeneralPointsForType(const UnitTypes eUnit) const;
 	void setGreatGeneralPointsForType(const UnitTypes eUnit, const int iValue);

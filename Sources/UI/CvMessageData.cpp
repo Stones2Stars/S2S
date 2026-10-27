@@ -2094,11 +2094,14 @@ void CvNetChooseArrestUnit::SetFromBuffer(FDataStreamBase* pStream)
 }
 
 
-CvNetConfirmAmbush::CvNetConfirmAmbush() : CvMessageData(GAMEMESSAGE_CONFIRM_AMBUSH), m_ePlayer(NO_PLAYER), m_bConfirm(false)
+CvNetConfirmAmbush::CvNetConfirmAmbush() : CvMessageData(GAMEMESSAGE_CONFIRM_AMBUSH), m_ePlayer(NO_PLAYER), m_bConfirm(false),
+	m_iTargetUnit(FFreeList::INVALID_INDEX), m_bTestAtWar(true)
 {
 }
 
-CvNetConfirmAmbush::CvNetConfirmAmbush(PlayerTypes ePlayer, bool bConfirm) : CvMessageData(GAMEMESSAGE_CONFIRM_AMBUSH), m_ePlayer(ePlayer), m_bConfirm(bConfirm)
+CvNetConfirmAmbush::CvNetConfirmAmbush(PlayerTypes ePlayer, bool bConfirm, int iTargetUnit, bool bTestAtWar)
+	: CvMessageData(GAMEMESSAGE_CONFIRM_AMBUSH), m_ePlayer(ePlayer), m_bConfirm(bConfirm),
+	m_iTargetUnit(iTargetUnit), m_bTestAtWar(bTestAtWar)
 {
 }
 
@@ -2110,41 +2113,47 @@ void CvNetConfirmAmbush::Debug(char* szAddendum)
 void CvNetConfirmAmbush::Execute()
 {
 	CvSyncedScope syncedScope;
-	if (m_ePlayer != NO_PLAYER)
+	if (m_ePlayer == NO_PLAYER)
 	{
-		if (GET_PLAYER(m_ePlayer).getAmbushingUnit() != FFreeList::INVALID_INDEX && m_bConfirm)
+		return;
+	}
+	CvPlayer& player = GET_PLAYER(m_ePlayer);
+	if (player.getAmbushingUnit() == FFreeList::INVALID_INDEX)
+	{
+		return;
+	}
+	CvUnit* pAttacker = m_bConfirm ? player.getUnit(player.getAmbushingUnit()) : NULL;
+	if (pAttacker != NULL && pAttacker->plot() != NULL)
+	{
+		CvUnit* pDefender = NULL;
+		if (m_iTargetUnit != FFreeList::INVALID_INDEX)
 		{
-			CvUnit* pAttacker = GET_PLAYER(m_ePlayer).getUnit(GET_PLAYER(m_ePlayer).getAmbushingUnit());
-			int DefID = GET_PLAYER(m_ePlayer).getAmbushingTargetUnit();
-			if (!pAttacker) return;
-			if (pAttacker->plot() == NULL)	return;
-			CvPlot* pPlot = pAttacker->plot();
-			CvUnit* pDefender = NULL;
-			if (DefID != FFreeList::INVALID_INDEX)
+			foreach_(CvUnit* unitX, pAttacker->plot()->units())
 			{
-				foreach_(CvUnit* unitX, pPlot->units())
+				if (unitX->getID() == m_iTargetUnit)
 				{
-					if (unitX->getID() == DefID)
-					{
-						pDefender = unitX;
-					}
+					pDefender = unitX;
 				}
 			}
-			bool bAssassinate = GET_PLAYER(m_ePlayer).isAssassinate();
-			pAttacker->enactAmbush(bAssassinate, pDefender);
-			GET_PLAYER(m_ePlayer).setAmbushingUnit(FFreeList::INVALID_INDEX);
 		}
+		pAttacker->enactAmbush(player.isAssassinate(), pDefender, m_bTestAtWar);
 	}
+	// Confirmed or cancelled, the ambush is resolved here, on every client.
+	player.setAmbushingUnit(FFreeList::INVALID_INDEX);
 }
 
 void CvNetConfirmAmbush::PutInBuffer(FDataStreamBase* pStream)
 {
 	pStream->Write(m_ePlayer);
 	pStream->Write(m_bConfirm);
+	pStream->Write(m_iTargetUnit);
+	pStream->Write(m_bTestAtWar);
 }
 
 void CvNetConfirmAmbush::SetFromBuffer(FDataStreamBase* pStream)
 {
 	pStream->Read((int*)&m_ePlayer);
 	pStream->Read((bool*)&m_bConfirm);
+	pStream->Read(&m_iTargetUnit);
+	pStream->Read(&m_bTestAtWar);
 }

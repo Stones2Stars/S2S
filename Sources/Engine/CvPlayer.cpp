@@ -26086,11 +26086,6 @@ int CvPlayer::getAmbushingUnit() const
 	return m_iAmbushingUnit;
 }
 
-int CvPlayer::getAmbushingTargetUnit() const
-{
-	return m_iAmbushingTargetUnit;
-}
-
 bool CvPlayer::isAssassinate() const
 {
 	return m_bAssassinate;
@@ -26100,12 +26095,6 @@ void CvPlayer::setAmbushingUnit(int iNewValue, bool bAssassinate)
 {
 	m_iAmbushingUnit = iNewValue;
 	m_bAssassinate = bAssassinate;
-}
-
-void CvPlayer::setAmbushingTargetUnit(int iNewValue, bool bAssassinate)
-{
-	m_iAmbushingTargetUnit = iNewValue;
-	//m_bAssassinate = bAssassinate;
 }
 
 void CvPlayer::setGreatGeneralPointsForType(const UnitTypes eUnit, const int iValue)

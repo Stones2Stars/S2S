@@ -851,44 +851,31 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 		}
 		case BUTTONPOPUP_CONFIRM_AMBUSH:
 		{
-			if (pPopupReturn->getButtonClicked() != 0)
+			// The whole choice travels in the message -- the target and the Alt key as it is NOW -- and the
+			// ambush is applied, or cancelled, when the message executes on every client.
+			const bool bTestAtWar = !gDLL->altKey();
+			const int iClicked = pPopupReturn->getButtonClicked();
+			if (iClicked == 0)
 			{
-				int DefID = pPopupReturn->getButtonClicked();
-				GET_PLAYER(GC.getGame().getActivePlayer()).setAmbushingTargetUnit(FFreeList::INVALID_INDEX);
-				if (DefID == 1) //Ambush, or no choice)
-				{
-					CvMessageControl::getInstance().sendAmbushConfirmation(true);
-				}
-				else
-				{
-					int iAttackerID = info.getData1();
-					bool bfoundDef = false;
-					const CvPlot* pPlot = GC.getMap().plot(info.getData2(), info.getData3());
-					foreach_(const CvUnit * unitX, pPlot->units())
-					{
-						if (unitX->getID() == DefID)
-						{
-							bfoundDef = true;
-							break;
-						}
-					}
-					if (bfoundDef)
-					{
-						GET_PLAYER(GC.getGame().getActivePlayer()).setAmbushingTargetUnit(DefID);
-						CvMessageControl::getInstance().sendAmbushConfirmation(true);
-					}
-					else
-					{
-						CvMessageControl::getInstance().sendAmbushConfirmation(false);
-						GET_PLAYER(GC.getGame().getActivePlayer()).setAmbushingUnit(FFreeList::INVALID_INDEX);
-					}
-
-				}
+				CvMessageControl::getInstance().sendAmbushConfirmation(false, FFreeList::INVALID_INDEX, bTestAtWar);
+			}
+			else if (iClicked == 1) // Ambush, or no choice: the best defender
+			{
+				CvMessageControl::getInstance().sendAmbushConfirmation(true, FFreeList::INVALID_INDEX, bTestAtWar);
 			}
 			else
 			{
-				CvMessageControl::getInstance().sendAmbushConfirmation(false);
-				GET_PLAYER(GC.getGame().getActivePlayer()).setAmbushingUnit(FFreeList::INVALID_INDEX);
+				bool bFoundDefender = false;
+				const CvPlot* pPlot = GC.getMap().plot(info.getData2(), info.getData3());
+				foreach_(const CvUnit * unitX, pPlot->units())
+				{
+					if (unitX->getID() == iClicked)
+					{
+						bFoundDefender = true;
+						break;
+					}
+				}
+				CvMessageControl::getInstance().sendAmbushConfirmation(bFoundDefender, iClicked, bTestAtWar);
 			}
 			break;
 		}

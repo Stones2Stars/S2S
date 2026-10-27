@@ -322,10 +322,10 @@ void CvMessageControl::sendArrestUnit(int iCopID, PlayerTypes eCopPlayer, int iV
 	gDLL->sendMessageData(new CvNetChooseArrestUnit(iCopID, eCopPlayer, iVictimID, eVictimPlayer));
 }
 
-void CvMessageControl::sendAmbushConfirmation(bool bConfirm)
+void CvMessageControl::sendAmbushConfirmation(bool bConfirm, int iTargetUnit, bool bTestAtWar)
 {
 	if (NO_PLAYER != GC.getGame().getActivePlayer())
 	{
-		gDLL->sendMessageData(new CvNetConfirmAmbush(GC.getGame().getActivePlayer(), bConfirm));
+		gDLL->sendMessageData(new CvNetConfirmAmbush(GC.getGame().getActivePlayer(), bConfirm, iTargetUnit, bTestAtWar));
 	}
 }

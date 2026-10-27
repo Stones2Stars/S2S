@@ -21,6 +21,24 @@ typedef struct CvReachablePlotInfo
 class CvPlot;
 class CvSelectionGroup;
 
+///<summary>
+/// Hashes and orders plots by POSITION, never by address, so a set's iteration order is the same on every client:
+/// synced AI loops over it draw, break ties and stop early in that order (docs/reference/engine.md, synced code
+/// reads nothing that differs per machine). A set never spans two maps, so x/y identify a plot within it.
+///</summary>
+struct CvPlotPositionHash
+{
+	enum
+	{
+		bucket_size = 4,
+		min_buckets = 8
+	};
+	size_t operator()(const CvPlot* pPlot) const;
+	bool operator()(const CvPlot* pLeft, const CvPlot* pRight) const;
+};
+
+typedef stdext::hash_map<CvPlot*, CvReachablePlotInfo, CvPlotPositionHash> CvReachablePlotMap;
+
 class CvReachablePlotSet
 {
 public:
@@ -28,7 +46,7 @@ public:
 	{
 	friend CvReachablePlotSet;
 	protected:
-		const_iterator(const CvReachablePlotSet* parent, stdext::hash_map<CvPlot*,CvReachablePlotInfo>::const_iterator& itr);
+		const_iterator(const CvReachablePlotSet* parent, CvReachablePlotMap::const_iterator& itr);
 
 	public:
 		const_iterator& operator++();
@@ -47,7 +65,7 @@ public:
 		void setOpaqueInfo(int iActivityId, int iValue);
 
 	private:
-		stdext::hash_map<CvPlot*,CvReachablePlotInfo>::const_iterator m_itr;
+		CvReachablePlotMap::const_iterator m_itr;
 		const CvReachablePlotSet* m_parent;
 	};
 
@@ -75,7 +93,7 @@ private:
 	static CvReachablePlotSet* findCachedPlotSet(const CvSelectionGroup* pGroup, int iFlags, int iOutsideOwnedRange);
 
 protected:
-	stdext::hash_map<CvPlot*, CvReachablePlotInfo>* m_reachablePlots;
+	CvReachablePlotMap* m_reachablePlots;
 	const CvSelectionGroup*	m_group;
 	int					m_iFlags;
 	int					m_iRange;
